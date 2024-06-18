@@ -1,6 +1,6 @@
 # Use the official lightweight Ruby image.
 # https://hub.docker.com/_/ruby
-FROM ruby:2.6.6 AS rails-toolbox
+FROM ruby:3.3.1 AS rails-toolbox
 
 RUN (curl -sS https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor | apt-key add -) && \
     echo "deb https://deb.nodesource.com/node_14.x buster main"      > /etc/apt/sources.list.d/nodesource.list && \
@@ -16,7 +16,7 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock ./
 
 RUN apt-get update && apt-get install -y libpq-dev && apt-get install -y python3-distutils
-RUN gem install bundler -v 2.4.22 && \
+RUN gem install bundler && \
     bundle config set --local deployment 'true' && \
     bundle config set --local without 'development test' && \
     bundle install
