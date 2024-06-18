@@ -21,11 +21,5 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  timeout: 5000
-  username: "postgres.pucohrmkpcwjcjrmnogy"
-  password: "gebirah_tonytan"
-  database: "postgres"
-  host:   "aws-0-ap-southeast-1.pooler.supabase.com"
+  <<: *default
+  database: db/production.sqlite3
