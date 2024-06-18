@@ -1,9 +1,10 @@
-import Homepage from "./homepage";
+import Head from 'next/head';
+import Homepage from "./homepage.jsx";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Homepage/>
+    <main className="max-w-screen-2xl max-h-screen bg-white">
+      <Homepage />
     </main>
   );
 }
