@@ -1,14 +1,16 @@
 import Field from "./info_field"
-export default function PersonalInfo() {
+export default function PersonalInfo(props) {
     return (
         <div>
-            <div className="grid grid-cols-2 grid-rows-3 gap-y-1 gap-x-3 ml-3">
-                <Field title={"Nama / Name"} content={"Lorem Ipsum"} />
-                <Field title={"NAMA / NAME"} content={"placeholder"} />
-                <Field title={"verification Status"} content={"Lorem Ipsum"} />
-                <Field title={"NAMA / NAME"} content={"placeholder"} />
-                <Field title={"Identification No."} content={"placeholder"} />
-                <Field title={"NAMA / NAME"} content={"placeholder"} />
+            <div className="grid-2-cols-4-rows">
+                <Field title={"Nama / Name"} content={props.userName} />
+                <Field title={"Issued Date"} content={props.issuedDate} />
+                <Field title={"verification Status"} content={props.status} />
+                <Field title={"Expiry Date"} content={props.expiryDate} />
+                <Field title={"Identification No."} content={props.idNo} />
+                <Field title={"Jantina / Sex"} content={props.sex} />
+                <Field title={"Country of Origin"} content={props.country} />
+                <Field title={"Date Of Birth"} content={props.dob} />
             </div>
         </div>
     )
