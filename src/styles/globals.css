@@ -42,7 +42,7 @@ body {
     @apply block text-3xl text-wrap my-auto mx-2 font-medium text-center align-middle justify-center;
   }
   .icon {
-    @apply p-2 max-w-12 max-h-12 transition-all-500;
+    @apply px-2 my-auto max-w-12 max-h-12;
   }
 }
 
@@ -51,7 +51,7 @@ body {
     text-wrap: balance;
   }
   .transition-all-500 {
-    @apply transition-all duration-500;
+    @apply transition-all duration-700 delay-0;
   }
   .btn-border {
     @apply border-0 rounded-xl;
