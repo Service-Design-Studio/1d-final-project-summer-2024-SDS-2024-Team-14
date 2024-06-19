@@ -118,7 +118,7 @@ body {
     @apply bg-white fill-darkblue text-darkblue;
   }
   .header-text {
-    @apply mx-auto text-3xl text-nowrap overflow-ellipsis font-bold align-middle text-left;
+    @apply text-4xl text-nowrap overflow-ellipsis text-darkblue font-medium align-middle text-left;
   }
   .h2-text {
     @apply block md:text-3xl font-medium sm:text-xl text-nowrap;

@@ -1,6 +1,6 @@
-export default function HomeHeader() {
+export default function HomeHeader(props) {
     return (
-        <div className="my-6 card shadow-white \rounded-xl bg-white md:max-w-2xl">
-            <h1 className="header-text">Home</h1>
+        <div className="p-0 card shadow-white \rounded-xl bg-white ">
+            <h1 className="header-text">{ props.text}</h1>
         </div>);
 }
