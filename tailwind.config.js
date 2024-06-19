@@ -10,6 +10,17 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    textColor: {
+      'default': 'black',
+      'darkblue': '#0072BC',
+    },
+    colors: {
+      'white': 'white',
+      'default': 'black',
+      'darkblue': '#0072BC',
+      'lightblue': '#D5EEFF',
+      'lightpink': '#FFEDFA',
+    },
   },
   plugins: [],
 }

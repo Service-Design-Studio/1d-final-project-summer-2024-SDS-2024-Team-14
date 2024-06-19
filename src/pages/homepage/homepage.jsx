@@ -3,7 +3,7 @@ import IdCard from "./id_card.jsx";
 
 export default function Homepage() {
     return (
-        <div>
+        <div mx-0>
             <HomeHeader/>
             <IdCard/>
         </div>);
