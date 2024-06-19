@@ -38,14 +38,18 @@ body {
   .btn-darkblue {
     @apply flex justify-center bg-darkblue text-white transition-all-500 hover:hover-color fill-white  px-4 py-3 w-full btn-border shadow-lg;
   }
-  .btn-text {
-    @apply block text-3xl text-wrap my-auto mx-2 font-medium text-center align-middle justify-center;
-  }
+
   .icon {
     @apply px-2 my-auto max-w-12 max-h-12;
   }
   .id-card {
-    @apply max-w-lg min-w-fit mx-auto my-6 p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+    @apply max-w-lg card-width mb-6 p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+  }
+  .feature-card {
+    @apply max-w-lg card-width p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-darkblue  text-white transition-all-500;
+  }
+  .profile-image {
+    @apply w-2/6 h-auto;
   }
 }
 
@@ -62,10 +66,20 @@ body {
   .hover-color {
     @apply bg-white fill-darkblue text-darkblue;
   }
+  .header-text{
+    @apply block text-5xl text-nowrap overflow-ellipsis font-semibold align-middle text-left
+  }
+  .btn-text {
+    @apply block md:text-3xl sm:text-xl text-nowrap my-auto mx-2 font-medium text-center align-middle justify-center;
+  }
+  .card-width{
+    @apply w-full;
+  }
+}
   /* .open-card {
     @apply  visible;
   }
   .hide-card {
     @apply  hidden;
   } */
-}
+

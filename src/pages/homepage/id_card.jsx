@@ -9,15 +9,7 @@ export default function IdCard() {
     const [isOpen, setIsOpen] = useState(false);
     let onClick = () => {
         setIsOpen(!isOpen);
-        // if (isOpen) {
-        //     document.getElementById("qr").classList.remove("hide-card");
-        //     document.getElementById("qr").classList.add("open-card");
-        // } else {
-        //     document.getElementById("qr").classList.remove("open-card");
-        //     document.getElementById("qr").classList.add("hide-card");
-        // }
     }
-
     return (
         <div className="id-card">
             <div className="block">
@@ -29,7 +21,7 @@ export default function IdCard() {
             </div>
             <div className="min-w-full text-darkblue" style={isOpen ? { visibility: "visible", height: "fit-content" } : { visibility: "hidden", height: "0" }}>
                 <span className="btn-text my-4">Scan For Documents</span>
-                <Image className="mx-auto" id="qr" src="/images/placeholder_qr.png" width={300} height={300} alt="QR code" />
+                <Image className="mx-auto" id="qr" src="/images/placeholder_qr.png" width={200} height={200} alt="QR code" />
             </div>
         </div>)
 };
