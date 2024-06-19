@@ -30,8 +30,6 @@ steps:
       ]
 
 
-logsBucket: gs://gebirah-logs/
-
 substitutions:
   _REGION: asia-southeast1
   _SERVICE_NAME: gebirah-backend
