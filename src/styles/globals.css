@@ -32,6 +32,38 @@ body {
   h2 {
     @apply text-xl;
   }
+  @screen xxs {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-mdd;
+    }
+  }
+  @screen xs {
+    .title-text {
+      @apply text-mdd;
+    }
+    .content-text {
+      @apply text-lg;
+    }
+  }
+  @screen sm {
+    .title-text {
+      @apply text-mdd;
+    }
+    .content-text {
+      @apply text-xl;
+    }
+  }
+  @screen md {
+    .title-text {
+      @apply text-2mdd;
+    }
+    .content-text {
+      @apply text-3xl;
+    }
+  }
 }
 
 @layer components {
@@ -43,13 +75,13 @@ body {
     @apply px-2 my-auto max-w-12 max-h-12;
   }
   .id-card {
-    @apply max-w-lg card-width mb-6 p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+    @apply max-w-lg card-width mb-6 sm:p-8 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
   }
   .feature-card {
     @apply max-w-lg card-width p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-darkblue  text-white transition-all-500;
   }
   .profile-image {
-    @apply w-2/6 h-auto;
+    @apply w-1/3 h-auto;
   }
 }
 
@@ -66,20 +98,25 @@ body {
   .hover-color {
     @apply bg-white fill-darkblue text-darkblue;
   }
-  .header-text{
-    @apply block text-4xl text-nowrap overflow-ellipsis font-bold align-middle text-left
+  .header-text {
+    @apply block text-3xl text-nowrap overflow-ellipsis font-bold align-middle text-left;
   }
   .btn-text {
     @apply block md:text-3xl sm:text-xl text-nowrap my-auto mx-2 font-medium text-center align-middle justify-center;
   }
-  .card-width{
+  .title-text {
+    @apply uppercase tracking-normal overflow-ellipsis text-darkblue font-semibold;
+  }
+  .content-text {
+    @apply block leading-tight font-medium text-default;
+  }
+  .card-width {
     @apply w-full;
   }
 }
-  /* .open-card {
+/* .open-card {
     @apply  visible;
   }
   .hide-card {
     @apply  hidden;
   } */
-

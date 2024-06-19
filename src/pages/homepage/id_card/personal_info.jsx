@@ -1,9 +1,14 @@
+import Field from "./info_field"
 export default function PersonalInfo() {
     return (
         <div>
-            <div className="px-8">
-                <div className="uppercase tracking-wide text-sm text-darkblue font-semibold">Nama / Name</div>
-                <h1 className="block mt-1 text-lg leading-tight font-medium text-black">Lorem Ipsum</h1>
+            <div className="grid grid-cols-2 grid-rows-3 gap-y-1 gap-x-3 ml-3">
+                <Field title={"Nama / Name"} content={"Lorem Ipsum"} />
+                <Field title={"NAMA / NAME"} content={"placeholder"} />
+                <Field title={"verification Status"} content={"Lorem Ipsum"} />
+                <Field title={"NAMA / NAME"} content={"placeholder"} />
+                <Field title={"Identification No."} content={"placeholder"} />
+                <Field title={"NAMA / NAME"} content={"placeholder"} />
             </div>
         </div>
     )
