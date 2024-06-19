@@ -9,9 +9,14 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        'height': 'height'
+      }
+    },
     textColor: {
       'default': 'black',
+      'white': 'white',
       'darkblue': '#0072BC',
     },
     colors: {

@@ -35,8 +35,17 @@ body {
 }
 
 @layer components {
-  .btn-blue {
-    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+  .btn-darkblue {
+    @apply flex justify-center bg-darkblue text-white transition-all-500 hover:hover-color fill-white  px-4 py-3 w-full btn-border shadow-lg;
+  }
+  .btn-text {
+    @apply block text-3xl text-wrap my-auto mx-2 font-medium text-center align-middle justify-center;
+  }
+  .icon {
+    @apply px-2 my-auto max-w-12 max-h-12;
+  }
+  .id-card {
+    @apply max-w-lg min-w-fit mx-auto my-6 p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
   }
 }
 
@@ -44,4 +53,19 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .transition-all-500 {
+    @apply transition-all delay-0 duration-700;
+  }
+  .btn-border {
+    @apply border-0 rounded-xl;
+  }
+  .hover-color {
+    @apply bg-white fill-darkblue text-darkblue;
+  }
+  /* .open-card {
+    @apply  visible;
+  }
+  .hide-card {
+    @apply  hidden;
+  } */
 }
