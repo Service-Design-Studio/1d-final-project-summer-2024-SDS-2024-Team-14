@@ -30,8 +30,7 @@ steps:
       ]
 
 options:
-  logging: GCS_ONLY
-  logsBucket: gs://gebirah-14_cloudbuild/
+  logging: CLOUD_LOGGING_ONLY
 
 substitutions:
   _REGION: asia-southeast1
