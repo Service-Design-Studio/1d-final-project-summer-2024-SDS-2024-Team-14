@@ -44,6 +44,9 @@ body {
   .icon {
     @apply px-2 my-auto max-w-12 max-h-12;
   }
+  .id-card {
+    @apply max-w-lg min-w-fit mx-auto my-6 p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+  }
 }
 
 @layer utilities {
@@ -51,7 +54,7 @@ body {
     text-wrap: balance;
   }
   .transition-all-500 {
-    @apply transition-all duration-700 delay-0;
+    @apply transition-all delay-0 duration-700;
   }
   .btn-border {
     @apply border-0 rounded-xl;
@@ -59,4 +62,10 @@ body {
   .hover-color {
     @apply bg-white fill-darkblue text-darkblue;
   }
+  /* .open-card {
+    @apply  visible;
+  }
+  .hide-card {
+    @apply  hidden;
+  } */
 }
