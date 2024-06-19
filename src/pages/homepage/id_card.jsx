@@ -17,7 +17,7 @@ export default function IdCard() {
                     <ProfilePic />
                     <PersonalInfo />
                 </div>
-                <ShowBtn isOpen={isOpen} onClick={onClick} hoverIcon={isOpen ? "/images/close_eye_blue.svg" : "/images/open_eye_blue.svg"} text={(isOpen ? "Show" : "Hide") + " UNHCR Card"} icon={isOpen ? "/images/close_eye.svg" : "/images/open_eye.svg"} />
+                <ShowBtn isOpen={isOpen} onClick={onClick} hoverIcon={isOpen ? "/images/close_eye_blue.svg" : "/images/open_eye_blue.svg"} text={(isOpen ? "Hide" : "Show") + " UNHCR Card"} icon={isOpen ? "/images/close_eye.svg" : "/images/open_eye.svg"} />
             </div>
             <div className="min-w-full text-darkblue" style={isOpen ? { visibility: "visible", height: "fit-content" } : { visibility: "hidden", height: "0" }}>
                 <span className="btn-text my-4">Scan For Documents</span>
