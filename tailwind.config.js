@@ -12,6 +12,7 @@ module.exports = {
     extend: {},
     textColor: {
       'default': 'black',
+      'white': 'white',
       'darkblue': '#0072BC',
     },
     colors: {
