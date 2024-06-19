@@ -30,7 +30,8 @@ steps:
       ]
 
 options:
-  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+  logging: GCS_ONLY
+  logsBucket: gs://gebirah-14_cloudbuild/
 
 substitutions:
   _REGION: asia-southeast1
@@ -40,3 +41,4 @@ substitutions:
 images:
   - "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
 # [END cloudrun_rails_cloudbuild]
+
