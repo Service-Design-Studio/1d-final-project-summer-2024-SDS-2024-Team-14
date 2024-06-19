@@ -34,7 +34,7 @@ body {
   }
   @screen xxs {
     .title-text {
-      @apply text-md;
+      @apply text-sm;
     }
     .content-text {
       @apply text-mdd;
@@ -42,10 +42,10 @@ body {
   }
   @screen xs {
     .title-text {
-      @apply text-mdd;
+      @apply text-md;
     }
     .content-text {
-      @apply text-lg;
+      @apply text-mdd;
     }
   }
   @screen sm {
