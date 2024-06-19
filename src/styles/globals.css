@@ -67,7 +67,7 @@ body {
     @apply bg-white fill-darkblue text-darkblue;
   }
   .header-text{
-    @apply block text-5xl text-nowrap overflow-ellipsis font-semibold align-middle text-left
+    @apply block text-4xl text-nowrap overflow-ellipsis font-bold align-middle text-left
   }
   .btn-text {
     @apply block md:text-3xl sm:text-xl text-nowrap my-auto mx-2 font-medium text-center align-middle justify-center;
