@@ -19,7 +19,7 @@ export default function IdCard() {
     }
 
     return (
-        <div className="id-card transition-all-500">
+        <div className="id-card">
             <div className="block">
                 <div className="flex">
                     <ProfilePic />
@@ -27,8 +27,9 @@ export default function IdCard() {
                 </div>
                 <ShowBtn isOpen={isOpen} onClick={onClick} />
             </div>
-            <div>
-                <Image style={isOpen ? { visibility: "visible", height: "100%" } : {visibility: "hidden", height: "0"} } id="qr" src="/images/placeholder_qr.png" width={300} height={300} alt="QR code" />
+            <div className="min-w-full text-darkblue" style={isOpen ? { visibility: "visible", height: "fit-content" } : { visibility: "hidden", height: "0" }}>
+                <span className="btn-text my-4">Scan For Documents</span>
+                <Image className="mx-auto" id="qr" src="/images/placeholder_qr.png" width={300} height={300} alt="QR code" />
             </div>
         </div>)
 };
