@@ -31,6 +31,7 @@ module.exports = {
     },
     colors: {
       'white': 'white',
+      'disabled': '#AFAFAF',
       'default': 'black',
       'paleblue': '#009BFF',
       'darkblue': '#0072BC',
