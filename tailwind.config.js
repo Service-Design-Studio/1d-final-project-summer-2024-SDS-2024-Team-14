@@ -12,6 +12,16 @@ module.exports = {
     extend: {
       transitionProperty: {
         'height': 'height'
+      },
+      screens: { 
+        'xxs': '0px',
+        'xs': '400px',
+        'xsm': '450px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
       }
     },
     textColor: {
@@ -22,9 +32,26 @@ module.exports = {
     colors: {
       'white': 'white',
       'default': 'black',
+      'paleblue': '#009BFF',
       'darkblue': '#0072BC',
+      'deepblue': '#005994',
       'lightblue': '#D5EEFF',
       'lightpink': '#FFEDFA',
+    },
+    fontSize: {
+      'xs': '0.1rem',
+      'sm': '0.4rem',
+      'xsm': '0.5rem',
+      'md': '0.6rem',
+      'mdd': '0.8rem',
+      '2mdd': '0.9rem',
+      'base': '1rem',
+      'lg': '1.2rem',
+      'xl': '1.25rem',
+      '2xl': '1.563rem',
+      '3xl': '1.953rem',
+      '4xl': '2.441rem',
+      '5xl': '3.052rem',
     },
   },
   plugins: [],

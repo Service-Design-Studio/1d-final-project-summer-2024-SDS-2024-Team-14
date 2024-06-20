@@ -32,20 +32,75 @@ body {
   h2 {
     @apply text-xl;
   }
+  @screen xxs {
+    .title-text {
+      @apply text-sm;
+    }
+    .content-text {
+      @apply text-md;
+    }
+    .grid-2-cols-4-rows {
+      @apply gap-x-1;
+    }
+  }
+  @screen xs {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-mdd;
+    }
+  }
+  @screen xsm {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-2mdd;
+    }
+    .grid-2-cols-4-rows {
+      @apply gap-x-4;
+    }
+  }
+  @screen sm {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-base;
+    }
+  }
+  @screen md {
+    .title-text {
+      @apply text-2mdd;
+    }
+    .content-text {
+      @apply text-xl;
+    }
+  }
 }
 
 @layer components {
   .btn-darkblue {
     @apply flex justify-center bg-darkblue text-white transition-all-500 hover:hover-color fill-white  px-4 py-3 w-full btn-border shadow-lg;
   }
-  .btn-text {
-    @apply block text-3xl text-wrap my-auto mx-2 font-medium text-center align-middle justify-center;
-  }
   .icon {
     @apply px-2 my-auto max-w-12 max-h-12;
   }
+  .card {
+    @apply max-w-lg card-width p-1 sm:p-2 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-2xl;
+  }
   .id-card {
-    @apply max-w-lg min-w-fit mx-auto my-6 p-8 rounded-xl shadow-md overflow-hidden md:max-w-2xl bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+    @apply card px-6 pt-6 bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+  }
+  .feature-card {
+    @apply card flex flex-row mt-4 mb-0 mx-auto bg-darkblue  text-white hover:bump transition-all duration-300 bg-gradient-to-r from-paleblue to-deepblue;
+  }
+  .profile-image {
+    @apply w-3/12 h-auto;
+  }
+  .grid-2-cols-4-rows {
+    @apply grid grid-cols-2 grid-rows-4 gap-y-2 ml-10 my-auto py-2;
   }
 }
 
@@ -62,10 +117,25 @@ body {
   .hover-color {
     @apply bg-white fill-darkblue text-darkblue;
   }
-  /* .open-card {
-    @apply  visible;
+  .header-text {
+    @apply text-4xl text-nowrap overflow-ellipsis text-darkblue font-medium align-middle text-left;
   }
-  .hide-card {
-    @apply  hidden;
-  } */
+  .h2-text {
+    @apply block md:text-3xl font-medium sm:text-xl text-nowrap;
+  }
+  .btn-text {
+    @apply h2-text my-auto mx-2  text-center align-middle justify-center;
+  }
+  .title-text {
+    @apply uppercase tracking-normal overflow-ellipsis text-darkblue font-semibold;
+  }
+  .content-text {
+    @apply block leading-tight font-medium text-default;
+  }
+  .card-width {
+    @apply w-full;
+  }
+  .bump {
+    @apply shadow-sm shadow-default duration-500 border-darkblue border-4;
+  }
 }
