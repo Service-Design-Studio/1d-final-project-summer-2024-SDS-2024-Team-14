@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Homepage from "./homepage/homepage.jsx";
 import { useRouter} from 'next/router'
 import "../styles/globals.css"
+import axios from "axios";
 export default function Home() {
   const router = useRouter();
   return (
