@@ -1,9 +1,11 @@
-import Homepage from "./homepage";
-
+import Head from 'next/head';
+import Homepage from "./homepage/homepage.jsx";
+import "../styles/globals.css"
+import axios from "axios";
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Homepage/>
+    <main className="min-w-minContent min-h-screen bg-white">
+      <Homepage />
     </main>
   );
 }
