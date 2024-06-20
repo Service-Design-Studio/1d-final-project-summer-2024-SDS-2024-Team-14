@@ -1,0 +1,128 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/helpers/users_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/controllers/users_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/serializers/user_serializer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          4,
+          null,
+          1,
+          4,
+          null,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/channels/application_cable/channel.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/channels/application_cable/connection.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1718889374
+  }
+}

@@ -14,7 +14,8 @@ RSpec.describe "Users", type: :request do
             "religion": "Buddhist",
             "gender": "Female",
             "date_birth": "10-06-2001",
-            "date_arrival": "10-06-2024"
+            "date_arrival": "10-06-2024",
+            "verification_status": "Pending approval"
             )
         User.create(
             email: 'test2@gmail.com', 
@@ -26,11 +27,12 @@ RSpec.describe "Users", type: :request do
             "religion": "Muslim",
             "gender": "Male",
             "date_birth": "10-06-2004",
-            "date_arrival": "14-06-2024"
+            "date_arrival": "14-06-2024",
+            "verification_status": "Approved"
             )
     end
 
-    scenario "Create user" do
+    scenario "Create user success" do
         post "http://localhost:3000/users",
         params: 
         {
@@ -59,6 +61,29 @@ RSpec.describe "Users", type: :request do
          expect(third_user["gender"]).to eq("Female")
          expect(third_user["date_birth"]).to eq("10-04-2022")
          expect(third_user["date_arrival"]).to eq("10-04-2022")
+         expect(third_user["verification_status"]).to eq("Pending approval")
+    end
+
+    scenario "Create user fail" do
+        post "http://localhost:3000/users",
+        params: 
+        {
+            email: "test3@gmail.com",
+            password_confirmation: "test123",
+            name: "testUser3",
+            country: "Peru",
+            ethnicity: "Hazara",
+            religion: "Buddhist",
+            gender: "Female",
+            date_birth: "10-04-2022",
+            date_arrival: "10-04-2022"
+        }
+        puts response.body
+        #check status 
+        expect(response).to have_http_status(422)
+        data = JSON.parse(response.body)
+        expect(data["password"]).to eq(["can't be blank"])
+
     end
     
     scenario "Get all users information" do
@@ -69,7 +94,6 @@ RSpec.describe "Users", type: :request do
         #check resp
         users = JSON.parse(response.body)
         first_user, second_user = users[0], users[1], users[2]
-        puts first_user
         # first user created
         expect(first_user["id"]).to eq(1)
         expect(first_user["email"]).to eq("test1@gmail.com")
@@ -80,6 +104,7 @@ RSpec.describe "Users", type: :request do
         expect(first_user["gender"]).to eq("Female")
         expect(first_user["date_birth"]).to eq("10-06-2001")
         expect(first_user["date_arrival"]).to eq("10-06-2024")
+        expect(first_user["verification_status"]).to eq("Pending approval")
         # second user created
         expect(second_user["id"]).to eq(2)
         expect(second_user["email"]).to eq("test2@gmail.com")
@@ -90,6 +115,7 @@ RSpec.describe "Users", type: :request do
         expect(second_user["gender"]).to eq("Male")
         expect(second_user["date_birth"]).to eq("10-06-2004")
         expect(second_user["date_arrival"]).to eq("14-06-2024")
+        expect(second_user["verification_status"]).to eq("Approved")
     
     end
 
@@ -110,6 +136,7 @@ RSpec.describe "Users", type: :request do
         expect(user["gender"]).to eq("Male")
         expect(user["date_birth"]).to eq("10-06-2004")
         expect(user["date_arrival"]).to eq("14-06-2024")
+        expect(user["verification_status"]).to eq("Approved")
     end
 
 end

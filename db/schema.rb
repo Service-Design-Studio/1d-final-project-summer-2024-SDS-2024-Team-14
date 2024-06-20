@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_18_091813) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_20_130515) do
   create_table "users", force: :cascade do |t|
     t.text "email"
     t.text "password_digest"
@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_18_091813) do
     t.string "gender"
     t.date "date_birth"
     t.date "date_arrival"
+    t.string "verification_status", default: "Pending approval"
   end
 
 end

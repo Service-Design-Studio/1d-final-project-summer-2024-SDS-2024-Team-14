@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :email, :name, :country, :ethnicity, :religion, :gender, :date_birth, :date_arrival
+  attributes :id, :email, :name, :country, :ethnicity, :religion, :gender, :date_birth, :date_arrival, :verification_status
   def date_birth
     object.date_birth.strftime('%d-%m-%Y') if object.date_birth.present?
   end
