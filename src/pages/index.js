@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Homepage from "./homepage/homepage.jsx";
+import Homepage from "../components/homepage/homepage.jsx";
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import "../styles/globals.css"

@@ -10,7 +10,7 @@ export default function FeatureCard(props) {
                 <span className="line-clamp-3 overflow-ellipsis">{props.text}</span>
             </div>
             
-            <a href="#"><Image src="/images/keyboard_arrow_left.svg" width={70} height={50} alt="next page" /></a>
+            <a href="@/components/homepage/features/feature_card#"><Image src="/images/keyboard_arrow_left.svg" width={70} height={50} alt="next page" /></a>
         </div>
     );
 }
