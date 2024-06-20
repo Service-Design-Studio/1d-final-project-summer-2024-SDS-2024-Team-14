@@ -5,7 +5,7 @@ import IdCard from "./id_card.jsx";
 import { useEffect, useState } from 'react';
 import axios from "axios";
 export default function Homepage(props) {
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {

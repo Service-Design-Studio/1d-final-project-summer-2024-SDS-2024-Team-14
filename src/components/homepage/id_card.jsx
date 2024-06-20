@@ -30,7 +30,7 @@ export default function IdCard(props) {
                                       idNo={"***-*****00" + props.data.id} country={"****"} dob={"** *** ****"}
                                       issuedDate={"** *** ****"} expiryDate={"** *** ****"} sex={"*"} />}
                 </div>
-                {props.data.verification_status == "UNHCR Refugee" ?
+                {props.data.verification_status == "Pending approval" ?
                     <ShowBtn isOpen={isOpen} onClick={expandCard} classStyle={"btn-darkblue"} hoverIcon={isOpen ? "/images/close_eye_blue.svg" : "/images/open_eye_blue.svg"} text={(isOpen ? "Hide" : "Show") + " UNHCR Card"} icon={isOpen ? "/images/close_eye.svg" : "/images/open_eye.svg"} /> :
                     <ShowBtn classStyle={"btn-disabled"} icon={"/images/close_eye_blue.svg"} hoverIcon={"/images/close_eye_blue.svg"} text={"Pending Approval"}/>
                 }
