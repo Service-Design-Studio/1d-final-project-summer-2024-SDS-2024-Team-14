@@ -5,7 +5,7 @@ import IdCard from "./id_card.jsx";
 import { useEffect, useState } from 'react';
 import axios from "axios";
 export default function Homepage(props) {
-    const [data, setData] = useState({});
+    const [data, setData] = useState();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
@@ -23,10 +23,10 @@ export default function Homepage(props) {
 
     return (
         <div className="flex flex-col  px-5 w-90 items-center">
-            {!props.loading && data != {} && <div><HomeHeader text={"Home"} />
+            {!props.loading && data && <div><HomeHeader text={"Home"} />
                 <IdCard data={data} loading={loading} />
                 <Features /></div>}
-            {props.loading && data != {} && <Loading text={ "Loading..."} />}
-            {!props.loading && props.data == {} && <Loading text={ "500: Internal Error\nUnable to fetch user data" }/>}
+            {props.loading && data && <Loading text={"Loading..."} />}
+            {!props.loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
         </div>);
 }
