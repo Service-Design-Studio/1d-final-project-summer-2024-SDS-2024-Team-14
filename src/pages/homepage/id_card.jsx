@@ -33,6 +33,7 @@ export default function IdCard(props) {
                 <span className="btn-text my-4">Scan For Documents</span>
                 <div className="mx-auto w-fit">
                     <Canvas
+                        //TODO - change to dynamic parameter based on axios call
                       text={'https://gebirah-aid-2r6b52gguq-as.a.run.app/users/1'}
                       options={{
                         errorCorrectionLevel: 'M',
