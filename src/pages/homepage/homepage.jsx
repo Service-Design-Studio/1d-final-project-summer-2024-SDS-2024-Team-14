@@ -1,6 +1,6 @@
 import Features from "./features.jsx";
 import HomeHeader from "./home_header.jsx"
-import Loading from "../loading.jsx"
+import Loading from "../../components/loading.jsx"
 import IdCard from "./id_card.jsx";
 import { useEffect, useState } from 'react';
 import axios from "axios";
