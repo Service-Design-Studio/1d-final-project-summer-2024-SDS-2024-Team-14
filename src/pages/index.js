@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import "../styles/globals.css"
 import axios from "axios";
-import Loading from './loading.jsx';
+import Loading from '../components/loading.jsx';
 
 export default function Home() {
 
