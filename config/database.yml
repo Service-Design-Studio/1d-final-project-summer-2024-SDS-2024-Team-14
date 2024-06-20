@@ -22,4 +22,7 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: gebirah-postgres
+  username: dbadmin
+  password: REDACTED
+  host: /cloudsql/gebirah-14:asia-southeast1:gebirah-postgres
