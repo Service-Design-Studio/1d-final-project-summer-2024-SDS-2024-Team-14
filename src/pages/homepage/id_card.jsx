@@ -1,10 +1,16 @@
 import ShowBtn from "./id_card/show_more_btn"
 import ProfilePic from "./id_card/profile_pic"
 import PersonalInfo from "./id_card/personal_info"
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react"
+import Image from "next/image"
+import axios from "axios";
+import { useQRCode } from 'next-qrcode';
+
+    
+ 
 
 export default function IdCard(props) {
+    const { Canvas } = useQRCode();
     const [isOpen, setIsOpen] = useState(false);
 
     let expandCard = () => {
@@ -25,7 +31,21 @@ export default function IdCard(props) {
             </div>
             <div className="min-w-full text-darkblue" style={isOpen ? { visibility: "visible", height: "fit-content" } : { visibility: "hidden", height: "0" }}>
                 <span className="btn-text my-4">Scan For Documents</span>
-                <Image className="mx-auto" id="qr" src="/images/placeholder_qr.png" width={200} height={200} alt="QR code" />
+                <div className="mx-auto w-fit">
+                    <Canvas
+                      text={'https://gebirah-aid-2r6b52gguq-as.a.run.app/users/1'}
+                      options={{
+                        errorCorrectionLevel: 'M',
+                        margin: 3,
+                        scale: 4,
+                        width: 200,
+                        color: {
+                          dark: '#000000',
+                          light: '#FFFFFF',
+                        },
+                      }}
+                    />
+                </div>
             </div>
         </div>)
 };
