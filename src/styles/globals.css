@@ -88,7 +88,7 @@ body {
     @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white ;
   }
   .btn-disabled {
-    @apply btn pointer-events-none bg-disabled fill-white text-darkblue;
+    @apply btn bg-disabled fill-white text-darkblue;
   }
   .icon {
     @apply px-2 my-auto max-w-12 max-h-12;
