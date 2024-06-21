@@ -3,7 +3,8 @@
     "jsx": "react",
     "paths": {
       "@/*": ["./src/*"],
-      "@/pages/id_card": ["./src/pages/id_card.jsx"]
+      "@/pages/info/*": ["./src/pages/info/*"],
+      "@/pages/id_card": ["./src/pages/id_card.jsx"],
     }
   }
 }
