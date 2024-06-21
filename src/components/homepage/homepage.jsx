@@ -21,7 +21,7 @@ export default function Homepage(props) {
             setLoading(false);
         }
         fetchData();
-    }, []);
+    }, data);
 
     return (
         <div className="flex flex-col  px-5 items-center">
