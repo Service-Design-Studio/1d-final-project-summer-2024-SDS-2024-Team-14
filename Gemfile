@@ -72,4 +72,6 @@ group :test do
   gem "simplecov", :require => false
 end
 
-gem "pg", "~> 1.5"
+group :production do
+  gem "pg", "~> 1.5"
+end
