@@ -17,16 +17,16 @@ export default function Info() {
         const fetchData = async () => {
             setLoading(true);
             try {
+                console.log("test:",router.query.id)
                 const { data: res } = await axios.get("https://gebirah-backend-2r6b52gguq-as.a.run.app/users/" + router.query.id);
                 setData(res);
-
             } catch (error) {
                 console.error(error.message);
             }
             setLoading(false);
         }
         fetchData();
-    }, []);
+    }, data);
     return (
         <div className="bg-white w-screen h-screen text-center">
             {console.log("get data:", data)}
@@ -40,8 +40,8 @@ export default function Info() {
                     </div>
                     <ExtendedInfo />
                 </div>}
-            {loading && typeof data && <Loading text={"Loading..."} />}
-            {!loading && typeof !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
+            {loading &&  data && <Loading text={"Loading..."} />}
+            {!loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
         </div>
     )
 }
