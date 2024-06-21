@@ -138,4 +138,7 @@ body {
   .bump {
     @apply shadow-sm shadow-default duration-500 border-darkblue border-4;
   }
+  .transbox{
+    @apply 
+  }
 }
