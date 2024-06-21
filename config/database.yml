@@ -15,5 +15,11 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  username: "dbadmin"
+  password: "REDACTED"
+  database: "gebirah-database"
+  host:   "/cloudsql/gebirah-14:asia-southeast1:gebirah-postgres"
