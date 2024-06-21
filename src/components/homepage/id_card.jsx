@@ -31,7 +31,7 @@ export default function IdCard(props) {
                                       issuedDate={"** *** ****"} expiryDate={"** *** ****"} sex={"*"} />}
                 </div>
                 {/* Need a pending and not pending for test case*/}
-                {props.data.verification_status == "Pending approval" ?
+                {props.data.verification_status == "Approved" ?
                     <ShowBtn isOpen={isOpen} onClick={expandCard} classStyle={"btn-darkblue"} hoverIcon={isOpen ? "/images/close_eye_blue.svg" : "/images/open_eye_blue.svg"} text={(isOpen ? "Hide" : "Show") + " UNHCR Card"} icon={isOpen ? "/images/close_eye.svg" : "/images/open_eye.svg"} /> :
                     <ShowBtn classStyle={"btn-disabled"} icon={"/images/close_eye_blue.svg"} hoverIcon={"/images/close_eye_blue.svg"} text={"Pending Approval"}/>
                 }
