@@ -38,5 +38,5 @@ Then("I should be redirected to the information page of the user",() =>{
 })
 
 Then("I should see more information on the user",() =>{
-
+  cy.get('.id-card').contains('Marriage Certificate')
 })

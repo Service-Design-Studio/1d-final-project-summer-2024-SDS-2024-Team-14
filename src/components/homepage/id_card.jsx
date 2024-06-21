@@ -30,6 +30,7 @@ export default function IdCard(props) {
                                       idNo={"***-*****00" + props.data.id} country={"****"} dob={"** *** ****"}
                                       issuedDate={"** *** ****"} expiryDate={"** *** ****"} sex={"*"} />}
                 </div>
+                {/* Need a pending and not pending for test case*/}
                 {props.data.verification_status == "Pending approval" ?
                     <ShowBtn isOpen={isOpen} onClick={expandCard} classStyle={"btn-darkblue"} hoverIcon={isOpen ? "/images/close_eye_blue.svg" : "/images/open_eye_blue.svg"} text={(isOpen ? "Hide" : "Show") + " UNHCR Card"} icon={isOpen ? "/images/close_eye.svg" : "/images/open_eye.svg"} /> :
                     <ShowBtn classStyle={"btn-disabled"} icon={"/images/close_eye_blue.svg"} hoverIcon={"/images/close_eye_blue.svg"} text={"Pending Approval"}/>
@@ -40,7 +41,7 @@ export default function IdCard(props) {
                 <div className="mx-auto w-fit">
                     <Canvas //TODO - change to dynamic parameter based on axios call
                         data-cy={"qrCode"}
-                      text={'https://gebirah-aid-2r6b52gguq-as.a.run.app/info/1'}
+                      text={'https://gebirah-aid-2r6b52gguq-as.a.run.app/info/' + props.data.id}
                       options={{
                         errorCorrectionLevel: 'M',
                         margin: 3,
