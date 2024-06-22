@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/globals.css"
-
+import Link from "next/link";
 
 export default function Info() {
     const router = useRouter();
@@ -30,6 +30,8 @@ export default function Info() {
     return (
         <div className="bg-white w-screen h-screen text-center">
             {console.log("get data:", data)}
+            <br />
+            <Link href={"/"}><span className="underline">back</span></Link> 
             {!loading && data && <div className="id-card">
                     <div className="block">
                         <div className="flex">

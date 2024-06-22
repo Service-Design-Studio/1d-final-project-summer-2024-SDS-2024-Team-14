@@ -1,12 +1,12 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
 import "../../styles/globals.css"
 import Link from "next/link"
-export default function FamilyTree() {
+export default function DocumentsManager() {
     const router = useRouter();
     return (<div className="bg-white w-screen h-screen">
-        Placeholder for family tree feature
+        Placeholder for documents manager feature
         <br />User id: {router.query.id}
-        <br />
+        <br/>
         <Link href={"/"}><span className="underline">back</span></Link>
     </div>)
 }
