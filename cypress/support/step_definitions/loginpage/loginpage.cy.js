@@ -1,5 +1,10 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import "../general_definitions.cy"
 import { loginPage } from "../../utils"
 
-Given; (/^I am on the $ /, () => {
-})
+
+When(), () => {
+}
+
+Then(), () => {
+}
