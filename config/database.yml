@@ -19,7 +19,7 @@ production:
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: "dbadmin"
-  password: "REDACTED"
-  database: "gebirah-database"
-  host:   "/cloudsql/gebirah-14:asia-southeast1:gebirah-postgres"
+  username: "postgres.pucohrmkpcwjcjrmnogy"
+  password: "gebirah_tonytan"
+  database: "postgres"
+  host:   "aws-0-ap-southeast-1.pooler.supabase.com"
