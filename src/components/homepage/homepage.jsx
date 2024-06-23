@@ -25,8 +25,8 @@ export default function Homepage(props) {
         <div className="flex flex-col  px-5 w-90 items-center">
             {!props.loading && data != {} && <div><HomeHeader text={"Home"} />
                 <IdCard data={data} loading={loading} />
-                <Features /></div>}
-            {props.loading && data != {} && <Loading text={ "Loading..."} />}
-            {!props.loading && props.data == {} && <Loading text={ "500: Internal Error\nUnable to fetch user data" }/>}
+                <Features/></div>}
+            {props.loading && data && <Loading text={"Loading..."} />}
+            {!props.loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
         </div>);
 }

@@ -1,6 +1,6 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
-import "../general_definitions.cy"
-import {homePage} from "../../utils"
+import "../general_definitions.cy.js";
+import { homePage } from "../../utils";
 
 // Scenario: Clicking UNHCR button
 // Given("I am on the Home page", () => {
