@@ -17,7 +17,7 @@ export default function Info() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                console.log("test:", router.query.id)
+                console.log("test:",router.query.id)
                 const { data: res } = await axios.get("https://gebirah-backend-2r6b52gguq-as.a.run.app/users/" + router.query.id);
                 setData(res);
             } catch (error) {

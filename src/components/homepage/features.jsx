@@ -1,7 +1,7 @@
 import DocumentsTag from "./features/documents_tag";
 import FeatureCard from "./features/feature_card";
-import HomeHeader from "./home_header";
-export default function Features() {
+import Link from "next/link"
+export default function Features(props) {
     return (
         <div className="flex flex-col w-full">
             <span className="card mx-auto my-0 pb-0 shadow-none text-3xl font-medium text-darkblue">Services</span>

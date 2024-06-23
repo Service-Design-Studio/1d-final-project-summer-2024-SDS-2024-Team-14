@@ -81,8 +81,14 @@ body {
 }
 
 @layer components {
+  .btn {
+    @apply flex justify-center  px-4 py-3 w-full btn-border shadow-lg;
+  }
   .btn-darkblue {
-    @apply flex justify-center bg-darkblue text-white transition-all-500 hover:hover-color fill-white  px-4 py-3 w-full btn-border shadow-lg;
+    @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white ;
+  }
+  .btn-disabled {
+    @apply btn bg-disabled fill-white text-darkblue;
   }
   .icon {
     @apply px-2 my-auto max-w-12 max-h-12;
@@ -137,5 +143,8 @@ body {
   }
   .bump {
     @apply shadow-sm shadow-default duration-500 border-darkblue border-4;
+  }
+  .transbox{
+    @apply 
   }
 }

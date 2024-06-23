@@ -1,5 +1,9 @@
-export default function Loading() {
-    return (<div className="text-xl text-center text-darkblue justify-center m-auto">
-        loading...
-    </div>)
+export default function Loading(props) {
+    return (
+        <div className="flex w-full h-full items-center justify-center">
+            <span className="text-xl text-darkblue">
+                {props.text}
+            </span>
+        </div>
+    )
 }
