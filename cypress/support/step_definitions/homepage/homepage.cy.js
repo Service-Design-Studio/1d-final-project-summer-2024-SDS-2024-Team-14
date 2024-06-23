@@ -1,10 +1,11 @@
-import { Given, When, Then} from '@badeball/cypress-cucumber-preprocessor';
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
+import "../general_definitions.cy"
 import {homePage} from "../../utils"
 
 // Scenario: Clicking UNHCR button
-Given("I am on the Home page", () => {
-  cy.visit('/')
-})
+// Given("I am on the Home page", () => {
+//   cy.visit('/')
+// })
 
 When("I click on the Show UNHCR Card button", () => {
   homePage.clickCardButton()
