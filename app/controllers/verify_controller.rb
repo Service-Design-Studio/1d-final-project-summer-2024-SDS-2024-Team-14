@@ -5,7 +5,6 @@ class VerifyController < ApplicationController
         if @user.save
             render json: {message: "Approval for #{@user.name} successful" },
             status: :ok
-            puts 'test'
         else
             render json: @user.errors, status: :unprocessable_entity
         end
