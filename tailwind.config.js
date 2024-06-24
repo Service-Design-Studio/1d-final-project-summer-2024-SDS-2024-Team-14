@@ -43,7 +43,7 @@ module.exports = {
       'darkblue': '#0072BC',
     },
     colors: {
-      'white': 'white',
+      'white': '#FFFFFF',
       'disabled': '#AFAFAF',
       'default': 'black',
       'paleblue': '#009BFF',
@@ -51,6 +51,7 @@ module.exports = {
       'deepblue': '#005994',
       'lightblue': '#D5EEFF',
       'lightpink': '#FFEDFA',
+      'lightorange': '#FFFF00',
     },
     fontSize: {
       'xs': '0.1rem',
