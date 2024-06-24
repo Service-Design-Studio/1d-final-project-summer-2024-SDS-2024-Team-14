@@ -13,7 +13,7 @@ module.exports = {
       transitionProperty: {
         'height': 'height'
       },
-      screens: { 
+      screens: {
         'xxs': '0px',
         'xs': '400px',
         'xsm': '450px',
@@ -22,7 +22,20 @@ module.exports = {
         'lg': '1024px',
         'xl': '1280px',
         '2xl': '1536px',
-      }
+      }, keyframes: {
+        slideIn: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        slideOut: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+      },
+      animation: {
+        slideIn: 'slideIn 1s ease-in-out forwards',
+        slideOut: 'slideOut 1s ease-in-out forwards',
+      },
     },
     textColor: {
       'default': 'black',
