@@ -41,6 +41,9 @@ module.exports = {
       'default': 'black',
       'white': 'white',
       'darkblue': '#0072BC',
+      'blue-600' : '#1E88E5',
+      'purple-600' : '#8E24AA',
+      'pink-600' : '#D81B60'
     },
     colors: {
       'white': '#FFFFFF',
@@ -51,7 +54,10 @@ module.exports = {
       'deepblue': '#005994',
       'lightblue': '#D5EEFF',
       'lightpink': '#FFEDFA',
+      'purple-100' : '#E1BEE7',
       'lightorange': '#FFFF00',
+      'pink-100' : '#F8BBD0',
+      'blue-100' : '#BBDEFB',
     },
     fontSize: {
       'xs': '0.1rem',
