@@ -43,7 +43,8 @@ module.exports = {
       'darkblue': '#0072BC',
       'blue-600' : '#1E88E5',
       'purple-600' : '#8E24AA',
-      'pink-600' : '#D81B60'
+      'pink-600': '#D81B60',
+      'gray': '#909090',
     },
     colors: {
       'white': '#FFFFFF',
@@ -57,7 +58,9 @@ module.exports = {
       'purple-100' : '#E1BEE7',
       'lightorange': '#FFFF00',
       'pink-100' : '#F8BBD0',
-      'blue-100' : '#BBDEFB',
+      'gray': '#C0C0C0',
+      'blue-100': '#BBDEFB',
+      
     },
     fontSize: {
       'xs': '0.1rem',

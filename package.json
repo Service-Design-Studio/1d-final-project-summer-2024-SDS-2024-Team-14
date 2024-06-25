@@ -10,6 +10,11 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@material/textfield": "^14.0.0",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/material": "^5.15.20",
     "@zxing/browser": "^0.1.5",
     "@zxing/library": "^0.21.1",
     "axios": "^1.7.2",
