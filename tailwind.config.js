@@ -13,7 +13,7 @@ module.exports = {
       transitionProperty: {
         'height': 'height'
       },
-      screens: { 
+      screens: {
         'xxs': '0px',
         'xs': '400px',
         'xsm': '450px',
@@ -22,15 +22,32 @@ module.exports = {
         'lg': '1024px',
         'xl': '1280px',
         '2xl': '1536px',
-      }
+      }, keyframes: {
+        slideIn: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        slideOut: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+      },
+      animation: {
+        slideIn: 'slideIn 1s ease-in-out forwards',
+        slideOut: 'slideOut 1s ease-in-out forwards',
+      },
     },
     textColor: {
       'default': 'black',
       'white': 'white',
       'darkblue': '#0072BC',
+      'blue-600' : '#1E88E5',
+      'purple-600' : '#8E24AA',
+      'pink-600': '#D81B60',
+      'gray': '#909090',
     },
     colors: {
-      'white': 'white',
+      'white': '#FFFFFF',
       'disabled': '#AFAFAF',
       'default': 'black',
       'paleblue': '#009BFF',
@@ -38,6 +55,12 @@ module.exports = {
       'deepblue': '#005994',
       'lightblue': '#D5EEFF',
       'lightpink': '#FFEDFA',
+      'purple-100' : '#E1BEE7',
+      'lightorange': '#FFFF00',
+      'pink-100' : '#F8BBD0',
+      'gray': '#C0C0C0',
+      'blue-100': '#BBDEFB',
+      
     },
     fontSize: {
       'xs': '0.1rem',

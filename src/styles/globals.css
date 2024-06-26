@@ -85,7 +85,7 @@ body {
     @apply flex justify-center  px-4 py-3 w-full btn-border shadow-lg;
   }
   .btn-darkblue {
-    @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white ;
+    @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white;
   }
   .btn-disabled {
     @apply btn bg-disabled fill-white text-darkblue;
@@ -144,7 +144,7 @@ body {
   .bump {
     @apply shadow-sm shadow-default duration-500 border-darkblue border-4;
   }
-  .transbox{
-    @apply 
+  .transbox {
+    @apply;
   }
 }

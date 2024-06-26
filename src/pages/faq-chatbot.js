@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import "../../styles/globals.css"
+import "../styles/globals.css"
 import Link from "next/link"
 export default function Faq() {
     const router = useRouter();

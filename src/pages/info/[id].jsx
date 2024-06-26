@@ -31,18 +31,27 @@ export default function Info() {
         <div className="bg-white w-screen h-screen text-center">
             {console.log("get data:", data)}
             <br />
-            <Link href={"/"}><span className="underline">back</span></Link> 
+            <Link href={"/"}><span className="underline">back</span></Link>
             {!loading && data && <div className="id-card">
-                    <div className="block">
-                        <div className="flex">
-                            <ProfilePic />
-                            <PersonalInfo />
-                            <h1></h1>
-                        </div>
+                <div className="block">
+                    <div className="flex">
+                        <ProfilePic />
+                        <PersonalInfo
+                            userName={data.name}
+                            sex={data.gender}
+                            status={data.verification_status}
+                            issuedDate={"no column"}
+                            expiryDate={"no column"}
+                            idNo={ `000-000-00000${data.id}`}
+                            dob={data.date_birth}
+                            country={data.country}
+                        />
+                        <h1></h1>
                     </div>
-                    <ExtendedInfo />
-                </div>}
-            {loading &&  data && <Loading text={"Loading..."} />}
+                </div>
+                <ExtendedInfo />
+            </div>}
+            {loading && data && <Loading text={"Loading..."} />}
             {!loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
         </div>
     )
