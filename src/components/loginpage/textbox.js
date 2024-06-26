@@ -4,8 +4,11 @@ export default function Textbox(props) {
   return (
     <div className='mt-5 w-full'>
       <TextField
+        error={ props.error}
+        onChange={() => props.setFormState(prevState => ({ ...prevState, [props.id]: document.getElementById(`${props.id}`).value }))}
+        id={props.id}
         required={ props.required || false}
-        sx={{width: '90%'}}
+        sx={{ width: '90%'}}
         InputProps={{
           startAdornment: (<InputAdornment position="start">
             { props.startIcon}
