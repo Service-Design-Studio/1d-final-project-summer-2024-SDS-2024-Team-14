@@ -7,7 +7,7 @@ export default function Textbox(props) {
         error={ props.error}
         onChange={() => props.setFormState(prevState => ({ ...prevState, [props.id]: document.getElementById(`${props.id}`).value }))}
         id={props.id}
-        required={ props.required || false}
+        required={ props.required || true}
         sx={{ width: '90%'}}
         InputProps={{
           startAdornment: (<InputAdornment position="start">
