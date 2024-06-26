@@ -16,23 +16,6 @@ import axios from "axios";
 import { redirect } from 'next/navigation'
 import DropdownItem from "../components/loginpage/dropdown_item";
 
-// export async function getServerSideProps(context) {
-//     const session = await getSession(context);
-//     if (session) {
-//         return {
-//             redirect: {
-//                 destination: '/',
-//                 permanent: false,
-//             },
-//         };
-//     }
-//     return {
-//         props: {
-//             session,
-//         },
-//     };
-// }
-
 export default function Login({ session }) {
     const router = useRouter();
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -51,42 +34,52 @@ export default function Login({ session }) {
     const [confirmError, setConfirmError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
-    const [errorState, setErrorState] = useState(true);
+    // const [errorState, setErrorState] = useState(true);
 
-    function checkErrors() {
-        return new Promise((resolve, reject) => {
-            const password = document.getElementById("password").value;
-            setEmailError((formState.email ? false : true) || !formState.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/));
-            setPasswordError(formState.password ? false : true);
-            if (!onLoginTab) {
-                setConfirmError(!(confirmPassword && confirmPassword === password));
-                setFirstNameError(!document.getElementById("firstName").value);
-                setLastNameError(!document.getElementById("lastName").value);
-                setErrorState(emailError || passwordError || confirmError || firstNameError || lastNameError);
-            } else {
-                setErrorState(emailError || passwordError);
-            }
-            return errorState;
-        })
-    }
-    async function handleSubmit(e) {
+    // function checkErrors() {
+    //     return new Promise((resolve, reject) => {
+    //         const password = document.getElementById("password").value;
+    //         setEmailError((formState.email ? false : true) || !formState.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/));
+    //         setPasswordError(formState.password ? false : true);
+    //         if (!onLoginTab) {
+    //             setConfirmError(!(confirmPassword && confirmPassword === password));
+    //             setFirstNameError(!document.getElementById("firstName").value);
+    //             setLastNameError(!document.getElementById("lastName").value);
+    //             setErrorState(emailError || passwordError || confirmError || firstNameError || lastNameError);
+    //         } else {
+    //             setErrorState(emailError || passwordError);
+    //         }
+    //         return errorState;
+    //     })
+    // }
+    const url = "https://gebirah-backend-2r6b52gguq-as.a.run.app/users/";
+    const [data, setData] = useState(null);
+    function handleSubmit(e) {
         e.preventDefault();
-        await checkErrors().then((state) => {
-            if (onLoginTab && !state) {
-                router.push('/',);
+        if (!onLoginTab) {
+            SignUpHandler(formState)
+        }
+        router.push('/');
+        console.log("test: ", data)
+    }
+
+    function SignUpHandler(req) {
+        const  email  = req.email;
+        const { users: res } = axios.get(url + "?email=Ao.com").then(
+            (allUsers) => {
+                console.log(allUsers);
             }
-        })
-        return;
+        );
     }
     return (
-        <Box onSubmit={(e) => handleSubmit(e)} component="form" autoComplete="on" noValidate className={`flex flex-col w-screen min-h-screen items-center bg-darkblue bg-no-repeat bg-center bg-cover px-3 pb-10`}>
+        <Box onSubmit={(e) => handleSubmit(e)} component="form" autoComplete="on" noValidate={false} className={`flex flex-col w-screen min-h-screen items-center bg-[url("/images/Zaatari_refugee_camp,_Jordan_(3).jpg")] bg-no-repeat bg-center bg-cover px-3 pb-10`}>
             <div className="flex flex-row items-center pt-6 my-0">
                 <Image src="/images/enable_id_logo.svg" width={40} height={0} className="md:w-20" alt="EnableID Logo" />
                 <span className="text-white text-4xl md:text-5xl px-3">EnableID</span>
             </div>
-            <div className='flex flex-col mt-6 w-full md:w-1/2 transition-all-50'>
+            <div className='flex flex-col mt-6 w-full md:w-1/2 transition-all-50 bg-opacity-70 backdrop-blur-sm'>
                 <LoginCarousel onLoginTab={onLoginTab} setOnLoginTab={setOnLoginTab} />
-                <div className='flex flex-col text-center bg-white rounded-b-xl pt-5'>
+                <div className='flex flex-col text-center bg-gradient-to-b from-white/100 to-white/65 rounded-b-xl pt-5'>
                     {onLoginTab ? null : <div className="">
                         <Textbox
                             error={firstNameError}
@@ -134,8 +127,8 @@ export default function Login({ session }) {
                         label={"Confirm Password"}
                         placeholder={"Confirm Password"}
                     />}
-                    <Button type="submit" id="submitBtn" variant="contained" className="mx-5 py-3 my-5 text-xl">{onLoginTab ? "Login" : "Create Account"}</Button>
-                    {onLoginTab ? <a href="#" className="underline text-darkblue">Forgot Password</a> : null}
+                    <Button type="submit" id="submitBtn" variant="contained" className="mx-5 pt-3 mt-5 text-xl">{onLoginTab ? "Login" : "Create Account"}</Button>
+                    {onLoginTab ? <a href="#" className="underline mt-5 text-darkblue">Forgot Password</a> : null}
                     <FormControl className="w-fit h-fit my-5 mx-auto text-default text-normal"><InputLabel id="language">Language</InputLabel>
                         <Select labelId="language" label="Language" defaultValue={"English"} className="flex w-40 h-10 flex-row">
                             <MenuItem value={"English"}><DropdownItem span={"English"} src={"/images/english.svg"} /></MenuItem>

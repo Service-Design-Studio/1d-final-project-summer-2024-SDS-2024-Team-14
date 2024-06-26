@@ -9,7 +9,7 @@ export default function Homepage(props) {
     const router = useRouter();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const id = 1;
+    const id = 31;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -22,7 +22,7 @@ export default function Homepage(props) {
             setLoading(false);
         }
         fetchData();
-    }, data);
+    }, [data]);
 
     return (
         <div className="flex flex-col  px-5 items-center">

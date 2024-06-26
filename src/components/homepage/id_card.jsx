@@ -18,7 +18,7 @@ export default function IdCard(props) {
 
     return (
         <div className="id-card">
-            {console.log(props.loading, "\n", props.data)}
+            {/* {console.log(props.loading, "\n", props.data)} */}
             <div className="block">
                 <div className="flex">
                     <ProfilePic />
