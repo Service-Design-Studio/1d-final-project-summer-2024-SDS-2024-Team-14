@@ -15,6 +15,9 @@ import { getSession, SessionProvider, signIn } from "next-auth/react";
 import axios from "axios";
 import { redirect } from 'next/navigation'
 import DropdownItem from "../components/loginpage/dropdown_item";
+import {Store, ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+
 
 export default function Login({ session }) {
     const router = useRouter();
@@ -34,6 +37,11 @@ export default function Login({ session }) {
     const [confirmError, setConfirmError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
+    const axiosInstance = axios.create({
+        // baseURL: 'https://gebirah-backend-2r6b52gguq-as.a.run.app', // Replace with your backend domain
+        baseURL: 'http://127.0.0.1:3001/',
+        withCredentials: true,
+    });
     // const [errorState, setErrorState] = useState(true);
 
     // function checkErrors() {
@@ -52,26 +60,59 @@ export default function Login({ session }) {
     //         return errorState;
     //     })
     // }
-    const url = "https://gebirah-backend-2r6b52gguq-as.a.run.app/users/";
     const [data, setData] = useState(null);
+
     function handleSubmit(e) {
         e.preventDefault();
         if (!onLoginTab) {
             SignUpHandler(formState)
+        } else {
+            LogInHandler(formState)
         }
-        router.push('/');
-        console.log("test: ", data)
     }
 
     function SignUpHandler(req) {
-        const  email  = req.email;
-        const { users: res } = axios.get(url + "?email=Ao.com").then(
-            (allUsers) => {
-                console.log(allUsers);
+        const email = req.email;
+        const {users: res} = axiosInstance.post('/users', {
+            email,
+            password,
+        }).then(
+            () => {
+                console.log();
             }
         );
     }
-    return (
+
+    function LogInHandler(req) {
+        const email = req.email
+        const password = req.password
+        axiosInstance.post('/sessions', {
+            email,
+            password,
+        }).then((resp) => {
+            if (resp.status === 200) {
+                router.push('/');
+            }
+        }).catch((error) => {
+            console.log("catch")
+                Store.addNotification({
+                        title: "Error",
+                        message: error.response.data.message,
+                        type: "danger",
+                        insert: "top",
+                        container: "bottom-right",
+                        animationIn: ["animate__animated", "animate__fadeIn"],
+                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        dismiss: {
+                            duration: 5000,
+                            onScreen: true
+                        }
+                    });
+            }
+        )
+    }
+    return (<>
+        <ReactNotifications/>
         <Box onSubmit={(e) => handleSubmit(e)} component="form" autoComplete="on" noValidate={false} className={`flex flex-col w-screen min-h-screen items-center bg-[url("/images/Zaatari_refugee_camp,_Jordan_(3).jpg")] bg-no-repeat bg-center bg-cover px-3 pb-10`}>
             <div className="flex flex-row items-center pt-6 my-0">
                 <Image src="/images/enable_id_logo.svg" width={40} height={0} className="md:w-20" alt="EnableID Logo" />
@@ -140,5 +181,6 @@ export default function Login({ session }) {
                 </div>
             </div>
         </Box>
+        </>
     );
 }
