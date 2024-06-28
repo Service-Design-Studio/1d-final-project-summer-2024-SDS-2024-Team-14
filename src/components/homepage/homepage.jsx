@@ -5,30 +5,35 @@ import IdCard from "./id_card.jsx";
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 export default function Homepage(props) {
     const router = useRouter();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const id = 31;
+    let userID;
+    // Change to dynamic
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
+            userID = localStorage.getItem("userID")
             try {
-                const { data: res } = await axios.get(`https://gebirah-backend-2r6b52gguq-as.a.run.app/users/${id}`);
-                setData(res);
+                await axiosInstance.get(`/users/${userID}`).then((resp) => {
+                    setData(resp.data)
+                    }
+                );
             } catch (error) {
                 console.error(error.message);
             }
             setLoading(false);
         }
         fetchData();
-    }, [data]);
+    }, []);
 
     return (
         <div className="flex flex-col  px-5 items-center">
             {!props.loading && data && <div><HomeHeader text={"Home"} />
                 <IdCard data={data} loading={loading} />
-                <Features id={id}/></div>}
+                <Features id={userID}/></div>}
             {props.loading && data && <Loading text={"Loading..."} />}
             {!props.loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
         </div>);

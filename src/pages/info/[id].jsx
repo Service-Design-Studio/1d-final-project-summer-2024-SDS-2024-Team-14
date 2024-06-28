@@ -1,13 +1,14 @@
 import IdCard from "../../components/homepage/id_card";
 import PersonalInfo from "../../components/homepage/id_card/personal_info";
 import ProfilePic from "../../components/homepage/id_card/profile_pic";
-import Loading from "@/components/loading"
-import ExtendedInfo from "@/components/extended_info"
+import Loading from "../../components/loading"
+import ExtendedInfo from "../../components/extended_info"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/globals.css"
 import Link from "next/link";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function Info() {
     const router = useRouter();
@@ -18,7 +19,7 @@ export default function Info() {
             setLoading(true);
             try {
                 console.log("test:",router.query.id)
-                const { data: res } = await axios.get("https://gebirah-backend-2r6b52gguq-as.a.run.app/users/" + router.query.id);
+                const { data: res } = await axiosInstance.get("/users/" + router.query.id);
                 setData(res);
             } catch (error) {
                 console.error(error.message);

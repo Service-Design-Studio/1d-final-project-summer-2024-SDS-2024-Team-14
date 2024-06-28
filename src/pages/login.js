@@ -8,6 +8,8 @@ import DropdownItem from "../components/loginpage/dropdown_item";
 import axios from "axios";
 import { Store, ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
+import axiosInstance from "../utils/axiosInstance";
+
 import { getSession, SessionProvider, signIn } from "next-auth/react";
 import { redirect } from 'next/navigation'
 import dayjs from "dayjs";
@@ -31,12 +33,12 @@ export default function Login({ session }) {
         arrivalDate: dayjs(),
         gender: null,
     });
-    const axiosInstance = axios.create({
-        // baseURL: 'https://gebirah-backend-2r6b52gguq-as.a.run.app', // Replace with your backend domain
-        baseURL: 'http://127.0.0.1:3001/',
-        withCredentials: true,
-    });
-
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [confirmError, setConfirmError] = useState(false);
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
+    // const [errorState, setErrorState] = useState(true);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -49,12 +51,47 @@ export default function Login({ session }) {
 
     function SignUpHandler(req) {
         const email = req.email;
-        const { users: res } = axiosInstance.post('/users', {
+        const password = req.password;
+        const password_confirmation = req.confirmPassword
+        const name = req.firstName + req.lastName
+        const country = req.originCountry
+        const religion = req.religion
+        const ethnicity = req.ethnicity
+        const gender = req.gender
+        const date_birth = req.birthDate
+        const date_arrival = req.arrivalDate
+        axiosInstance.post('/users', {
             email,
             password,
+            password_confirmation,
+            name,
+            country,
+            religion,
+            ethnicity,
+            gender,
+            date_birth,
+            date_arrival
         }).then(
-            () => {
-                console.log();
+            (resp) => {
+                console.log(resp)
+                if (resp.status === 200 || resp.status === 201) {
+                localStorage.setItem('userID', resp.data.user_id)
+                router.push('/');
+            }
+        }).catch((error) => {
+            Store.addNotification({
+                title: "Error",
+                message: error.response.data.message,
+                type: "danger",
+                insert: "top",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
             }
         );
     }
@@ -62,15 +99,15 @@ export default function Login({ session }) {
     function LogInHandler(req) {
         const email = req.email
         const password = req.password
-        axiosInstance.post('/sessions', {
+        axiosInstance.post('/login', {
             email,
             password,
         }).then((resp) => {
-            if (resp.status === 200) {
+            if (resp.status === 200 || resp.status === 201) {
+                localStorage.setItem('userID', resp.data.user_id)
                 router.push('/');
             }
         }).catch((error) => {
-            console.log("catch")
             Store.addNotification({
                 title: "Error",
                 message: error.response.data.message,
