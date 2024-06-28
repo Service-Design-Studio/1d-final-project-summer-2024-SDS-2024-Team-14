@@ -1,4 +1,4 @@
-import Field from "../../components/homepage/id_card/info_field";
+import Field from "../components/homepage/id_card/info_field";
 
 export default function ExtendedInfo() {
     return (

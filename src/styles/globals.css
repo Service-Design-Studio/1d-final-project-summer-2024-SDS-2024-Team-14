@@ -85,10 +85,10 @@ body {
     @apply flex justify-center  px-4 py-3 w-full btn-border shadow-lg;
   }
   .btn-darkblue {
-    @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white ;
+    @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white;
   }
   .btn-disabled {
-    @apply btn pointer-events-none bg-disabled fill-white text-darkblue;
+    @apply btn bg-disabled fill-white text-darkblue;
   }
   .icon {
     @apply px-2 my-auto max-w-12 max-h-12;
@@ -108,6 +108,17 @@ body {
   .grid-2-cols-4-rows {
     @apply grid grid-cols-2 grid-rows-4 gap-y-2 ml-10 my-auto py-2;
   }
+  .embla {
+  @apply overflow-hidden;
+}
+.embla__container {
+  @apply flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
 }
 
 @layer utilities {
@@ -143,5 +154,8 @@ body {
   }
   .bump {
     @apply shadow-sm shadow-default duration-500 border-darkblue border-4;
+  }
+  .transbox {
+    @apply;
   }
 }
