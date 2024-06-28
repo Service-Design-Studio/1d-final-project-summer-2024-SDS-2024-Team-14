@@ -10,6 +10,7 @@ import { Store, ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 import { getSession, SessionProvider, signIn } from "next-auth/react";
 import { redirect } from 'next/navigation'
+import dayjs from "dayjs";
 import LoginForm from "../components/loginpage/login_form";
 import SignUpForm from "../components/loginpage/signup_form";
 
@@ -23,6 +24,12 @@ export default function Login({ session }) {
         rememberPassword: true,
         firstName: null,
         lastName: null,
+        ethnicity: null,
+        religion: null,
+        originCountry: null,
+        birthDate: dayjs(),
+        arrivalDate: dayjs(),
+        gender: null,
     });
     const axiosInstance = axios.create({
         // baseURL: 'https://gebirah-backend-2r6b52gguq-as.a.run.app', // Replace with your backend domain

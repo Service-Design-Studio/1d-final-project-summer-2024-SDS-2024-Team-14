@@ -1,5 +1,7 @@
 import { TextField } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
+
+
 export default function Textbox(props) {
   return (
     <div className='mt-5 w-full'>
@@ -14,7 +16,7 @@ export default function Textbox(props) {
             { props.startIcon}
           </InputAdornment>
           ),
-          endAdornment: (<InputAdornment position='end'>{ props.endIcon}</InputAdornment>),
+          endAdornment: (<InputAdornment position='end'>{props.endIcon}</InputAdornment>),
         }}
         type={ props.type || "text"}
         label={props.label}
