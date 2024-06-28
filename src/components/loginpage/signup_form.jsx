@@ -1,7 +1,7 @@
 import Textbox from "./textbox";
 import EmailIcon from '@mui/icons-material/Email'
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import VisibilityIcon from '@mui/icons-material/visibility';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Button } from '@mui/material'
