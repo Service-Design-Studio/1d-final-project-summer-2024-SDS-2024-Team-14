@@ -38,8 +38,7 @@ export default function Login({ session }) {
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
     const axiosInstance = axios.create({
-        // baseURL: 'https://gebirah-backend-2r6b52gguq-as.a.run.app', // Replace with your backend domain
-        baseURL: 'http://127.0.0.1:3001/',
+        baseURL: process.env.NEXT_PUBLIC_URL,
         withCredentials: true,
     });
     // const [errorState, setErrorState] = useState(true);

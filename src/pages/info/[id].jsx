@@ -13,12 +13,16 @@ export default function Info() {
     const router = useRouter();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosInstance = axios.create({
+        baseURL: process.env.NEXT_PUBLIC_URL,
+        withCredentials: true,
+    });
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
                 console.log("test:",router.query.id)
-                const { data: res } = await axios.get("https://gebirah-backend-2r6b52gguq-as.a.run.app/users/" + router.query.id);
+                const { data: res } = await axiosInstance.get("/users/" + router.query.id);
                 setData(res);
             } catch (error) {
                 console.error(error.message);

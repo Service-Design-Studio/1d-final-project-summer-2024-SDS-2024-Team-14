@@ -6,15 +6,20 @@ import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from "axios";
 export default function Homepage(props) {
+    const axiosInstance = axios.create({
+        baseURL: process.env.NEXT_PUBLIC_URL,
+        withCredentials: true,
+    });
     const router = useRouter();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    // Change to dynamic
     const id = 31;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const { data: res } = await axios.get(`https://gebirah-backend-2r6b52gguq-as.a.run.app/users/${id}`);
+                const { data: res } = await axiosInstance.get(`/users/${id}`);
                 setData(res);
             } catch (error) {
                 console.error(error.message);
