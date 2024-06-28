@@ -108,6 +108,17 @@ body {
   .grid-2-cols-4-rows {
     @apply grid grid-cols-2 grid-rows-4 gap-y-2 ml-10 my-auto py-2;
   }
+  .embla {
+  @apply overflow-hidden;
+}
+.embla__container {
+  @apply flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
 }
 
 @layer utilities {
