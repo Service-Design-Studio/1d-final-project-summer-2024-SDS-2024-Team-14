@@ -14,8 +14,7 @@ class UsersController < ApplicationController
     def create
         @user = User.create(user_params)
         if @user.save
-            session[:user_id] = @user.id
-            render json: @user, status: :created
+            render json: {message: "Signup for user #{@user.name} successful", user_id: @user.id}, status: :created
         else
             render json: @user.errors, serializer: user_serializer, status: :unprocessable_entity
         end

@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :verify
-  resources :sessions
+  post 'login', to: 'login#create'
 end
