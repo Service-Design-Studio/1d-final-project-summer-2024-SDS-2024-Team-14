@@ -37,7 +37,6 @@ export default function SignUpForm({ formState, setFormState }) {
     }, [emblaApi])
     return (
         <div id="signUpForm" onKeyDownCapture={(e) => { if (e.which == 9) e.preventDefault() }}>
-            <ReactNotifications />
             <div className="embla__controls embla__buttons">
                 <Button className="embla__button embla__button--prev" onClick={() => {
                     onPrevButtonClick();
@@ -64,7 +63,7 @@ export default function SignUpForm({ formState, setFormState }) {
                                     message: "Please fill form to continue.",
                                     type: "danger",
                                     insert: "top",
-                                    container: "top-center",
+                                    container: "bottom-right",
                                     animationIn: ["animate__animated", "animate__fadeIn"],
                                     animationOut: ["animate__animated", "animate__fadeOut"],
                                     dismiss: {

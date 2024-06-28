@@ -50,14 +50,48 @@ export default function Login({ session }) {
     }
 
     function SignUpHandler(req) {
-        //TODO - change to all the required fields
         const email = req.email;
-        const { users: res } = axiosInstance.post('/users', {
+        const password = req.password;
+        const password_confirmation = req.confirmPassword
+        const name = req.firstName + req.lastName
+        const country = req.originCountry
+        const religion = req.religion
+        const ethnicity = req.ethnicity
+        const gender = req.gender
+        const date_birth = req.birthDate
+        const date_arrival = req.arrivalDate
+        axiosInstance.post('/users', {
             email,
             password,
+            password_confirmation,
+            name,
+            country,
+            religion,
+            ethnicity,
+            gender,
+            date_birth,
+            date_arrival
         }).then(
-            () => {
-                console.log();
+            (resp) => {
+                console.log(resp)
+                if (resp.status === 200 || resp.status === 201) {
+                localStorage.setItem('userID', resp.data.user_id)
+                router.push('/');
+            }
+        }).catch((error) => {
+            Store.addNotification({
+                title: "Error",
+                message: error.response.data.message,
+                type: "danger",
+                insert: "top",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
             }
         );
     }
@@ -69,12 +103,11 @@ export default function Login({ session }) {
             email,
             password,
         }).then((resp) => {
-            if (resp.status === 200) {
+            if (resp.status === 200 || resp.status === 201) {
                 localStorage.setItem('userID', resp.data.user_id)
                 router.push('/');
             }
         }).catch((error) => {
-            console.log("catch")
             Store.addNotification({
                 title: "Error",
                 message: error.response.data.message,
