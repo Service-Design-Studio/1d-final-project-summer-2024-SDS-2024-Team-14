@@ -17,6 +17,7 @@ import { redirect } from 'next/navigation'
 import DropdownItem from "../components/loginpage/dropdown_item";
 import {Store, ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
+import axiosInstance from "../utils/axiosInstance";
 
 
 export default function Login({ session }) {
@@ -37,10 +38,6 @@ export default function Login({ session }) {
     const [confirmError, setConfirmError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
-    const axiosInstance = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_URL,
-        withCredentials: true,
-    });
     // const [errorState, setErrorState] = useState(true);
 
     // function checkErrors() {
@@ -71,6 +68,7 @@ export default function Login({ session }) {
     }
 
     function SignUpHandler(req) {
+        //TODO - change to all the required fields
         const email = req.email;
         const {users: res} = axiosInstance.post('/users', {
             email,
@@ -85,11 +83,12 @@ export default function Login({ session }) {
     function LogInHandler(req) {
         const email = req.email
         const password = req.password
-        axiosInstance.post('/sessions', {
+        axiosInstance.post('/login', {
             email,
             password,
         }).then((resp) => {
             if (resp.status === 200) {
+                localStorage.setItem('userID', resp.data.user_id)
                 router.push('/');
             }
         }).catch((error) => {

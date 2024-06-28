@@ -1,22 +1,19 @@
 import IdCard from "../../components/homepage/id_card";
 import PersonalInfo from "../../components/homepage/id_card/personal_info";
 import ProfilePic from "../../components/homepage/id_card/profile_pic";
-import Loading from "@/components/loading"
-import ExtendedInfo from "@/components/extended_info"
+import Loading from "../../components/loading"
+import ExtendedInfo from "../../components/extended_info"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/globals.css"
 import Link from "next/link";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function Info() {
     const router = useRouter();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const axiosInstance = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_URL,
-        withCredentials: true,
-    });
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
