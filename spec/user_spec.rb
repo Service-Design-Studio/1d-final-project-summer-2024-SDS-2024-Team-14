@@ -50,18 +50,10 @@ RSpec.describe "Users", type: :request do
         #check status 
         expect(response).to have_http_status(:success)
         #check resp
-        third_user = JSON.parse(response.body)
+        data = JSON.parse(response.body)
          # third user created from earlier api call
-         expect(third_user["id"]).to eq(3)
-         expect(third_user["email"]).to eq("test3@gmail.com")
-         expect(third_user["name"]).to eq("testUser3")
-         expect(third_user["country"]).to eq("Peru")
-         expect(third_user["religion"]).to eq("Buddhist")
-         expect(third_user["ethnicity"]).to eq("Hazara")
-         expect(third_user["gender"]).to eq("Female")
-         expect(third_user["date_birth"]).to eq("10-04-2022")
-         expect(third_user["date_arrival"]).to eq("10-04-2022")
-         expect(third_user["verification_status"]).to eq("Pending approval")
+         expect(data["message"]).to eq("Signup for user testUser3 successful")
+         expect(data["user_id"]).to eq(3)
     end
 
     scenario "Create user fail" do
