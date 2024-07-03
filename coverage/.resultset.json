@@ -4,6 +4,13 @@
       "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/helpers/application_helper.rb": {
         "lines": [
           1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
           null
         ]
       },
@@ -64,10 +71,10 @@
           1,
           1,
           1,
-          4,
+          3,
           null,
           1,
-          4,
+          3,
           null,
           null
         ]
@@ -91,6 +98,43 @@
       },
       "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/channels/application_cable/connection.rb": {
         "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/controllers/login_controller.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/yangsijun/SUTD/SDS/gebirah_backend/app/controllers/verify_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -123,6 +167,6 @@
         }
       }
     },
-    "timestamp": 1718889374
+    "timestamp": 1720011755
   }
 }
