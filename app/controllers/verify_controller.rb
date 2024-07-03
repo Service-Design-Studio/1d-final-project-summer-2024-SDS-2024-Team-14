@@ -1,12 +1,12 @@
 class VerifyController < ApplicationController
     def show 
-        @user = User.find(params[:id])
-        @user.verification_status = "Approved"
-        if @user.save
+        begin
+            @user = User.find(params[:id])
+            @user.verification_status = "Approved"
             render json: {message: "Approval for #{@user.name} successful" },
             status: :ok
-        else
-            render json: @user.errors, status: :unprocessable_entity
+        rescue ActiveRecord::RecordNotFound
+            render json: { message: "User does not exist" }, status: :unprocessable_entity
         end
     end
 end

@@ -7,8 +7,12 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find(params[:id])
-        render json: @user, status: :ok
+        begin
+            @user = User.find(params[:id])
+            render json: @user, status: :ok
+        rescue ActiveRecord::RecordNotFound
+            render json: { message: "User does not exist" }, status: :unprocessable_entity
+        end
     end
 
     def create
