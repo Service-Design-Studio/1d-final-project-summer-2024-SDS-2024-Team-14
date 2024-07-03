@@ -70,7 +70,6 @@ RSpec.describe "Users", type: :request do
             date_birth: "10-04-2022",
             date_arrival: "10-04-2022"
         }
-        puts response.body
         #check status 
         expect(response).to have_http_status(422)
         data = JSON.parse(response.body)

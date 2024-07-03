@@ -1,5 +1,6 @@
 require "rails_helper"
-RSpec.describe "verify", type: :request do
+
+RSpec.describe "Verify", type: :request do
 
     before do
         #seed data
@@ -39,5 +40,9 @@ RSpec.describe "verify", type: :request do
         data = JSON.parse(response.body)
          # third user created from earlier api call
          expect(data["message"]).to eq("Approval for testUser1 successful")
+    end
+
+    scenario "Verify user fail" do
+        expect(true).to eq(false)
     end
 end
