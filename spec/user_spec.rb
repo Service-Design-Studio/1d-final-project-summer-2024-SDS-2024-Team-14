@@ -110,7 +110,7 @@ RSpec.describe "Users", type: :request do
     
     end
 
-    scenario "Get user information based on Id" do
+    scenario "Get user information based on Id Success" do
     
         get "http://localhost:3000/users/2"
         #check status 
@@ -128,6 +128,17 @@ RSpec.describe "Users", type: :request do
         expect(user["date_birth"]).to eq("10-06-2004")
         expect(user["date_arrival"]).to eq("14-06-2024")
         expect(user["verification_status"]).to eq("Approved")
+    end
+
+    scenario "Get user information based on Id, Invalid Id" do
+    
+        get "http://localhost:3000/users/5"
+        #check status 
+        expect(response).to have_http_status(422)
+        #check resp
+        data = JSON.parse(response.body)
+        # user retrieved
+        expect(data["message"]).to eq("User does not exist")
     end
 
 end

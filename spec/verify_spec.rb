@@ -43,6 +43,13 @@ RSpec.describe "Verify", type: :request do
     end
 
     scenario "Verify user fail" do
-        expect(true).to eq(false)
+        get "http://localhost:3000/verify/3"
+        #check status 
+        expect(response).to have_http_status(422)
+        #check resp
+        data = JSON.parse(response.body)
+         # third user created from earlier api call
+        puts data
+        expect(data["message"]).to eq("User does not exist")
     end
 end
