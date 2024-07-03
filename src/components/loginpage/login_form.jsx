@@ -10,7 +10,6 @@ export default function LoginForm({ onLoginTab, setFormState}) {
     const [passwordError, setPasswordError] = useState(false);
     const [rememberPassword, setRememberPassword] = useState(true);
     const [passwordVisible, setPasswordVisible] = useState(false);
-    console.log('test123')
 
     return (
         <div className='flex flex-col'>
