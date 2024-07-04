@@ -25,10 +25,10 @@ class HomePage {
         this.elements.idCard().get('canvas').then(($canvas) => {
             // $canvas is a jQuery-wrapped DOM element, get the raw DOM element
             const originalCanvas = $canvas[0];
-
+            const fullUrl = reader.decodeFromCanvas(originalCanvas).getText();
             // Copy the content from the original canvas to the new canvas
             expect(reader.decodeFromCanvas(originalCanvas).getText()).to.equal(
-                'https://gebirah-aid-2r6b52gguq-as.a.run.app/info/1')
+                'https://gebirah-frontend-2r6b52gguq-as.a.run.app/info/1')
         })
     }
 
@@ -39,12 +39,44 @@ class HomePage {
             const originalCanvas = $canvas[0];
             const fullUrl = reader.decodeFromCanvas(originalCanvas).getText();
             const url = new URL(fullUrl);
-            console.log(url);
             const relativePart = url.pathname + url.search;
             console.log(relativePart);
             // Return the relative part wrapped in a Cypress chainable object
             return cy.wrap(relativePart);
         });
+    }
+
+    verified() {
+        // intercept api call and return fixture
+          cy.window().then((win) => {
+            win.localStorage.setItem('userID', '1'); // Set user_id to mimic login
+          });
+          cy.intercept("GET", `/users/1`, (req) => {
+            req.reply({
+              statusCode: 200,
+              fixture: 'userdetails_approved.json'
+            })
+          })
+    }
+
+    unverified() {
+        cy.window().then((win) => {
+            win.localStorage.setItem('userID', '1'); // Set user_id to mimic login
+          });
+          cy.intercept("GET", `/users/1`, (req) => {
+            req.reply({
+              statusCode: 200,
+              fixture: 'userdetails_pending.json'
+            })
+          })
+    }
+
+    checkCardButton() {
+        this.elements.idCard().get("#idCardButton").contains("Pending Approval")
+    }
+
+    checkQrCodeDoesNotExist() {
+        this.elements.idCard().get('canvas').should('not.be.visible');
     }
 }
 

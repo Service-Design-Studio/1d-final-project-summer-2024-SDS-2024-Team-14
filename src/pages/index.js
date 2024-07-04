@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Homepage from "../components/homepage/homepage.jsx";
+import Homepage from "../components/homepage/homepage.js";
 import "../styles/globals.css";
 import { redirect } from 'next/navigation'
 import { getSession, SessionProvider} from "next-auth/react";
