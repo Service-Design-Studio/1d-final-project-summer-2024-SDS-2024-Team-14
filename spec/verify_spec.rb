@@ -49,7 +49,6 @@ RSpec.describe "Verify", type: :request do
         #check resp
         data = JSON.parse(response.body)
          # third user created from earlier api call
-        puts data
         expect(data["message"]).to eq("User does not exist")
     end
 end
