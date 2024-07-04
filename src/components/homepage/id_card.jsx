@@ -42,7 +42,7 @@ export default function IdCard(props) {
                     <div className="mx-auto w-fit">
                         <Canvas //TODO - change to dynamic parameter based on axios call
                             data-cy={"qrCode"}
-                            text={process.env.NEXT_PUBLIC_URL + 'info/' + props.data.id}
+                            text={process.env.NEXT_FRONTEND_URL + 'info/' + props.data.id}
                             options={{
                                 errorCorrectionLevel: 'M',
                                 margin: 3,
