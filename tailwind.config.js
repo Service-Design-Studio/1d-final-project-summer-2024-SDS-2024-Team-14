@@ -45,6 +45,12 @@ module.exports = {
       'purple-600' : '#8E24AA',
       'pink-600': '#D81B60',
       'gray': '#909090',
+      'green':'#22c55e',
+      'lightgreen':'#bbf7d0',
+      'yellow':'#ffa000',
+      'lightyellow':'#fde68a',
+      'red':'#ef4444',
+      'lightred':'#ffcdd2',
     },
     colors: {
       'white': '#FFFFFF',
@@ -60,6 +66,12 @@ module.exports = {
       'pink-100' : '#F8BBD0',
       'gray': '#C0C0C0',
       'blue-100': '#BBDEFB',
+      'green':'#22c55e',
+      'lightgreen':'#bbf7d0',
+      'yellow':'#ffa000',
+      'lightyellow':'#fde68a',
+      'red':'#ef4444',
+      'lightred':'#ffcdd2',
       
     },
     fontSize: {
