@@ -7,39 +7,44 @@ Background:
 
 Scenario: Log In Successful
     When I click the "loginTab" button
-    When I fill in "email" with "test123@gmail.com"
+    And I fill in "email" with "test123@gmail.com"
     And I fill in "password" with "p@ssw0rd"
-    And I click the "submitBtn" button
+    And I click on the "submitBtn" button - login success
     Then I should be directed to the Home page
 
 Scenario: Log In wrong password
     When I click the "loginTab" button
-    When I fill in "email" with "test123@gmail.com"
+    And I fill in "email" with "test123@gmail.com"
     And I fill in "password" with "p@ssw0rd1"
-    And I click the "submitBtn" button
-    And I should see the message "Login unsuccessful!"
+    And I click on the "submitBtn" button - wrong password
+    And I should be notified of the wrong password
     Then I should remain on the Login page
 
 Scenario: Log In invalid email
     When I click the "loginTab" button
-    When I fill in "email" with "-"
+    And I fill in "email" with "-@gmail.com"
     And I fill in "password" with "p@ssw0rd"
-    And I click the "submitBtn" button
-    And I should see the message "error"
+    And I click on the "submitBtn" button - invalid email
+    And I should be notified of the invalid email
     Then I should remain on the Login page
 
 Scenario: Signup successful
     When I click the "signUpTab" button
-    When I fill in "firstName" with "Abdul"
+    And I fill in "firstName" with "Abdul"
     And I fill in "lastName" with "Ahmed"
+    And I fill in "originCountry" with "Africa"
+    And I fill in "ethnicity" with "African American"
+    And I fill in "gender" with "Male"
+    And I fill in "religion" with "Buddhist"
     And I fill in "email" with "e@gmail.com"
     And I fill in "password" with "Passw0rd!"
-    And I click on the "submitBtn" button
+    And I fill in "confirmPassword" with "Passw0rd!"
+    And I click on the "submitBtn" button - signup success
     Then I should be directed to the Home page
 
 Scenario: Signing Up Unsuccessfully
     When I click the "signUpTab" button
-    When I do not fill in "firstName"
+    And I do not fill in "firstName"
     And I fill in "lastName" with "Ahmed"
     And I fill in "email" with "e@gmail.com"
     And I fill in "password" with "Passw0rd!"
