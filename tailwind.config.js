@@ -51,6 +51,7 @@ module.exports = {
       'lightyellow':'#fde68a',
       'red':'#ef4444',
       'lightred':'#ffcdd2',
+      'purpleblue':'#818cf8',
     },
     colors: {
       'white': '#FFFFFF',
@@ -72,6 +73,7 @@ module.exports = {
       'lightyellow':'#fde68a',
       'red':'#ef4444',
       'lightred':'#ffcdd2',
+      'purpleblue':'#818cf8',
       
     },
     fontSize: {
