@@ -42,7 +42,17 @@ RSpec.describe "Verify", type: :request do
          expect(data["message"]).to eq("Approval for testUser1 successful")
     end
 
-    scenario "Verify user fail" do
+    scenario "Verify user - verified already" do
+        get "http://localhost:3000/verify/2"
+        #check status 
+        expect(response).to have_http_status(422)
+        #check resp
+        data = JSON.parse(response.body)
+         # third user created from earlier api call
+        expect(data["message"]).to eq("testUser2 has already been verified")
+    end
+
+    scenario "Verify user - does not exist" do
         get "http://localhost:3000/verify/3"
         #check status 
         expect(response).to have_http_status(422)
