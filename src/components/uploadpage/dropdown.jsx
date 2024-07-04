@@ -55,7 +55,7 @@ const ITEM_HEIGHT = 40;
 
 export default function UploadDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedCategory, setSelectedCategory] = React.useState('Category');
+  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Document', icon: null });
   const [menuWidth, setMenuWidth] = React.useState(null);
   const buttonRef = React.useRef(null);
   const open = Boolean(anchorEl);
@@ -67,10 +67,10 @@ export default function UploadDropdown() {
     }
   };
 
-  const handleClose = (category) => {
+  const handleClose = (category, icon) => {
     setAnchorEl(null);
     if (category) {
-      setSelectedCategory(category);
+      setSelectedCategory({ name: category, icon: icon });
     }
   };
 
@@ -89,7 +89,8 @@ export default function UploadDropdown() {
         endIcon={<KeyboardArrowDownIcon />}
         className="w-full"
       >
-        {selectedCategory}
+        {selectedCategory.icon && <selectedCategory.icon className="mr-2" />}
+        {selectedCategory.name}
       </Button>
       <StyledMenu
         id="demo-customized-menu"
@@ -98,7 +99,7 @@ export default function UploadDropdown() {
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={() => handleClose(null)}
+        onClose={() => handleClose(null, null)}
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
@@ -106,27 +107,27 @@ export default function UploadDropdown() {
           },
         }}
       >
-        <MenuItem onClick={() => handleClose('Education')} disableRipple>
+        <MenuItem onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
           <SchoolIcon />
           Education
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Career')} disableRipple>
+        <MenuItem onClick={() => handleClose('Career', WorkIcon)} disableRipple>
           <WorkIcon />
           Career
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Finance')} disableRipple>
+        <MenuItem onClick={() => handleClose('Finance', AttachMoneyIcon)} disableRipple>
           <AttachMoneyIcon />
           Finance
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Property')} disableRipple>
+        <MenuItem onClick={() => handleClose('Property', HouseIcon)} disableRipple>
           <HouseIcon />
           Property
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Family')} disableRipple>
+        <MenuItem onClick={() => handleClose('Family', FamilyRestroomIcon)} disableRipple>
           <FamilyRestroomIcon />
           Family
         </MenuItem>
