@@ -81,6 +81,17 @@ class HomePage {
 }
 
 class LoginPage {
+    elements = {
+        notificationMessage: () => cy.get(".rnc__notification-message"),
+    }
+
+    wrongPassword() {
+        this.elements.notificationMessage().contains("make sure that your password is correct")
+    }
+
+    invalidEmail() {
+        this.elements.notificationMessage().contains("email you have entered is invalid")
+    }
 }
 export const homePage = new HomePage();
 export const loginPage = new LoginPage();

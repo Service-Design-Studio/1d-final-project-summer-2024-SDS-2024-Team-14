@@ -1,11 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
-
-    // Or if using `src` directory:
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -74,7 +72,7 @@ module.exports = {
       'red':'#ef4444',
       'lightred':'#ffcdd2',
       'purpleblue':'#526AFF',
-      
+      'blue-600': '#1E88E5',
     },
     fontSize: {
       'xs': '0.1rem',
@@ -89,8 +87,19 @@ module.exports = {
       '2xl': '1.563rem',
       '3xl': '1.953rem',
       '4xl': '2.441rem',
-      '5xl': '3.052rem',
+      '5xl': '3.052rem'
+    },
+    screens: { // New lines added for custom breakpoints
+      'xxs': '0px',
+      'xs': '400px',
+      'xsm': '450px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
     },
   },
   plugins: [],
 }
+
