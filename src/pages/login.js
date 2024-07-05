@@ -53,7 +53,7 @@ export default function Login({ session }) {
         const email = req.email;
         const password = req.password;
         const password_confirmation = req.confirmPassword
-        const name = req.firstName + req.lastName
+        const name = req.firstName + ' ' + req.lastName
         const country = req.originCountry
         const religion = req.religion
         const ethnicity = req.ethnicity

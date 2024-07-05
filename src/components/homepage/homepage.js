@@ -1,7 +1,7 @@
-import Features from "./features.jsx";
-import HomeHeader from "./home_header.jsx"
-import Loading from "../loading.jsx"
-import IdCard from "./id_card.jsx";
+import Features from "./features.js";
+import HomeHeader from "./home_header.js"
+import Loading from "../loading.js"
+import IdCard from "./id_card.js";
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from "axios";

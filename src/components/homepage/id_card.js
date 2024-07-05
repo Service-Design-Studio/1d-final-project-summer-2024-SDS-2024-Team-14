@@ -40,9 +40,9 @@ export default function IdCard(props) {
                 <span className="btn-text my-4">Scan For Documents</span>
                 <Link href={`/info/${props.data.id}`}>
                     <div className="mx-auto w-fit">
-                        <Canvas //TODO - change to dynamic parameter based on axios call
+                        <Canvas
                             data-cy={"qrCode"}
-                            text={process.env.NEXT_PUBLIC_URL + 'info/' + props.data.id}
+                            text={process.env.NEXT_PUBLIC_FRONTEND + 'info/' + props.data.id}
                             options={{
                                 errorCorrectionLevel: 'M',
                                 margin: 3,
