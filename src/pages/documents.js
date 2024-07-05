@@ -3,6 +3,7 @@ import Header from '../components/dm_header';
 import Footer from '../components/document_manager/dm_footer';
 import Card from '../components/document_manager/dm_card';
 import "../styles/globals.css"
+import useAuth from "@/hooks/useAuth";
 
 // const DocumentManager = () => {
 //   return (
@@ -25,6 +26,7 @@ import "../styles/globals.css"
 // export default DocumentManager;
 
 const DocumentManager = () => {
+    useAuth();
   const cards = [
     { title: 'Health', date: '24 Dec 2020', bgColor: 'bg-blue-100', iconColor: 'text-blue-600' },
     { title: 'Career', date: '24 Dec 2020', bgColor: 'bg-purple-100', iconColor: 'text-purple-600' },
