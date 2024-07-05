@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { Component } from "react";
+import axiosInstance from "../../utils/axiosInstance";
 
-class App extends Component {
+class UploadFile extends Component {
     state = {
         // Initially, no file is selected
         selectedFile: null,
@@ -28,11 +29,11 @@ class App extends Component {
         );
 
         // Details of the uploaded file
-        console.log(this.state.selectedFile);
 
         // Request made to the backend api
         // Send formData object
-        axios.post("api/uploadfile", formData);
+        // axios.post("api/uploadfile", formData);
+
     };
 
     // File content to be displayed after
@@ -57,7 +58,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            <div className="flex flex-col items-center justify-center bg-gray-100">
                 <div className="w-full max-w-md p-4">
                     <label
                         htmlFor="dropzone-file"
@@ -93,7 +94,7 @@ class App extends Component {
                     </label>
                     <button
                         onClick={this.onFileUpload}
-                        className="mt-4 w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        className="mt-4 w-full px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700"
                     >
                         Upload!
                     </button>
@@ -104,4 +105,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default UploadFile;
