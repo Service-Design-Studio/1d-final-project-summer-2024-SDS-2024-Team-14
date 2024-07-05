@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Document() {
+function App() {
   return (
     <div className="min-h-screen bg-white p-4 flex flex-col justify-between">
       {/* Header */}
@@ -104,3 +104,4 @@ export default function Document() {
   );
 }
 
+export default App;
