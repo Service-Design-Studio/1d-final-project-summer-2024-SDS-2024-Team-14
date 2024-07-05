@@ -21,18 +21,18 @@ import { faFolder, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 const Card = ({ title, date, bgColor, iconColor }) => {
   return (
     <div className={`relative p-4 sm:p-6 md:p-8 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center`}>
-      <div className="absolute top-4 left-4">
+      <div className="absolute top-2 left-2 md:top-4 md:left-4">
         <button className="text-gray-600 text-lg"> {/* Adjusted icon size */}
           <FontAwesomeIcon icon={faEllipsisV} />
         </button>
       </div>
-      <div className="absolute top-4 right-4">
-        <FontAwesomeIcon icon={faFolder} className={`text-2xl ${iconColor}`} /> {/* Adjusted icon size */}
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+        <FontAwesomeIcon icon={faFolder} className={`sm:text-2xl text-lg ${iconColor}`} /> {/* Adjusted icon size */}
       </div>
-      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold text-blue-600 text-center mt-12 overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}
+      <h2 className="text-lg sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}
         {title}
       </h2>
-      <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-blue-600 text-center overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}
+      <p className="text-md sm:text-xl md:text-2xl lg:text-1xl xl:text-1xl text-blue-600 text-center overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}
         {date}
       </p>
     </div>
