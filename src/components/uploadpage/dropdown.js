@@ -53,6 +53,17 @@ const StyledMenu = styled((props) => (
 
 const ITEM_HEIGHT = 40;
 
+const CustomButton = styled(Button)(({ theme }) => ({
+  backgroundColor: '#007bff', // Change button color here
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: '#0056b3', // Change button hover color here
+  },
+  width: '100%', // Ensure the button takes full width
+  height: '50px',
+  borderRadius: '10px', // Change button roundness here
+}));
+
 export default function UploadDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Document', icon: null });
@@ -76,7 +87,7 @@ export default function UploadDropdown() {
 
   return (
     <div className="w-full">
-      <Button
+      <CustomButton
         ref={buttonRef}
         id="demo-customized-button"
         aria-label="more"
@@ -91,7 +102,7 @@ export default function UploadDropdown() {
       >
         {selectedCategory.icon && <selectedCategory.icon className="mr-2" />}
         {selectedCategory.name}
-      </Button>
+      </CustomButton>
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{

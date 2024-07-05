@@ -3,6 +3,11 @@ import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Icon } from "@mui/material";
+const CustomFileUploadOutlinedIcon = () => {
+    return (
+        <FileUploadOutlinedIcon style={{ fontSize: '5rem', color: '#526AFF' }} />
+    );
+  };
 
 class UploadFile extends Component {
     state = {
@@ -58,6 +63,7 @@ class UploadFile extends Component {
             );
         }
     };
+    
 
     render() {
         return (
@@ -65,14 +71,16 @@ class UploadFile extends Component {
                 <div className="w-full max-w-md p-4">
                     <label
                         htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-purpleblue border-dashed rounded-lg cursor-pointer bg-purpleblue bg-opacity-10 z-0 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 dark:hover:border-gray-500"
+                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 dark:hover:border-gray-500"
                     >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <FileUploadOutlinedIcon className="w-100 h-100 text-purpleblue"/>
-                            <p className="mb-2 text-xl text-purpleblue">
-                                <span className="font-semibold">Click to upload</span> or drag and drop
+                            <CustomFileUploadOutlinedIcon/>
+                            <p className="mb-2 text-2xl text-purpleblue font-bold">
+                                Upload a file
                             </p>
-                            <p className="text-md text-purpleblue">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                            <p className="mb-2 text-l text-purpleblue font-semibold">
+                                Drag and drop or browse to choose a file
+                            </p>
                         </div>
                         <input
                             id="dropzone-file"
@@ -84,8 +92,7 @@ class UploadFile extends Component {
                     <div className="py-6"></div>
                     <button
                         onClick={this.onFileUpload}
-                        className="w-full py-2 text-purpleblue border-2 border-solid border-purpleblue  border-radius-19px rounded-md hover:bg-purpleblue hover:text-white hover:underline"
-                    >
+                        className="w-full py-2 text-purpleblue border-2 border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white hover:underline">
                         Upload
                     </button>
                 </div>

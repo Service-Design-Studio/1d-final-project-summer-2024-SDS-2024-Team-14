@@ -28,7 +28,7 @@ export default function Upload() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen py-10 bg-white">
+    <div className="w-full flex flex-col items-center min-h-screen py-10 bg-white">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex flex-col w-full max-w-md px-3"
@@ -42,13 +42,19 @@ export default function Upload() {
           <div className= "">
             <UploadFile className="flex flex-col items-center justify-center"/>
           </div>
-        <p className="text-center bg-white my-4">or</p>
-        <button
-          type="button"
-          className="w-full py-2 text-purpleblue border-2 border-solid border-purpleblue  border-radius-19px rounded-md hover:bg-purpleblue hover:text-white hover:underline "
-        >
-          Scan
-        </button>
+          <div className="flex items-center my-4 bg-white">
+            <div className="flex-grow border-t border-purpleblue"></div>
+            <span className="px-4 text-gray-500 font-bold">or</span>
+            <div className="flex-grow border-t border-purpleblue"></div>
+          </div>
+        <div className='flex flex-col items-center'>
+          <button
+            type="button"
+            className="w-48 py-2 text-purpleblue border-2 border-solid border-purpleblue rounded-3xl hover:bg-purpleblue hover:text-white hover:underline "
+          >
+            Scan
+          </button>
+        </div>
       </form>
     </div>
   );
