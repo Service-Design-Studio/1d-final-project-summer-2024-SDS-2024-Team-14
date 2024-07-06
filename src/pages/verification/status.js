@@ -1,8 +1,10 @@
 import React from "react";
 import Notification from "../../components/verification/notifications.js";
 import "../../styles/globals.css";
+import useAuth from "@/hooks/useAuth";
 
 export default function Status() {
+    useAuth();
   const notifications = [
     { status: 'success', title: 'Success', message: 'Finance Document 5 has been verified successfully!' },
     { status: 'failure', title: 'Failure', message: 'Education Document 1 has been declined' },
