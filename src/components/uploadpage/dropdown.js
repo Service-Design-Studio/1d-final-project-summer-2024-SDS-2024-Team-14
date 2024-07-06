@@ -86,7 +86,7 @@ export default function UploadDropdown() {
   };
 
   return (
-    <div className="flex w-[50vw] items-center justify-center">
+    <div className="flex md:w-10/12 w-full items-center justify-center">
       <CustomButton
         ref={buttonRef}
         id="demo-customized-button"
@@ -100,7 +100,7 @@ export default function UploadDropdown() {
         endIcon={<KeyboardArrowDownIcon className='text-bold'/>}
       >
         {selectedCategory.icon && <selectedCategory.icon className="mr-2" />}
-        <span style={{ fontSize: 'md',textTransform: 'none' }}>
+        <span className='text-lg md:text-xl' style={{textTransform: 'none' }}>
           {selectedCategory.name}
         </span>
       </CustomButton>

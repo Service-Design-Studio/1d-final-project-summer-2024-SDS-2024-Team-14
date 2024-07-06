@@ -38,7 +38,7 @@ export default function Upload() {
         noValidate={false}
       >
         <Header title="Upload" />
-        <div className="flex items-center justify-center mb-4">
+        <div className="flex items-center justify-center md:mb-4 mb-6">
           <UploadDropdown value={dropdownValue} onChange={handleDropdownChange} />
         </div>
         <div className="mb-4">

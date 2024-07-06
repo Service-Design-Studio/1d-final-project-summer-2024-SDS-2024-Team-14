@@ -7,7 +7,7 @@ import shortid from 'shortid';
 
 const CustomFileUploadOutlinedIcon = () => {
     return (
-        <FileUploadOutlinedIcon style={{ fontSize: '8vw', color: '#526AFF', opacity:'80%' }} />
+        <FileUploadOutlinedIcon style={{ fontSize: '14vw', color: '#526AFF', opacity:'80%' }} />
     );
 };
 
@@ -32,7 +32,7 @@ class UploadFile extends Component {
     onFileUpload = () => {
         const formData = new FormData();
         this.state.selectedFiles.forEach(fileObj => {
-            formData.append("myFiles", fileObj.file, fileObj.file.name);
+            formData.append("files[]", fileObj.file, fileObj.file.name);
         });
 
         axiosInstance.post("/document", formData);
@@ -43,19 +43,19 @@ class UploadFile extends Component {
             return (
                 <div>
                     {this.state.selectedFiles.map(fileObj => (
-                        <div key={fileObj.id}>
-                            <p className="text-md">File Name: {fileObj.file.name}</p>
-                            <p className="text-md">File Type: {fileObj.file.type}</p>
-                            <p className="text-md">Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
+                        <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
+                            <p>File Name: {fileObj.file.name}</p>
+                            <p>File Type: {fileObj.file.type}</p>
+                            <p className="mb-4">Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
                             {fileObj.file.type.startsWith('image/') && (
-                                <img src={fileObj.preview} alt={fileObj.file.name} style={{ width: '100px' }} />
+                                <img src={fileObj.preview} alt={fileObj.file.name} className='h-[80vw] md:h-[40vw] w-full'/>
                             )}
                             {fileObj.file.type === 'application/pdf' && (
-                                <embed src={fileObj.preview} type="application/pdf" width="60%" height="300px" />
+                                <embed src={fileObj.preview} type="application/pdf" className="h-[80vw] md:h-[40vw] w-full"/>
                             )}
                             <button 
                             onClick={() => this.deleteSelectedFile(fileObj.id)} 
-                            className="text-md py-2 text-purpleblue rounded-md hover:underline">
+                            className="mt-4 text-purpleblue rounded-md hover:underline">
                             Delete
                             </button>
                         </div>
@@ -85,17 +85,17 @@ class UploadFile extends Component {
             : "text-mdd px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
         return (
             <div className="flex flex-col items-center justify-center">
-                <div className="pt-4 w-11/12">
+                <div className="pt-4 w-full md:w-11/12 md:mt-4">
                     <label
                         htmlFor="dropzone-file"
                         className="w-full flex flex-col items-center justify-center border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5"
                     >
-                        <div className="w-full flex flex-col items-center justify-center pt-5 pb-6">
-                            <CustomFileUploadOutlinedIcon className='w-11/12'/>
-                            <p className="mb-2 text-xl text-purpleblue font-bold">
+                        <div className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
+                            <CustomFileUploadOutlinedIcon/>
+                            <p className="mb-2 text-lg md:text-3xl text-purpleblue font-bold">
                                 Upload a file
                             </p>
-                            <p className="mb-2 text-md text-purpleblue font-semibold">
+                            <p className="mb-2 text-md md:text-xl text-purpleblue font-semibold">
                                 Drag and drop or browse to choose a file
                             </p>
                         </div>
@@ -107,7 +107,7 @@ class UploadFile extends Component {
                             onChange={this.onFileChange}
                         />
                     </label>
-                    <div className="py-5">
+                    <div className="py-5 font-bold rounded-xl">
                         {this.fileData()}
                     </div>
                     <div className="w-full flex flex-row items-end justify-end mt-auto py-vw-2">
@@ -118,7 +118,7 @@ class UploadFile extends Component {
                             Clear All
                         </button>
                         <button
-                            oonClick={this.onFileUpload}
+                            onClick={this.onFileUpload}
                             className={uploadButtonClasses}
                             disabled={!this.state.selectedFiles}>
                             Upload
