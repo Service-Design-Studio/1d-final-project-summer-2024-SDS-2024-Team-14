@@ -3,57 +3,57 @@ import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Icon } from "@mui/material";
+import shortid from 'shortid';
+
 const CustomFileUploadOutlinedIcon = () => {
     return (
-        <FileUploadOutlinedIcon style={{ fontSize: '5rem', color: '#526AFF' }} />
+        <FileUploadOutlinedIcon style={{ fontSize: '8vw', color: '#526AFF', opacity:'80%' }} />
     );
-  };
+};
 
 class UploadFile extends Component {
     state = {
-        // Initially, no file is selected
-        selectedFile: null,
+        selectedFiles: []
     };
 
-    // On file select (from the pop up)
     onFileChange = (event) => {
-        // Update the state
+        const files = Array.from(event.target.files);
+        const updatedFiles = files.map(file => ({
+            id: shortid.generate(),
+            file: file,
+            preview: URL.createObjectURL(file)
+        }));
+
         this.setState({
-            selectedFile: event.target.files[0],
+            selectedFiles: [...this.state.selectedFiles, ...updatedFiles]
         });
     };
 
-    // On file upload (click the upload button)
     onFileUpload = () => {
-        // Create an object of formData
         const formData = new FormData();
+        this.state.selectedFiles.forEach(fileObj => {
+            formData.append("myFiles", fileObj.file, fileObj.file.name);
+        });
 
-        // Update the formData object
-        formData.append(
-            "myFile",
-            this.state.selectedFile,
-            this.state.selectedFile.name
-        );
-
-        // Details of the uploaded file
-
-        // Request made to the backend api
-        // Send formData object
-        // axios.post("api/uploadfile", formData);
-        axiosInstance.post("/document",
-            formData)
+        axiosInstance.post("/document", formData);
     };
 
-    // File content to be displayed after
-    // file upload is complete
     fileData = () => {
-        if (this.state.selectedFile) {
+        if (this.state.selectedFiles.length > 0) {
             return (
                 <div>
                     <h2>File Details:</h2>
-                    <p>File Name: {this.state.selectedFile.name}</p>
-                    <p>File Type: {this.state.selectedFile.type}</p>
-                    <p>Last Modified: {this.state.selectedFile.lastModifiedDate.toDateString()}</p>
+                    {this.state.selectedFiles.map(fileObj => (
+                        <div key={fileObj.id}>
+                            {fileObj.file.type.startsWith('image/') && (
+                                <img src={fileObj.preview} alt={fileObj.file.name} style={{ width: '100px' }} />
+                            )}
+                            <p>File Name: {fileObj.file.name}</p>
+                            <p>File Type: {fileObj.file.type}</p>
+                            <p>Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
+                            <button onClick={() => this.deleteSelectedFile(fileObj.id)}>Delete</button>
+                        </div>
+                    ))}
                 </div>
             );
         } else {
@@ -63,22 +63,26 @@ class UploadFile extends Component {
             );
         }
     };
-    
+
+    deleteSelectedFile = (id) => {
+        const updatedFiles = this.state.selectedFiles.filter(fileObj => fileObj.id !== id);
+        this.setState({ selectedFiles: updatedFiles });
+    };
 
     render() {
         return (
             <div className="flex flex-col items-center justify-center">
-                <div className="w-full max-w-md p-4">
+                <div className="pt-4 w-11/12">
                     <label
                         htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 dark:hover:border-gray-500"
+                        className="w-full flex flex-col items-center justify-center border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5"
                     >
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <CustomFileUploadOutlinedIcon/>
-                            <p className="mb-2 text-2xl text-purpleblue font-bold">
+                        <div className="w-full flex flex-col items-center justify-center pt-5 pb-6">
+                            <CustomFileUploadOutlinedIcon className='w-11/12'/>
+                            <p className="mb-2 text-xl text-purpleblue font-bold">
                                 Upload a file
                             </p>
-                            <p className="mb-2 text-l text-purpleblue font-semibold">
+                            <p className="mb-2 text-md text-purpleblue font-semibold">
                                 Drag and drop or browse to choose a file
                             </p>
                         </div>
@@ -86,15 +90,24 @@ class UploadFile extends Component {
                             id="dropzone-file"
                             type="file"
                             className="hidden"
+                            multiple
                             onChange={this.onFileChange}
                         />
                     </label>
-                    <div className="py-6"></div>
-                    <button
-                        onClick={this.onFileUpload}
-                        className="w-full py-2 text-purpleblue border-2 border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white hover:underline">
-                        Upload
-                    </button>
+                    <div className="w-full flex flex-row items-end justify-end mt-auto py-vw-2">
+                        <div className="flex space-x-4">
+                        <button
+                            onClick={this.onFileUpload}
+                            className="text-mdd px-5 py-2 text-purpleblue border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white hover:underline">
+                            Cancel
+                        </button>
+                        <button
+                            onClick={this.onFileUpload}
+                            className="text-mdd px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md hover:bg-purpleblue hover:text-white hover:underline">
+                            Upload
+                        </button>
+                        </div>
+                    </div>
                 </div>
                 {this.fileData()}
             </div>

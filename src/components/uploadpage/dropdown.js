@@ -59,14 +59,14 @@ const CustomButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     backgroundColor: '#0056b3', // Change button hover color here
   },
-  width: '100%', // Ensure the button takes full width
+  width: '80%', // Ensure the button takes full width
   height: '50px',
   borderRadius: '10px', // Change button roundness here
 }));
 
 export default function UploadDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Document', icon: null });
+  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Documents', icon: null });
   const [menuWidth, setMenuWidth] = React.useState(null);
   const buttonRef = React.useRef(null);
   const open = Boolean(anchorEl);
@@ -86,7 +86,7 @@ export default function UploadDropdown() {
   };
 
   return (
-    <div className="w-full">
+    <div className="flex w-[50vw] items-center justify-center">
       <CustomButton
         ref={buttonRef}
         id="demo-customized-button"
@@ -97,11 +97,12 @@ export default function UploadDropdown() {
         variant="contained"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
-        className="w-full"
+        endIcon={<KeyboardArrowDownIcon className='text-bold'/>}
       >
         {selectedCategory.icon && <selectedCategory.icon className="mr-2" />}
-        {selectedCategory.name}
+        <span style={{ fontSize: 'md',textTransform: 'none' }}>
+          {selectedCategory.name}
+        </span>
       </CustomButton>
       <StyledMenu
         id="demo-customized-menu"
@@ -147,25 +148,4 @@ export default function UploadDropdown() {
     </div>
   );
 }
-
-// const UploadDropdown = ({ value, onChange }) => {
-//   return (
-//     <Select
-//       value={value}
-//       onChange={onChange}
-//       variant="outlined"
-//       fullWidth
-//       displayEmpty
-//     >
-//       <MenuItem value="" disabled>
-//         Health
-//       </MenuItem>
-//       <MenuItem value="health">Health</MenuItem>
-//       <MenuItem value="finance">Finance</MenuItem>
-//       <MenuItem value="education">Education</MenuItem>
-//     </Select>
-//   );
-// };
-
-// export default UploadDropdown;
 

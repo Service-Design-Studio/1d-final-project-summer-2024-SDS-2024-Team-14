@@ -5,6 +5,8 @@ import 'react-notifications-component/dist/theme.css';
 import { Icon } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import UploadFile from '../components/uploadpage/upload_file.js';
+import Header from '../components/header.js';
+
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownValue, setDropdownValue] = useState('');
@@ -28,34 +30,22 @@ export default function Upload() {
   }
 
   return (
-    <div className="w-full flex flex-col items-center min-h-screen py-10 bg-white">
+    <div className="min-h-screen bg-white p-4 flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-full max-w-md px-3"
+        className="flex flex-col w-screen h-screen px-4 md:px-8 lg:px-12"
         autoComplete="on"
         noValidate={false}
       >
-        <h1 className="text-4xl font-bold text-center mb-6">Upload</h1>
-        <div className="mb-4">
+        <Header title="Upload" />
+        <div className="flex items-center justify-center mb-4">
           <UploadDropdown value={dropdownValue} onChange={handleDropdownChange} />
         </div>
-          <div className= "">
-            <UploadFile className="flex flex-col items-center justify-center"/>
-          </div>
-          <div className="flex items-center my-4 bg-white">
-            <div className="flex-grow border-t border-purpleblue"></div>
-            <span className="px-4 text-gray-500 font-bold">or</span>
-            <div className="flex-grow border-t border-purpleblue"></div>
-          </div>
-        <div className='flex flex-col items-center'>
-          <button
-            type="button"
-            className="w-48 py-2 text-purpleblue border-2 border-solid border-purpleblue rounded-3xl hover:bg-purpleblue hover:text-white hover:underline "
-          >
-            Scan
-          </button>
+        <div className="mb-4">
+          <UploadFile className="flex flex-col items-center justify-center" />
         </div>
       </form>
+      
     </div>
   );
 }

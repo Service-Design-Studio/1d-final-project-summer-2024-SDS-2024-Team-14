@@ -34,6 +34,23 @@ module.exports = {
         slideIn: 'slideIn 1s ease-in-out forwards',
         slideOut: 'slideOut 1s ease-in-out forwards',
       },
+      padding: {
+        'vw-1': '1vw',
+        'vw-2': '2vw',
+        'vw-3': '3vw',
+        'vw-4': '4vw',
+        'vw-5': '5vw',
+        
+      },
+      margin: {
+        'vw-1': '1vw',
+        'vw-2': '2vw',
+        'vw-3': '3vw',
+        'vw-4': '4vw',
+        'vw-5': '5vw',
+        
+      },
+
     },
     textColor: {
       'default': 'black',
