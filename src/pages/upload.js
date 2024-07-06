@@ -33,7 +33,7 @@ export default function Upload() {
     <div className="min-h-screen bg-white p-4 flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-screen h-screen px-4 md:px-8 lg:px-12"
+        className="flex flex-col w-full max-w-screen-lg px-4 md:px-8 lg:px-12"
         autoComplete="on"
         noValidate={false}
       >

@@ -42,16 +42,22 @@ class UploadFile extends Component {
         if (this.state.selectedFiles.length > 0) {
             return (
                 <div>
-                    <h2>File Details:</h2>
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id}>
+                            <p className="text-md">File Name: {fileObj.file.name}</p>
+                            <p className="text-md">File Type: {fileObj.file.type}</p>
+                            <p className="text-md">Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
                             {fileObj.file.type.startsWith('image/') && (
                                 <img src={fileObj.preview} alt={fileObj.file.name} style={{ width: '100px' }} />
                             )}
-                            <p>File Name: {fileObj.file.name}</p>
-                            <p>File Type: {fileObj.file.type}</p>
-                            <p>Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
-                            <button onClick={() => this.deleteSelectedFile(fileObj.id)}>Delete</button>
+                            {fileObj.file.type === 'application/pdf' && (
+                                <embed src={fileObj.preview} type="application/pdf" width="60%" height="300px" />
+                            )}
+                            <button 
+                            onClick={() => this.deleteSelectedFile(fileObj.id)} 
+                            className="text-md py-2 text-purpleblue rounded-md hover:underline">
+                            Delete
+                            </button>
                         </div>
                     ))}
                 </div>
@@ -69,7 +75,14 @@ class UploadFile extends Component {
         this.setState({ selectedFiles: updatedFiles });
     };
 
+    clearAllFiles = () => {
+        this.setState({ selectedFiles: [] });
+    };
+
     render() {
+        const uploadButtonClasses = this.state.selectedFile
+            ? "text-mdd px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
+            : "text-mdd px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
         return (
             <div className="flex flex-col items-center justify-center">
                 <div className="pt-4 w-11/12">
@@ -94,22 +107,25 @@ class UploadFile extends Component {
                             onChange={this.onFileChange}
                         />
                     </label>
+                    <div className="py-5">
+                        {this.fileData()}
+                    </div>
                     <div className="w-full flex flex-row items-end justify-end mt-auto py-vw-2">
                         <div className="flex space-x-4">
                         <button
-                            onClick={this.onFileUpload}
-                            className="text-mdd px-5 py-2 text-purpleblue border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white hover:underline">
-                            Cancel
+                            onClick={this.clearAllFiles}
+                            className="text-mdd px-5 py-2 text-purpleblue border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white">
+                            Clear All
                         </button>
                         <button
-                            onClick={this.onFileUpload}
-                            className="text-mdd px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md hover:bg-purpleblue hover:text-white hover:underline">
+                            oonClick={this.onFileUpload}
+                            className={uploadButtonClasses}
+                            disabled={!this.state.selectedFile}>
                             Upload
                         </button>
                         </div>
                     </div>
                 </div>
-                {this.fileData()}
             </div>
         );
     }
