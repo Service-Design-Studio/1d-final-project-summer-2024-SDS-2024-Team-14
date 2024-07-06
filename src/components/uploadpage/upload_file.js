@@ -80,7 +80,7 @@ class UploadFile extends Component {
     };
 
     render() {
-        const uploadButtonClasses = this.state.selectedFile
+        const uploadButtonClasses = (this.state.selectedFiles.length > 0)
             ? "text-mdd px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
             : "text-mdd px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
         return (
@@ -120,7 +120,7 @@ class UploadFile extends Component {
                         <button
                             oonClick={this.onFileUpload}
                             className={uploadButtonClasses}
-                            disabled={!this.state.selectedFile}>
+                            disabled={!this.state.selectedFiles}>
                             Upload
                         </button>
                         </div>
