@@ -54,7 +54,7 @@ const StyledMenu = styled((props) => (
 const ITEM_HEIGHT = 40;
 
 const CustomButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#007bff', // Change button color here
+  backgroundColor: 'blue-600', // Change button color here
   color: '#fff',
   '&:hover': {
     backgroundColor: '#0056b3', // Change button hover color here
@@ -66,7 +66,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 export default function UploadDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Documents', icon: null });
+  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Select Category Here', icon: null });
   const [menuWidth, setMenuWidth] = React.useState(null);
   const buttonRef = React.useRef(null);
   const open = Boolean(anchorEl);
