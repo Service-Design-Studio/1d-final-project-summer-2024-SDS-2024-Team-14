@@ -37,7 +37,7 @@ export default function Upload() {
         autoComplete="on"
         noValidate={false}
       >
-        <Header title="Upload" backButton="documents"/>
+        <Header title="Upload" backButton="/documents"/>
         <div className="flex items-center justify-center md:mb-4 mb-6">
           <UploadDropdown value={dropdownValue} onChange={handleDropdownChange} />
         </div>
