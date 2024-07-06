@@ -1,5 +1,5 @@
 import "../styles/globals.css"
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import LoginCarousel from '../components/loginpage/login_carousel';
@@ -39,6 +39,25 @@ export default function Login({ session }) {
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
     // const [errorState, setErrorState] = useState(true);
+    useEffect(() => {
+        const message = localStorage.getItem('notificationMessage');
+        if (message) {
+        Store.addNotification({
+                    title: "Error",
+                    message: "Please login first before using the services",
+                    type: "danger",
+                    insert: "bottom",
+                    container: "bottom-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+        localStorage.removeItem('notificationMessage'); // Clear the message after displaying
+    }
+  }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -73,7 +92,6 @@ export default function Login({ session }) {
             date_arrival
         }).then(
             (resp) => {
-                console.log(resp)
                 if (resp.status === 200 || resp.status === 201) {
                 localStorage.setItem('userID', resp.data.user_id)
                 router.push('/');

@@ -1,7 +1,7 @@
 import Textbox from "./textbox";
 import EmailIcon from '@mui/icons-material/Email'
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from '@mui/icons-material/visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Button } from '@mui/material'
@@ -11,7 +11,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
-
 export default function SignUpForm({ formState, setFormState }) {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);

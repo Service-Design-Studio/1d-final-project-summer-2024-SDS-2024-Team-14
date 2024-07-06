@@ -21,7 +21,7 @@ body {
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
-    )
+    ),
     rgb(var(--background-start-rgb));
 }
 
@@ -82,7 +82,7 @@ body {
 
 @layer components {
   .btn {
-    @apply flex justify-center  px-4 py-3 w-full btn-border shadow-lg;
+    @apply flex justify-center px-4 py-3 w-full btn-border shadow-lg;
   }
   .btn-darkblue {
     @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white;
@@ -118,7 +118,6 @@ body {
   flex: 0 0 100%;
   min-width: 0;
 }
-
 }
 
 @layer utilities {
@@ -159,3 +158,8 @@ body {
     @apply;
   }
 }
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
