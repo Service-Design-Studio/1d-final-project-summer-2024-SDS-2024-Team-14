@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../components/header';
-import Footer from '../components/document_manager/dm_footer';
-import Card from '../components/document_manager/dm_card';
-import "../styles/globals.css"
+import Header from '../../components/header';
+import Footer from '../../components/document_manager/dm_footer';
+import Card from '../../components/document_manager/dm_card';
+import "../../styles/globals.css"
 import useAuth from "@/hooks/useAuth";
 
 // const DocumentManager = () => {

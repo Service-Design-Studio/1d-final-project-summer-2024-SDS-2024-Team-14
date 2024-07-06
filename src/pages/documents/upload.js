@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import UploadDropdown from '../components/uploadpage/dropdown.js';
-import '../styles/globals.css';
+import UploadDropdown from '../../components/uploadpage/dropdown.js';
+import '../../styles/globals.css';
 import 'react-notifications-component/dist/theme.css';
 import { Icon } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import UploadFile from '../components/uploadpage/upload_file.js';
-import Header from '../components/header.js';
+import UploadFile from '../../components/uploadpage/upload_file.js';
+import Header from '../../components/header.js';
 
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);

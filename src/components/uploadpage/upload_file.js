@@ -81,8 +81,8 @@ class UploadFile extends Component {
 
     render() {
         const uploadButtonClasses = (this.state.selectedFiles.length > 0)
-            ? "text-mdd px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
-            : "text-mdd px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
+            ? "text-lg px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
+            : "text-lg px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
         return (
             <div className="flex flex-col items-center justify-center">
                 <div className="pt-4 w-full md:w-11/12 md:mt-4">
@@ -110,11 +110,11 @@ class UploadFile extends Component {
                     <div className="py-5 font-bold rounded-xl">
                         {this.fileData()}
                     </div>
-                    <div className="w-full flex flex-row items-end justify-end mt-auto py-vw-2">
-                        <div className="flex space-x-4">
+                    <div className="w-full flex flex-row items-end md:justify-end justify-center mt-auto py-vw-2">
+                        <div className="flex md:space-x-4 space-x-8">
                         <button
                             onClick={this.clearAllFiles}
-                            className="text-mdd px-5 py-2 text-purpleblue border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white">
+                            className="text-lg px-5 py-2 text-purpleblue border-solid border-purpleblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white">
                             Clear All
                         </button>
                         <button
