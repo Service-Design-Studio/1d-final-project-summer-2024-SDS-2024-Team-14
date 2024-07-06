@@ -39,7 +39,7 @@ const DocumentManager = () => {
 
   return (
     <div className="min-h-screen bg-white p-4 flex flex-col justify-between">
-      <Header title="Document Manager" />
+      <Header title="Document Manager"/>
       <main className="grid grid-cols-2 w-[95%] mx-auto gap-6 sm:gap-8 md:gap-12 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex-grow"> {/* Increased gap value */}
         {cards.map((card, index) => (
           <Card key={index} title={card.title} date={card.date} bgColor={card.bgColor} iconColor={card.iconColor} />
