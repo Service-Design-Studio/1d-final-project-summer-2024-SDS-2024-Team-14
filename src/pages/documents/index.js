@@ -26,7 +26,7 @@ import useAuth from "@/hooks/useAuth";
 // export default DocumentManager;
 
 const DocumentManager = () => {
-    useAuth();
+    // useAuth();
   const cards = [
     { title: 'Health', date: '24 Dec 2020', bgColor: 'bg-blue-100', iconColor: 'text-blue-600' },
     { title: 'Career', date: '24 Dec 2020', bgColor: 'bg-purple-100', iconColor: 'text-purple-600' },
