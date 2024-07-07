@@ -87,7 +87,6 @@ class UploadFile extends Component {
             <div className="flex flex-col items-center justify-center">
                 <div className="pt-4 w-full md:w-11/12 md:mt-4">
                     <label
-                        htmlFor="dropzone-file"
                         className="w-full flex flex-col items-center justify-center border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5"
                     >
                         <div className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
@@ -100,7 +99,7 @@ class UploadFile extends Component {
                             </p>
                         </div>
                         <input
-                            id="dropzone-file"
+                            id="dropzone"
                             type="file"
                             className="hidden"
                             multiple
@@ -118,6 +117,7 @@ class UploadFile extends Component {
                             Clear All
                         </button>
                         <button
+                            id="upload"
                             onClick={this.onFileUpload}
                             className={uploadButtonClasses}
                             disabled={!this.state.selectedFiles}>

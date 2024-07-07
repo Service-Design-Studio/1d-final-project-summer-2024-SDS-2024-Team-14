@@ -42,7 +42,7 @@ export default function Upload() {
           <UploadDropdown value={dropdownValue} onChange={handleDropdownChange} />
         </div>
         <div className="mb-4">
-          <UploadFile className="flex flex-col items-center justify-center" />
+          <UploadFile id="uploadfiles" className="flex flex-col items-center justify-center" />
         </div>
       </form>
       

@@ -29,7 +29,7 @@ const Card = ({ title, date, bgColor, iconColor }) => {
       <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
         <FontAwesomeIcon icon={faFolder} className={`sm:text-2xl text-lg ${iconColor}`} /> {/* Adjusted icon size */}
       </div>
-      <h2 className="text-lg sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}
+      <h2 id='title' className="text-lg sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}
         {title}
       </h2>
       <p className="text-md sm:text-xl md:text-2xl lg:text-1xl xl:text-1xl text-blue-600 text-center overflow-hidden whitespace-nowrap"> {/* Adjusted text size */}

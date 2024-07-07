@@ -1,15 +1,6 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import "../general_definitions.cy.js"
 
-//Scenario 1: clicking on back button
-When("I click the back button", () => {
-    cy.get("#back").click()
-})
-//or put this in general definitions ?
-When('I click the back button', () => {
-    cy.go('back'); 
-  });
-
 Then("I should be directed to the Home page", () => {
     cy.url().should('eq', Cypress.config().baseUrl+'')
 })
@@ -31,8 +22,8 @@ Then(/^I should (not )?see the following options in the pop-up menu:$/, (not, da
     });
   });
 
-When("I click on the files button", ()=>{
-    cy.get("#files").click()
+When("I click on the uploadfiles button", ()=>{
+    cy.get("#uploadfiles").click()
 })
 
 Then("I should be directed to the Upload page", () => {
