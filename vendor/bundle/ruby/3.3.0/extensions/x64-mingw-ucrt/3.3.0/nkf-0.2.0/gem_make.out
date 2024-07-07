@@ -1,0 +1,19 @@
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+C:/Ruby33-x64/bin/ruby.exe extconf.rb
+creating Makefile
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240706-43888-5z4l3 sitelibdir\=./.gem.20240706-43888-5z4l3 clean
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240706-43888-5z4l3 sitelibdir\=./.gem.20240706-43888-5z4l3
+generating nkf-x64-mingw-ucrt.def
+compiling nkf.c
+linking shared-object nkf.so
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240706-43888-5z4l3 sitelibdir\=./.gem.20240706-43888-5z4l3 install
+/usr/bin/install -c -m 0755 nkf.so ./.gem.20240706-43888-5z4l3
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240706-43888-5z4l3 sitelibdir\=./.gem.20240706-43888-5z4l3 clean

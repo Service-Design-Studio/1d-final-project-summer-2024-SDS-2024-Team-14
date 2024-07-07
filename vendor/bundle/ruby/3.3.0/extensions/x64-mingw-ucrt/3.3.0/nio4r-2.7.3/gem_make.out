@@ -1,0 +1,18 @@
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nio4r-2.7.3/ext/nio4r
+C:/Ruby33-x64/bin/ruby.exe extconf.rb
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nio4r-2.7.3/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20240626-23268-hjw5ej sitelibdir\=./.gem.20240626-23268-hjw5ej clean
+make: *** No rule to make target 'clean'.  Stop.
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nio4r-2.7.3/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20240626-23268-hjw5ej sitelibdir\=./.gem.20240626-23268-hjw5ej
+make: Nothing to be done for 'all'.
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nio4r-2.7.3/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20240626-23268-hjw5ej sitelibdir\=./.gem.20240626-23268-hjw5ej install
+make: Nothing to be done for 'install'.
+
+current directory: C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/nio4r-2.7.3/ext/nio4r
+make DESTDIR\= sitearchdir\=./.gem.20240626-23268-hjw5ej sitelibdir\=./.gem.20240626-23268-hjw5ej clean
+make: *** No rule to make target 'clean'.  Stop.

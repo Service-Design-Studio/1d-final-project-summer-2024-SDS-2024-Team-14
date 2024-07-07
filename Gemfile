@@ -77,3 +77,6 @@ group :production do
 end
 
 gem "appengine", "~> 0.7.0"
+
+# gem for google translate
+gem 'google-cloud-translate', '~> 3.2', '>= 3.2.2'
