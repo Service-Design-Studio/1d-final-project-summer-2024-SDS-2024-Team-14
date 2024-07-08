@@ -5,15 +5,21 @@ Feature: Documents Page
   Background:
     Given I am on the Documents page 
 
-  Scenario: Scanning Documents
+  Scenario: Scanning Documents Successful
     When I click on the "plus" button
     Then I should see option "scan"
     When I click on the "scan" button
     Then I should be navigated to the "scan" page
     Then I should be able to see my camera live inputs
-    When I press the "Capture" button 
+    When I click the "Capture" button 
     Then I should be able to take a picture 
     Then I should be able to see the parsed information
+
+   Scenario: Scanning Documents Unsuccessful  
+    Given I am on the picture upload page
+    When I click the "Capture" button
+    And the picture is too unclear to be parsed
+    Then I should see a message "Please retake the picture."
   
   Scenario: Successful in adding Documents
     When I click on the "plus" button
