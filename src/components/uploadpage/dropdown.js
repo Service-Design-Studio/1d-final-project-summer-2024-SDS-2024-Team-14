@@ -64,9 +64,8 @@ const CustomButton = styled(Button)(({ theme }) => ({
   borderRadius: '10px', // Change button roundness here
 }));
 
-export default function UploadDropdown() {
+export default function UploadDropdown({selectedCategory, setSelectedCategory}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Select Category Here', icon: null });
   const [menuWidth, setMenuWidth] = React.useState(null);
   const buttonRef = React.useRef(null);
   const open = Boolean(anchorEl);
