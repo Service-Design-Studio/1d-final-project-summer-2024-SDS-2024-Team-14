@@ -1,310 +1,56 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import { Button } from "@mui/base";
-import { Camera } from "react-camera-pro";
-import * as cv from "@techstark/opencv-js";
+import { useState, useRef, useCallback, useEffect } from 'react';
 import "../styles/globals.css";
-import { Canvas, createCanvas, Image, ImageData } from "canvas"
-
-////////////////////////////////////////////////////////////////////////////
-/*! jscanify v1.2.0 | (c) ColonelParrot and other contributors | MIT License */
-
-function distance(p1, p2) {
-    return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
-}
-
-/**
- * Finds the contour of the paper within the image
- * @param {*} img image to process (cv.Mat)
- * @returns the biggest contour inside the image
- */
-function findPaperContour(img) {
-    const imgGray = new cv.Mat();
-    cv.cvtColor(img, imgGray, cv.COLOR_RGBA2GRAY);
-
-    const imgBlur = new cv.Mat();
-    cv.GaussianBlur(
-        imgGray,
-        imgBlur,
-        new cv.Size(5, 5),
-        0,
-        0,
-        cv.BORDER_DEFAULT
-    );
-
-    const imgThresh = new cv.Mat();
-    cv.threshold(imgBlur, imgThresh, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU);
-
-    let contours = new cv.MatVector();
-    let hierarchy = new cv.Mat();
-
-    cv.findContours(
-        imgThresh,
-        contours,
-        hierarchy,
-        cv.RETR_CCOMP,
-        cv.CHAIN_APPROX_SIMPLE
-    );
-    let maxArea = 0;
-    let maxContourIndex = -1;
-    for (let i = 0; i < contours.size(); ++i) {
-        let contourArea = cv.contourArea(contours.get(i));
-        if (contourArea > maxArea) {
-            maxArea = contourArea;
-            maxContourIndex = i;
-        }
-    }
-
-    const maxContour = contours.get(maxContourIndex);
-
-    imgGray.delete();
-    imgBlur.delete();
-    imgThresh.delete();
-    contours.delete();
-    hierarchy.delete();
-    return maxContour;
-}
-
-
-/**
- * Highlights the paper detected inside the image.
- * @param {*} image image to process
- * @param {*} options options for highlighting. Accepts `color` and `thickness` parameter
- * @returns `HTMLCanvasElement` with original image and paper highlighted
- */
-function highlightPaper(image, options) {
-    options = options || {};
-    options.color = options.color || "orange";
-    options.thickness = options.thickness || 10;
-    const canvas = createCanvas();
-    const ctx = canvas.getContext("2d");
-    const img = cv.imread(image);
-
-    const maxContour = findPaperContour(img);
-    cv.imshow(canvas, img);
-    if (maxContour) {
-        const {
-            topLeftCorner,
-            topRightCorner,
-            bottomLeftCorner,
-            bottomRightCorner,
-        } = getCornerPoints(maxContour, img);
-
-        if (
-            topLeftCorner &&
-            topRightCorner &&
-            bottomLeftCorner &&
-            bottomRightCorner
-        ) {
-            ctx.strokeStyle = options.color;
-            ctx.lineWidth = options.thickness;
-            ctx.beginPath();
-            ctx.moveTo(...Object.values(topLeftCorner));
-            ctx.lineTo(...Object.values(topRightCorner));
-            ctx.lineTo(...Object.values(bottomRightCorner));
-            ctx.lineTo(...Object.values(bottomLeftCorner));
-            ctx.lineTo(...Object.values(topLeftCorner));
-            ctx.stroke();
-        }
-    }
-
-    img.delete();
-    return canvas;
-}
-
-/**
-  * Extracts and undistorts the image detected within the frame.
-  * @param {*} image image to process
-  * @param {*} resultWidth desired result paper width
-  * @param {*} resultHeight desired result paper height
-  * @param {*} onComplete callback with `HTMLCanvasElement` passed - the unwarped paper
-  * @param {*} cornerPoints optional custom corner points, in case automatic corner points are incorrect
-  */
-function extractPaper(image, resultWidth, resultHeight, cornerPoints) {
-    const canvas = createCanvas();
-    const img = cv.imread(image);
-    const maxContour = findPaperContour(img);
-    const {
-        topLeftCorner,
-        topRightCorner,
-        bottomLeftCorner,
-        bottomRightCorner,
-    } = cornerPoints || getCornerPoints(maxContour, img);
-    let warpedDst = new cv.Mat();
-    let dsize = new cv.Size(resultWidth, resultHeight);
-    let srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
-        topLeftCorner.x,
-        topLeftCorner.y,
-        topRightCorner.x,
-        topRightCorner.y,
-        bottomLeftCorner.x,
-        bottomLeftCorner.y,
-        bottomRightCorner.x,
-        bottomRightCorner.y,
-    ]);
-    let dstTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
-        0,
-        0,
-        resultWidth,
-        0,
-        0,
-        resultHeight,
-        resultWidth,
-        resultHeight,
-    ]);
-    let M = cv.getPerspectiveTransform(srcTri, dstTri);
-    cv.warpPerspective(
-        img,
-        warpedDst,
-        M,
-        dsize,
-        cv.INTER_LINEAR,
-        cv.BORDER_CONSTANT,
-        new cv.Scalar()
-    );
-
-    cv.imshow(canvas, warpedDst);
-
-    img.delete();
-    warpedDst.delete();
-    return canvas;
-}
-
-/**
-   * Calculates the corner points of a contour.
-   * @param {*} contour contour from {@link findPaperContour}
-   * @returns object with properties `topLeftCorner`, `topRightCorner`, `bottomLeftCorner`, `bottomRightCorner`, each with `x` and `y` property
-   */
-function getCornerPoints(contour) {
-    let rect = cv.minAreaRect(contour);
-    const center = rect.center;
-
-    let topLeftCorner;
-    let topLeftCornerDist = 0;
-
-    let topRightCorner;
-    let topRightCornerDist = 0;
-
-    let bottomLeftCorner;
-    let bottomLeftCornerDist = 0;
-
-    let bottomRightCorner;
-    let bottomRightCornerDist = 0;
-
-    for (let i = 0; i < contour.data32S.length; i += 2) {
-        const point = { x: contour.data32S[i], y: contour.data32S[i + 1] };
-        const dist = distance(point, center);
-        if (point.x < center.x && point.y < center.y) {
-            // top left
-            if (dist > topLeftCornerDist) {
-                topLeftCorner = point;
-                topLeftCornerDist = dist;
-            }
-        } else if (point.x > center.x && point.y < center.y) {
-            // top right
-            if (dist > topRightCornerDist) {
-                topRightCorner = point;
-                topRightCornerDist = dist;
-            }
-        } else if (point.x < center.x && point.y > center.y) {
-            // bottom left
-            if (dist > bottomLeftCornerDist) {
-                bottomLeftCorner = point;
-                bottomLeftCornerDist = dist;
-            }
-        } else if (point.x > center.x && point.y > center.y) {
-            // bottom right
-            if (dist > bottomRightCornerDist) {
-                bottomRightCorner = point;
-                bottomRightCornerDist = dist;
-            }
-        }
-    }
-
-    return {
-        topLeftCorner,
-        topRightCorner,
-        bottomLeftCorner,
-        bottomRightCorner,
-    };
-}
-////////////////////////////////////////////////////////////////////////////
-
+import ScannedImage from '@/components/scanner/scanned_item';
+import CameraView from '../components/scanner/camera';
+import { Button } from "@mui/material";
 export default function Scanner() {
-    const camera = useRef(null);
+    const [imageList, setImageList] = useState([]);
     const [image, setImage] = useState(null);
-    const [processedImage, setProcessedImage] = useState(null);
-    const containerRef = useRef(null);
-    const processImage = useCallback(() => {
-        if (!image) return;
-        // containerRef.current.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = image;
-
-        img.onload = () => {
-            const resultCanvas = extractPaper(img, 386, 500);
-            containerRef.current.append(resultCanvas);
-
-            const highlightedCanvas = highlightPaper(img);
-            containerRef.current.append(highlightedCanvas);
-            /*
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
-            canvas.width = img.width;
-            canvas.height = img.height;
-            context.drawImage(img, 0, 0);
-
-
-            const src = cv.imread(canvas);
-            const dst = cv.Mat.zeros(src.rows, src.cols, cv.CV_8UC3);
-            cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
-            cv.threshold(src, src, 120, 200, cv.THRESH_BINARY);
-            const contours = new cv.MatVector();
-            const hierarchy = new cv.Mat();
-            cv.findContours(src, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
-            for (let i = 0; i < contours.size(); ++i) {
-                const color = new cv.Scalar(
-                    Math.round(Math.random() * 255),
-                    Math.round(Math.random() * 255),
-                    Math.round(Math.random() * 255)
-                );
-                cv.drawContours(dst, contours, i, color, 1, cv.LINE_8, hierarchy, 100);
-            }
-            const processedCanvas = document.createElement("canvas");
-            cv.imshow(processedCanvas, dst);
-            setProcessedImage(processedCanvas.toDataURL());
-
-            src.delete();
-            dst.delete();
-            contours.delete();
-            hierarchy.delete();
-            */
-        };
-    }, [image]);
+    const camera = useRef(null);
+    const [cameraLoaded, setCameraLoaded] = useState(false);
 
     useEffect(() => {
-        processImage();
-    }, [image, processImage]);
+        if (image) {
+            setImageList((prevList) => [...prevList, image]);
+            console.log("imageList: ", imageList);
+        }
+    }, [image])
+
+    function removeImage(index) {
+        if (index < imageList.length){
+        setImageList((prevList) => prevList.filter((item) => {return item != prevList[index]}));}
+    }
+    
+
+    useEffect(() => {
+        if (camera.current) {
+            setCameraLoaded(true);
+            console.log(cameraLoaded, ": cameraloaded");
+        }
+    }, [camera, cameraLoaded]);
 
     return (
-        <div className="bg-white w-screen h-full">
-            <div className="w-5/12">
-                <Camera ref={camera} facingMode="environment" aspectRatio={2 / 3} />
-            </div>
-            <Button
-                className="card bg-darkblue text-xl text-white"
-                onClick={() => {
-                    setImage(camera.current.takePhoto());
-                }}
-            >
-                Take photo
-            </Button>
+        <div className='w-full h-screen bg-white'>
+            <div className='w-full text-2xl ' alt={"header placeholder"}>Scanner</div>
 
-            <div className="flex h-50">
-                <div ref={containerRef} id="result-container"></div>
+            <div className="flex flex-col lg:flex-row items-center justify-center ">
+                <div className='flex flex-col w-11/12 xsm:w-7/12 sm:w-5/12 lg:w-fit items-center'>
+                    <CameraView
+                        cameraRef={camera}
+                    />
+                    <Button
+                        className={`w-full bg-darkblue text-white hover:bg-white hover:text-darkblue text-xl rounded-md my-5`}
+                        onClick={() => {
+                            if (cameraLoaded) setImage(camera.current.takePhoto())
+                        }}
+                    >Scan Document</Button>
+                </div>
+                <div className='flex flex-row w-11/12 xsm:w-7/12 sm:w-5/12 lg:w-fit'>
+                    {imageList.map((image, index) => (
+                        <ScannedImage src={image} key={index} index={ index} remove={removeImage} />
+                    ))}
+                </div>
 
-                {/* <img className="flex-1 w-auto h-auto" src={image} alt="Taken photo" /> */}
-                {/* <img className="flex-1 w-auto h-auto" src={processedImage} alt="Processed photo" /> */}
             </div>
-        </div>
-    );
+        </div>)
 }
