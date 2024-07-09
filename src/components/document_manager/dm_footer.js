@@ -24,6 +24,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
+import '../../styles/globals.css';
 
 const Footer = () => {
   return (

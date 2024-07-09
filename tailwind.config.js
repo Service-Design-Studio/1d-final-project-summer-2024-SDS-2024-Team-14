@@ -34,6 +34,23 @@ module.exports = {
         slideIn: 'slideIn 1s ease-in-out forwards',
         slideOut: 'slideOut 1s ease-in-out forwards',
       },
+      padding: {
+        'vw-1': '1vw',
+        'vw-2': '2vw',
+        'vw-3': '3vw',
+        'vw-4': '4vw',
+        'vw-5': '5vw',
+        
+      },
+      margin: {
+        'vw-1': '1vw',
+        'vw-2': '2vw',
+        'vw-3': '3vw',
+        'vw-4': '4vw',
+        'vw-5': '5vw',
+        
+      },
+
     },
     textColor: {
       'default': 'black',
@@ -53,7 +70,6 @@ module.exports = {
       'mutedgreen':'#2C7662',
       'mutedyellow':'#B49438',
       'mutedred':'#AF1B1B',
-      'darkblue':'#405DB5',
       'lightpink':'#F38CE3',
       'lightblue':'#4378DB',
       'lightpurple':'#9B65B5',
@@ -80,6 +96,7 @@ module.exports = {
       'lightyellow':'#fde68a',
       'red':'#ef4444',
       'lightred':'#ffcdd2',
+      'purpleblue':'#526AFF',
       'blue-600': '#1E88E5',
       'lightpurple':'#E6D6FA',
     },

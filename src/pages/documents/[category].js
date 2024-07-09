@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/document_manager/dm_header';
 import DocumentCard from '@/components/document_manager/d_card';
 import Footer from '@/components/document_manager/dm_footer'; // Import the Footer component
+import '../../styles/globals.css';
 
 const DocumentStatusPage = () => {
   const router = useRouter();

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Header from '../components/document_manager/dm_header';
-import Footer from '../components/document_manager/dm_footer';
-import Card from '../components/document_manager/dm_card';
-import Modal from '../components/document_manager/dm_modal';
-import '../styles/globals.css';
+import Header from '../../components/document_manager/dm_header';
+import Footer from '../../components/document_manager/dm_footer';
+import Card from '../../components/document_manager/dm_card';
+import Modal from '../../components/document_manager/dm_modal';
+import '../../styles/globals.css';
+import useAuth from "@/hooks/useAuth";
+
 
 const DocumentManager = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [documentCounts, setDocumentCounts] = useState([]);
   const router = useRouter();
+  useAuth();
 //PlaceHolder
   useEffect(() => {
     const mockData = [
@@ -56,6 +59,27 @@ const DocumentManager = () => {
   const handleCardClick = (title) => {
     router.push(`/Documents/${title.toLowerCase()}`);
   };
+
+// const DocumentManager = () => {
+//   return (
+//     <div className="min-h-screen bg-white p-4 flex flex-col justify-between">
+//       <Header />
+//       <main className="grid grid-cols-1 sm:grid-cols-2 gap-20 flex-grow">
+//         <Card bgColor="bg-blue-100" iconColor="text-blue-600" title="Health" date="24 Dec 2020" />
+//         <Card bgColor="bg-purple-100" iconColor="text-purple-600" title="Career" date="24 Dec 2020" />
+//         <Card bgColor="bg-pink-100" iconColor="text-pink-600" title="Education" date="23 Dec 2020" />
+//         <Card bgColor="bg-blue-100" iconColor="text-blue-600" title="Family" date="24 Dec 2020" />
+//         <Card bgColor="bg-purple-100" iconColor="text-purple-600" title="Finance" date="24 Dec 2020" />
+//         <Card bgColor="bg-pink-100" iconColor="text-pink-600" title="Property" date="23 Dec 2020" />
+//         <Card bgColor="bg-blue-100" iconColor="text-blue-600" title="Pattern" date="24 Dec 2020" />
+//       </main>
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default DocumentManager;
+
 
   const cards = [
     { title: 'Health', bgColor: 'bg-lightblue', iconColor: 'text-lightblue', textColor: 'text-darkblue' },
