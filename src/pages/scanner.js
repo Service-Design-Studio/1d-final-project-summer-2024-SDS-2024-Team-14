@@ -40,7 +40,7 @@ export default function Scanner() {
 
     function removeImage(index) {
         if (index < imageList.length) {
-            setImageList((prevList) => prevList.filter((item) => { return item != prevList[index] }));
+            setImageList((prevList) => prevList.filter((_, i) => { return i != index }));
         }
     }
 

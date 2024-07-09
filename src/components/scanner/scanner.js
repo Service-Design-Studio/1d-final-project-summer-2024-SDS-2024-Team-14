@@ -234,7 +234,6 @@ function getCornerPoints(contour) {
 export default function Scanner() {
     const camera = useRef(null);
     const [image, setImage] = useState(null);
-    const [processedImage, setProcessedImage] = useState(null);
     const containerRef = useRef(null);
     const processImage = useCallback(() => {
         if (!image) return;
