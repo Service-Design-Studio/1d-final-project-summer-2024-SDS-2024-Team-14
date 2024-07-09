@@ -6,7 +6,6 @@ class DocumentController < ApplicationController
         category = params[:category]
         begin
             @user = User.find(user)
-            puts @user
         rescue ActiveRecord::RecordNotFound
             render json: { message: "User does not exist" }, status: :unprocessable_entity
         end
@@ -39,7 +38,6 @@ class DocumentController < ApplicationController
                 {
                   id: document.id,
                   name: document.name,
-                  category: document.category,
                   file_url: document.file.attached? ? url_for(document.file) : nil
                 }
             end
