@@ -15,7 +15,6 @@ class UploadFile extends Component {
     state = {
         selectedFiles: []
     };
-
     onFileChange = (event) => {
         const files = Array.from(event.target.files);
         const updatedFiles = files.map(file => ({
@@ -30,9 +29,14 @@ class UploadFile extends Component {
     };
 
     onFileUpload = () => {
+        const { selectedCategory } = this.props;
+        const userId = localStorage.getItem('userID');
+        // const category =
         const formData = new FormData();
         this.state.selectedFiles.forEach(fileObj => {
             formData.append("files[]", fileObj.file, fileObj.file.name);
+            formData.append("id", userId)
+            formData.append("category", selectedCategory.name)
         });
 
         axiosInstance.post("/document", formData);

@@ -10,6 +10,7 @@ import Header from '../../components/header.js';
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownValue, setDropdownValue] = useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Select Category Here', icon: null });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -39,10 +40,10 @@ export default function Upload() {
       >
         <Header title="Upload" backButton="/documents"/>
         <div className="flex items-center justify-center md:mb-4 mb-6">
-          <UploadDropdown value={dropdownValue} onChange={handleDropdownChange} />
+          <UploadDropdown selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} value={dropdownValue} onChange={handleDropdownChange} />
         </div>
         <div className="mb-4">
-          <UploadFile id="uploadfiles" className="flex flex-col items-center justify-center" />
+          <UploadFile selectedCategory={selectedCategory} className="flex flex-col items-center justify-center" />
         </div>
       </form>
       
