@@ -24,7 +24,7 @@
     "@zxing/library": "^0.21.1",
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
-    "embla-carousel-react": "^8.1.5",
+    "embla-carousel-react": "^8.1.6",
     "http-proxy-agent": "^7.0.2",
     "jscanify": "^1.2.0",
     "net": "^1.0.2",

@@ -87,6 +87,9 @@ body {
   .btn-darkblue {
     @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white;
   }
+  .btn-submit{
+  @apply w-full bg-darkblue text-white hover:bg-white hover:text-darkblue text-xl rounded-md my-5 md:text-2xl border-solid border-4 border-darkblue
+  }
   .btn-disabled {
     @apply btn bg-disabled fill-white text-darkblue;
   }
