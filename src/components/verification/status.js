@@ -1,5 +1,5 @@
 import React from "react";
-import Notification from "../../components/verification/notifications.js";
+import Notification from "./notifications.js";
 import "../../styles/globals.css";
 
 export default function Status() {
