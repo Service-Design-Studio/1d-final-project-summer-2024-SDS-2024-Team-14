@@ -45,7 +45,8 @@ const Footer = () => {
           <button className="text-gray-600">
             <FontAwesomeIcon icon={faBell} />
           </button>
-          <button 
+          <button
+            id='plus' 
             className="bg-purpleblue text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-darkpurple transition duration-300"
             onClick={openModal}
           >

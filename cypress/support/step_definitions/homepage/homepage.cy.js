@@ -26,8 +26,6 @@ Then("the QR Code should have my id bounded to it", () => {
 
 /* Scenario: Scanning the qrcode */
 
-
-
 Given("that the Show UNHCR Card button has been clicked",() =>{
   homePage.clickCardButton()
 })
