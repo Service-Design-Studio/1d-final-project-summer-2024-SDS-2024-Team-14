@@ -35,7 +35,7 @@ const Header = ({ title, backButton = "/" }) => {
       <Link href={backButton} className='text-blue-600'>
         <FontAwesomeIcon icon={faArrowLeft} size="lg" />
       </Link>
-      <h1 className="text-xl md:text-3xl font-bold text-darkblue">{title}</h1>
+      <h1 className="text-xl md:text-3xl font-bold text-darkblue font-bold">{title}</h1>
       <button className="text-blue-600">
         <FontAwesomeIcon icon={faCog} size="lg" />
       </button>

@@ -1,5 +1,4 @@
 import React from 'react';
-import CardHeader from './dm_cardheader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
