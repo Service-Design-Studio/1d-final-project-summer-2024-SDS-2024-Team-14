@@ -2,7 +2,6 @@ import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/document_manager/dm_footer';
 import Card from '../../components/document_manager/dm_card';
-import Modal from '@/components/document_manager/dm_modal';
 import "../../styles/globals.css"
 import useAuth from "@/hooks/useAuth";
 
@@ -26,6 +25,8 @@ import useAuth from "@/hooks/useAuth";
 
 // export default DocumentManager;
 
+const backButtonUrl = "/"; // Define the backButton URL here
+
 const DocumentManager = () => {
     useAuth();
   const cards = [
@@ -38,8 +39,7 @@ const DocumentManager = () => {
     { title: 'Pattern', date: '24 Dec 2020', bgColor: 'bg-blue-100', iconColor: 'text-blue-600' },
   ];
 
-  const backButtonUrl = "/"; // Define the backButton URL here
-
+  
   return (
     <div className="min-h-screen bg-white p-4 flex flex-col justify-between">
       <Header title="Document Manager" backButton={backButtonUrl} /> {/* Pass backButton prop */}
