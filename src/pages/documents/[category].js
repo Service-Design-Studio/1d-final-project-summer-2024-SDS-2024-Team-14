@@ -1,15 +1,17 @@
 // pages/[category].js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Header from '@/components/document_manager/dm_header';
-import DocumentCard from '@/components/document_manager/d_card';
-import Footer from '@/components/document_manager/dm_footer'; // Import the Footer component
+import Header from '../../components/header';
+import DocumentCard from '../../components/document_manager/d_card';
+import Footer from '../../components/document_manager/dm_footer'; // Import the Footer component
 import '../../styles/globals.css';
+
 
 const DocumentStatusPage = () => {
   const router = useRouter();
   const { category } = router.query;
   const [documents, setDocuments] = useState([]);
+  const backButtonUrl = "/documents";
 
   const mockData = [
     { id: 1, name: 'Health Document 1', status: 'verified', category: 'health' },
@@ -47,7 +49,7 @@ const DocumentStatusPage = () => {
 
   return (
     <div className="min-h-screen bg-white p-4 flex flex-col">
-      <Header category={category} />
+      <Header category={category} backButton={backButtonUrl}/>
       <div className="mt-4 flex-1">
         <div>
           <h2 className="text-lg text-blue-600 font-bold my-4">Pending Documents:</h2>

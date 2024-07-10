@@ -28,7 +28,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCog } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 
-const Header = ({ title, backButton }) => {
+const Header = ({ title, backButton = "/" }) => {
   return (
     <header className="flex items-center justify-between mb-12">
       <Link href={backButton} className='text-blue-600'>
