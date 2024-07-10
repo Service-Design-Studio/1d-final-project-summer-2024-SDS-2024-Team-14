@@ -86,7 +86,7 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
   };
 
   return (
-    <div className="flex md:w-10/12 w-full items-center justify-center">
+    <div className="flex md:w-6/12 w-full items-center justify-center">
       <CustomButton
         ref={buttonRef}
         id="demo-customized-button"
@@ -123,6 +123,7 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
           <LocalHospitalIcon />
           Health
         </MenuItem>
+        <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
           <SchoolIcon />
           Education

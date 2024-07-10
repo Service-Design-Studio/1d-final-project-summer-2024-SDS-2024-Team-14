@@ -5,13 +5,10 @@ import Image from 'next/image';
 import LoginCarousel from '../components/loginpage/login_carousel';
 import { Box, InputLabel, MenuItem, Select, FormControl, } from '@mui/material';
 import DropdownItem from "../components/loginpage/dropdown_item";
-import axios from "axios";
 import { Store, ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 import axiosInstance from "../utils/axiosInstance";
 
-import { getSession, SessionProvider, signIn } from "next-auth/react";
-import { redirect } from 'next/navigation'
 import dayjs from "dayjs";
 import LoginForm from "../components/loginpage/login_form";
 import SignUpForm from "../components/loginpage/signup_form";
@@ -44,7 +41,7 @@ export default function Login({ session }) {
         if (message) {
         Store.addNotification({
                     title: "Error",
-                    message: "Please login first before using the services",
+                    message: message,
                     type: "danger",
                     insert: "bottom",
                     container: "bottom-right",
