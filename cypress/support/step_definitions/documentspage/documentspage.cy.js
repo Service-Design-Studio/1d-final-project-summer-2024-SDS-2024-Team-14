@@ -18,9 +18,9 @@ When('I click the files button', () => {
 });
 
 Then('I should be redirected to the Upload page',() => {
-    cy.url().should('eq', Cypress.config().baseUrl+'documents'+(page.toLowerCase() === "documents" ? "" : `${page().replace(' ', '-')}`));
+    cy.url().should('eq', Cypress.config().baseUrl+'documents'+(page.toLowerCase() === "documents" ? "" : `${pagetoLowerCase().replace(' ', '-')}`));
 })
 
 When('I click on the dropdown menu', () =>{
-
+    cy.get('#dropdownmenu').click()
 })

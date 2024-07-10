@@ -89,9 +89,9 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
     <div className="flex md:w-10/12 w-full items-center justify-center">
       <CustomButton
         ref={buttonRef}
-        id="demo-customized-button"
+        id="dropdownmenu"
         aria-label="more"
-        aria-controls={open ? 'demo-customized-menu' : undefined}
+        aria-controls={open ? 'dropdownmenu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         variant="contained"
@@ -100,14 +100,14 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
         endIcon={<KeyboardArrowDownIcon className='text-bold'/>}
       >
         {selectedCategory.icon && <selectedCategory.icon className="mr-2" />}
-        <span className='text-lg md:text-xl' style={{textTransform: 'none' }}>
+        <span className='text-lg md:text-xl text-wrap text-balanced' style={{textTransform: 'none' }}>
           {selectedCategory.name}
         </span>
       </CustomButton>
       <StyledMenu
-        id="demo-customized-menu"
+        id="dropdownmenu"
         MenuListProps={{
-          'aria-labelledby': 'demo-customized-button',
+          'aria-labelledby': 'dropdownmenu-button',
         }}
         anchorEl={anchorEl}
         open={open}
@@ -123,6 +123,7 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
           <LocalHospitalIcon />
           Health
         </MenuItem>
+        <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
           <SchoolIcon />
           Education

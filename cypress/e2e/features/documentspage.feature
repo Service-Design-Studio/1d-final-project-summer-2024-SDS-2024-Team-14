@@ -26,8 +26,9 @@ Feature: Documents Page
     When I click on the "plus" button
     Then I should see "popupmenu"
     When I click on the "files" button
-    Then I should be redirected to the "Upload" page
-    When I click on the dropdown menu
+    Then I should be redirected to the "Upload" page 
+    When I click on the "dropdownmenu" button
+    #
     Then I should see a list of options
     When I click on "option_name" menu item
     Then I click on the "dropzone"
