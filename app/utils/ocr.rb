@@ -59,8 +59,10 @@ end
 def ocr(file_path)
   prompt = if file_path.downcase.end_with?('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')
              process_image(file_path)
+             puts "Supported image type"
            elsif file_path.downcase.end_with?('.pdf')
              process_pdf(file_path)
+             puts "Supported pdf type"
            else
              puts "Unsupported file type"
              return
