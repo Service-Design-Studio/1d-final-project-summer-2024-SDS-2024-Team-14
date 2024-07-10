@@ -5,10 +5,10 @@ import CameraView from '../../components/scanner/camera';
 import { Button } from "@mui/material";
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
-import Header from '../../components/scanner/header';
+import Header from '../../components/header';
 import { Alert, AlertTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Dialog, DialogActions, Dialogcontent, DialogContentText, DialogTitle } from '@mui/material';
+import { Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material';
 
 
 export default function Scanner() {
@@ -20,6 +20,7 @@ export default function Scanner() {
     const [notif, setNotif] = useState(false);
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start' });
     const imageRef = useRef(null);
+    const backButtonUrl = "/documents";
 
     const [slideCount, setSlideCount] = useState(1);
 
@@ -61,8 +62,10 @@ export default function Scanner() {
     }, [notif])
 
     return (
-        <div className='flex flex-col min-w-full min-h-screen h-full bg-white'>
-            <Header text={"Scanner"} onClick={() => { "/" }} />
+        <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
+            <div className="w-11/12 mt-4">
+                <Header title={"Scanner"} backButton={backButtonUrl} />
+            </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
                 severity='error'
@@ -90,7 +93,7 @@ export default function Scanner() {
                     </div>
 
                 </div>
-                <div className=' text-darkblue text-xl sm:text-3xl mt-5 lg:ml-5 lg:mt-0 w-full lg:w-7/12  font-semibold'>
+                <div className=' text-darkblue text-xl sm:text-3xl mt-5 lg:ml-20 lg:mt-0 w-full lg:w-7/12  font-semibold'>
                     <span className='w-full'>{count} Scanned Documents</span>
                     <div className='flex flex-row w-full'>
                         <Button
