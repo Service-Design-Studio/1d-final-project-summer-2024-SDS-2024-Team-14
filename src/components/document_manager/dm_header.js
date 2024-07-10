@@ -28,14 +28,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCog } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 
-const Header = ({ title, backButton = "/" }) => {
-    title = title.charAt(0).toUpperCase() + title.slice(1)
+
+const Header = ({ title, backButton = "/"}) => {
   return (
     <header className="flex items-center justify-between mb-12">
       <Link href={backButton} className='text-blue-600'>
         <FontAwesomeIcon icon={faArrowLeft} size="lg" />
+      {/*</button>*/}
+        {/*{category ? `${category.charAt(0).toUpperCase() + category.slice(1)}` : 'Document Manager'}*/}
       </Link>
-      <h1 className="text-xl md:text-3xl font-bold text-darkblue font-bold">{title}</h1>
+      <h1 className="text-xl md:text-3xl font-bold text-darkblue">{title}</h1>
       <button className="text-blue-600">
         <FontAwesomeIcon icon={faCog} size="lg" />
       </button>
@@ -44,5 +46,4 @@ const Header = ({ title, backButton = "/" }) => {
 };
 
 export default Header;
-
 

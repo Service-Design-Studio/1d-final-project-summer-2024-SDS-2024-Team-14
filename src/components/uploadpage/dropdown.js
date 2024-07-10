@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SchoolIcon from '@mui/icons-material/School';
 import Divider from '@mui/material/Divider';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import WorkIcon from '@mui/icons-material/Work';
 import FamilyRestroomIcon from '@mui/icons-material/FamilyRestroom';
@@ -85,7 +86,7 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
   };
 
   return (
-    <div className="flex md:w-10/12 w-full items-center justify-center">
+    <div className="flex md:w-6/12 w-full items-center justify-center">
       <CustomButton
         ref={buttonRef}
         id="demo-customized-button"
@@ -118,6 +119,11 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
           },
         }}
       >
+        <MenuItem onClick={() => handleClose('Health', LocalHospitalIcon)} disableRipple>
+          <LocalHospitalIcon />
+          Health
+        </MenuItem>
+        <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
           <SchoolIcon />
           Education

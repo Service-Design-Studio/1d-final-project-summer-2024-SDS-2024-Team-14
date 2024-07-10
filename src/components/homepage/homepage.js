@@ -30,7 +30,7 @@ export default function Homepage(props) {
     }, []);
 
     return (
-        <div className="flex flex-col  px-5 items-center">
+        <div className="flex flex-col px-5 items-center mt-4">
             {!props.loading && data && <div><HomeHeader text={"Home"} />
                 <IdCard data={data} loading={loading} />
                 <Features id={userID}/></div>}

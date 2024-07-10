@@ -4,6 +4,8 @@ import axiosInstance from "../../utils/axiosInstance";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { Icon } from "@mui/material";
 import shortid from 'shortid';
+import {ReactNotifications, Store} from "react-notifications-component";
+import 'react-notifications-component/dist/theme.css'
 
 const CustomFileUploadOutlinedIcon = () => {
     return (
@@ -30,16 +32,33 @@ class UploadFile extends Component {
 
     onFileUpload = () => {
         const { selectedCategory } = this.props;
-        const userId = localStorage.getItem('userID');
-        // const category =
-        const formData = new FormData();
-        this.state.selectedFiles.forEach(fileObj => {
-            formData.append("files[]", fileObj.file, fileObj.file.name);
-            formData.append("id", userId)
-            formData.append("category", selectedCategory.name)
-        });
+        if (selectedCategory.name === "Select Category Here"){
+            Store.addNotification({
+                    title: "Error",
+                    message: "Please choose a category first before uploading",
+                    type: "danger",
+                    insert: "bottom",
+                    container: "bottom-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+        }
+        else {
+            const userId = localStorage.getItem('userID');
+            // const category =
+            const formData = new FormData();
+            this.state.selectedFiles.forEach(fileObj => {
+                formData.append("files[]", fileObj.file, fileObj.file.name);
+                formData.append("id", userId)
+                formData.append("category", selectedCategory.name)
+            });
 
-        axiosInstance.post("/document", formData);
+            axiosInstance.post("/document", formData);
+        }
     };
 
     fileData = () => {
@@ -89,7 +108,7 @@ class UploadFile extends Component {
             : "text-lg px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
         return (
             <div className="flex flex-col items-center justify-center">
-                <div className="pt-4 w-full md:w-11/12 md:mt-4">
+                <div className="pt-4 w-full md:w-7/12 md:mt-4">
                     <label
                         htmlFor="dropzone-file"
                         className="w-full flex flex-col items-center justify-center border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5"

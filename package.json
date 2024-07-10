@@ -20,7 +20,7 @@
     "@heroicons/react": "^2.1.4",
     "@material/textfield": "^14.0.0",
     "@mui/icons-material": "^5.15.20",
-    "@mui/material": "^5.15.20",
+    "@mui/material": "^5.16.0",
     "@mui/x-date-pickers": "^7.7.1",
     "@techstark/opencv-js": "^4.9.0-release.3",
     "@types/next-auth": "^3.15.0",
