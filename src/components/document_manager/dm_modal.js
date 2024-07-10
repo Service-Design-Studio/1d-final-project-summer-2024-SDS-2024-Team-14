@@ -3,12 +3,13 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faQrcode } from '@fortawesome/free-solid-svg-icons';
 
+
 const Modal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-20 left-0 right-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div className="bg-white rounded-lg p-6 w-3/5 max-w-md relative shadow-lg">
+    <div className="fixed mb-10 bottom-20 left-0 right-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div className="custom-shadow bg-white rounded-lg p-6 w-3/5 max-w-md relative">
         <button className="absolute top-2 right-2 text-gray-500" onClick={onClose}>
           &times;
         </button>
