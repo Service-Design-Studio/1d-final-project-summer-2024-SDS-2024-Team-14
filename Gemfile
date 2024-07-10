@@ -73,7 +73,9 @@ group :test do
 end
 
 group :production do
+  gem "google-cloud-storage", "~> 1.11", require: false
   gem "pg", "~> 1.5"
+  gem "dotenv-rails", "~> 2.7"
 end
 
 gem "appengine", "~> 0.7.0"

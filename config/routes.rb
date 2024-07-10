@@ -9,5 +9,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :verify
+  post 'document', to: 'document#create'
+  post 'document/retrieve', to: 'document#retrieve'
+  resources :document
   post 'login', to: 'login#create'
 end
