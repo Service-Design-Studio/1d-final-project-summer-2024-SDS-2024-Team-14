@@ -4,6 +4,7 @@ import Footer from '../../components/document_manager/dm_footer';
 import Card from '../../components/document_manager/dm_card';
 import "../../styles/globals.css"
 import useAuth from "@/hooks/useAuth";
+import {useRouter} from "next/router";
 
 // const DocumentManager = () => {
 //   return (
@@ -28,10 +29,11 @@ import useAuth from "@/hooks/useAuth";
 const backButtonUrl = "/"; // Define the backButton URL here
 
 const DocumentManager = () => {
+    const router = useRouter();
     useAuth();
 
     const handleCardClick = (title) => {
-      console.log(`Clicked on card with title: ${title}`);
+        router.push(`/documents/${title.toLowerCase()}`)
       // Add more actions as needed
   };
 
