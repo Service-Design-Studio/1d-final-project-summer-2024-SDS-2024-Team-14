@@ -18,7 +18,6 @@ export default function Info() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                console.log("test:",router.query.id)
                 const { data: res } = await axiosInstance.get("/users/" + router.query.id);
                 setData(res);
             } catch (error) {
@@ -30,7 +29,6 @@ export default function Info() {
     }, data);
     return (
         <div className="bg-white w-screen h-screen text-center">
-            {console.log("get data:", data)}
             <br />
             <Link href={"/"}><span className="underline">back</span></Link>
             {!loading && data && <div className="id-card">
