@@ -99,6 +99,7 @@ module.exports = {
       'purpleblue':'#526AFF',
       'blue-600': '#1E88E5',
       'lightpurple':'#E6D6FA',
+      'darkpurple':'#3222AF',
     },
     fontSize: {
       'xs': '0.1rem',
