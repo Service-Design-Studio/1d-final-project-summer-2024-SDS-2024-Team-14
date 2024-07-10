@@ -6,17 +6,21 @@ import { Button } from "@mui/material";
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
 import Header from '../../components/scanner/header';
+import { Alert, AlertTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { Dialog, DialogActions, Dialogcontent, DialogContentText, DialogTitle } from '@mui/material';
 
+
 export default function Scanner() {
-    const [imageList, setImageList] = useState([]);
+    const [imageList, setImageList] = useState({});
     const [uploadBtn, setUploadBtn] = useState("/images/upload.svg");
     const [image, setImage] = useState(null);
+    const [count, setCount] = useState(Object.keys(imageList).length)
     const [open, setOpen] = useState(false);
-
+    const [notif, setNotif] = useState(false);
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start' });
-    const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
-    const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
+    const imageRef = useRef(null);
+
     const [slideCount, setSlideCount] = useState(1);
 
     const onPrevButtonClick = useCallback(() => {
@@ -30,29 +34,49 @@ export default function Scanner() {
     }, [emblaApi])
 
     const camera = useRef(null);
-    const [cameraLoaded, setCameraLoaded] = useState(false);
     useEffect(() => {
         if (image) {
-            setImageList((prevList) => [...prevList, image]);
-            console.log("imageList: ", imageList);
+            setImageList((prev) => ({ ...prev, [Object.keys(imageList).length]: image }));
         }
+        setCount(Object.keys(imageList).length);
+        setImage(null)
     }, [image])
 
     function removeImage(index) {
-        if (index < imageList.length) {
-            setImageList((prevList) => prevList.filter((_, i) => { return i != index }));
-        }
+        setImageList((prev) => {
+            prev = Object.keys(prev).filter(k => k !== index).reduce((newObj, key) => {
+                newObj[key] = prev[key];
+                return newObj
+            }, {})
+            setCount(Object.keys(prev).length);
+            return prev;
+        })
     }
-
     useEffect(() => {
-        if (camera.current) {
-            setCameraLoaded(true);
-            console.log(cameraLoaded, ": cameraloaded");
+        if (notif) {
+            setTimeout(() => {
+                setNotif(false);
+            }, 3000);
         }
-    }, [camera, cameraLoaded]);
+    }, [notif])
+
     return (
-        <div className='flex flex-col min-w-full w-fit min-h-screen h-full bg-white'>
-            <Header text={"Scanner"} onClick={() => { }} />
+        <div className='flex flex-col min-w-full min-h-screen h-full bg-white'>
+            <Header text={"Scanner"} onClick={() => { "/" }} />
+            {notif ? <Alert
+                className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
+                severity='error'
+                action={
+                    <IconButton aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setNotif(false);
+                        }}
+                    >
+                        <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                }><AlertTitle>No document detected</AlertTitle>Please adjust camera and try again.</Alert> : null}
             <div className='flex flex-col lg:flex-row w-10/12 lg:ml-10 mx-auto'>
                 <div className='lg:w-5/12 '>
                     <div className="flex flex-col w-full ">
@@ -60,18 +84,17 @@ export default function Scanner() {
                             <CameraView
                                 cameraRef={camera}
                                 setImage={setImage}
-                                cameraLoaded={cameraLoaded}
                             />
                         </div>
 
                     </div>
 
                 </div>
-                <div className=' text-darkblue text-lg sm:text-3xl lg:ml-5 w-full lg:w-7/12  font-semibold'>
-                    <span className='w-full'>{imageList.length} Scanned Documents</span>
-                   <div className='flex flex-row'>
+                <div className=' text-darkblue text-xl sm:text-3xl mt-5 lg:ml-5 lg:mt-0 w-full lg:w-7/12  font-semibold'>
+                    <span className='w-full'>{count} Scanned Documents</span>
+                    <div className='flex flex-row w-full'>
                         <Button
-                            className='w-1/12  embla__button embla__button--prev'
+                            className='w-fit px-0 mx-0 embla__button embla__button--prev'
                             onClick={() => {
                                 if (slideCount > 0) {
                                     onPrevButtonClick()
@@ -79,25 +102,32 @@ export default function Scanner() {
                                 }
                             }}
                         ><Image src="/images/previous_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view previous scanned documents" /></Button>
-            
-                    <div ref={emblaRef} className='embla__viewport flex flex-row w-[500px] min-h-[150px] overflow-hidden'>
-                        <div className=' embla__container w-[500px] px-100'>
-                            {imageList.map((image, index) => (
-                                <ScannedImage src={image} key={index} index={index} remove={removeImage} />
-                            ))}
-                            <div className={`embla__slide min-w-[100px] max-w-[100px]`}></div>
+
+                        <div ref={emblaRef} className='embla__viewport flex flex-row w-10/12 min-h-[150px] overflow-hidden'>
+                            <div ref={imageRef} className=' embla__container w-[500px] px-100'>
+                                {Object.entries(imageList).map((kv) => {
+                                    return (<ScannedImage
+                                        src={kv[1]}
+                                        key={kv[0]}
+                                        index={kv[0]}
+                                        remove={() => removeImage(kv[0])}
+                                        setNotif={setNotif}
+                                    />)
+                                })}
+                                <div className={`embla__slide min-w-[200px] max-w-[200px]`}></div>
+                            </div>
                         </div>
-                    </div>
-                    <Button
-                        className={`w-1/12 embla__buttons embla__button embla__controls  {embla__button--next}`}
-                        onClick={() => {
-                            if (slideCount < imageList.length) {
-                                onNextButtonClick()
-                                setSlideCount((prev) => prev++)
-                            }
-                        }}
+                        <Button
+                            className={`w-1/12 embla__buttons embla__button embla__controls  {embla__button--next}`}
+                            onClick={() => {
+                                if (slideCount < count) {
+                                    onNextButtonClick()
+                                    setSlideCount((prev) => prev++)
+                                }
+                            }}
                         ><Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                     </div>
+
                     <Button
                         onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
                         onMouseLeave={() => setUploadBtn("/images/upload.svg")}
@@ -107,7 +137,7 @@ export default function Scanner() {
                 </div>
 
             </div>
-            {imageList.length > 0 ?
+            {count > 0 ?
                 <Dialog
                     open={open}
                     onClose={() => setOpen(false)}

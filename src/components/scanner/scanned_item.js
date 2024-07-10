@@ -130,6 +130,10 @@ function extractPaper(image, resultWidth, resultHeight, cornerPoints) {
     } = cornerPoints || getCornerPoints(maxContour, img);
     let warpedDst = new cv.Mat();
     let dsize = new cv.Size(resultWidth, resultHeight);
+    // if (!topLeftCorner || !topRightCorner || !bottomLeftCorner || !bottomRightCorner) {
+    //     cv.imshow(canvas, img)
+    //     return canvas;
+    // }
     let srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
         topLeftCorner.x,
         topLeftCorner.y,
@@ -230,28 +234,38 @@ function getCornerPoints(contour) {
 ////////////////////////////////////////////////////////////////////////////
 
 export default function ScannedImage(props) {
+    const holderRef = useRef(null);
     const containerRef = useRef(null);
-    const processImage = useCallback(() => {
+    // TODO: unmount ref and whole component if error in extracting image (in try-catch)
+    useEffect(() => {
         if (!props.src) return;
-        // containerRef.current.innerHTML = '';
         const img = document.createElement('img');
         img.src = props.src;
-
         img.onload = () => {
-            const resultCanvas = extractPaper(img, 100, 142);
-            containerRef.current.append(resultCanvas);
-
-            // const highlightedCanvas = highlightPaper(img);
-            // containerRef.current.append(highlightedCanvas);
-
+            try {
+                const resultCanvas = extractPaper(img, 100, 142);
+                if (containerRef.current.childNodes.length == 0) {
+                    containerRef.current.append(resultCanvas);
+                }
+            } catch (error) {
+                props.remove();
+                props.setNotif(true);
+                // holderRef.current.replaceChildren();
+                // holderRef.current = null;
+                // containerRef.current = null;
+            }
         };
     }, [props.src]);
 
-    useEffect(() => {
-        processImage();
-    }, [props.src, processImage]);
-    return (<div className="flex flex-col embla__slide items-center min-w-[100px max-w-[100px]  h-auto mr-3">
-        <div ref={ containerRef}></div>
-        <Button className="text-red underline flex flex-row items-center text-md xsm:text-xl" onClick={() => props.remove(props.index)}><Image src="/images/cross.svg" className="w-2/12 h-5 mr-1" width={ 1} height={1} alt="Remove Item"/>Remove</Button>
-    </div>)
+    return (
+
+        <div ref={holderRef} className="flex flex-col embla__slide items-center min-w-[100px max-w-[100px]  h-auto mr-3">
+            <div ref={containerRef}></div>
+            <span>{props.index}</span>
+            <Button className="text-red underline flex flex-row items-center text-md xsm:text-xl" onClick={() => {
+                props.remove()
+            }
+            }><Image src="/images/cross.svg" className="w-2/12 h-5 mr-1" width={1} height={1} alt="Remove Item" />Remove</Button>
+        </div>
+    )
 }
