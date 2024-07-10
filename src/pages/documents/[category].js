@@ -1,4 +1,3 @@
-// pages/[category].js
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Header from '../../components/header';
@@ -9,7 +8,7 @@ import '../../styles/globals.css';
 
 const DocumentStatusPage = () => {
   const router = useRouter();
-  const { category } = router.query;
+  const category = router.query.category;
   const [documents, setDocuments] = useState([]);
   const backButtonUrl = "/documents";
 
@@ -49,7 +48,7 @@ const DocumentStatusPage = () => {
 
   return (
     <div className="min-h-screen bg-white p-4 flex flex-col">
-      <Header category={category} backButton={backButtonUrl}/>
+      <Header title={category} backButton={backButtonUrl}/>
       <div className="mt-4 flex-1">
         <div>
           <h2 className="text-lg text-blue-600 font-bold my-4">Pending Documents:</h2>
