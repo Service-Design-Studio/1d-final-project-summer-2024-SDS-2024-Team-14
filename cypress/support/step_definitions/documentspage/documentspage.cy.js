@@ -1,6 +1,7 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import DocumentPage from '../path/to/DocumentPage';
 import "../general_definitions.cy.js";
+import { documentPage } from "../../utils";
 
 const documentPage = new DocumentPage
 
@@ -18,4 +19,8 @@ When('I click the files button', () => {
 
 Then('I should be redirected to the Upload page',() => {
     cy.url().should('eq', Cypress.config().baseUrl+'documents'+(page.toLowerCase() === "documents" ? "" : `${page().replace(' ', '-')}`));
+})
+
+When('I click on the dropdown menu', () =>{
+
 })
