@@ -40,13 +40,13 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-white p-4 border-t border-white shadow-xl z-10">
+      <footer className="bg-white p-4 border-t-2 border-[#B0B0B0]/50 shadow-xl z-10 absolute bottom-0 left-0 w-full">
         <div className="flex justify-around items-center mx-auto max-w-7xl">
           <button className="text-gray-600">
             <FontAwesomeIcon icon={faBell} />
           </button>
           <button 
-            className="bg-purpleblue text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-darkpurple transition duration-300"
+            className="bg-purpleblue text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg- transition duration-300"
             onClick={openModal}
           >
             <FontAwesomeIcon icon={faPlus} />
@@ -60,6 +60,7 @@ const Footer = () => {
     </>
   );
 };
+
 
 export default Footer;
 
