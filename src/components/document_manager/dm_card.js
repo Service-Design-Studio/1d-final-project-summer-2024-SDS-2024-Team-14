@@ -24,7 +24,7 @@ const Card = ({ title, date, bgColor, iconColor, onClick }) => {
   };
 
   return (
-    <div className={`relative p-4 sm:p-6 md:p-8 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center cursor-pointer`} onClick={handleClick}>
+    <div className={`relative p-4 sm:p-12 md:p-16 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center cursor-pointer`} onClick={handleClick}>
       <div className="absolute top-2 left-2 md:top-4 md:left-4">
         <button className="text-gray-600 text-lg">
           <FontAwesomeIcon icon={faEllipsisV} />
@@ -33,22 +33,19 @@ const Card = ({ title, date, bgColor, iconColor, onClick }) => {
       <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
         <FontAwesomeIcon icon={faFolder} className={`sm:text-2xl text-lg ${iconColor}`} />
       </div>
-      <h2 className="text-lg sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap">
+      <h2 className="text-lg sm:text-4xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap">
         {title}
       </h2>
-      <p className="text-md sm:text-xl md:text-2xl lg:text-1xl xl:text-1xl text-blue-600 text-center overflow-hidden whitespace-nowrap">
-        {date}
-      </p>
-      <div className="flex justify-center gap-5 mt-3 w-full">
+      <div className="flex justify-center sm:gap-8 md:gap-8 gap-3 mt-3 w-full">
         {categoryCounts && (
           <>
-            <div className="w-9 h-9 bg-mutedgreen rounded-full relative flex items-center justify-center">
+            <div className="w-6 h-6 sm:h-8 sm:h-8 md:w-12 md:h-12 bg-mutedgreen rounded-full flex items-center justify-center">
               <span className="text-white font-bold">{categoryCounts.verified}</span>
             </div>
-            <div className="w-9 h-9 bg-mutedyellow rounded-full relative flex items-center justify-center">
+            <div className="w-6 h-6 sm:h-8 sm:h-8 md:w-12 md:h-12 bg-mutedyellow rounded-full flex items-center justify-center">
               <span className="text-white font-bold">{categoryCounts.pending}</span>
             </div>
-            <div className="w-9 h-9 bg-mutedred rounded-full relative flex items-center justify-center">
+            <div className="w-6 h-6 sm:h-8 sm:h-8 md:w-12 md:h-12 bg-mutedred rounded-full flex items-center justify-center">
               <span className="text-white font-bold">{categoryCounts.rejected}</span>
             </div> 
           </>
