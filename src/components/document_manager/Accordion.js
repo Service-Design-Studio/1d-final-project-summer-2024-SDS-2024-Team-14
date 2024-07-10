@@ -5,6 +5,7 @@ import crossIcon from "../../../public/images/cross_icon.svg"
 import exclamationIcon from "../../../public/images/exclamation_icon.svg"
 import accordionButton from "../../../public/images/accordion_button.svg"
 import Listing from "@/components/document_manager/dm_listing";
+import FileModal from "@/components/document_manager/FileModal";
 
 export default function Accordion(props){
     const [accordionOpen, setAccordionOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function Accordion(props){
         <div className={`w-[95%] mx-auto ${accordionOpen ? 'opacity-100 pb-4' : 'opacity-0'}`}>
                     {accordionOpen && data.length > 0 ? (
                 data.map((document) => (
-                  <Listing url={document.file_url} title={document.name}/>
+                  <FileModal url={document.file_url} title={document.name} description={document.important}/>
                 ))
               ) : (
                 <p className={`text-center text-black font-bold text-[1.5vw] ${accordionOpen ? 'opacity-100 mt-10 mb-6' : 'opacity-0'}`}>No documents available</p>
