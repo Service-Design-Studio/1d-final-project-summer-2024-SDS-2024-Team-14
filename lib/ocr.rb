@@ -13,9 +13,10 @@ def process_image(image_path)
     # Print the extracted text
 
     # Translate the text to English
-    translated = translate_text(text, 'en')
+    # translated = translate_text(text, 'en')
 
-    translated
+    # translated
+    text
   rescue => e
     puts "Error processing image: #{e.message}"
     nil
@@ -32,9 +33,10 @@ def process_pdf(pdf_path)
     end
 
     # Translate the text to English
-    translated_text = translate_text(text2, 'en')
+    # translated_text = translate_text(text2, 'en')
 
-    translated_text
+    # translated_text
+    text2
   rescue => e
     puts "Error processing PDF: #{e.message}"
     nil
@@ -44,7 +46,7 @@ end
 def translate_text(text, target_language)
   begin
     translate = Google::Cloud::Translate::V2.new(
-      credentials: Rails.application.credentials.gtranskey.as_json
+      credentials: "C:/Users/USER/sds-ocr-428616-97b95f2f702a.json"
     )
     translation = translate.translate text, to: target_language
     translation.text

@@ -15,12 +15,8 @@ WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
 
-RUN apt-get update -qq && apt-get install -y python3-distutils && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    tesseract-ocr \
-    tesseract-ocr-eng \
-    tesseract-ocr-all
+RUN apt-get update -qq && apt-get install -y python3-distutils && apt-get install -y libpq-dev && apt-get install -y tesseract-ocr
+    
 RUN gem install bundler && \
     bundle config set --local deployment 'true' && \
     bundle config set --local without 'development test' && \
