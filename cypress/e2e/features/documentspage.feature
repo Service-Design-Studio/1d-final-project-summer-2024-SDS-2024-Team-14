@@ -24,9 +24,9 @@ Feature: Documents Page
   
   Scenario: Successful in adding Documents
     When I click the "plus" button
-    Then I should see the "popupmenu"
+    Then I should see the "popupmenu" element
     When I click the "files" button
-    Then I should be redirected to the Upload page 
+    Then I should be redirected to the documents upload page 
     When I click the "dropdownmenu" button
     # #
     # Then I should see a list of options

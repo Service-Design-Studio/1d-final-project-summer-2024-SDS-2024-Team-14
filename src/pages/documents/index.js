@@ -81,7 +81,7 @@ const DocumentManager = () => {
           ))}
         </main>
        </div>
-          <Footer id='popupmenu' />
+          <Footer/>
       </div>
       </>
   );
