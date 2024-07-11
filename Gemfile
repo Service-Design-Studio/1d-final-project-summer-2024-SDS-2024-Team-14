@@ -45,8 +45,22 @@ gem "rack-cors"
 
 gem 'active_model_serializers'
 
+gem 'rtesseract'
+
+gem 'json'
+
+gem 'pdf-reader'
+
+gem 'google-cloud-translate'
+
+gem 'httparty'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+
+group :development, :production do
+  gem "google-cloud-storage", "~> 1.11", require: false
+end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -73,7 +87,6 @@ group :test do
 end
 
 group :production do
-  gem "google-cloud-storage", "~> 1.11", require: false
   gem "pg", "~> 1.5"
   gem "dotenv-rails", "~> 2.7"
 end
