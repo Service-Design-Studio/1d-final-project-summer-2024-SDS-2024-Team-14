@@ -23,5 +23,5 @@ Scenario: Successfully uploading documents
     Then I click the "dropzone" button
     Then I should be able to add new files
 #    Then I should see previews of my uploaded files
-    When I click the "upload" button
-    Then I should be redirected to the documents page 
+    Then I click the "upload" button
+    Then I should then return to the documents page 

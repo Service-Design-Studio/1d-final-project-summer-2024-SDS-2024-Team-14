@@ -5,7 +5,7 @@ import 'cypress-file-upload';
 // Given(/^I have clicked to the (.+) page$/i, (page) => {
 //     cy.visit(Cypress.config().baseUrl+'documents'+page.toLowerCase() === "documents" ? "/" : `/${page.toLowerCase().replace(' ', '/')}`);
 // })
-
+const apiUrl = '/document';
 
 Given(/^I have clicked to the (.+) page$/i, (page) => {
     const baseUrl = Cypress.config().baseUrl;
@@ -34,4 +34,22 @@ Then('I should see previews of my uploaded files', () => {
     cy.get('img').should('be.visible'); // For image previews
     cy.get('iframe').should('be.visible'); // For PDF previews
 });
+
+Then('I press the upload button', () => {
+  // Intercept the axios call before triggering the upload button
+  cy.intercept('POST', apiUrl, (req) => {
+    req.reply({
+      statusCode: 200,
+      body: {
+        status: 'success',
+        message: 'File uploaded successfully'
+      }
+    });
+  }).as('uploadFile');
+
+  // Trigger the upload button click
+  cy.get('#upload').click();
+});
+
+
 
