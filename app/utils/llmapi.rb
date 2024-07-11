@@ -25,4 +25,5 @@ def llm_process(prompt_text, parameters)
   response = HTTParty.post("#{BASE_URL}", headers: headers, body: body)
   resp = JSON.parse(response.body)
   data = resp["candidates"][0]["content"]["parts"][0]["text"]
+  puts data
 end

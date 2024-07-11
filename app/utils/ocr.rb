@@ -25,16 +25,16 @@ end
 def process_pdf(pdf_path)
   begin
     # Extract text from PDF using pdf-reader
-    reader = PDF::Reader.new(pdf_path)
+    reader = PDF::Reader.open(pdf_path)
     text2 = ''
     reader.pages.each do |page|
       text2 += page.text
     end
-
+    puts text2
     # Translate the text to English
     translated_text = translate_text(text2, 'en')
 
-    translated_text
+    puts translated_text
   rescue => e
     puts "Error processing PDF: #{e.message}"
     nil
@@ -57,10 +57,10 @@ end
 def ocr(file_path)
   prompt = if file_path.downcase.end_with?('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')
              process_image(file_path)
-             puts "Supported image type"
+            #  puts "Supported image type"
            elsif file_path.downcase.end_with?('.pdf')
              process_pdf(file_path)
-             puts "Supported pdf type"
+            #  puts "Supported pdf type"
            else
              puts "Unsupported file type"
              return
