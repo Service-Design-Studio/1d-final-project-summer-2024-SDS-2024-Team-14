@@ -37,6 +37,7 @@ Feature: Documents Page
     # Then I click on the 'Upload' button 
     # Then I should be able to see the message document has been successfully uploaded
 
+
   # Scenario: Unsuccessful in adding Documents
   #   When I click on the "plus" button
   #   Then I should see option "files"
