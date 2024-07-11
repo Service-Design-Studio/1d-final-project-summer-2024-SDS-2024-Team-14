@@ -39,10 +39,6 @@ When(/^I click on the \"submitBtn\" button - (.+)$/i, (scenario) => {
     cy.get("#submitBtn").click()
 })
 
-Then("I should be directed to the Home page", () => {
-    cy.url().should('eq', Cypress.config().baseUrl+'')
-})
-
 Then("I should be notified of the wrong password", () => {
     loginPage.wrongPassword()
 })
