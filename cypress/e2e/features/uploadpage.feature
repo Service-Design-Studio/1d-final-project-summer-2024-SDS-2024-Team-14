@@ -6,16 +6,10 @@
     Given I have clicked to the Upload page 
     
 Scenario: Attempt to upload file without selecting category   
-    When I click the "dropdownmenu" button
-    Then I should see the "options" element
-    When I attempt to upload a file without selecting a category
-    Then I should see the error message "Please choose a category first before uploading"
-    
-    # When I do not click on "category"
-    # Then I click on the "dropzone"
-    # Then I should be able add new files 
-    # When I click on the 'Upload' button
-    # Then I should be able to see the message to choose the category document belongs to 
+    When I click the "dropzone" button
+    And I have selected files to upload
+    When I click the "upload" button
+    Then I should see the message "Please choose a category first before uploading"
 
 Scenario: testing 
     When I click the "dropdownmenu" button

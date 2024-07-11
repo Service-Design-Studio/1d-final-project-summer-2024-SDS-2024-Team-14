@@ -22,7 +22,3 @@ When(/^I attempt to upload a file without selecting a category$/, () => {
         }
     });
 })
-
-Then(/^I should see the error message "(.+)"$/, (message) => {
-    cy.contains(message).should('be.visible');
-})
