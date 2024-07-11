@@ -89,7 +89,7 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
     <div className="flex md:w-6/12 w-full items-center justify-center">
       <CustomButton
         ref={buttonRef}
-        id="dropdownmenu"
+        className='dropdownmenu'
         aria-label="more"
         aria-controls={open ? 'dropdownmenu' : undefined}
         aria-haspopup="true"

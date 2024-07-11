@@ -12,7 +12,7 @@ Scenario: Attempt to upload file without selecting category
     Then I should see the message "Please choose a category first before uploading"
 
 Scenario: testing 
-    When I click the "dropdownmenu" button
+    When I click the "dropdownmenu"
     Then I should see a list of options
     When I click on "option_name" menu item
     Then I click on the "dropzone"

@@ -9,6 +9,11 @@ When(/^I click the "(.+)" button$/i, (btn) => {
     cy.get(`#${btn}`).click();
 })
 
+
+When(/^I click the "(.+)"$/i, (btn) => {
+    cy.get(`.${btn}`).click();
+})
+
 When(/^I fill in "(.+)" with "(.+)"$/i, (e1, e2) => {
     cy.get(`#${e1}`).type(e2);
 })
