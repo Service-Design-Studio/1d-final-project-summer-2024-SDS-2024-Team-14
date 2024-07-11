@@ -31,7 +31,7 @@ class UploadFile extends Component {
     };
 
     onFileUpload = () => {
-        const { selectedCategory } = this.props;
+        const { selectedCategory, router } = this.props;
         if (selectedCategory.name === "Select Category Here"){
             Store.addNotification({
                     title: "Error",
@@ -53,11 +53,21 @@ class UploadFile extends Component {
             const formData = new FormData();
             this.state.selectedFiles.forEach(fileObj => {
                 formData.append("files[]", fileObj.file, fileObj.file.name);
-                formData.append("id", userId)
-                formData.append("category", selectedCategory.name)
             });
+            formData.append("id", userId)
+            formData.append("category", selectedCategory.name)
 
-            axiosInstance.post("/document", formData);
+            axiosInstance.post("/document", formData).then((resp)=>{
+                if (resp.status === 200 || resp.status === 201) {
+                    localStorage.setItem('notificationMessage', 'You have successfully uploaded the file. Please check that the file is in your folder.');
+                    localStorage.setItem('status', 'success')
+                }
+                else{
+                    localStorage.setItem('notificationMessage', 'There was an error uploading the file. Please contact your administrator for help.');
+                    localStorage.setItem('status', 'error')
+                }
+                router.push("/documents")
+            })
         }
     };
 
