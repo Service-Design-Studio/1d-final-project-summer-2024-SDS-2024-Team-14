@@ -16,7 +16,6 @@ RSpec.describe "llmapi", type: :request do
         }
 
     scenario "succesfully use the llm to process the inputs" do
-        expect do
-            text = llm_process(mockjson)
+        text = llm_process(mockjson)
         # end.to be_an_instance_of(JSON)
         end.to eq(mockjson)

@@ -96,8 +96,8 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   # config to not run google error checks for rspec
-  # config.google_cloud.use_trace = false
-  # config.google_cloud.use_logging = false
-  # config.google_cloud.use_error_reporting = false
-  # config.google_cloud.use_debugger = false
+  config.google_cloud.use_trace = false
+  config.google_cloud.use_logging = false
+  config.google_cloud.use_error_reporting = false
+  config.google_cloud.use_debugger = false
 end
