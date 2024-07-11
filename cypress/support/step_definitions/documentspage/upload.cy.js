@@ -49,6 +49,6 @@ When('I submit my documents by the upload button', () => {
   cy.get('#upload').click();
 });
 
-Then('Then I should then return to the documents page', ()=>{
-  cy.url().should("eq",Cypress.config().baseUrl+)
+Then('I should then return to the documents page', ()=>{
+  cy.url().should("eq",Cypress.config().baseUrl+"document")
 })
