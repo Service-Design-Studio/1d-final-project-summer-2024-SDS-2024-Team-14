@@ -16,27 +16,21 @@ Given(/^I have clicked to the (.+) page$/i, (page) => {
     cy.url().should("eq", uploadPageUrl);
 })
 
-When(/^I attempt to upload a file without selecting a category$/, () => {
-    cy.get('body').then(($body) => {
-        if ($body.find('.MuiBackdrop-root').length) {
-            cy.get('.MuiBackdrop-root').click(); 
-        }
-    });
-})
-
 Then('I should be able to add new files', () => {
-    const fileName = 'example-file.png'
-    cy.fixture(fileName).then(fileContent => {
-        cy.get('input[type="file"]').attachFile({
-          fileContent,
-          fileName,
-          mimeType: 'image/png' // Adjust the mime type according to your test file
-        });
-      });
+    const fileName = 'example-file.pdf'; // Change to the path of your test PDF file
+    cy.fixture(fileName, 'base64').then(fileContent => {
+      const file = {
+        fileContent,
+        fileName,
+        mimeType: 'application/pdf',
+        encoding: 'base64'
+      };
+      cy.get('input[type="file"]').attachFile(file);
+    });
     cy.get('input[type="file"]').should('be.visible').and('not.be.disabled');
-  });
+});
 
-  Then('I should see previews of my uploaded files', () => {
+Then('I should see previews of my uploaded files', () => {
     cy.get('img').should('be.visible'); // For image previews
     cy.get('iframe').should('be.visible'); // For PDF previews
-  });
+});

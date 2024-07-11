@@ -12,15 +12,16 @@
 #     Then I should see the message "Please choose a category first before uploading"
 
 Scenario: If no documents uploaded, error message received
-    When I click the "Upload" button
+    When I click the "upload" button
     Then I should be getting an error notification
+    #not done with error notification
 
 Scenario: Successfully uploading documents
     When I click the "dropdownmenu" 
-    Then I click on "option_name" menu item 
-    #making sure that category is choosen
-    Then I click on the "dropzone"
+    Then I click the "Health"
+    #making sure that any category is choosen
+    Then I click the "dropzone" button
     Then I should be able add new files 
     Then I should see previews of my uploaded files 
-    Then I click on the 'Upload' button 
+    Then I click on the 'upload' button 
     Then I should be redirected to the documents page 
