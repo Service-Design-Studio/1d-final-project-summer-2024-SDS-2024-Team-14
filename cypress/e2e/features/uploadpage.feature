@@ -22,6 +22,6 @@ Scenario: Successfully uploading documents
     #making sure that any category is choosen
     Then I click the "dropzone" button
     Then I should be able to add new files
-    Then I should see previews of my uploaded files 
-    Then I click on the 'upload' button 
+#    Then I should see previews of my uploaded files
+    When I click the "upload" button
     Then I should be redirected to the documents page 

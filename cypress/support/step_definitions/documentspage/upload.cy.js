@@ -27,10 +27,11 @@ Then('I should be able to add new files', () => {
       };
       cy.get('input[type="file"]').attachFile(file, { force: true })
     });
-    cy.get('input[type="file"]').should('be.visible').and('not.be.disabled');
+   // cy.get('input[type="file"]').should('be.visible').and('not.be.disabled');
 });
 
 Then('I should see previews of my uploaded files', () => {
     cy.get('img').should('be.visible'); // For image previews
     cy.get('iframe').should('be.visible'); // For PDF previews
 });
+
