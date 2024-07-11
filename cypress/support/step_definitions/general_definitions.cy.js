@@ -23,9 +23,9 @@ Then(/^I should (not )?see the message "(.+)"$/i, (not, msg) => {
     });
 })
 
-// Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
-//     not ? expect().to.not.contains(e2): expect().to.contains(e2);
-// })
+Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
+    not ? expect().to.not.contains(e2): expect().to.contains(e2);
+})
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
     cy.url().should("eq", Cypress.config().baseUrl + (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(' ', '/')}`));

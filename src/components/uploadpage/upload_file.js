@@ -112,7 +112,7 @@ class UploadFile extends Component {
                     <label
                         className="w-full flex flex-col items-center justify-center border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5"
                     >
-                        <div className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
+                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
                             <CustomFileUploadOutlinedIcon/>
                             <p className="mb-2 text-lg md:text-3xl text-purpleblue font-bold">
                                 Upload a file
@@ -122,7 +122,6 @@ class UploadFile extends Component {
                             </p>
                         </div>
                         <input
-                            id="dropzone"
                             type="file"
                             className="hidden"
                             multiple

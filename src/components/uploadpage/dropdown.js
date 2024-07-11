@@ -105,7 +105,7 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
         </span>
       </CustomButton>
       <StyledMenu
-        id="dropdownmenu"
+        id="options"
         MenuListProps={{
           'aria-labelledby': 'dropdownmenu-button',
         }}
@@ -119,32 +119,32 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
           },
         }}
       >
-        <MenuItem onClick={() => handleClose('Health', LocalHospitalIcon)} disableRipple>
+        <MenuItem id='health-option' onClick={() => handleClose('Health', LocalHospitalIcon)} disableRipple>
           <LocalHospitalIcon />
           Health
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
+        <MenuItem id='education-option' onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
           <SchoolIcon />
           Education
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Career', WorkIcon)} disableRipple>
+        <MenuItem id='career-option' onClick={() => handleClose('Career', WorkIcon)} disableRipple>
           <WorkIcon />
           Career
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Finance', AttachMoneyIcon)} disableRipple>
+        <MenuItem id='finance-option' onClick={() => handleClose('Finance', AttachMoneyIcon)} disableRipple>
           <AttachMoneyIcon />
           Finance
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Property', HouseIcon)} disableRipple>
+        <MenuItem id='property-option' onClick={() => handleClose('Property', HouseIcon)} disableRipple>
           <HouseIcon />
           Property
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Family', FamilyRestroomIcon)} disableRipple>
+        <MenuItem id='family-option' onClick={() => handleClose('Family', FamilyRestroomIcon)} disableRipple>
           <FamilyRestroomIcon />
           Family
         </MenuItem>
