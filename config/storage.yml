@@ -9,11 +9,11 @@ local:
 google_dev:
   service: GCS
   project: gebirah-14
-  credentials: <%= Rails.application.credentials.gcskey.as_json %>
+  credentials: <%= Rails.application.credentials.gcskey.to_json %>
   bucket: gebirah-bucket
 
 google:
   service: GCS
   project: gebirah-14
-  credentials: <%= Rails.application.credentials.gcskey.as_json %>
+  credentials: <%= Rails.application.credentials.gcskey.to_json %>
   bucket: gebirah-bucket
