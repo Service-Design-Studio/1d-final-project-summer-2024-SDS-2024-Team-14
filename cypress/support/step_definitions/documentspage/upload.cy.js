@@ -50,5 +50,11 @@ When('I submit my documents by the upload button', () => {
 });
 
 Then('I should then return to the documents page', ()=>{
-  cy.url().should("eq",Cypress.config().baseUrl+"document")
+  cy.url().should("eq",Cypress.config().baseUrl+"documents")
 })
+
+Then('I should be getting an error notification', ()=> {
+  cy.get(".rnc__notification-message").contains("Please choose a category first before uploading")
+})
+
+ 
