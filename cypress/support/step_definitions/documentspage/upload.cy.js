@@ -16,9 +16,13 @@ Given(/^I have clicked to the (.+) page$/i, (page) => {
 })
 
 When(/^I attempt to upload a file without selecting a category$/, () => {
-    cy.get('#dropzone').click(); 
-});
+    cy.get('body').then(($body) => {
+        if ($body.find('.MuiBackdrop-root').length) {
+            cy.get('.MuiBackdrop-root').click(); 
+        }
+    });
+})
 
 Then(/^I should see the error message "(.+)"$/, (message) => {
     cy.contains(message).should('be.visible');
-});
+})
