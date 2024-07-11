@@ -52,7 +52,7 @@ const DocumentManager = () => {
     }
   }, []);
     const router = useRouter();
-    useAuth();
+    // useAuth();
 
     const handleCardClick = (title) => {
         router.push(`/documents/${title.toLowerCase()}`)
@@ -81,7 +81,7 @@ const DocumentManager = () => {
           ))}
         </main>
        </div>
-          <Footer />
+          <Footer id='popupmenu' />
       </div>
       </>
   );

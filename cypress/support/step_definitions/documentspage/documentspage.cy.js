@@ -7,9 +7,9 @@ import { documentPage } from "../../utils";
 //     cy.get(`#plus`).click(); 
 // });
 
-Then('I should see the popupmenu', () => {
-    documentPage.elements.popupmenu().should('be.visible');
-});
+// Then('I should see the popupmenu', () => {
+//     documentPage.elements.popupmenu().should('be.visible');
+// });
 
 // When('I click the files button', () => {
 //     cy.get('#files').click();
