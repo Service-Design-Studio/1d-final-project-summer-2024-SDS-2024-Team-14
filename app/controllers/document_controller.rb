@@ -1,4 +1,4 @@
-require_relative '../utils/llmapi'
+
 
 class DocumentController < ApplicationController
     def create
@@ -18,14 +18,9 @@ class DocumentController < ApplicationController
                 # @user.documents.attach(file_json)
                 document = @user.documents.create(name: file_json.original_filename, category: category, status: "Pending")
                 document.file.attach(file_json)
-                ocr_text = "test123"
-                llm_json = llm_process(ocr_text, [
-                    "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
-                    "overall GPA", "institution name", "graduation date"
-                  ])
                 File.delete(local_path) if File.exist?(local_path)
             end
-            render json: llm_json
+            render json: {message: "File transfer has failed. Please contact the administrator"}
         else
             render json: {message: "File transfer has failed. Please contact the administrator"}
         end
