@@ -4,6 +4,7 @@ Given(/^I am on the (.+) page$/i, (page) => {
     cy.visit(page.toLowerCase() === "home" ? "/" : `/${page.toLowerCase().replace(' ', '/')}`);
 })
 
+
 When(/^I click the "(.+)" button$/i, (btn) => {
     cy.get(`#${btn}`).click();
 })

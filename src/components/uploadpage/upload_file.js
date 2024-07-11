@@ -74,7 +74,7 @@ class UploadFile extends Component {
                                 <img src={fileObj.preview} alt={fileObj.file.name} className='h-[80vw] md:h-[40vw] w-full'/>
                             )}
                             {fileObj.file.type === 'application/pdf' && (
-                                <embed src={fileObj.preview} type="application/pdf" className="h-[80vw] md:h-[40vw] w-full"/>
+                                <iframe src={fileObj.preview} type="application/pdf" className="h-[80vw] md:h-[40vw] w-full"/>
                             )}
                             <button 
                             onClick={() => this.deleteSelectedFile(fileObj.id)} 
