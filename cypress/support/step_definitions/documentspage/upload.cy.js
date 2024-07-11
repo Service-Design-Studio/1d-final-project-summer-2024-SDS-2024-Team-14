@@ -35,15 +35,13 @@ Then('I should see previews of my uploaded files', () => {
     cy.get('iframe').should('be.visible'); // For PDF previews
 });
 
-Then('I press the upload button', () => {
+
+When('I submit my documents by the upload button', () => {
   // Intercept the axios call before triggering the upload button
   cy.intercept('POST', apiUrl, (req) => {
     req.reply({
       statusCode: 200,
-      body: {
-        status: 'success',
-        message: 'File uploaded successfully'
-      }
+      fixture: 'example-file.pdf'
     });
   }).as('uploadFile');
 
@@ -51,5 +49,6 @@ Then('I press the upload button', () => {
   cy.get('#upload').click();
 });
 
-
-
+Then('Then I should then return to the documents page', ()=>{
+  cy.url().should("eq",Cypress.config().baseUrl+)
+})
