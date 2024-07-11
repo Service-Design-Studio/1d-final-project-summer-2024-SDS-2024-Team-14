@@ -21,7 +21,7 @@ Scenario: Successfully uploading documents
     Then I click the "Health"
     #making sure that any category is choosen
     Then I click the "dropzone" button
-    Then I should be able add new files 
+    Then I should be able to add new files
     Then I should see previews of my uploaded files 
     Then I click on the 'upload' button 
     Then I should be redirected to the documents page 
