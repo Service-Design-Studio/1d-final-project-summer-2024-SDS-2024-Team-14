@@ -2,16 +2,15 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import "../../styles/globals.css";
 import ScannedImage from '@/components/scanner/scanned_item';
 import CameraView from '../../components/scanner/camera';
-import { Button } from "@mui/material";
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
 import Header from '../../components/header';
-import { Alert, AlertTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Dialog, DialogActions, DialogContentText, DialogTitle } from '@mui/material';
-
+import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
+import PDFDocument from 'pdfkit'
 
 export default function Scanner() {
+    const fs = require('fs') //filesystem for upload pdf test
     const [imageList, setImageList] = useState({});
     const [uploadBtn, setUploadBtn] = useState("/images/upload.svg");
     const [image, setImage] = useState(null);
@@ -20,10 +19,38 @@ export default function Scanner() {
     const [notif, setNotif] = useState(false);
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start' });
     const imageRef = useRef(null);
+    const fileNameRef = useRef(null);
+    const fileCategoryRef = useRef(null);
     const backButtonUrl = "/documents";
-
     const [slideCount, setSlideCount] = useState(1);
-
+    const [fileName, setFileName] = useState(null);
+    const fileCategories = [
+        {
+            value: "Career",
+            label: "Career"
+        },
+        {
+            value: "Education",
+            label: "Education"
+        },
+        {
+            value: "Family",
+            label: "Family"
+        },
+        {
+            value: "Finance",
+            label: "Finance"
+        },
+        {
+            value: "Health",
+            label: "Health"
+        },
+        {
+            value: "Property",
+            label: "Property"
+        }
+    ]
+    const [category, setCategory] = useState(fileCategories[0].value)
     const onPrevButtonClick = useCallback(() => {
         if (!emblaApi) return
         emblaApi.scrollPrev()
@@ -108,11 +135,11 @@ export default function Scanner() {
 
                         <div ref={emblaRef} className='embla__viewport flex flex-row w-10/12 min-h-[150px] overflow-hidden'>
                             <div ref={imageRef} className=' embla__container w-[500px] px-100'>
-                                {Object.entries(imageList).map((kv) => {
+                                {Object.entries(imageList).map((kv, i) => {
                                     return (<ScannedImage
                                         src={kv[1]}
                                         key={kv[0]}
-                                        index={kv[0]}
+                                        index={i}
                                         remove={() => removeImage(kv[0])}
                                         setNotif={setNotif}
                                     />)
@@ -130,13 +157,26 @@ export default function Scanner() {
                             }}
                         ><Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                     </div>
+                    <FormControl required className='w-full mt-10'>
+                        <span className='mb-3'>Document Details</span>
+                        {/* <TextField onChange={(e) => {
+                            setFileName(e.target.value)
+                        }} fullWidth sx={{ "marginBottom": 3 }} ref={fileNameRef} required label="Input File Name" rows={1} variant='outlined' placeholder="File name"></TextField> */}
 
+                        <TextField onChange={(e) => {
+                            setCategory(e.target.value)
+                        }} required select fullWidth sx={{ "marginBottom": 3, }} ref={fileCategoryRef} label="Category" placeholder="Category" rows={1} variant='outlined' defaultValue={`${fileCategories[0].label}`}>
+                            {fileCategories.map((val) => {
+                                return (<MenuItem key={val.value} value={val.value}>{val.label}</MenuItem>)
+                            })}
+                        </TextField>
+                    </FormControl>
                     <Button
                         onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
                         onMouseLeave={() => setUploadBtn("/images/upload.svg")}
                         onClick={() => {
                             setOpen(true);
-                        }} className='btn-submit'><Image src={uploadBtn} className="w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Upload document' />Upload Document</Button>
+                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Upload document' />Upload Document</Button>
                 </div>
 
             </div>
@@ -148,16 +188,20 @@ export default function Scanner() {
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
                         <DialogTitle>Confirm Upload?</DialogTitle>
-                        <DialogContentText>Confirm document upload?</DialogContentText>
+                        <DialogContentText>
+                            <span>Confirm document upload?</span>
+                        </DialogContentText>
                     </div>
 
-                    <DialogActions>
-                        <Button onClick={() => setOpen(false)}>Yes</Button>
-                        <Button onClick={() => setOpen(false)}>Close</Button>
+                    <DialogActions className='flex flex-row'>
+                        <Button className="w-3/12" onClick={() => setOpen(false)}>Close</Button>
+                        <Button className="w-3/12 bg-darkblue text-white hover:text-white hover:bg-darkblue" onClick={() => {
+                            setOpen(false);
+                            doc.pipe(fs.createWriteStream('test_pdf_gebirah.pdf'));
+                        }}>Yes</Button>
                     </DialogActions>
                 </Dialog>
-
-                :
+           :
                 <Dialog
                     sx={{ textAlign: "start" }}
                     open={open}
