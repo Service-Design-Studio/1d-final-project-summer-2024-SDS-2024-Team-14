@@ -26,3 +26,29 @@ Feature: Documents Page
   Scenario: Accessing Health folder in Documents
     Then I should see "Health"
     When I click the "Health"
+    Then I should be redirected to the documents health page
+
+  Scenario: Accessing Career folder in Documents
+    Then I should see "Career"
+    When I click the "Career"
+    Then I should be redirected to the documents career page
+
+  Scenario: Accessing Education folder in Documents
+    Then I should see "Education"
+    When I click the "Education"
+    Then I should be redirected to the documents Education page
+
+  Scenario: Accessing Property folder in Documents
+    Then I should see "Property"
+    When I click the "Property"
+    Then I should be redirected to the documents Property page
+
+  Scenario: Accessing Family folder in Documents
+    Then I should see "Family"
+    When I click the "Family"
+    Then I should be redirected to the documents Family page
+
+  Scenario: Accessing Finance folder in Documents
+    Then I should see "Finance"
+    When I click the "Finance"
+    Then I should be redirected to the documents Finance page
