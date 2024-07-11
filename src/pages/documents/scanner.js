@@ -8,6 +8,8 @@ import Header from '../../components/header';
 import CloseIcon from '@mui/icons-material/Close';
 import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
 import PDFDocument from 'pdfkit'
+import axiosInstance from "@/utils/axiosInstance";
+import {useRouter} from "next/router";
 
 export default function Scanner() {
     const fs = require('fs') //filesystem for upload pdf test
@@ -50,6 +52,7 @@ export default function Scanner() {
             label: "Property"
         }
     ]
+    const router = useRouter();
     const [category, setCategory] = useState(fileCategories[0].value)
     const onPrevButtonClick = useCallback(() => {
         if (!emblaApi) return
@@ -60,6 +63,40 @@ export default function Scanner() {
         if (!emblaApi) return
         emblaApi.scrollNext()
     }, [emblaApi])
+
+    function base64ToBlob(base64, contentType) {
+        const byteCharacters = atob(base64.split(',')[1]);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        return new Blob([byteArray], { type: contentType });
+    }
+
+    function uploadImages() {
+        const userId = localStorage.getItem('userID');
+        // const category =
+        const formData = new FormData();
+        Object.values(imageList).forEach((image, index) => {
+            const contentType = image.split(',')[1]
+            const blob = base64ToBlob(image, contentType);
+            formData.append("files[]", blob, `photo${index}.jpg`);
+        });
+        formData.append("id", userId)
+        formData.append("category", category)
+        axiosInstance.post("/document", formData).then((resp)=>{
+            if (resp.status === 200 || resp.status === 201) {
+                localStorage.setItem('notificationMessage', 'You have successfully uploaded the file. Please check that the file is in your folder.');
+                localStorage.setItem('status', 'success')
+            }
+            else{
+                localStorage.setItem('notificationMessage', 'There was an error uploading the file. Please contact your administrator for help.');
+                localStorage.setItem('status', 'error')
+            }
+            router.push("/documents")
+        })
+    }
 
     const camera = useRef(null);
     useEffect(() => {
@@ -197,7 +234,7 @@ export default function Scanner() {
                         <Button className="w-3/12" onClick={() => setOpen(false)}>Close</Button>
                         <Button className="w-3/12 bg-darkblue text-white hover:text-white hover:bg-darkblue" onClick={() => {
                             setOpen(false);
-                            doc.pipe(fs.createWriteStream('test_pdf_gebirah.pdf'));
+                            uploadImages();
                         }}>Yes</Button>
                     </DialogActions>
                 </Dialog>
