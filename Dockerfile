@@ -1,5 +1,6 @@
 FROM node:18-alpine
 
+RUN apk add --no-cache make gcc g++ python3 cairo-dev jpeg-dev pango-dev giflib-dev
 WORKDIR /app
 
 COPY package*.json ./

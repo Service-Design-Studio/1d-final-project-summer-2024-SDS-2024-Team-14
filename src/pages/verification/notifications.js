@@ -1,5 +1,5 @@
 import React from "react";
-import Notification from "./notifications.js";
+import Notification from "../../components/verification/notifications.js";
 import "../../styles/globals.css";
 import useAuth from "@/hooks/useAuth";
 

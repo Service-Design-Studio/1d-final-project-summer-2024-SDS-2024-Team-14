@@ -84,7 +84,7 @@ module.exports = {
       'darkblue': '#0072BC',
       'deepblue': '#005994',
       'lightblue': '#D5EEFF',
-      'lightpink': '#FFEDFA',
+      'lightpink': '#FFDDFA',
       'purple-100' : '#E1BEE7',
       'lightorange': '#FFFF00',
       'pink-100' : '#F8BBD0',
@@ -100,9 +100,10 @@ module.exports = {
       'blue-600': '#1E88E5',
       'lightpurple':'#E6D6FA',
       'darkpurple':'#3222AF',
-      'mutedgreen':'#94B1A9',
-      'mutedyellow':'#C3B383',
-      'mutedred':'#B77A7A',
+      'mutedgreen':'#27D5A6',
+      'mutedyellow':'#EEBD2F',
+      'mutedred':'#DA5071',
+      'lightblue':'#D2EFFF',
     },
     fontSize: {
       'xs': '0.1rem',
@@ -130,6 +131,26 @@ module.exports = {
       '2xl': '1536px',
     },
   },
-  plugins: [],
-}
+  plugins: [
+    //custom shadow
+    function ({ addUtilities }) {
+      addUtilities({
+        '.custom-shadow': {
+          position: 'relative',
+          overflow: 'hidden',
+        },
+        '.custom-shadow::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '15px', /* Adjust the height as needed */
+          boxShadow: '0 -10px 20px rgba(0, 0, 0, 0.1)', /* Adjust the shadow properties as needed */
+          pointerEvents: 'none', /* Ensures the pseudo-element does not interfere with other interactions */
+        },
+      }, ['responsive']);
+    }
+  ],
+};
 

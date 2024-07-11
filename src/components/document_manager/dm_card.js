@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
-const Card = ({ title, date, bgColor, iconColor }) => {
+const Card = ({ title, date, bgColor, iconColor, onClick }) => {
   // Define the counts directly within the Card component
   const counts = [
     { category: 'health', counts: { verified: 3, pending: 1, rejected: 0 } },
@@ -17,8 +17,14 @@ const Card = ({ title, date, bgColor, iconColor }) => {
   // Find the counts for the specific category
   const categoryCounts = counts.find((item) => item.category === title.toLowerCase())?.counts;
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick(title);
+    }
+  };
+
   return (
-    <div className={`relative p-4 sm:p-6 md:p-8 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center`}>
+    <div className={`relative p-4 sm:p-12 md:p-16 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center cursor-pointer`} onClick={handleClick}>
       <div className="absolute top-2 left-2 md:top-4 md:left-4">
         <button className="text-gray-600 text-lg">
           <FontAwesomeIcon icon={faEllipsisV} />
@@ -27,22 +33,19 @@ const Card = ({ title, date, bgColor, iconColor }) => {
       <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
         <FontAwesomeIcon icon={faFolder} className={`sm:text-2xl text-lg ${iconColor}`} />
       </div>
-      <h2 className="text-lg sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap">
+      <h2 className="text-lg sm:text-4xl font-semibold text-blue-600 text-center overflow-hidden whitespace-nowrap">
         {title}
       </h2>
-      <p className="text-md sm:text-xl md:text-2xl lg:text-1xl xl:text-1xl text-blue-600 text-center overflow-hidden whitespace-nowrap">
-        {date}
-      </p>
-      <div className="flex justify-center gap-5 mt-3">
+      <div className="flex justify-center sm:gap-8 md:gap-8 gap-3 mt-3 w-full">
         {categoryCounts && (
           <>
-            <div className="w-10 h-10 bg-mutedgreen rounded-full relative flex items-center justify-center">
+            <div className="w-6 h-6 sm:h-8 sm:h-8 md:w-12 md:h-12 bg-mutedgreen rounded-full flex items-center justify-center">
               <span className="text-white font-bold">{categoryCounts.verified}</span>
             </div>
-            <div className="w-10 h-10 bg-mutedyellow rounded-full relative flex items-center justify-center">
+            <div className="w-6 h-6 sm:h-8 sm:h-8 md:w-12 md:h-12 bg-mutedyellow rounded-full flex items-center justify-center">
               <span className="text-white font-bold">{categoryCounts.pending}</span>
             </div>
-            <div className="w-10 h-10 bg-mutedred rounded-full relative flex items-center justify-center">
+            <div className="w-6 h-6 sm:h-8 sm:h-8 md:w-12 md:h-12 bg-mutedred rounded-full flex items-center justify-center">
               <span className="text-white font-bold">{categoryCounts.rejected}</span>
             </div> 
           </>
@@ -54,6 +57,6 @@ const Card = ({ title, date, bgColor, iconColor }) => {
 
 export default Card;
 
-
+//bg-purpleblue text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-darkpurple transition duration-300"
 
 
