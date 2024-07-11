@@ -159,9 +159,9 @@ export default function Scanner() {
                     </div>
                     <FormControl required className='w-full mt-10'>
                         <span className='mb-3'>Document Details</span>
-                        <TextField onChange={(e) => {
+                        {/* <TextField onChange={(e) => {
                             setFileName(e.target.value)
-                        }} fullWidth sx={{ "marginBottom": 3 }} ref={fileNameRef} required label="Input File Name" rows={1} variant='outlined' placeholder="File name"></TextField>
+                        }} fullWidth sx={{ "marginBottom": 3 }} ref={fileNameRef} required label="Input File Name" rows={1} variant='outlined' placeholder="File name"></TextField> */}
 
                         <TextField onChange={(e) => {
                             setCategory(e.target.value)
@@ -180,7 +180,7 @@ export default function Scanner() {
                 </div>
 
             </div>
-            {count > 0 && fileName && category &&
+            {count > 0 ?
                 <Dialog
                     open={open}
                     onClose={() => setOpen(false)}
@@ -201,25 +201,7 @@ export default function Scanner() {
                         }}>Yes</Button>
                     </DialogActions>
                 </Dialog>
-            }
-            {count > 0 && (!fileName || !category) &&
-                <Dialog
-                open={open}
-                onClose={() => setOpen(false)}
-                fullWidth={true}
-            >
-                <div className='mx-4 flex flex-col text-start items-start'>
-                    <DialogTitle>Fill File Name And Category</DialogTitle>
-                    <DialogContentText>
-                        <span>Please fill in File Name and Category fields.</span>
-                    </DialogContentText>
-                </div>
-
-                <DialogActions className='flex flex-row'>
-                    <Button className="w-3/12" onClick={() => setOpen(false)}>Close</Button>
-                </DialogActions>
-            </Dialog>}
-            {count == 0 &&
+           :
                 <Dialog
                     sx={{ textAlign: "start" }}
                     open={open}
