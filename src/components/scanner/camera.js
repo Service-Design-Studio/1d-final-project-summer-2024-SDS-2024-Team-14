@@ -11,7 +11,6 @@ export default function CameraView({ cameraRef, setImage }) {
     async function loadCam() {
         const devices = await navigator.mediaDevices.enumerateDevices();
 
-        console.log("devices: ", devices)
         const videoDevice = devices.filter((d) => d.kind === "videoinput");
         setCameraLoaded(videoDevice.length > 0)
         return videoDevice.length > 0

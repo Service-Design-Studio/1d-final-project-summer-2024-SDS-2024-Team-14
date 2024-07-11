@@ -6,12 +6,14 @@ import { Icon } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import UploadFile from '../../components/uploadpage/upload_file.js';
 import Header from '../../components/header.js';
-import {ReactNotifications} from "react-notifications-component";
+import {ReactNotifications, Store} from "react-notifications-component";
+import {useRouter} from "next/router";
 
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownValue, setDropdownValue] = useState('');
   const [selectedCategory, setSelectedCategory] = React.useState({ name: 'Select Category Here', icon: null });
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -46,7 +48,7 @@ export default function Upload() {
           <UploadDropdown selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} value={dropdownValue} onChange={handleDropdownChange} />
         </div>
         <div className="mb-4">
-          <UploadFile selectedCategory={selectedCategory} className="flex flex-col items-center justify-center" />
+          <UploadFile selectedCategory={selectedCategory} router={router} className="flex flex-col items-center justify-center" />
         </div>
       </form>
 

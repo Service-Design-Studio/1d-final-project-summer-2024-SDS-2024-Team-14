@@ -34,8 +34,25 @@ const backButtonUrl = "/"; // Define the backButton URL here
 const DocumentManager = () => {
     useEffect(() => {
         const message = localStorage.getItem('notificationMessage');
+        const status = localStorage.getItem('status');
         if (message) {
-        Store.addNotification({
+            if (status==="success") {
+                Store.addNotification({
+                    title: "Success",
+                    message: message,
+                    type: "success",
+                    insert: "bottom",
+                    container: "bottom-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+            }
+            else {
+                Store.addNotification({
                     title: "Error",
                     message: message,
                     type: "danger",
@@ -48,7 +65,9 @@ const DocumentManager = () => {
                         onScreen: true
                     }
                 });
+            }
         localStorage.removeItem('notificationMessage'); // Clear the message after displaying
+        localStorage.removeItem('status'); // Clear the message after displaying
     }
   }, []);
     const router = useRouter();
