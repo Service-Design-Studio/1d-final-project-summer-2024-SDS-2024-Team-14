@@ -77,7 +77,7 @@ const DocumentManager = () => {
         <Header title="Document Manager" backButton={backButtonUrl} /> {/* Pass backButton prop */}
         <main className="grid grid-cols-2 pb-2 w-[95%] overflow-auto mx-auto gap-6 sm:gap-8 md:gap-12 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex-grow">
           {cards.map((card, index) => (
-            <Card key={index} title={card.title} bgColor={card.bgColor} iconColor={card.iconColor} onClick={handleCardClick} />
+            <Card className={card.title} name={card.title} key={index} title={card.title} bgColor={card.bgColor} iconColor={card.iconColor} onClick={handleCardClick} />
           ))}
         </main>
        </div>

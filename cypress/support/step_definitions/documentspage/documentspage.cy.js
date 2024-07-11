@@ -15,9 +15,9 @@ import { documentPage } from "../../utils";
 //     cy.get('#files').click();
 // });
 
-Then('I should be redirected to the Upload page',() => {
-    cy.url().should('eq', Cypress.config().baseUrl+'documents'+(page.toLowerCase() === "documents" ? "" : `${pagetoLowerCase().replace(' ', '-')}`));
-})
+// Then('I should be redirected to the Upload page',() => {
+//     cy.url().should('eq', Cypress.config().baseUrl+'documents'+(page.toLowerCase() === "documents" ? "" : `${pagetoLowerCase().replace(' ', '-')}`));
+// })
 
 // When('I click on the dropdown menu', () =>{
 //     cy.get('#dropdownmenu').click()

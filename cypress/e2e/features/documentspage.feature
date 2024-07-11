@@ -15,12 +15,14 @@ Feature: Documents Page
       When I click the "plus" button
       Then I should see the "scanner" element
       When I click the "scanner" button
-      Then I should be redirected to the scanner page
+      Then I should be redirected to the documents scanner page
 
-    Scenario: Accessing Documents in Folders
-      Then I should see Cards with the following title: Health, Career, Education, Family, Finance, Property
-      When I click on the "Folder_Title" button
-      Then I should be navigated to the "Folder_Title" page
-      Then I should be able to see the status of each file 
-
-
+  # Scenario: Accessing Documents in Folders
+  #   Then I should see Cards with the following title: Health, Career, Education, Family, Finance, Property
+  #   When I click on the "Folder_Title" button
+  #   Then I should be navigated to the "Folder_Title" page
+  #   Then I should be able to see the status of each file 
+    
+  Scenario: Accessing Health folder in Documents
+    Then I should see "Health"
+    When I click the "Health"

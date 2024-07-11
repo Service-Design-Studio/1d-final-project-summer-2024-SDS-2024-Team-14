@@ -7,7 +7,7 @@
     
 Scenario: Attempt to upload file without selecting category   
     When I click the "dropzone" button
-    And I have selected files to upload
+    And I have attached ''
     When I click the "upload" button
     Then I should see the message "Please choose a category first before uploading"
 

@@ -1,5 +1,6 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import "../general_definitions.cy.js";
+import 'cypress-file-upload';
 
 // Given(/^I have clicked to the (.+) page$/i, (page) => {
 //     cy.visit(Cypress.config().baseUrl+'documents'+page.toLowerCase() === "documents" ? "/" : `/${page.toLowerCase().replace(' ', '/')}`);
@@ -22,3 +23,4 @@ When(/^I attempt to upload a file without selecting a category$/, () => {
         }
     });
 })
+

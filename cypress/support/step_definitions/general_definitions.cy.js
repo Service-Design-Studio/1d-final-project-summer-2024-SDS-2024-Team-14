@@ -29,7 +29,7 @@ Then(/^I should (not )?see the message "(.+)"$/i, (not, msg) => {
 })
 
 Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
-    not ? expect().to.not.contains(e2): expect().to.contains(e2);
+    not ? cy.get(`.${e2}`).should('not.exist') : cy.get(`.${e2}`).should('exist')
 })
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
