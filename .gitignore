@@ -34,3 +34,5 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /config/gebirah-14-79b845accba2.json
+
+/config/credentials/development.key
