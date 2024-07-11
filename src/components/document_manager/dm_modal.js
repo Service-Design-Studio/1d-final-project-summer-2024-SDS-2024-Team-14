@@ -7,8 +7,8 @@ const Modal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-20 left-0 right-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div id='popupmenu' className="bg-white rounded-lg p-6 w-3/5 max-w-md relative shadow-lg">
+    <div id='popupmenu' className="fixed bottom-20 left-0 right-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div className="bg-white rounded-lg p-6 w-3/5 max-w-md relative shadow-lg">
         <button className="absolute top-2 right-2 text-gray-500" onClick={onClose}>
           &times;
         </button>
