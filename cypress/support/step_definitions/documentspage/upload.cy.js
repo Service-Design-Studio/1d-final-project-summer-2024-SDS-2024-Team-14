@@ -24,3 +24,19 @@ When(/^I attempt to upload a file without selecting a category$/, () => {
     });
 })
 
+Then('I should be able to add new files', () => {
+    const fileName = 'example-file.png'
+    cy.fixture(fileName).then(fileContent => {
+        cy.get('input[type="file"]').attachFile({
+          fileContent,
+          fileName,
+          mimeType: 'image/png' // Adjust the mime type according to your test file
+        });
+      });
+    cy.get('input[type="file"]').should('be.visible').and('not.be.disabled');
+  });
+
+  Then('I should see previews of my uploaded files', () => {
+    cy.get('img').should('be.visible'); // For image previews
+    cy.get('iframe').should('be.visible'); // For PDF previews
+  });
