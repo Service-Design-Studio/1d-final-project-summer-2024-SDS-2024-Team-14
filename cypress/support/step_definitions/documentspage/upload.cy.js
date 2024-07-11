@@ -25,7 +25,7 @@ Then('I should be able to add new files', () => {
         mimeType: 'application/pdf',
         encoding: 'base64'
       };
-      cy.get('input[type="file"]').attachFile(file);
+      cy.get('input[type="file"]').attachFile(file, { force: true })
     });
     cy.get('input[type="file"]').should('be.visible').and('not.be.disabled');
 });
