@@ -1,5 +1,5 @@
-require_relative '../utils/ocr'
-require_relative '../utils/llmapi'
+require 'ocr'
+require 'llmapi'
 
 class DocumentController < ApplicationController
     def create
@@ -25,9 +25,11 @@ class DocumentController < ApplicationController
                     "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
                     "overall GPA", "institution name", "graduation date"
                   ])
+                document.important = llm_json.to_s
+                document.save
                 File.delete(local_path) if File.exist?(local_path)
             end
-            render json: llm_json
+            render json: {message: "Your file has been uploaded successfully"}
         else
             render json: {message: "File transfer has failed. Please contact the administrator"}
         end
@@ -35,7 +37,7 @@ class DocumentController < ApplicationController
 
     def retrieve
         user = params[:id]
-        category = params[:category]
+        category = params[:category].capitalize
         begin
             @user = User.find(user)
         rescue ActiveRecord::RecordNotFound
@@ -47,7 +49,9 @@ class DocumentController < ApplicationController
                 {
                   id: document.id,
                   name: document.name,
-                  file_url: document.file.attached? ? url_for(document.file) : nil
+                  status: document.status,
+                  file_url: document.file.attached? ? url_for(document.file) : nil,
+                  important: document.important
                 }
             end
             render json: {documents: documents_with_files}, status: :ok
