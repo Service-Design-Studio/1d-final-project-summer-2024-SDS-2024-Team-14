@@ -17,7 +17,6 @@ module Ocr
       translated = translate_text(text, 'en')
 
       translated
-      text
     rescue => e
       puts "Error processing image: #{e.message}"
       nil
