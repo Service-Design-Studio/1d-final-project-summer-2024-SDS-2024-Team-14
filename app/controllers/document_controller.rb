@@ -1,3 +1,5 @@
+require 'ocr'
+require 'llmapi'
 
 
 class DocumentController < ApplicationController
@@ -14,10 +16,18 @@ class DocumentController < ApplicationController
         uploaded_files = params[:files]
         if uploaded_files
             for file_json in uploaded_files
-                # Change to upload onto cloud storage
-                # @user.documents.attach(file_json)
                 document = @user.documents.create(name: file_json.original_filename, category: category, status: "Pending")
                 document.file.attach(file_json)
+                local_path = download_active_storage_file(document.file)
+                # extract text
+                ocr_text = ocr(local_path)
+                # LLM
+                llm_json = llm_process(ocr_text, [
+                    "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
+                    "overall GPA", "institution name", "graduation date"
+                  ])
+                document.important = llm_json.to_s
+                document.save
                 File.delete(local_path) if File.exist?(local_path)
             end
             render json: {message: "File transfer has failed. Please contact the administrator"}
@@ -28,7 +38,7 @@ class DocumentController < ApplicationController
 
     def retrieve
         user = params[:id]
-        category = params[:category]
+        category = params[:category].capitalize
         begin
             @user = User.find(user)
         rescue ActiveRecord::RecordNotFound
@@ -40,7 +50,9 @@ class DocumentController < ApplicationController
                 {
                   id: document.id,
                   name: document.name,
-                  file_url: document.file.attached? ? url_for(document.file) : nil
+                  status: document.status,
+                  file_url: document.file.attached? ? url_for(document.file) : nil,
+                  important: document.important
                 }
             end
             render json: {documents: documents_with_files}, status: :ok
