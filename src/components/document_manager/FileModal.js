@@ -70,11 +70,19 @@ export default function FileModal(props) {
       return str.replace(/\b\w/g, (char) => char.toUpperCase());
     };
     const JSONDisplay = ({ data }) => {
+        const renderValue = (value) => {
+            if (typeof value === 'object' && value !== null) {
+              return (
+                <pre>{JSON.stringify(value, null, 2)}</pre> // Renders objects as a pretty-printed JSON string
+              );
+            }
+            return value !== null ? value.toString() : 'N/A';
+          };
       return (
         <div>
           {Object.entries(data).map(([key, value]) => (
             <div key={key} className='mb-8 text-black'>
-              <strong>{capitalizeWords(key)}:</strong> {value !== null ? value : 'N/A'}
+              <strong>{capitalizeWords(key)}:</strong> {renderValue(value)}
             </div>
           ))}
         </div>
