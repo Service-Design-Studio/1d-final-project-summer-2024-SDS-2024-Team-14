@@ -1,6 +1,7 @@
 require 'ocr'
 require 'llmapi'
 
+
 class DocumentController < ApplicationController
     def create
         # Get user
@@ -29,7 +30,7 @@ class DocumentController < ApplicationController
                 document.save
                 File.delete(local_path) if File.exist?(local_path)
             end
-            render json: {message: "Your file has been uploaded successfully"}
+            render json: {message: "File transfer has failed. Please contact the administrator"}
         else
             render json: {message: "File transfer has failed. Please contact the administrator"}
         end
