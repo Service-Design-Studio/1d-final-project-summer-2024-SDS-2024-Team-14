@@ -1,57 +1,66 @@
-require "rails_helper"
+require 'rails_helper'
+require 'webmock/rspec'
 require_relative "../app/utils/ocr"
+require 'google/cloud/translate/v2'
 
+RSpec.describe 'OCR processing' do
+    let(:image_path) {"spec/fixtures/mockpic.png"}
+    let(:pdf_path1) {"spec/fixtures/mockarabic.pdf"}
+    let(:pdf_path2) {"spec/fixtures/mockeng.pdf"}
+    let(:pdf_path3) {"spec/fixtures/mockeng.docx"}
+    let(:pdf_path4) {"spec/fixtures/sds.pdf"}
+    let(:resume) {"spec/fixtures/Timothy_Tang Resume.pdf"}
+    let(:translate_client) { double('Google::Cloud::Translate::V2.new') }
 
-RSpec.describe "ocr", type: :request do
-
-    scenario "successfully extract files from english PDF files" do
-        # get file path
-        # engpdf = "spec\mockengpdf.pdf"
-        # file = ocr(engpdf)
-        # expect(file["message"]).to eq("Supported pdf type")
-        # expect(file).to include(".pdf")
-        expect do
-            ocr("fixtures/mockeng.pdf")
-        end.to output("Supported pdf type").to_stdout
+    before do
+        allow(Google::Cloud::Translate::V2).to receive(:new).and_return(translate_client)    
+      
+        # Stub translation
+        allow(translate_client).to receive(:translate) do |text, options|
+            {
+                translations: [
+                    {translated_text: 'Name\nText to speech\nPhone number'},
+                    {translated_text: 'Name\nText to speech\nPhone number'},
+                    {translated_text: 'Name\nText to speech\nPhone number\nHello'},
+                    {translated_text: 'I drink water'}
+                ]
+            }
+        end
     end
 
-    # scenario "successfully extract text from English PDF" do
-    #     # get file path
-    #     engpdf = "./fixtures/mockengpdf.pdf"        
-    #     response = process_pdf(engpdf)
-    #     # expect(response).to eq("Name, Text to speech, Phone number")
-    #     # puts response
-    # end
-
-    scenario "loaded wrong pdf file type" do
-        # # get file path
-        # engpdf = "/fixtures/mockengpdf.pdf"
-        # response = ocr(process_pdf(engpdf))
-        # # expect(response).to eq("Name, Text to speech, Phone number")
-        # puts response
-        expect do
-            ocr("fixtures/mockeng.pdp")
-        end.to output(a_string_including("Unsupported file type")).to_stdout
+    scenario 'it processes an image and translates it' do
+        # allow(RTesseract).to receive(:new).and_return("text: ")
+        # expect(result).to eq("Translated text")
+        # expect do
+        #     result = ocr(image_path)
+        # end.to output("yes").to_stdout
+        result = ocr(image_path)
+        expect(result[0]).to eq("Name\\nText to speech\\nPhone number")
     end
 
-    scenario "successfully extract text from English PNG" do
-        # engpng = "/fixtures/mockengpng.png"
-        # response = ocr()
-        # # expect(response).to eq()
-        # puts response
-        expect do
-            ocr("fixtures/mockpic.png")
-        end.to output("Supported image type").to_stdout
+    scenario 'it processes a PDF and translates arabic text to english' do
+        result = ocr(pdf_path1)
+        expect(result[1]).to eq("Name\\nText to speech\\nPhone number")
     end
 
-    scenario "successfully translate text from Arabic PDF" do
-    #     arapng = "/fixtures/mockarabicpdf.pdf"
-    #     response = ocr()
-    #     # expect(response).to eq()
-    #     puts response
-    # end
-        expect do
-            ocr("fixtures/mockarabic.pdf")
-        end.to output("Supported pdf type").to_stdout
+    scenario 'it processes a PDF and translates english text to english' do
+        result = ocr(pdf_path2)
+        expect(result[2]).to eq("Name\\nText to speech\\nPhone number\\nHello")
     end
+
+    scenario 'it proccess an invalid file type and throws an error' do
+        result = ocr(pdf_path3)
+        expect(result).to eq("Unsupported file type")
+    end
+    
+    scenario 'it processes file that does not exist and throws an error' do
+        result = ocr(pdf_path4)
+        expect(result).to include("Error processing PDF: ")
+    end
+
+    scenario 'it translates my malay text to english' do
+        result = translate_text("Saya minum air", "en")
+        expect(result[3]).to eq("I drink water")
+    end
+    
 end
