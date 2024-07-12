@@ -8,6 +8,7 @@ def process_image(image_path)
   begin
     # Use RTesseract to do OCR on the image
     ocr = RTesseract.new(image_path)
+<<<<<<< HEAD:lib/ocr.rb
     text = ocr.to_s.strip
 
     # Print the extracted text
@@ -17,27 +18,33 @@ def process_image(image_path)
 
     # translated
     text
+=======
+    # text = ocr.to_s.strip #error: no implicit conversion of symbol into string
+    text = ocr.to_s
+    # Translate the text to English
+    puts text
+    translated = translate_text(text, 'en')
+    puts translated
+    translated
+>>>>>>> ff3ed56025623c28ca944200fbea347fbfbe6d6a:app/utils/ocr.rb
   rescue => e
     puts "Error processing image: #{e.message}"
-    nil
   end
 end
 
 def process_pdf(pdf_path)
   begin
     # Extract text from PDF using pdf-reader
-    reader = PDF::Reader.open(pdf_path)
+    reader = PDF::Reader.new(pdf_path)
     text2 = ''
     reader.pages.each do |page|
       text2 += page.text
     end
     # Translate the text to English
-    translated_text = translate_text(text2, 'en')
-    translated_text
-    text2
+    translated = translate_text(text2, "en")
+    translated
   rescue => e
-    puts "Error processing PDF: #{e.message}"
-    nil
+    "Error processing PDF: #{e.message}"
   end
 end
 
@@ -47,23 +54,20 @@ def translate_text(text, target_language)
       credentials: "C:/Users/USER/sds-ocr-428616-97b95f2f702a.json"
     )
     translation = translate.translate text, to: target_language
-    translation.text
+    translated_text = translation[:translations].map{|transl| transl[:translated_text]}
+    translated_text
   rescue => e
-    puts "Error translating text: #{e.message}"
-    nil
+    "Error translating text: #{e.message}"
   end
 end
 
 def ocr(file_path)
   prompt = if file_path.downcase.end_with?('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')
              process_image(file_path)
-            #  puts "Supported image type"
            elsif file_path.downcase.end_with?('.pdf')
              process_pdf(file_path)
-            #  puts "Supported pdf type"
            else
-             puts "Unsupported file type"
-             return
+             "Unsupported file type"
            end
   prompt
 end
