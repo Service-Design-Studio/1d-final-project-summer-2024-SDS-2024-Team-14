@@ -1,5 +1,5 @@
-require_relative '../utils/ocr'
-require_relative '../utils/llmapi'
+require 'ocr'
+require 'llmapi'
 
 class DocumentController < ApplicationController
     def create
