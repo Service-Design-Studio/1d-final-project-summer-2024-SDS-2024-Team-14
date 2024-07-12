@@ -93,5 +93,13 @@ class LoginPage {
         this.elements.notificationMessage().contains("email you have entered is invalid")
     }
 }
+
+class DocumentPage{
+    elements={
+        popupmenu: () => cy.get(".popupmenu")
+    }
+}
+
 export const homePage = new HomePage();
 export const loginPage = new LoginPage();
+export const documentPage = new DocumentPage();

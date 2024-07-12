@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
-const Card = ({ title, date, bgColor, iconColor, onClick }) => {
+const Card = ({ title, date, bgColor, iconColor, onClick, name }) => {
   // Define the counts directly within the Card component
   const counts = [
     { category: 'health', counts: { verified: 3, pending: 1, rejected: 0 } },
@@ -24,7 +24,7 @@ const Card = ({ title, date, bgColor, iconColor, onClick }) => {
   };
 
   return (
-    <div className={`relative p-4 sm:p-12 md:p-16 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center cursor-pointer`} onClick={handleClick}>
+    <div className={`${name} relative p-4 sm:p-12 md:p-16 rounded-lg shadow-md ${bgColor} flex flex-col justify-center items-center cursor-pointer`} onClick={handleClick}>
       <div className="absolute top-2 left-2 md:top-4 md:left-4">
         <button className="text-gray-600 text-lg">
           <FontAwesomeIcon icon={faEllipsisV} />

@@ -89,9 +89,9 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
     <div className="flex md:w-6/12 w-full items-center justify-center">
       <CustomButton
         ref={buttonRef}
-        id="demo-customized-button"
+        className='dropdownmenu'
         aria-label="more"
-        aria-controls={open ? 'demo-customized-menu' : undefined}
+        aria-controls={open ? 'dropdownmenu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         variant="contained"
@@ -100,14 +100,14 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
         endIcon={<KeyboardArrowDownIcon className='text-bold'/>}
       >
         {selectedCategory.icon && <selectedCategory.icon className="mr-2" />}
-        <span className='text-lg md:text-xl' style={{textTransform: 'none' }}>
+        <span className='text-lg md:text-xl text-wrap text-balanced' style={{textTransform: 'none' }}>
           {selectedCategory.name}
         </span>
       </CustomButton>
       <StyledMenu
-        id="demo-customized-menu"
+        id="options"
         MenuListProps={{
-          'aria-labelledby': 'demo-customized-button',
+          'aria-labelledby': 'dropdownmenu-button',
         }}
         anchorEl={anchorEl}
         open={open}
@@ -119,32 +119,32 @@ export default function UploadDropdown({selectedCategory, setSelectedCategory}) 
           },
         }}
       >
-        <MenuItem onClick={() => handleClose('Health', LocalHospitalIcon)} disableRipple>
+        <MenuItem className='Health' onClick={() => handleClose('Health', LocalHospitalIcon)} disableRipple>
           <LocalHospitalIcon />
           Health
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
+        <MenuItem className='Education' onClick={() => handleClose('Education', SchoolIcon)} disableRipple>
           <SchoolIcon />
           Education
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Career', WorkIcon)} disableRipple>
+        <MenuItem className='Career' onClick={() => handleClose('Career', WorkIcon)} disableRipple>
           <WorkIcon />
           Career
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Finance', AttachMoneyIcon)} disableRipple>
+        <MenuItem className='Finance' onClick={() => handleClose('Finance', AttachMoneyIcon)} disableRipple>
           <AttachMoneyIcon />
           Finance
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Property', HouseIcon)} disableRipple>
+        <MenuItem className='Property' onClick={() => handleClose('Property', HouseIcon)} disableRipple>
           <HouseIcon />
           Property
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose('Family', FamilyRestroomIcon)} disableRipple>
+        <MenuItem className='Family' onClick={() => handleClose('Family', FamilyRestroomIcon)} disableRipple>
           <FamilyRestroomIcon />
           Family
         </MenuItem>
