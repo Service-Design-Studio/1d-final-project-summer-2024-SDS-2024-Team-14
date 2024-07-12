@@ -1,8 +1,8 @@
-require 'ocr'
-require 'llmapi'
 
 
 class DocumentController < ApplicationController
+    include Ocr
+    include Llmapi
     def create
         # Get user
         user = params[:id]
