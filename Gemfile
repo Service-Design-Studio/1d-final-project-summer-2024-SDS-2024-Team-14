@@ -79,6 +79,10 @@ group :development do
   # gem "spring"
 end
 
+group :development, :production do
+  gem "google-cloud-storage", "~> 1.11", require: false
+end
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
