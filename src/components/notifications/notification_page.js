@@ -1,10 +1,10 @@
 import Divider from '@mui/material/Divider';
-import Header from "../components/scanner/header";
-import Notification from "../components/notifications/notification";
-import "../styles/globals.css";
+import Header from "../scanner/header";
+import Notification from "./notification";
+import "../../styles/globals.css";
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-export default function NotificationPage(props) {
+export default function NotificationPage({ open}) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
     const placeholderStr = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica";
@@ -57,14 +57,14 @@ export default function NotificationPage(props) {
     useEffect(() => {
         // setRecent([]);
         setRecent(recentPlaceholder);
-        setPast([]);
-        // setPast(pastPlaceholder);
+        // setPast([]);
+        setPast(pastPlaceholder);
     }, []);
 
 
 
     return (
-        <div className="w-screen min-h-screen h-full bg-white">
+        <div className={`${open ? `w-screen shadow-md` : `w-0 hidden`} min-h-screen h-full bg-white transition-all-500`}>
             <Header text={"Notifications"} onClick={() => { }} />
             <div className="flex flex-col w-11/12 mx-auto">
                 <span className="notif-subheader">Recent</span>
