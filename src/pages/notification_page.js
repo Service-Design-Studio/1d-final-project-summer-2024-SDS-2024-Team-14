@@ -3,6 +3,7 @@ import Header from "../components/scanner/header";
 import Notification from "../components/notifications/notification";
 import "../styles/globals.css";
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 export default function NotificationPage(props) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
@@ -54,8 +55,10 @@ export default function NotificationPage(props) {
         },
     ];
     useEffect(() => {
+        // setRecent([]);
         setRecent(recentPlaceholder);
-        setPast(pastPlaceholder)
+        setPast([]);
+        // setPast(pastPlaceholder);
     }, []);
 
 
@@ -65,7 +68,7 @@ export default function NotificationPage(props) {
             <Header text={"Notifications"} onClick={() => { }} />
             <div className="flex flex-col w-11/12 mx-auto">
                 <span className="notif-subheader">Recent</span>
-                {recent.map((i, index) => {
+                {recent.length > 0 ? recent.map((i, index) => {
                     return (<Notification
                         key={index}
                         unread={i.unread}
@@ -73,10 +76,15 @@ export default function NotificationPage(props) {
                         text={i.text}
                         notifStatus={i.notifStatus}
                     />)
-                })}
+                }) :
+                    <div className='flex flex-col w-full mx-auto items-center'>
+                        <Image src={"/images/empty_notifications.svg"} className="w-[30vw] md:w-fit h-auto" width={1} height={1} alt='No recent notification' />
+                        <span className='text-darkblue text-[1em] md:text-2xl font-semibold mt-3'>No new notifications</span>
+                    </div>
+                }
                 <Divider className='p-2 m-3 ' variant='middle' />
                 <span className="notif-subheader">Past Notifications</span>
-                {past.map((i, index) => {
+                {past.length > 0 ? past.map((i, index) => {
                     return (<Notification
                         key={index}
                         unread={i.unread}
@@ -84,7 +92,11 @@ export default function NotificationPage(props) {
                         text={i.text}
                         notifStatus={i.notifStatus}
                     />)
-                })}
+                }) :
+                    <div className='flex flex-col w-full mx-auto items-center'>
+                        <Image src={"/images/empty_past_notifications.svg"} className="w-[30vw] md:w-fit h-auto" width={1} height={1} alt='No recent notification' />
+                        <span className='text-darkblue text-[1em] md:text-2xl font-semibold mt-3'>No past notifications</span>
+                    </div>}
                 <Divider className='p-2 m-3' variant='middle' />
             </div>
 
