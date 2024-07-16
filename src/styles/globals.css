@@ -108,6 +108,9 @@ body {
   .profile-image {
     @apply w-3/12 h-auto;
   }
+  .notif-subheader{
+    @apply w-fit text-2xl font-semibold text-darkblue;
+  }
   .grid-2-cols-4-rows {
     @apply grid grid-cols-2 grid-rows-4 gap-y-2 ml-10 my-auto py-2;
   }

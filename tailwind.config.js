@@ -89,6 +89,7 @@ module.exports = {
       'lightorange': '#FFFF00',
       'pink-100' : '#F8BBD0',
       'gray': '#C0C0C0',
+      'lightgray': '#E0E0E0',
       'blue-100': '#BBDEFB',
       'green':'#22c55e',
       'lightgreen':'#bbf7d0',
@@ -103,7 +104,7 @@ module.exports = {
       'mutedgreen':'#27D5A6',
       'mutedyellow':'#EEBD2F',
       'mutedred':'#DA5071',
-      'lightblue':'#D2EFFF',
+      'lightblue': '#D2EFFF',
     },
     fontSize: {
       'xs': '0.1rem',
