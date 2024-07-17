@@ -100,13 +100,13 @@ body {
     @apply max-w-lg card-width p-1 sm:p-2 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-2xl;
   }
   .id-card {
-    @apply card px-6 pt-6 bg-gradient-to-r from-lightblue to-lightpink transition-all-500;
+    @apply card px-6 pt-6 bg-gradient-to-r from-[#BEE3F7] to-white transition-all-500;
   }
   .feature-card {
-    @apply card flex flex-row mt-4 mb-0 mx-auto bg-darkblue  text-white hover:bump transition-all duration-300 bg-gradient-to-r from-paleblue to-deepblue;
+    @apply card flex flex-row mb-4 mx-auto bg-darkblue text-white hover:bump transition-all duration-300;
   }
   .profile-image {
-    @apply w-3/12 h-auto;
+    @apply w-3/12 h-auto mt-4;
   }
   .grid-2-cols-4-rows {
     @apply grid grid-cols-2 grid-rows-4 gap-y-2 ml-10 my-auto py-2;
