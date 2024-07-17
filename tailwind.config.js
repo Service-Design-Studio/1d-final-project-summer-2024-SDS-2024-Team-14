@@ -55,7 +55,7 @@ module.exports = {
     textColor: {
       'default': 'black',
       'white': 'white',
-      'darkblue': '#0072BC',
+      'darkblue': '#405DB5',
       'blue-600' : '#1E88E5',
       'purple-600' : '#8E24AA',
       'pink-600': '#D81B60',
@@ -81,7 +81,7 @@ module.exports = {
       'disabled': '#AFAFAF',
       'default': 'black',
       'paleblue': '#009BFF',
-      'darkblue': '#0072BC',
+      'darkblue': '#405DB5',
       'deepblue': '#005994',
       'lightblue': '#D5EEFF',
       'lightpink': '#FFDDFA',

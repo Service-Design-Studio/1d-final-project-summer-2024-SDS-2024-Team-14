@@ -4,7 +4,6 @@ import Loading from "../loading.js"
 import IdCard from "./id_card.js";
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
-import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
 export default function Homepage(props) {
     const router = useRouter();
@@ -30,11 +29,17 @@ export default function Homepage(props) {
     }, []);
 
     return (
-        <div className="flex flex-col px-5 items-center mt-4">
-            {!props.loading && data && <div><HomeHeader text={"Home"} />
-                <IdCard data={data} loading={loading} />
-                <Features id={userID}/></div>}
+        <>
+        <div className="flex flex-row justify-center mt-8 mx-20">
+            {!props.loading && data &&
+                <>
+                    <IdCard data={data} loading={loading} />
+                    <Features id={userID}/>
+                </>
+            }
             {props.loading && data && <Loading text={"Loading..."} />}
             {!props.loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
-        </div>);
+        </div>
+        </>
+    );
 }
