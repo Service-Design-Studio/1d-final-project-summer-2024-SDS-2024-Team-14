@@ -4,7 +4,6 @@ import Image from "next/image";
 import styles from "../../pages/gebirah.module.css"
 import { styled } from '@mui/material/styles';
 import React, {useEffect, useState} from "react";
-import ImageWithSpinner from "@/components/ImageWithSpinner";
 import fileIcon from "../../../public/images/file_icon.svg";
 
 
@@ -66,20 +65,38 @@ export default function FileModal(props) {
       }
     };
     const description = parseJSON(props.description);
+    console.log(description)
     const capitalizeWords = (str) => {
       return str.replace(/\b\w/g, (char) => char.toUpperCase());
     };
     const JSONDisplay = ({ data }) => {
+      const renderValue = (value) => {
+        if (Array.isArray(value)) {
+          return (
+            <ul className="list-disc list-inside">
+              {value.map((item, index) => (
+                <li key={index}>{renderValue(item)}</li>
+              ))}
+            </ul>
+          );
+        } else if (value && typeof value === 'object') {
+          return <JSONDisplay data={value} />;
+        } else {
+          return <span>{value !== null ? value.toString() : 'N/A'}</span>;
+        }
+      };
+
       return (
         <div>
           {Object.entries(data).map(([key, value]) => (
-            <div key={key} className='mb-8 text-black'>
-              <strong>{capitalizeWords(key)}:</strong> {value !== null ? value : 'N/A'}
+            <div key={key} className="mb-8 text-black">
+              <strong>{capitalizeWords(key)}:</strong>
+              <div className="ml-4">{renderValue(value)}</div>
             </div>
           ))}
         </div>
       );
-    };
+};
 
     function isImageFile(filename) {
         const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|tiff|svg|webp)$/i;

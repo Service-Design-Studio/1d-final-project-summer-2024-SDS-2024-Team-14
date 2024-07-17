@@ -5,12 +5,14 @@ import { redirect } from 'next/navigation'
 import { getSession, SessionProvider} from "next-auth/react";
 import "../hooks/useAuth"
 import useAuth from "@/hooks/useAuth";
+import NaviBar from "../components/NaviBar";
 // import {ReactNotifications} from "react-notifications-component";
 
 export default function Home({ session }) {
     useAuth();
   return (
     <main className="flex flex-col align-middle min-h-screen my-0 mx-0 bg-white transition-all-500">
+        <NaviBar/>
       <Homepage />
       </main>
   );
