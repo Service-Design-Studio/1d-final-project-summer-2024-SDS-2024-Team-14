@@ -18,7 +18,10 @@ module Llmapi
     body = {
       "contents": [{
             "parts":[{
-              "text": "Extract [#{parameters_str}] from [#{prompt_text}]. Return me a json response only, starting with { and ending with } "
+              # "text": "Extract the following parameters: #{parameters_str} from the given text: #{prompt_text}. 
+              # Provide the output in JSON format, starting with { and ending with }. Exclude any parameters that cannot be found"
+              "text": "Extract important information from the given text: #{prompt_text} for a #{category} document. 
+              Provide the output in JSON format, strictly starting with { and ending with }. Do not include the word json in the response."
             }]
             }]
     }.to_json
