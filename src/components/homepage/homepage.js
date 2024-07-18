@@ -30,7 +30,7 @@ export default function Homepage(props) {
 
     return (
         <>
-        <div className="flex flex-row justify-center mt-8 mx-20">
+        <div className="flex lg:flex-row flex-col justify-center md:my-4 mb-4 px-4 md:px-0 gap-[4vw]">
             {!props.loading && data &&
                 <>
                     <IdCard data={data} loading={loading} />

@@ -18,9 +18,9 @@ export default function IdCard(props) {
 
     return (
         <>
-            <div className="flex items-center flex-col w-full">
-                <span className="card mx-auto my-4 pb-0 shadow-none text-3xl font-medium text-darkblue">ID Card</span>
-                <div className="id-card">
+            <div className="flex items-center flex-col" data-aos='fade-right' data-aos-delay='300'>
+                <span className="card mx-auto md:my-4 mb-4 pb-0 shadow-none text-3xl font-medium text-darkblue">ID Card</span>
+                <div className="id-card transition duration-500 ">
                     {/* {console.log(props.loading, "\n", props.data)} */}
                     <div className="block">
                         <div className="flex">
@@ -39,10 +39,11 @@ export default function IdCard(props) {
                             <ShowBtn classStyle={"btn-disabled"} icon={"/images/close_eye_blue.svg"} hoverIcon={"/images/close_eye_blue.svg"} text={"Pending Approval"} />
                         }
                     </div>
-                    <div className="min-w-full text-darkblue" style={isOpen && props.verification_status != "Approved" ? { visibility: "visible", height: "fit-content" } : { visibility: "hidden", height: "0" }}>
+                    <div className={`min-w-full text-darkblue overflow-hidden transition-all duration-500 ${
+            isOpen && props.verification_status !== "Approved" ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
                         <span className="btn-text my-4">Scan For Documents</span>
                         <Link href={`/info/${props.data.id}`}>
-                            <div className="mx-auto w-fit pb-4">
+                            <div className="mx-auto w-fit py-4">
                                 <Canvas
                                     data-cy={"qrCode"}
                                     text={process.env.NEXT_PUBLIC_FRONTEND + 'info/' + props.data.id}
