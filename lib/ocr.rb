@@ -54,11 +54,21 @@ module Ocr
   def translate_text(text, target_language)
     begin
       translate = Google::Cloud::Translate::V2.new(
-        credentials: "C:/Users/USER/sds-ocr-428616-97b95f2f702a.json"
-      )
+        credentials: {
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED,
+          REDACTED
+        })
       translation = translate.translate text, to: target_language
-      translated_text = translation[:translations].map{|transl| transl[:translated_text]}
-      translated_text
+      translation.text
     rescue => e
       "Error translating text: #{e.message}"
     end
