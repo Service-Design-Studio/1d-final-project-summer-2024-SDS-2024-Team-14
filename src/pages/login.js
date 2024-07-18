@@ -143,7 +143,7 @@ export default function Login({ session }) {
         <ReactNotifications />
         <Box onSubmit={(e) => handleSubmit(e)} component="form" autoComplete="on" noValidate={false} className={`flex flex-col min-w-screen min-h-screen items-center bg-[url("/images/Zaatari_refugee_camp,_Jordan_(3).jpg")] bg-no-repeat bg-center bg-cover px-3 pb-10`}>
             <div className="flex flex-row items-center pt-6 my-0">
-                <Image src="/images/darkblue_enable_id_logo.svg" width={40} height={0} className="md:w-20" alt="EnableID Logo" />
+                <Image src="/images/enable_id_logo.svg" width={40} height={0} className="md:w-20" alt="EnableID Logo" />
                 <span className="text-darkblue text-4xl md:text-5xl px-3">EnableID</span>
             </div>
             <div className='flex flex-col mt-6 w-full lg:w-1/2 transition-all-50 bg-opacity-70 backdrop-blur-sm'>
