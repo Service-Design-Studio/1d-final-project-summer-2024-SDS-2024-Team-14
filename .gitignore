@@ -36,3 +36,6 @@
 /config/gebirah-14-79b845accba2.json
 
 /config/credentials/development.key
+
+# Ignore db 
+/db/development*
