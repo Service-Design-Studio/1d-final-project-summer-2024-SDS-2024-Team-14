@@ -20,14 +20,8 @@ module Ocr
         translated = translate_text(text, 'en')
         puts translated
 
-<<<<<<< HEAD
-      # Translate the text to English
-      translated = translate_text(text, 'en')
-      translated
-=======
         translated
       end
->>>>>>> da5dfbae76ca209b16aef69cfe91234907e488ae
     rescue => e
       puts "Error processing image: #{e.message}"
     end 
