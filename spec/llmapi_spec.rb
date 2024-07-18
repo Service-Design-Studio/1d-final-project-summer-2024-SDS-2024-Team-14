@@ -1,7 +1,8 @@
 require "rails_helper"
-require_relative "../app/utils/llmapi"
 require 'pdf-reader'
 require "webmock/rspec"
+
+include Llmapi
 
 RSpec.describe "llmapi", type: :request do
     let(:resume) {"spec/fixtures/mockresume.pdf"}

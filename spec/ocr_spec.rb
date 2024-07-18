@@ -1,7 +1,8 @@
 require 'rails_helper'
 require 'webmock/rspec'
-require_relative "../app/utils/ocr"
 require 'google/cloud/translate/v2'
+
+include Ocr
 
 RSpec.describe 'OCR processing' do
     let(:image_path) {"spec/fixtures/mockpic.png"}

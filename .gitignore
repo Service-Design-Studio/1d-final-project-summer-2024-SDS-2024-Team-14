@@ -39,3 +39,7 @@
 
 # Ignore db 
 /db/development*
+/db/test*
+
+#ignore coverage
+/coverage
