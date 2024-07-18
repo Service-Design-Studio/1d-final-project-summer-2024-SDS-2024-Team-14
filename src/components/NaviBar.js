@@ -22,8 +22,11 @@ export default function NaviBar() {
             onClick={() => setNavState(!navState)}
           >
             {navState ? (
+                <>
+                <div className="w-8 h-8">
+                </div>
               <svg
-                className="w-8 h-8 text-darkblue"
+                className="fixed top-5 left-3 w-8 h-8 text-darkblue"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -36,6 +39,7 @@ export default function NaviBar() {
                   d="M6 18L18 6M6 6l12 12"
                 ></path>
               </svg>
+                </>
             ) : (
               <svg
                 className="w-8 h-8 text-darkblue"
