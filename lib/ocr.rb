@@ -70,12 +70,8 @@ module Ocr
             elsif file_path.downcase.end_with?('.pdf')
               process_pdf(file_path)
             else
-<<<<<<< HEAD
-              "Unsupported file type"
-=======
               puts "Unsupported file type"
               nil
->>>>>>> da5dfbae76ca209b16aef69cfe91234907e488ae
             end
     prompt
   end
