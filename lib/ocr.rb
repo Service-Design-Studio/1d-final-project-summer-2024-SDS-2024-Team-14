@@ -11,10 +11,23 @@ module Ocr
       # Use RTesseract to do OCR on the image
       ocr = RTesseract.new(image_path)
       text = ocr.to_s.strip
+      if text.empty?
+        puts "OCR result is empty."
+        nil
+      else
+        # Translate the text to English
+        puts text
+        translated = translate_text(text, 'en')
+        puts translated
 
+<<<<<<< HEAD
       # Translate the text to English
       translated = translate_text(text, 'en')
       translated
+=======
+        translated
+      end
+>>>>>>> da5dfbae76ca209b16aef69cfe91234907e488ae
     rescue => e
       puts "Error processing image: #{e.message}"
     end 
@@ -24,13 +37,21 @@ module Ocr
     begin
       # Extract text from PDF using pdf-reader
       reader = PDF::Reader.new(pdf_path)
-      text2 = ''
+      text = ''
       reader.pages.each do |page|
-        text2 += page.text
+        text += page.text
       end
+
+      if text.empty?
+        puts "OCR result is empty."
+        nil
+      else
+
       # Translate the text to English
-      translated = translate_text(text2, "en")
-      translated
+        translated_text = translate_text(text, 'en')
+
+        translated_text
+      end
     rescue => e
       "Error processing PDF: #{e.message}"
     end
@@ -50,12 +71,17 @@ module Ocr
   end
 
   def ocr(file_path)
-    prompt = if file_path.downcase.end_with?('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')
+    prompt = if file_path.downcase.end_with?('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif', '.webp')
               process_image(file_path)
             elsif file_path.downcase.end_with?('.pdf')
               process_pdf(file_path)
             else
+<<<<<<< HEAD
               "Unsupported file type"
+=======
+              puts "Unsupported file type"
+              nil
+>>>>>>> da5dfbae76ca209b16aef69cfe91234907e488ae
             end
     prompt
   end
