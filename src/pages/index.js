@@ -1,16 +1,22 @@
-import Head from 'next/head';
+import {useEffect} from 'react';
 import Homepage from "../components/homepage/homepage.js";
 import "../styles/globals.css";
-import { redirect } from 'next/navigation'
-import { getSession, SessionProvider} from "next-auth/react";
 import "../hooks/useAuth"
 import useAuth from "@/hooks/useAuth";
-// import {ReactNotifications} from "react-notifications-component";
+import NaviBar from "../components/NaviBar";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Home({ session }) {
     useAuth();
+    useEffect(() => {
+        AOS.init({
+            once: true,
+        });
+      }, [])
   return (
-    <main className="flex flex-col align-middle min-h-screen my-0 mx-0 bg-white transition-all-500">
+    <main className="flex flex-col align-middle min-h-screen bg-white transition-all-500 bg-local bg-[url('../../public/images/background/gebirah-background.jpg')]">
+        <NaviBar/>
       <Homepage />
       </main>
   );
