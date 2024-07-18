@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+/**import React, { useState, useEffect } from 'react';
 import UploadDropdown from '../../components/uploadpage/dropdown.js';
 import '../../styles/globals.css';
 import 'react-notifications-component/dist/theme.css';
 import { Icon } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import UploadFile from '../../components/uploadpage/upload_file.js';
-import Header from '../../components/header.js';
+//import Header from '../../components/header.js';
 import {ReactNotifications, Store} from "react-notifications-component";
 import {useRouter} from "next/router";
+import NaviBar from "../../components/NaviBar";
 
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);
@@ -36,23 +37,29 @@ export default function Upload() {
   return (
       <>
       <ReactNotifications />
-      <div className="min-h-screen bg-white p-4 flex flex-col">
-        <Header title="Upload" backButton="/documents"/>
-        <form
-          onSubmit={(e) => handleSubmit(e)}
-          className="flex flex-col justify-center w-full px-4 md:px-8 lg:px-12"
-          autoComplete="on"
-          noValidate={false}
-        >
-        <div className="flex items-center justify-center md:mb-4 mb-6">
-          <UploadDropdown selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} value={dropdownValue} onChange={handleDropdownChange} />
+        <NaviBar />
+      <div className="min-h-screen p-4 flex flex-col bg-[url('../../public/images/background/gebirah-background.jpg')] items-center">
+        <div className='w-full font-bold text-darkblue bold '>
+          <h1 className='mb-2 p-10'>Upload</h1>
+          <p className=''>Start uploading your important documents here</p>
+          <p className =''>Please upload all relevant documents by selecting one or multiple files</p>
         </div>
-        <div className="mb-4">
-          <UploadFile selectedCategory={selectedCategory} router={router} className="flex flex-col items-center justify-center" />
+        <div className="bg-white rounded-lg shadow-md p-8">
+          <form
+            onSubmit={(e) => handleSubmit(e)}
+            className="flex flex-col justify-center w-full px-4 md:px-8 lg:px-12"
+            autoComplete="on"
+            noValidate={false}
+          >
+          <div className="flex items-center justify-center md:mb-4 mb-6">
+            <UploadDropdown selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} value={dropdownValue} onChange={handleDropdownChange} />
+          </div>
+          <div className="mb-4">
+            <UploadFile selectedCategory={selectedCategory} router={router} className="flex flex-col items-center justify-center" />
+          </div>
+        </form>
         </div>
-      </form>
-
       </div>
         </>
   );
-}
+}*/
