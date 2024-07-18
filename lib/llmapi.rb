@@ -5,16 +5,12 @@ GOOGLE_API_KEY = 'AIzaSyD3eT6P2yBnWsO_9CvpEX8PWod0joKUUUE'
 BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=#{GOOGLE_API_KEY}"
 
 module Llmapi
-  def llm_process(prompt_text, parameters)
+  def llm_process(prompt_text, category)
 
     headers = {
       'Content-Type' => 'application/json',
     }
-    # education_transcript_parameters = [
-    #   "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
-    #   "overall GPA", "institution name", "graduation date"
-    # ]
-    parameters_str = parameters.join(', ')
+    # parameters_str = parameters.join(', ')
     body = {
       "contents": [{
             "parts":[{

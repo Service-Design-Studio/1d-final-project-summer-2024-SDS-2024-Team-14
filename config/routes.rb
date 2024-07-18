@@ -11,6 +11,5 @@ Rails.application.routes.draw do
   resources :verify
   post 'document', to: 'document#create'
   post 'document/retrieve', to: 'document#retrieve'
-  resources :document
   post 'login', to: 'login#create'
 end
