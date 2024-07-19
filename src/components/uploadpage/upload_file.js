@@ -79,12 +79,11 @@ class UploadFile extends Component {
                 <div className='w-full'>
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
-                            <div className="bg-[#F3FBFF] rounded-lg shadow-md p-4">
-                                <p className="font-bold">File Name: {fileObj.file.name}</p>
-                                <p className="mb-4">Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
+                            <div className="bg-[#F3FBFF] rounded-lg shadow-md p-4 md:w-8vw flex justify-between">
+                                <p className="font-bold text-md sm:text-md md:text-md lg:text-md">File Name: {fileObj.file.name}</p>
                                 <button 
                                 onClick={() => this.deleteSelectedFile(fileObj.id)} 
-                                className="text-purpleblue rounded-md">
+                                className="pl-2 text-purpleblue rounded-md flex justify-end ">
                                 <FontAwesomeIcon icon={faTimesCircle} />
                                 </button> 
                             </div>
@@ -116,16 +115,17 @@ class UploadFile extends Component {
     
         return (
             <div className="flex flex-col h-full">
-                <div className=" pt-4 md:pt-8 flex flex-col md:flex-row flex-1">
+                <div className="pt-4 md:pt-8 flex flex-col md:flex-row gap-4">
+                    {/* File Upload Zone */}
                     <label
-                        className="h-65 md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40"
+                        className="md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 p-4"
                     >
-                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
+                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 md:py-20">
                             <CustomFileUploadOutlinedIcon />
                             <p className="mb-2 text-2xl md:text-2xl text-lightblue font-semibold">
                                 Upload a file
                             </p>
-                            <p className="mb-2 text-lg md:text-lg text-lightblue">
+                            <p className="mb-2 text-md md:text-lg text-lightblue">
                                 Drag and drop or browse to choose a file
                             </p>
                         </div>
@@ -136,8 +136,12 @@ class UploadFile extends Component {
                             onChange={this.onFileChange}
                         />
                     </label>
-                    <div className="pl-8 rounded-xl flex-1">
-                        {this.fileData()}
+
+                    {/* File Data Container */}
+                    <div className="w-full md:w-1/2 max-h-[35vh] md:max-h-[30vw] flex flex-col overflow-y-auto">
+                        <div className="md:pl-8 rounded-xl flex-1 overflow-auto h-full">
+                            {this.fileData()}
+                        </div>
                     </div>
                 </div>
                 <div className="pt-4 flex flex-col items-end justify-end mt-auto">
