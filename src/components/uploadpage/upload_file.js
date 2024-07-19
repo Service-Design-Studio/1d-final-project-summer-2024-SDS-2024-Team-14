@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faFileText } from '@fortawesome/free-solid-svg-icons';
 import shortid from 'shortid';
 import { ReactNotifications, Store } from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css';
@@ -80,16 +80,17 @@ class UploadFile extends Component {
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
                             <div
-                                className="bg-[#F3FBFF] rounded-lg shadow-md p-4 md:w-8vw flex justify-between cursor-pointer"
+                                className="bg-[#F3FBFF] rounded-lg shadow-md p-4 md:w-8vw flex justify-start items-center cursor-pointer hover:bg-lightblue "
                                 onClick={() => this.handleCardClick(fileObj)}
                             >
-                                <p className="font-bold text-md sm:text-md md:text-md lg:text-md">File Name: {fileObj.file.name}</p>
+                                <FontAwesomeIcon icon={faFileText} />
+                                <p className="pl-3 pr-5 font-bold text-lightblue text-md sm:text-md md:text-md lg:text-md flex-grow">File Name: {fileObj.file.name}</p>
                                 <button 
                                     onClick={(e) => {
                                         e.stopPropagation(); // Prevent click event from bubbling to the card
                                         this.deleteSelectedFile(fileObj.id);
                                     }} 
-                                    className="pl-2 text-purpleblue rounded-md flex justify-end"
+                                    className="text-darkblue rounded-md flex justify-end ml-auto hover:text-lightblue "
                                 >
                                     <FontAwesomeIcon icon={faTimesCircle} />
                                 </button> 
@@ -125,17 +126,17 @@ class UploadFile extends Component {
 
     render() {
         const uploadButtonClasses = (this.state.selectedFiles.length > 0)
-            ? "text-lg px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
-            : "text-lg px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
+            ? "text-lg px-5 py-2 text-white bg-darkblue rounded-md hover:bg-[#4378DB] hover:text-white hover:underline"
+            : "text-lg px-5 py-2 text-darkblue bg-darkblue bg-opacity-30 rounded-md cursor-not-allowed";
     
         return (
             <div className="flex flex-col h-full">
                 <div className="pt-4 md:pt-8 flex flex-col md:flex-row gap-4">
                     {/* File Upload Zone */}
                     <label
-                        className="md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 p-4"
+                        className="md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 p-4 "
                     >
-                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 md:py-20">
+                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 md:py-20 ">
                             <CustomFileUploadOutlinedIcon />
                             <p className="mb-2 text-2xl md:text-2xl text-lightblue font-semibold">
                                 Upload a file
@@ -163,7 +164,7 @@ class UploadFile extends Component {
                     <div className="flex md:space-x-4 space-x-8">
                         <button
                             onClick={this.clearAllFiles}
-                            className="text-lg px-5 py-2 text-lightblue border-solid border-lightblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white"
+                            className="text-lg px-5 py-2 text-lightblue border-solid border-lightblue border-radius-19px rounded-md hover:bg-darkblue hover:text-white"
                         >
                             Clear All
                         </button>

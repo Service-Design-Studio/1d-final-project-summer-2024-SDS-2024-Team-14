@@ -43,7 +43,7 @@ export default function Upload() {
             <h1 className='text-darkblue font-bold'>Upload Document</h1>
             <p className='my-2'>Start uploading your important documents here</p>
             <p className=''>Please upload all relevant documents by selecting one or multiple files</p>
-            <div className="bg-white rounded-lg shadow-md p-8 my-8">
+            <div className="bg-white rounded-xl shadow-xl p-8 my-8">
                 <form
                     onSubmit={(e) => handleSubmit(e)}
                     className="flex flex-col justify-center w-full px-4 md:px-8 lg:px-12"
