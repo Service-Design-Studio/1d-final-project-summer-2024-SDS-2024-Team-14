@@ -6,6 +6,7 @@ import useAuth from "@/hooks/useAuth";
 import NaviBar from "../components/NaviBar";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import ChatBot from "@/components/ChatBot";
 
 export default function Home({ session }) {
     useAuth();
@@ -18,6 +19,7 @@ export default function Home({ session }) {
     <main className="overflow-hidden flex flex-col align-middle min-h-screen bg-white transition-all-500 bg-local bg-[url('../../public/images/background/gebirah-background.jpg')]">
         <NaviBar/>
       <Homepage />
+        <ChatBot/>
       </main>
   );
 }

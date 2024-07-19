@@ -105,9 +105,6 @@ body {
   .feature-card {
     @apply card flex flex-row mb-4 mx-auto bg-darkblue text-white hover:bump transition-all duration-300;
   }
-  .profile-image {
-    @apply w-3/12 h-auto mt-4;
-  }
   .notif-subheader{
     @apply w-fit text-2xl font-semibold text-darkblue;
   }
