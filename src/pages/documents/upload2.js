@@ -38,24 +38,23 @@ export default function Upload() {
     <>
     <ReactNotifications />
       <NaviBar />
-      <div className="min-h-screen p-4 flex flex-col bg-[url('../../public/images/background/gebirah-background.jpg')] ">
-        <div className='w-full text-darkblue bold 'style={{ marginLeft: '167px' }}>
-            <h1 className='pd-2 text-darkblue font-bold'>Upload Document</h1>
-            <p className='my-5'>Start uploading your important documents here</p>
+      <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-background.jpg')] ">
+        <div className='w-full p-8 text-darkblue bold'>
+            <h1 className='text-darkblue font-bold'>Upload Document</h1>
+            <p className='my-2'>Start uploading your important documents here</p>
             <p className=''>Please upload all relevant documents by selecting one or multiple files</p>
-        </div>
-        
-        <div className="bg-white rounded-lg shadow-md p-8 mx-10 my-8">
-            <form
-                onSubmit={(e) => handleSubmit(e)}
-                className="flex flex-col justify-center w-full px-4 md:px-8 lg:px-12"
-                autoComplete="on"
-                noValidate={false}
-            >
-            <div className="mb-4 flex flex-row flex-col">
-                <UploadFile selectedCategory={selectedCategory} router={router} className="flex flex-col items-center justify-center" />
+            <div className="bg-white rounded-lg shadow-md p-8 my-8">
+                <form
+                    onSubmit={(e) => handleSubmit(e)}
+                    className="flex flex-col justify-center w-full px-4 md:px-8 lg:px-12"
+                    autoComplete="on"
+                    noValidate={false}
+                >
+                <div className="mb-4 flex flex-row flex-col">
+                    <UploadFile selectedCategory={selectedCategory} router={router} className="flex flex-col items-center justify-center" />
+                </div>
+                </form>
             </div>
-            </form>
         </div>
     
       </div>
