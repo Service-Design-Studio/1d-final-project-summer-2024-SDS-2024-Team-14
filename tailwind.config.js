@@ -20,7 +20,16 @@ module.exports = {
         'lg': '1024px',
         'xl': '1280px',
         '2xl': '1536px',
-      }, keyframes: {
+      },
+      keyframes: {
+        grow: {
+          '0%': { maxHeight: '0', maxWidth: '0vw', opacity: '0' },
+          '100%': { maxHeight: '100vh', maxWidth: '100vw', opacity: '1' },
+        },
+        shrink: {
+          '0%': { maxHeight: '100vh', maxWidth: '100vw', opacity: '1' },
+          '100%': { maxHeight: '0', maxWidth: '0vw',  opacity: '0' },
+        },
         slideIn: {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(0)' },
@@ -31,6 +40,8 @@ module.exports = {
         },
       },
       animation: {
+        grow: 'grow 0.8s ease-out forwards',
+        shrink: 'shrink 0.5s ease-out forwards',
         slideIn: 'slideIn 1s ease-in-out forwards',
         slideOut: 'slideOut 1s ease-in-out forwards',
       },

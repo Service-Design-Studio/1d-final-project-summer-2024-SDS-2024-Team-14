@@ -58,7 +58,7 @@ export default function NaviBar() {
             )}
           </button>
             <div className={`transition duration-500 fixed top-0 left-0 pt-16 bg-white z-20 h-screen ${
-          navState ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}>
+          navState ? "translate-x-0" : "-translate-x-full"}`}>
                 {/*Links */}
                 {/*<hr className="border-t-2 border-[#B0B0B0]/50 w-10/12 my-2 mx-auto" />*/}
                 <ul className="text-black pl-4 pr-16">
