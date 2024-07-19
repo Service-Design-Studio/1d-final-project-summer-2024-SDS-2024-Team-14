@@ -117,10 +117,10 @@ class UploadFile extends Component {
             ? "text-lg px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
             : "text-lg px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
         return (
-            <div className="flex flex-col items-center justify-center">
-                <div className="pt-4 w-full md:w-7/12 md:mt-4">
+            <div className="flex flex-col ">
+                <div className="pt-4 w-full md:w-1/2 md:mt-4">
                     <label
-                        className="w-full flex flex-col items-center justify-center border-2 border-purpleblue border-dashed rounded-3xl cursor-pointer bg-purpleblue bg-opacity-5"
+                        className="w-full flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40"
                     >
                         <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
                             <CustomFileUploadOutlinedIcon/>

@@ -39,8 +39,8 @@ export default function Upload() {
     <ReactNotifications />
       <NaviBar />
       <div className="min-h-screen p-4 flex flex-col bg-[url('../../public/images/background/gebirah-background.jpg')] ">
-        <div className='w-full text-darkblue bold 'style={{ marginLeft: '45px' }}>
-            <h1 className='pd-2 text-darkblue font-bold'>Document Upload</h1>
+        <div className='w-full text-darkblue bold 'style={{ marginLeft: '167px' }}>
+            <h1 className='pd-2 text-darkblue font-bold'>Upload Document</h1>
             <p className='my-5'>Start uploading your important documents here</p>
             <p className=''>Please upload all relevant documents by selecting one or multiple files</p>
         </div>
@@ -52,10 +52,7 @@ export default function Upload() {
                 autoComplete="on"
                 noValidate={false}
             >
-            <div className="flex items-center justify-center md:mb-4 mb-6">
-                <UploadDropdown selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} value={dropdownValue} onChange={handleDropdownChange} />
-            </div>
-            <div className="mb-4">
+            <div className="mb-4 flex flex-row flex-col">
                 <UploadFile selectedCategory={selectedCategory} router={router} className="flex flex-col items-center justify-center" />
             </div>
             </form>
