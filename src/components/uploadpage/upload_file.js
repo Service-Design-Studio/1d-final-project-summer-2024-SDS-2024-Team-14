@@ -6,6 +6,8 @@ import { Icon } from "@mui/material";
 import shortid from 'shortid';
 import {ReactNotifications, Store} from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 
 const CustomFileUploadOutlinedIcon = () => {
     return (
@@ -74,17 +76,18 @@ class UploadFile extends Component {
     fileData = () => {
         if (this.state.selectedFiles.length > 0) {
             return (
-                <div className='bg-white rounded-lg shadow-md p-8 w-full'>
+                <div className='w-full'>
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
-                            <p>File Name: {fileObj.file.name}</p>
-                            <p>File Type: {fileObj.file.type}</p>
-                            <p className="mb-4">Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
-                            <button 
-                            onClick={() => this.deleteSelectedFile(fileObj.id)} 
-                            className="mt-4 text-purpleblue rounded-md hover:underline">
-                            Delete
-                            </button>
+                            <div className="bg-[#F3FBFF] rounded-lg shadow-md p-4">
+                                <p className="font-bold">File Name: {fileObj.file.name}</p>
+                                <p className="mb-4">Last Modified: {fileObj.file.lastModifiedDate.toDateString()}</p>
+                                <button 
+                                onClick={() => this.deleteSelectedFile(fileObj.id)} 
+                                className="text-purpleblue rounded-md">
+                                <FontAwesomeIcon icon={faTimesCircle} />
+                                </button> 
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -110,18 +113,19 @@ class UploadFile extends Component {
         const uploadButtonClasses = (this.state.selectedFiles.length > 0)
             ? "text-lg px-5 py-2 text-white bg-purpleblue rounded-md hover:bg-purpleblue hover:text-white hover:underline"
             : "text-lg px-5 py-2 text-purpleblue bg-purpleblue bg-opacity-30 rounded-md cursor-not-allowed";
+    
         return (
-            <div className="flex flex-col ">
-                <div className="justify-between items-between pt-4 md:pt-8 flex flex-col md:flex-row">
+            <div className="flex flex-col h-full">
+                <div className=" pt-4 md:pt-8 flex flex-col md:flex-row flex-1">
                     <label
-                        className=" h-65 md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40"
+                        className="h-65 md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40"
                     >
                         <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 lg:py-12 md:py-20">
-                            <CustomFileUploadOutlinedIcon/>
+                            <CustomFileUploadOutlinedIcon />
                             <p className="mb-2 text-2xl md:text-2xl text-lightblue font-semibold">
                                 Upload a file
                             </p>
-                            <p className="mb-2 text-lg md:text-lg text-lightblue ">
+                            <p className="mb-2 text-lg md:text-lg text-lightblue">
                                 Drag and drop or browse to choose a file
                             </p>
                         </div>
@@ -132,30 +136,35 @@ class UploadFile extends Component {
                             onChange={this.onFileChange}
                         />
                     </label>
-                    <div className="font-bold rounded-xl">
+                    <div className="pl-8 rounded-xl flex-1">
                         {this.fileData()}
                     </div>
-                    
                 </div>
-                <div className=" flex flex-col items-end md:justify-end justify-center mt-auto ">
-                        <div className="flex md:space-x-4 space-x-8">
+                <div className="pt-4 flex flex-col items-end justify-end mt-auto">
+                    <div className="flex md:space-x-4 space-x-8">
                         <button
                             onClick={this.clearAllFiles}
-                            className="text-lg px-5 py-2 text-lightblue border-solid border-lightblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white">
+                            className="text-lg px-5 py-2 text-lightblue border-solid border-lightblue border-radius-19px rounded-md hover:bg-purpleblue hover:text-white"
+                        >
                             Clear All
                         </button>
                         <button
                             id="upload"
                             onClick={this.onFileUpload}
                             className={uploadButtonClasses}
-                            disabled={!this.state.selectedFiles}>
+                            disabled={!this.state.selectedFiles}
+                        >
                             Upload
                         </button>
-                        </div>
                     </div>
+                </div>
             </div>
         );
     }
+    
 }
 
 export default UploadFile;
+
+
+//<p>File Type: {fileObj.file.type}</p>

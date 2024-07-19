@@ -39,7 +39,7 @@ export default function Upload() {
     <ReactNotifications />
       <NaviBar />
       <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-background.jpg')] ">
-        <div className='w-full p-8 text-darkblue bold'>
+        <div className='flex flex-col p-4 text-darkblue bold'style={{ marginLeft: '160px', marginRight: '160px' }}>
             <h1 className='text-darkblue font-bold'>Upload Document</h1>
             <p className='my-2'>Start uploading your important documents here</p>
             <p className=''>Please upload all relevant documents by selecting one or multiple files</p>
