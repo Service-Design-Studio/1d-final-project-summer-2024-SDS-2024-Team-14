@@ -2,23 +2,26 @@ import axios from "axios";
 import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import { Icon } from "@mui/material";
-import shortid from 'shortid';
-import {ReactNotifications, Store} from "react-notifications-component";
-import 'react-notifications-component/dist/theme.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import shortid from 'shortid';
+import { ReactNotifications, Store } from "react-notifications-component";
+import 'react-notifications-component/dist/theme.css';
+import FilePreviewModal from './FilePreviewmodal'; // Import the modal component
 
 const CustomFileUploadOutlinedIcon = () => {
     return (
-        <FileUploadOutlinedIcon style={{ fontSize: '10vw', color: '#4378DB', opacity:'100%' }} />
+        <FileUploadOutlinedIcon style={{ fontSize: '10vw', color: '#4378DB', opacity: '100%' }} />
     );
 };
 
 class UploadFile extends Component {
     state = {
-        selectedFiles: []
+        selectedFiles: [],
+        showModal: false,
+        currentFile: null,
     };
+
     onFileChange = (event) => {
         const files = Array.from(event.target.files);
         const updatedFiles = files.map(file => ({
@@ -34,24 +37,22 @@ class UploadFile extends Component {
 
     onFileUpload = () => {
         const { selectedCategory, router } = this.props;
-        if (selectedCategory.name === "Select Category Here"){
+        if (selectedCategory.name === "Select Category Here") {
             Store.addNotification({
-                    title: "Error",
-                    message: "Please choose a category first before uploading",
-                    type: "danger",
-                    insert: "bottom",
-                    container: "bottom-right",
-                    animationIn: ["animate__animated", "animate__fadeIn"],
-                    animationOut: ["animate__animated", "animate__fadeOut"],
-                    dismiss: {
-                        duration: 5000,
-                        onScreen: true
-                    }
-                });
-        }
-        else {
+                title: "Error",
+                message: "Please choose a category first before uploading",
+                type: "danger",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+        } else {
             const userId = localStorage.getItem('userID');
-            // const category =
             const formData = new FormData();
             this.state.selectedFiles.forEach(fileObj => {
                 formData.append("files[]", fileObj.file, fileObj.file.name);
@@ -59,12 +60,11 @@ class UploadFile extends Component {
             formData.append("id", userId)
             formData.append("category", selectedCategory.name)
 
-            axiosInstance.post("/document", formData).then((resp)=>{
+            axiosInstance.post("/document", formData).then((resp) => {
                 if (resp.status === 200 || resp.status === 201) {
                     localStorage.setItem('notificationMessage', 'You have successfully uploaded the file. Please check that the file is in your folder.');
                     localStorage.setItem('status', 'success')
-                }
-                else{
+                } else {
                     localStorage.setItem('notificationMessage', 'There was an error uploading the file. Please contact your administrator for help.');
                     localStorage.setItem('status', 'error')
                 }
@@ -79,12 +79,19 @@ class UploadFile extends Component {
                 <div className='w-full'>
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
-                            <div className="bg-[#F3FBFF] rounded-lg shadow-md p-4 md:w-8vw flex justify-between">
+                            <div
+                                className="bg-[#F3FBFF] rounded-lg shadow-md p-4 md:w-8vw flex justify-between cursor-pointer"
+                                onClick={() => this.handleCardClick(fileObj)}
+                            >
                                 <p className="font-bold text-md sm:text-md md:text-md lg:text-md">File Name: {fileObj.file.name}</p>
                                 <button 
-                                onClick={() => this.deleteSelectedFile(fileObj.id)} 
-                                className="pl-2 text-purpleblue rounded-md flex justify-end ">
-                                <FontAwesomeIcon icon={faTimesCircle} />
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // Prevent click event from bubbling to the card
+                                        this.deleteSelectedFile(fileObj.id);
+                                    }} 
+                                    className="pl-2 text-purpleblue rounded-md flex justify-end"
+                                >
+                                    <FontAwesomeIcon icon={faTimesCircle} />
                                 </button> 
                             </div>
                         </div>
@@ -97,6 +104,14 @@ class UploadFile extends Component {
                 </div>
             );
         }
+    };
+
+    handleCardClick = (fileObj) => {
+        this.setState({ showModal: true, currentFile: fileObj });
+    };
+
+    handleCloseModal = () => {
+        this.setState({ showModal: false, currentFile: null });
     };
 
     deleteSelectedFile = (id) => {
@@ -156,19 +171,25 @@ class UploadFile extends Component {
                             id="upload"
                             onClick={this.onFileUpload}
                             className={uploadButtonClasses}
-                            disabled={!this.state.selectedFiles}
+                            disabled={this.state.selectedFiles.length === 0}
                         >
                             Upload
                         </button>
                     </div>
                 </div>
+                {this.state.showModal && (
+                    <FilePreviewModal 
+                        fileObj={this.state.currentFile} 
+                        onClose={this.handleCloseModal}
+                    />
+                )}
             </div>
         );
     }
-    
 }
 
 export default UploadFile;
+
 
 
 //<p>File Type: {fileObj.file.type}</p>
