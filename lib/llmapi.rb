@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-GOOGLE_API_KEY = 'AIzaSyD3eT6P2yBnWsO_9CvpEX8PWod0joKUUUE'
+GOOGLE_API_KEY = Rails.application.credentials.google_api_key
 BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=#{GOOGLE_API_KEY}"
 
 module Llmapi

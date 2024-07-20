@@ -54,19 +54,8 @@ module Ocr
   def translate_text(text, target_language)
     begin
       translate = Google::Cloud::Translate::V2.new(
-        credentials: {
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED,
-          REDACTED
-        })
+        credentials: Rails.application.credentials.gtranskey.as_json
+        )
       translation = translate.translate text, to: target_language
       translation.text
     rescue => e
