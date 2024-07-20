@@ -12,7 +12,6 @@ steps:
 
   - id: "build image"
     name: "gcr.io/cloud-builders/docker"
-    entrypoint: 'bash'
     args: ["build", "--build-arg", "MASTER_KEY=$(cat config/master.key)", "-t", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}", "."]
 
   - id: "push image"
