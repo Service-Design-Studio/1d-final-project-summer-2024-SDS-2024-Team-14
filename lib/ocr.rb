@@ -4,6 +4,7 @@ require 'pdf-reader'
 require 'google/cloud/translate/v2'
 require 'google/cloud/storage'
 
+
 module Ocr
   def process_image(image_path)
     begin
@@ -23,8 +24,7 @@ module Ocr
       end
     rescue => e
       puts "Error processing image: #{e.message}"
-      nil
-    end
+    end 
   end
 
   def process_pdf(pdf_path)
@@ -35,6 +35,7 @@ module Ocr
       reader.pages.each do |page|
         text += page.text
       end
+
       if text.empty?
         puts "OCR result is empty."
         nil
@@ -46,8 +47,7 @@ module Ocr
         translated_text
       end
     rescue => e
-      puts "Error processing PDF: #{e.message}"
-      nil
+      "Error processing PDF: #{e.message}"
     end
   end
 
@@ -70,8 +70,7 @@ module Ocr
       translation = translate.translate text, to: target_language
       translation.text
     rescue => e
-      puts "Error translating text: #{e.message}"
-      nil
+      "Error translating text: #{e.message}"
     end
   end
 

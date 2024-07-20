@@ -19,7 +19,7 @@ production:
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: "postgres.pucohrmkpcwjcjrmnogy"
-  password: "gebirah_tonytan"
+  username: <%= Rails.application.credentials.db_username %>
+  password: <%= Rails.application.credentials.db_password %>
   database: "postgres"
-  host:   "aws-0-ap-southeast-1.pooler.supabase.com"
+  host:   <%= Rails.application.credentials.db_host %>
