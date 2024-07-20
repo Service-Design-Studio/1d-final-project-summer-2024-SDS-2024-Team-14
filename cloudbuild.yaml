@@ -29,9 +29,9 @@ steps:
         "${_SERVICE_NAME}",
         "--platform", "managed",
         "--region", "${_REGION}",
-        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
-        '--set-env-vars', 'NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}'
-        '--set-env-vars', 'NEXT_PUBLIC_FRONTEND=${NEXT_PUBLIC_FRONTEND}'
+        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
+        "--set-env-vars", "NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}",
+        "--set-env-vars", "NEXT_PUBLIC_FRONTEND=${NEXT_PUBLIC_FRONTEND}"
       ]
 
 substitutions:
