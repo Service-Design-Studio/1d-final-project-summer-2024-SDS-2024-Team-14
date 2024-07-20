@@ -30,8 +30,8 @@ steps:
         "--platform", "managed",
         "--region", "${_REGION}",
         "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
-        "--set-env-vars", "NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}",
-        "--set-env-vars", "NEXT_PUBLIC_FRONTEND=${NEXT_PUBLIC_FRONTEND}"
+        "--set-env-vars", "NEXT_PUBLIC_URL=$(gcloud secrets versions access latest --secret=NEXT_PUBLIC_URL)",
+        "--set-env-vars", "NEXT_PUBLIC_FRONTEND=$(gcloud secrets versions access latest --secret=NEXT_PUBLIC_FRONTEND)"
       ]
 
 substitutions:
