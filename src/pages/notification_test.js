@@ -13,7 +13,7 @@ export default function NotificationTest() {
                         <Image onMouseEnter={ ()=>setHover(true)} onMouseLeave={()=> setHover(false)}
                                src={(open && "/images/filled_bell.svg") || (!open && !hover && "/images/alert_bell.svg")
                                    || (!open && hover && "/images/filled_alert_bell.svg")} width={1} height={1}
-                                    alt="Open notifications" className="w-5 md:w-[5vw]" />
+                               alt="Open notifications" className="w-5 md:w-[5vw]" />
                     </Button>
                 </div>
                 <NotificationPage open={open}/>
