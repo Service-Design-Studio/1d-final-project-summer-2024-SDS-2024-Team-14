@@ -61,4 +61,10 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+#   # config to not run google error checks for rspec
+#   config.google_cloud.use_trace = false
+#   config.google_cloud.use_logging = false
+#   config.google_cloud.use_error_reporting = false
+#   config.google_cloud.use_debugger = false
 end

@@ -17,7 +17,7 @@ module Llmapi
               # "text": "Extract the following parameters: #{parameters_str} from the given text: #{prompt_text}. 
               # Provide the output in JSON format, starting with { and ending with }. Exclude any parameters that cannot be found"
               "text": "Extract important information from the given text: #{prompt_text} for a #{category} document. 
-              Provide the output in JSON format, starting with { and ending with }."
+              Provide the output in JSON format, strictly starting with { and ending with }. Do not include the word json in the response."
             }]
             }]
     }.to_json
@@ -27,4 +27,3 @@ module Llmapi
     data = resp["candidates"][0]["content"]["parts"][0]["text"]
   end
 end
-
