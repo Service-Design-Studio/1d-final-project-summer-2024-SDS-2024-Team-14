@@ -6,7 +6,7 @@ steps:
     args:
       [
         "-c",
-        "gcloud secrets versions access latest --secret=rails-master-key > config/master.key"
+        "gcloud secrets versions access latest --secret=MASTER_KEY > config/master.key"
       ]
   - id: "build image"
     name: "gcr.io/cloud-builders/docker"
