@@ -7,12 +7,13 @@ steps:
       [
         "-c",
         "gcloud secrets versions access latest --secret=RAILS_MASTER_KEY > config/master.key && \
-         if [ -s config/master.key ]; then echo 'Secret fetched successfully'; else echo 'Failed to fetch secret'; fi"
+         if [ -s config/master.key ]; then echo 'Secret fetched successfully' && cat config/master.key; else echo 'Failed to fetch secret'; fi"
       ]
 
   - id: "build image"
     name: "gcr.io/cloud-builders/docker"
-    args: ["build", "--build-arg", "MASTER_KEY=$(cat config/master.key)", "-t", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}", "."]
+    entrypoint: "bash"
+    args: ["-c", "docker build --build-arg MASTER_KEY=$(cat config/master.key) -t gcr.io/${PROJECT_ID}/${_SERVICE_NAME} . "]
 
   - id: "push image"
     name: "gcr.io/cloud-builders/docker"
