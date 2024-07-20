@@ -1,13 +1,13 @@
 # [START cloudrun_rails_cloudbuild]
 steps:
-  - id: "fetch secrets"
-    name: "gcr.io/cloud-builders/gcloud"
-    entrypoint: "bash"
-    args:
-      [
-        "-c",
-        "gcloud secrets versions access latest --secret=MASTER_KEY > config/master.key"
-      ]
+  # - id: "fetch secrets"
+  #   name: "gcr.io/cloud-builders/gcloud"
+  #   entrypoint: "bash"
+  #   args:
+  #     [
+  #       "-c",
+  #       "gcloud secrets versions access latest --secret=MASTER_KEY > config/master.key"
+  #     ]
   - id: "build image"
     name: "gcr.io/cloud-builders/docker"
     entrypoint: 'bash'
