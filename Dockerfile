@@ -28,7 +28,7 @@ RUN gem install bundler && \
 # Copy local code to the container image.
 COPY . /app
 
-COPY config/master.key config/master.key
+# COPY config/master.key config/master.key
 
 ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
