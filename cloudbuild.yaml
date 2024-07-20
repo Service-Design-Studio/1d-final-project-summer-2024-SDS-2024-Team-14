@@ -1,0 +1,42 @@
+steps:
+  - id: "fetch secrets"
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      [
+        "-c",
+        "gcloud secrets versions access latest --secret=env-production > .env.production && \
+        if [ -s .env.production ]; then echo 'Secrets fetched successfully' && cat .env.production; else echo 'Failed to fetch secrets'; fi"
+      ]
+
+  - id: "build image"
+    name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args: ["-c", "docker build -t gcr.io/${PROJECT_ID}/${_SERVICE_NAME} . "]
+
+  - id: "push image"
+    name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"]
+
+  - id: "run deploy"
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      [
+        "run", "deploy",
+        "${_SERVICE_NAME}",
+        "--platform", "managed",
+        "--region", "${_REGION}",
+        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
+        '--set-secrets-file', '/env-production=.env.production'
+      ]
+
+substitutions:
+  _REGION: asia-southeast1
+  _SERVICE_NAME: gebirah-frontend
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
