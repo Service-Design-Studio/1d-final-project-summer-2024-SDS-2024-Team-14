@@ -43,14 +43,188 @@
           null
         ]
       },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/utils/ocr.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          3,
+          2,
+          2,
+          2,
+          null,
+          null,
+          2,
+          2,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          3,
+          null,
+          null,
+          3,
+          15,
+          3,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          5,
+          1,
+          4,
+          3,
+          null,
+          1,
+          null,
+          5,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null
+        ]
+      },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/login_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          3,
+          3,
+          1,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
       "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/application_controller.rb": {
         "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/users_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/serializers/user_serializer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          3,
+          null,
+          1,
+          3,
+          null,
+          null
+        ]
+      },
+      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/verify_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          3,
+          2,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null
+        ]
       },
       "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/document_controller.rb": {
         "lines": [
@@ -120,94 +294,6 @@
         "branches": {
         }
       },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/login_controller.rb": {
-        "lines": [
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/users_controller.rb": {
-        "lines": [
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/controllers/verify_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/models/application_record.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/models/document.rb": {
         "lines": [
           0,
@@ -217,110 +303,8 @@
         ],
         "branches": {
         }
-      },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/models/user.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/serializers/user_serializer.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "C:/Users/trust/OneDrive/SUTD/SUTD Term 5/Service Studio/gebirah_backend/app/utils/ocr.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null
-        ],
-        "branches": {
-        }
       }
     },
-    "timestamp": 1720737107
+    "timestamp": 1720737404
   }
 }
