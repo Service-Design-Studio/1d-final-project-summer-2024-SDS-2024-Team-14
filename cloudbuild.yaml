@@ -5,8 +5,10 @@ steps:
     args:
       [
         "-c",
-        "gcloud secrets versions access latest --secret=env-production > .env.production && \
-        if [ -s .env.production ]; then echo 'Secrets fetched successfully' && cat .env.production; else echo 'Failed to fetch secrets'; fi"
+        "export NEXT_PUBLIC_URL=$(gcloud secrets versions access latest --secret=NEXT_PUBLIC_URL) && \
+         export NEXT_PUBLIC_FRONTEND=$(gcloud secrets versions access latest --secret=NEXT_PUBLIC_FRONTEND) && \
+         echo 'SECRETS fetched'
+         "
       ]
 
   - id: "build image"
@@ -27,8 +29,9 @@ steps:
         "${_SERVICE_NAME}",
         "--platform", "managed",
         "--region", "${_REGION}",
-        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
-        '--set-secrets-file', '/env-production=.env.production'
+        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
+        '--set-env-vars', 'NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}'
+        '--set-env-vars', 'NEXT_PUBLIC_FRONTEND=${NEXT_PUBLIC_FRONTEND}'
       ]
 
 substitutions:
