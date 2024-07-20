@@ -13,6 +13,9 @@ RUN (curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -) && \
 # Install production dependencies.
 WORKDIR /app
 
+ARG MASTER_KEY
+ENV RAILS_MASTER_KEY=${MASTER_KEY}
+
 COPY Gemfile Gemfile.lock ./
 
 RUN apt-get update -qq && apt-get install -y python3-distutils && apt-get install -y libpq-dev && apt-get install -y tesseract-ocr
@@ -24,6 +27,8 @@ RUN gem install bundler && \
 
 # Copy local code to the container image.
 COPY . /app
+
+COPY config/master.key config/master.key
 
 ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
