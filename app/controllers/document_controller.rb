@@ -55,8 +55,10 @@ class DocumentController < ApplicationController
                     File.delete(local_path) if File.exist?(local_path)
                 end
             end
+            NotificationService.create_document_upload_success_notification(@user,document)
             render json: {message: "Your file has been uploaded successfully"}, status: :ok
         else
+            NotificationService.create_document_upload_fail_notification(@user,document)
             render json: {message: "File transfer has failed. Please contact the administrator"}, status: :unprocessable_entity
         end
     end
