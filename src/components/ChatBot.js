@@ -90,7 +90,7 @@ export default function ChatBot() {
                         <div className="my-2 py-2 px-4 w-3/4 rounded-2xl clear-both bg-[#C6E8FA] float-left text-black">
                             <h4 className="lg:text-[0.8vw] sm:text-[2vw] text-[2.5vw]">
                                 Hi, I am the Enable ID FAQ Chatbot. Ask me any questions about this website and I will try to answer them.
-                                You can ask questions such as "How do I upload a document" or "Please redirect me to the resource locator page".
+                                You can ask questions such as &quot;How do I upload a document&quot; or &quot;Please redirect me to the resource locator page&quot;.
                             </h4>
                         </div>
                         {messages.map((message, index) => (

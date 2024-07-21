@@ -10,7 +10,10 @@ export default function NotificationTest() {
             <div className="flex flex-row w-screen">
                 <div className=" w-fit h-screen">
                     <Button onClick={() => setOpen(!open)} className={`sticky top-0 ${open ? `shadow-md` : null}`}>
-                        <Image onMouseEnter={ ()=>setHover(true)} onMouseLeave={()=> setHover(false)} src={(open && "/images/filled_bell.svg") || (!open && !hover && "/images/alert_bell.svg") || (!open && hover && "/images/filled_alert_bell.svg")} width={1} height={1} alt="Open notifications" className="w-5 md:w-[5vw]" />
+                        <Image onMouseEnter={ ()=>setHover(true)} onMouseLeave={()=> setHover(false)}
+                               src={(open && "/images/filled_bell.svg") || (!open && !hover && "/images/alert_bell.svg")
+                                   || (!open && hover && "/images/filled_alert_bell.svg")} width={1} height={1}
+                                    alt="Open notifications" className="w-5 md:w-[5vw]" />
                     </Button>
                 </div>
                 <NotificationPage open={open}/>
