@@ -61,6 +61,9 @@ module.exports = {
         'vw-5': '5vw',
         
       },
+      boxShadow: {
+        'right': '10px 0 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -4px rgba(0, 0, 0, 0.1)',
+      }
 
     },
     textColor: {
@@ -71,6 +74,7 @@ module.exports = {
       'purple-600' : '#8E24AA',
       'pink-600': '#D81B60',
       'gray': '#909090',
+      'lightgray':'#797979',
       'green':'#22c55e',
       'lightgreen':'#bbf7d0',
       'yellow':'#ffa000',

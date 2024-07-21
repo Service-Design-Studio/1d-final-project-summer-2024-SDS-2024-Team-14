@@ -3,9 +3,8 @@ export default function PersonalInfo(props) {
     return (
         <div>
             <div className="grid-2-cols-4-rows">
-                <Field title={"Nama / Name"} content={props.userName} />
-                <Field title={"Issued Date"} content={props.issuedDate} />
                 <Field title={"Verification Status"} content={props.status} />
+                <Field title={"Issued Date"} content={props.issuedDate} />
                 <Field title={"Expiry Date"} content={props.expiryDate} />
                 <Field title={"Identification No."} content={props.idNo} />
                 <Field title={"Jantina / Sex"} content={props.sex} />
