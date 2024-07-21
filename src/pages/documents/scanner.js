@@ -4,7 +4,7 @@ import ScannedImage from '@/components/scanner/scanned_item';
 import CameraView from '../../components/scanner/camera';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
-import Header from '../../components/header';
+import NaviBar from '../../components/NaviBar';
 import CloseIcon from '@mui/icons-material/Close';
 import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
 import PDFDocument from 'pdfkit'
@@ -128,7 +128,7 @@ export default function Scanner() {
     return (
         <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
             <div className="w-11/12 mt-4">
-                <Header title={"Scanner"} backButton={backButtonUrl} />
+                <NaviBar title={"Scanner"} backButton={backButtonUrl} />
             </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
