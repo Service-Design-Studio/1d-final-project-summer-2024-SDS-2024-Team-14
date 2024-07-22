@@ -78,12 +78,12 @@ class UploadFile extends Component {
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
                             <div
-                                className="bg-[#F3FBFF] rounded-lg shadow-md px-4 py-2 md:w-8vw flex justify-start items-center cursor-pointer hover:bg-lightblue "
+                                className="bg-[#F3FBFF] rounded-lg shadow-md px-4 md:py-2 py-4 flex justify-start items-center cursor-pointer hover:bg-lightblue "
                                 onClick={() => this.handleCardClick(fileObj)}
                             >
-                                <Image className="w-[3vw]" src={fileIcon} alt="file icon"/>
+                                <Image className="md:w-[3vw] w-[7.5vw]" src={fileIcon} alt="file icon"/>
                                 {/*<FontAwesomeIcon icon={faFileText} />*/}
-                                <p className="pl-3 pr-5 font-semibold text-lightblue text-md sm:text-md md:text-lg lg:text-[1.1vw] flex-grow">File Name: {fileObj.file.name}</p>
+                                <p className="pl-3 pr-5 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] flex-grow">File Name: {fileObj.file.name}</p>
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation(); // Prevent click event from bubbling to the card
@@ -91,7 +91,7 @@ class UploadFile extends Component {
                                     }}
                                     className="text-darkblue rounded-md flex justify-end ml-auto hover:text-lightblue "
                                 >
-                                    <Image className="w-[1.7vw]" src={crossIcon} alt="cross icon"/>
+                                    <Image className="md:w-[1.7vw] w-[3.5vw]" src={crossIcon} alt="cross icon"/>
                                 </button>
                             </div>
                         </div>
