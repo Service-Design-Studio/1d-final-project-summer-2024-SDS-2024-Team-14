@@ -1,32 +1,52 @@
-import IdCard from "../../components/homepage/id_card";
+
 import PersonalInfo from "../../components/homepage/id_card/personal_info";
 import ProfilePic from "../../components/homepage/id_card/profile_pic";
 import Loading from "../../components/loading"
 import ExtendedInfo from "../../components/extended_info"
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/globals.css"
 import Link from "next/link";
 import axiosInstance from "../../utils/axiosInstance";
 import Image from "next/image";
 import EnableId from "../../../public/images/enable_id_logo.svg"
-import Vector from "../../../public/images/id_card/vector.png"
 import download from "../../../public/images/id_card/download.svg"
 import vector from "../../../public/images/id_card/vector.png"
-import idCarousel from "@/components/id_card/id_card";
 import DownloadIndiv from "../../../public/images/id_card/downloadindiv.svg"
 
 
 export default function Info() {
     const router = useRouter();
-    const [tabState, setTabState]= useState(0)
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const categories = [{name:"Education", index: 0},
-        {name:"Health", index:1}, {name:"Property", index:2},
+    const categories = [
+        {name:"Education", index: 0},
+        {name:"Health", index:1}, 
+        {name:"Property", index:2},
         {name:"Family", index:3}]
+
+    const tabsRef = useRef([]);
+    const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
+    const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
+  
+    useEffect(() => {
+      if (activeTabIndex === null) {
+        return;
+      }
+  
+      const setTabPosition = () => {
+        const currentTab = tabsRef.current[activeTabIndex];
+        if (currentTab) {
+          setTabUnderlineLeft(currentTab.offsetLeft);
+          setTabUnderlineWidth(currentTab.clientWidth);
+        }
+      };
+  
+      setTabPosition();
+    }, [activeTabIndex]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,20 +106,33 @@ export default function Info() {
                         </div>
                     </div>
                     <div className="flex flex-col w-[50vw] ml-[5vw] overflow-hidden">
-                        <div className="flex flex-row">
-                            {categories.map((category)=> {
+                        <div className="flex flex-row rounded-t-lg bg-[#E7E7E7] backdrop-blur-sm">
+                            <span
+                                className="absolute bottom-0 top-0 -z-10 flex overflow-hidden transition-all duration-300"
+                                style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
+                            >
+                                <span className="h-full w-full rounded-t-lg bg-darkblue" />
+                            </span>
+                            {categories.map((category, index)=> {
+                                const isActive = activeTabIndex === index;
                                 return(
-                            <div onClick={() => {setTabState(category.index)}} className={`w-1/4 text-[1.5vw] font-bold  
-                            py-1 text- border-r-2 border-[#939393]/50 rounded-t-lg ${tabState === category.index ? "bg-darkblue text-white": "bg-[#E7E7E7] text-[#939393]"}`}>
-                                {category.name} 
-                            </div>
+                                    <div 
+                                        className={`flex-grow font-bold py-1 rounded-t-lg text-[1.5vw] text-[#939393] shadow-xl"
+                                            ${isActive ? 'text-white shadow-lg':'text-[#939393] shadow-md'}`}
+                                        style={{ marginRight: isActive ? '0' : '4px' }}
+                                        key={index} 
+                                        ref={(el) => (tabsRef.current[index] = el)}
+                                        onClick={() => setActiveTabIndex(index)}
+                                    >
+                                        {category.name}
+                                    </div>
                                 )
-                        })}
+                            })}
                         </div>
                         <div className="bg-white w-full px-[2vw] rounded-b-lg">
-                            <div className="flex flex-row">
-                                <h1 className="text-darkblue text-[1.4vw] font-bold">Document title</h1>
-                                <Image src={DownloadIndiv}></Image>
+                            <div className="flex flex-row justify-between">
+                                <h1 className="text-darkblue text-[1.4vw] py-[1vw] inline-block font-bold">Document title</h1>
+                                <Image className='w-[2vw] py-[1vw]' src={DownloadIndiv}></Image>
                             </div>
                         </div>
                     </div>
@@ -107,5 +140,6 @@ export default function Info() {
             {loading && data && <Loading text={"Loading..."} />}
             {!loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
         </div>
+    
     )
 }
