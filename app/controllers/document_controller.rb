@@ -27,41 +27,41 @@ class DocumentController < ApplicationController
 #     "purchase date", "property value", "mortgage details", "insurance details"
 #   ]
 # }
-    def create 
-        # Get user
-        user = params[:id]
-        category = params[:category].downcase
-        begin
-            @user = User.find(user)
-        rescue ActiveRecord::RecordNotFound
-            render json: { message: "User does not exist" }, status: :unprocessable_entity
-        end
-        # get files
-        uploaded_files = params[:files]
-        if uploaded_files
-            for file_json in uploaded_files
-                document = @user.documents.create(name: file_json.original_filename, category: category, status: "Pending")
-                document.file.attach(file_json)
-                local_path = download_active_storage_file(document.file)
-                # extract text
-                ocr_text = ocr(local_path)
-                # LLM
-                llm_json = llm_process(ocr_text, category)
-                if llm_json.nil?
-                    render json: {message: "The document you uploaded was too blurry or it was in an invalid format. Please try again."}, status: :unprocessable_entity
-                else
-                    document.important = llm_json.to_s
-                    document.save
-                    File.delete(local_path) if File.exist?(local_path)
-                end
-            end
-            NotificationService.create_document_upload_success_notification(@user,document)
-            render json: {message: "Your file has been uploaded successfully"}, status: :ok
-        else
-            NotificationService.create_document_upload_fail_notification(@user,document)
-            render json: {message: "File transfer has failed. Please contact the administrator"}, status: :unprocessable_entity
-        end
+    def create
+    user_id = params[:id]
+    category = params[:category].downcase
+
+    begin
+      @user = User.find(user_id)
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: "User does not exist" }, status: :unprocessable_entity and return
     end
+
+    uploaded_files = params[:files]
+    if uploaded_files
+      uploaded_files.each do |file_json|
+        document = @user.documents.create(name: file_json.original_filename, category: category, status: "Pending")
+        document.file.attach(file_json)
+        local_path = download_active_storage_file(document.file)
+
+        ocr_text = ocr(local_path)
+        llm_json = llm_process(ocr_text, category)
+        if llm_json.nil?
+          render json: { message: "The document you uploaded was too blurry or it was in an invalid format. Please try again." }, status: :unprocessable_entity and return
+        else
+          document.important = llm_json.to_s
+          document.save
+          File.delete(local_path) if File.exist?(local_path)
+        end
+        NotificationService.create_document_upload_success_notification(user_id, document)
+      end
+      render json: { message: "Your file has been uploaded successfully" }, status: :ok
+    else
+        NotificationService.create_document_upload_fail_notification(user_id,document)
+      render json: { message: "File transfer has failed. Please contact the administrator" }, status: :unprocessable_entity
+    end
+  end
+
 
     def retrieve
         user = params[:id]
