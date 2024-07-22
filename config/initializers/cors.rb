@@ -3,7 +3,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       origins "http://localhost:3000",
               "http://127.0.0.1:3000",
               "https://gebirah-frontend-2r6b52gguq-as.a.run.app",
-              "https://enableid.gebirah.info"
+              "https://enableid.gebirah.info",
+              "https://www.enableid.gebirah.info",
+              "https://gebirah-frontend-training-2r6b52gguq-as.a.run.app",
   
       resource "*",
         headers: :any,
