@@ -160,6 +160,9 @@ body {
   .transbox {
     @apply;
   }
+  .custom-icon-size {
+  @apply w-10 h-10; /* Use Tailwind utility classes here */
+}
 }
 
 @import '@fortawesome/fontawesome-free/css/all.min.css';

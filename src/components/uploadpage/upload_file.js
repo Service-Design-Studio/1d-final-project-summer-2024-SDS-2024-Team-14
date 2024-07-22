@@ -6,14 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle, faFileText } from '@fortawesome/free-solid-svg-icons';
 import shortid from 'shortid';
 import { ReactNotifications, Store } from "react-notifications-component";
+import fileIcon from "../../../public/images/icons/file_darkblue.svg";
+import crossIcon from "../../../public/images/upload/cross_icon.svg";
+import fileUpload from "../../../public/images/upload/file_upload.svg";
 import 'react-notifications-component/dist/theme.css';
-import FilePreviewModal from './FilePreviewmodal'; // Import the modal component
-
-const CustomFileUploadOutlinedIcon = () => {
-    return (
-        <FileUploadOutlinedIcon style={{ fontSize: '10vw', color: '#4378DB', opacity: '100%' }} />
-    );
-};
+import FilePreviewModal from './FilePreviewmodal';
+import Image from "next/image"; // Import the modal component
 
 class UploadFile extends Component {
     state = {
@@ -37,7 +35,7 @@ class UploadFile extends Component {
 
     onFileUpload = () => {
         const { selectedCategory, router } = this.props;
-        if (selectedCategory.name === "Select Category Here") {
+        if (!selectedCategory || selectedCategory.id === null || selectedCategory.id === 0) {
             Store.addNotification({
                 title: "Error",
                 message: "Please choose a category first before uploading",
@@ -80,20 +78,21 @@ class UploadFile extends Component {
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
                             <div
-                                className="bg-[#F3FBFF] rounded-lg shadow-md p-4 md:w-8vw flex justify-start items-center cursor-pointer hover:bg-lightblue "
+                                className="bg-[#F3FBFF] rounded-lg shadow-md px-4 py-2 md:w-8vw flex justify-start items-center cursor-pointer hover:bg-lightblue "
                                 onClick={() => this.handleCardClick(fileObj)}
                             >
-                                <FontAwesomeIcon icon={faFileText} />
-                                <p className="pl-3 pr-5 font-bold text-lightblue text-md sm:text-md md:text-md lg:text-md flex-grow">File Name: {fileObj.file.name}</p>
-                                <button 
+                                <Image className="w-[3vw]" src={fileIcon} alt="file icon"/>
+                                {/*<FontAwesomeIcon icon={faFileText} />*/}
+                                <p className="pl-3 pr-5 font-semibold text-lightblue text-md sm:text-md md:text-lg lg:text-[1.1vw] flex-grow">File Name: {fileObj.file.name}</p>
+                                <button
                                     onClick={(e) => {
                                         e.stopPropagation(); // Prevent click event from bubbling to the card
                                         this.deleteSelectedFile(fileObj.id);
-                                    }} 
+                                    }}
                                     className="text-darkblue rounded-md flex justify-end ml-auto hover:text-lightblue "
                                 >
-                                    <FontAwesomeIcon icon={faTimesCircle} />
-                                </button> 
+                                    <Image className="w-[1.7vw]" src={crossIcon} alt="cross icon"/>
+                                </button>
                             </div>
                         </div>
                     ))}
@@ -126,23 +125,24 @@ class UploadFile extends Component {
 
     render() {
         const uploadButtonClasses = (this.state.selectedFiles.length > 0)
-            ? "text-lg px-5 py-2 text-white bg-darkblue rounded-md hover:bg-[#4378DB] hover:text-white hover:underline"
+            ? "text-lg px-5 py-2 text-white bg-darkblue rounded-lg hover:bg-[#4378DB] hover:text-white hover:underline"
             : "text-lg px-5 py-2 text-darkblue bg-darkblue bg-opacity-30 rounded-md cursor-not-allowed";
     
         return (
             <div className="flex flex-col h-full">
-                <div className="pt-4 md:pt-8 flex flex-col md:flex-row gap-4">
-                    {/* File Upload Zone */}
+                <div className="md:pt-8 pt-6 flex flex-col md:flex-row gap-4">
+                    {/* File Category Zone */}
                     <label
-                        className="md:w-1/2 flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 p-4 "
+                        className="md:w-1/2 flex flex-col items-center
+                        justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 py-4"
                     >
-                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-16 md:py-20 ">
-                            <CustomFileUploadOutlinedIcon />
-                            <p className="mb-2 text-2xl md:text-2xl text-lightblue font-semibold">
+                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-8 md:py-20 ">
+                            <Image className="w-[15vw] md:w-[6.5vw]" src={fileUpload} alt="file Upload" />
+                            <p className="mb-2 mt-2 text-xl md:text-2xl text-lightblue font-semibold">
                                 Upload a file
                             </p>
-                            <p className="mb-2 text-md md:text-lg text-lightblue">
-                                Drag and drop or browse to choose a file
+                            <p className="mb-2 text-[3.5vw] md:text-lg text-lightblue">
+                                Drag and drop to choose a file
                             </p>
                         </div>
                         <input
@@ -151,6 +151,7 @@ class UploadFile extends Component {
                             multiple
                             onChange={this.onFileChange}
                         />
+                        <h1 className="text-lightblue text-md md:text-[1.2vw]">Files Supported: DOC, PDF, JPEG, PNG</h1>
                     </label>
 
                     {/* File Data Container */}
@@ -164,7 +165,10 @@ class UploadFile extends Component {
                     <div className="flex md:space-x-4 space-x-8">
                         <button
                             onClick={this.clearAllFiles}
-                            className="text-lg px-5 py-2 text-lightblue border-solid border-lightblue border-radius-19px rounded-md hover:bg-darkblue hover:text-white"
+                            className={`text-lg px-5 py-2 border-solid border-lightblue 
+                            border-radius-19px rounded-md ${this.state.selectedFiles.length > 0 ? "text-lightblue":
+                                "text-gray cursor-not-allowed"
+                            }`}
                         >
                             Clear All
                         </button>
