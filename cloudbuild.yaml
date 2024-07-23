@@ -36,8 +36,7 @@ steps:
         "${_SERVICE_NAME}",
         "--platform", "managed",
         "--region", "${_REGION}",
-        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}",
-        '--set-env-vars', 'RAILS_MASTER_KEY=${RAILS_MASTER_KEY}'
+        "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
       ]
 
 options:
