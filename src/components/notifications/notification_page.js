@@ -80,7 +80,7 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
     }, [open])
 
     return (
-        <div className={`${open ? `w-screen md:w-fit lg:w-4/12 xl:3/12 shadow-md` : `w-0 hidden`} md:min-h-fit absolute h-screen md:h-auto max-h-screen md:fixed overflow-y-scroll overflow-x-clip bg-white z-40 md:right-0 md:top-20 top-0 pointer-events-auto`}>
+        <div className={`${open ? `w-screen md:w-fit lg:w-4/12 xl:3/12 shadow-md opacity-100 ease-in` : `w-0 opacity-0 ease-out`} md:min-h-fit absolute h-screen md:h-auto max-h-screen md:fixed overflow-y-scroll overflow-x-clip bg-white z-40 md:right-0 md:top-20 top-0 pointer-events-auto transition-all duration-300`}>
             <div 
             className="flex flex-row items-center w-11/12 lg:w-11/12 h-fit mb-3 pt-4 text-darkblue text-3xl sm:text-4xl font-semibold mx-auto sticky top-0 bg-white shadow-white shadow-lg">
                 <span className='flex-1 font-bold text-xl md:text-3xl'>Notifications</span>

@@ -9,7 +9,8 @@ module.exports = {
   theme: {
     extend: {
       transitionProperty: {
-        'height': 'height'
+        'height': 'height',
+        'width': 'width'
       },
       screens: {
         'xxs': '0px',
