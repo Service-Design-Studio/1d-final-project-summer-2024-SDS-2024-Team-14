@@ -1,65 +1,39 @@
 class DocumentController < ApplicationController
     include Ocr
     include Llmapi
-#     LLM_DICT = {
-#   "education": [
-#     "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
-#     "overall GPA", "institution name", "graduation date"
-#   ],
-#   "health": [
-#     "name", "date of birth", "medical record number", "insurance number", "primary physician",
-#     "medical history", "current medications", "allergies", "vaccination records"
-#   ],
-#   "career": [
-#     "name", "date of birth", "job title", "company name", "employment start date", 
-#     "employment end date", "job responsibilities", "reference contact", "salary"
-#   ],
-#   "family": [
-#     "name", "date of birth", "relationship", "dependent status", "spouse name", 
-#     "number of children", "children's names", "children's dates of birth", "emergency contact"
-#   ],
-#   "finance": [
-#     "name", "date of birth", "bank account number", "bank name", "account type", 
-#     "balance", "income source", "monthly income", "debts"
-#   ],
-#   "property": [
-#     "name", "date of birth", "property address", "property type", "ownership status", 
-#     "purchase date", "property value", "mortgage details", "insurance details"
-#   ]
-# }
     def create
-    user_id = params[:id]
-    category = params[:category].downcase
+      user_id = params[:id]
+      category = params[:category].downcase
 
-    begin
-      @user = User.find(user_id)
-    rescue ActiveRecord::RecordNotFound
-      render json: { message: "User does not exist" }, status: :unprocessable_entity and return
-    end
-
-    uploaded_files = params[:files]
-    if uploaded_files
-      uploaded_files.each do |file_json|
-        document = @user.documents.create(name: file_json.original_filename, category: category, status: "Pending")
-        document.file.attach(file_json)
-        local_path = download_active_storage_file(document.file)
-
-        ocr_text = ocr(local_path)
-        llm_json = llm_process(ocr_text, category)
-        if llm_json.nil?
-          render json: { message: "The document you uploaded was too blurry or it was in an invalid format. Please try again." }, status: :unprocessable_entity and return
-        else
-          document.important = llm_json.to_s
-          document.save
-          File.delete(local_path) if File.exist?(local_path)
-        end
-        NotificationService.create_document_upload_success_notification(user_id, document)
+      begin
+        @user = User.find(user_id)
+      rescue ActiveRecord::RecordNotFound
+        render json: { message: "User does not exist" }, status: :unprocessable_entity and return
       end
-      render json: { message: "Your file has been uploaded successfully" }, status: :ok
-    else
-        NotificationService.create_document_upload_fail_notification(user_id,document)
-      render json: { message: "File transfer has failed. Please contact the administrator" }, status: :unprocessable_entity
-    end
+
+      uploaded_files = params[:files]
+      if uploaded_files
+        uploaded_files.each do |file_json|
+          document = @user.documents.create(name: file_json.original_filename, category: category, status: "Pending")
+          document.file.attach(file_json)
+          local_path = download_active_storage_file(document.file)
+
+          ocr_text = ocr(local_path)
+          llm_json = llm_process(ocr_text, category)
+          if llm_json.nil?
+            render json: { message: "The document you uploaded was too blurry or it was in an invalid format. Please try again." }, status: :unprocessable_entity and return
+          else
+            document.important = llm_json.to_s
+            document.save
+            File.delete(local_path) if File.exist?(local_path)
+          end
+          NotificationService.create_document_upload_success_notification(user_id, document, category)
+        end
+        render json: { message: "Your file has been uploaded successfully" }, status: :ok
+      else
+        NotificationService.create_document_upload_fail_notification(user_id, document, category)
+        render json: { message: "File transfer has failed. Please contact the administrator" }, status: :unprocessable_entity
+      end
   end
 
 
