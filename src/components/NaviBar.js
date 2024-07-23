@@ -6,11 +6,13 @@ import documentIcon from "../../public/images/icons/document.svg"
 import familyIcon from "../../public/images/icons/family.svg"
 import resourceIcon from "../../public/images/icons/home.svg"
 import notificationIcon from "../../public/images/filled_bell.svg"
-import alertNotificationIcon from "../../public/images/alert_bell.svg"
+import alertNotificationIcon from "../../public/images/unfilled_alert_bell.svg"
+import unfilledNotificationIcon from "../../public/images/unfilled_bell.svg"
 import { Button } from '@mui/material'
 import NotificationPage from "./notifications/notification_page";
 export default function NaviBar({ open, setOpen }) {
     const [navState, setNavState] = useState(false)
+    const [unread, setUnread] = useState(false)
     const popupRef = useRef(null);
     const notifRef = useRef(null)
     const handleClickOutside = (event) => {
@@ -105,7 +107,7 @@ export default function NaviBar({ open, setOpen }) {
                     )}
                     <div className="py-4 flex items-center">
                         <div className="w-[8vw] inline-block">
-                            <Image src={(open && notificationIcon) || (!open && alertNotificationIcon)} layout="responsive" alt="navigation icon" />
+                            <Image src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} layout="responsive" alt="navigation icon" />
                         </div>
                         <li className='inline-block ml-3 items-center'>
                             <Button onClick={() => {
@@ -130,11 +132,11 @@ export default function NaviBar({ open, setOpen }) {
                 ))}
                 <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md` : null}`}>
                     <Image
-                        src={(open && notificationIcon) || (!open && alertNotificationIcon)} width={1} height={1}
+                        src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} width={1} height={1}
                         alt="Open notifications" className="w-5" />
                 </Button>
             </div>
-            <NotificationPage ref={notifRef} open={open} setOpen={setOpen} />
+            <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>
         </div>
     )
 }

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import axiosInstance from "../../utils/axiosInstance";
 import Image from 'next/image';
 import { Button } from '@mui/material';
-export default function NotificationPage({ open, setOpen }) {
+export default function NotificationPage({ open, setOpen, unread, setUnread }) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -20,12 +20,15 @@ export default function NotificationPage({ open, setOpen }) {
                     let res = resp.data;
                     const currentDate = new Date();
                     res.forEach(element => {
-                        if (currentDate - new Date(element.created_at) > 1000 * 60 * 60 * 24) {
+                        if (!element.read && currentDate - new Date(element.created_at) > 1000 * 60 * 60 * 24) {
                             setPast((prev) => {
                                 return [...prev, element]
                             })
                         } else {
                             setRecent((prev) => {
+                                if (!element.read && !unread) {
+                                    setUnread(true);
+                                }
                                 return [...prev, element]
                             })
                         }
@@ -67,7 +70,10 @@ export default function NotificationPage({ open, setOpen }) {
                     idArr.forEach(element => formData.append('id[]', element))
                     await axiosInstance.post(`notifications/read/`,
                         formData
-                    ).then(()=> setReadAll(true))
+                    ).then(() => {
+                        setReadAll(true)
+                        setUnread(false)
+                    })
                 }
             }, 150);
         }
