@@ -5,56 +5,12 @@ import "../../styles/globals.css";
 import { useState, useEffect } from 'react';
 import axiosInstance from "../../utils/axiosInstance";
 import Image from 'next/image';
-export default function NotificationPage({ open }) {
+import { Button } from '@mui/material';
+export default function NotificationPage({ open, setOpen }) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
     const [loading, setLoading] = useState(false);
-    // const recentPlaceholder = [
-    //     {
-    //         unread: true,
-    //         time: "15m",
-    //         notifStatus: "Document Upload Success",
-    //         text: placeholderStr,
-    //     },
-    //     {
-    //         unread: true,
-    //         time: "3d",
-    //         notifStatus: "Verification Success",
-    //         text: placeholderStr,
-    //     },
-    //     {
-    //         unread: false,
-    //         time: "2w",
-    //         notifStatus: "Notice",
-    //         text: placeholderStr,
-    //     }
-    // ];
-    // const pastPlaceholder = [
-    //     {
-    //         unread: false,
-    //         time: "4w",
-    //         notifStatus: "Document Upload Failed",
-    //         text: placeholderStr,
-    //     },
-    //     {
-    //         unread: false,
-    //         time: "5w",
-    //         notifStatus: "Verification Failed",
-    //         text: placeholderStr,
-    //     },
-    //     {
-    //         unread: false,
-    //         time: "6w",
-    //         notifStatus: "Notice",
-    //         text: placeholderStr,
-    //     },
-    //     {
-    //         unread: false,
-    //         time: "5w",
-    //         notifStatus: "Verification Pending",
-    //         text: placeholderStr,
-    //     },
-    // ];
+    const [readAll, setReadAll] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -62,8 +18,9 @@ export default function NotificationPage({ open }) {
             try {
                 await axiosInstance.get(`/notifications/${userID}`).then((resp) => {
                     let res = resp.data;
+                    const currentDate = new Date();
                     res.forEach(element => {
-                        if (element.read) {
+                        if (currentDate - new Date(element.created_at) > 1000 * 60 * 60 * 24) {
                             setPast((prev) => {
                                 return [...prev, element]
                             })
@@ -98,9 +55,9 @@ export default function NotificationPage({ open }) {
 
     useEffect(() => {
         let userID = localStorage.getItem("userID")
-        if (open && userID) {
+        if (open && userID && !readAll) {
             setTimeout(async () => {
-                if (open && userID) {
+                if (open && userID && !readAll) {
                     let idArr = [];
                     recent.forEach(element => {
                         idArr.push(element.id)
@@ -110,17 +67,18 @@ export default function NotificationPage({ open }) {
                     idArr.forEach(element => formData.append('id[]', element))
                     await axiosInstance.post(`notifications/read/`,
                         formData
-                    )
+                    ).then(()=> setReadAll(true))
                 }
             }, 150);
         }
     }, [open])
 
     return (
-        <div className={`${open ? `w-screen shadow-md` : `w-0 hidden`} min-h-screen h-full bg-white transition-all-500`}>
+        <div className={`${open ? `w-screen md:w-fit lg:w-4/12 xl:3/12 shadow-md` : `w-0 hidden`} min-h-fit max-h-screen fixed overflow-y-scroll overflow-x-clip bg-white transition-all-500 z-40 right-0 top-20 pointer-events-auto`}>
             <div 
             className="flex flex-row items-center w-11/12 lg:w-11/12 h-fit mb-3 pt-4 text-darkblue text-3xl sm:text-4xl font-semibold mx-auto sticky top-0 bg-white shadow-white shadow-lg">
-                <span>Notifications</span>
+                <span className='flex-1'>Notifications</span>
+                <Button onClick={()=>setOpen(false)} className=' w-fit'><Image src={ "/images/cross_icon.svg"} width={1} height={1} className='h-10 w-auto' alt="close notifications"></Image></Button>
             </div>
 
             <div className="flex flex-col w-11/12 mx-auto">
