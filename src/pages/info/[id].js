@@ -80,7 +80,7 @@ export default function Info() {
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
             </div>
                 <br/>
-            <div className="flex flex-col xl:justify-between xl:flex-row overflow-hidden">
+            <div className="flex flex-col xl:flex-row overflow-hidden">
                 <div className="flex flex-row justify-between xl:flex xl:flex-col lg:mr-[2vw]">
                     <div className="flex flex-col w-full">
                         {!loading && data && <div className="id-card">
