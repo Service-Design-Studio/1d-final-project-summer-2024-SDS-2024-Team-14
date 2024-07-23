@@ -1,6 +1,7 @@
 class NotificationsController < ApplicationController
   # before_action :authenticate_user!
   def index 
+    puts "All Notification records:", Notification.all
     render json: Notification.all, status: :ok
   end
 
