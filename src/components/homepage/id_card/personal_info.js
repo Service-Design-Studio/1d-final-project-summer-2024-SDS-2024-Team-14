@@ -2,7 +2,7 @@ import Field from "./info_field"
 export default function PersonalInfo(props) {
     return (
         <div>
-            <div className="grid-2-cols-4-rows">
+            <div className="grid-2-cols-4-rows ">
                 <Field title={"Verification Status"} content={props.status} />
                 <Field title={"Issued Date"} content={props.issuedDate} />
                 <Field title={"Expiry Date"} content={props.expiryDate} />
