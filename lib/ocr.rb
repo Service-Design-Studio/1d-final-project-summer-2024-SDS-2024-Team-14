@@ -12,18 +12,16 @@ module Ocr
       ocr = RTesseract.new(image_path)
       text = ocr.to_s.strip
       if text.empty?
-        puts "OCR result is empty."
+        Rails.logger.debug "OCR result is empty."
         nil
       else
         # Translate the text to English
-        puts text
         translated = translate_text(text, 'en')
-        puts translated
-
         translated
       end
     rescue => e
-      puts "Error processing image: #{e.message}"
+      Rails.logger.debug "Error processing image: #{e.message}"
+      "Error processing image: #{e.message}"
     end 
   end
 
@@ -37,16 +35,16 @@ module Ocr
       end
 
       if text.empty?
-        puts "OCR result is empty."
+        Rails.logger.debug "OCR result is empty."
         nil
       else
 
       # Translate the text to English
         translated_text = translate_text(text, 'en')
-
         translated_text
       end
     rescue => e
+      Rails.logger.debug "Error processing PDF: #{e.message}"
       "Error processing PDF: #{e.message}"
     end
   end
@@ -59,6 +57,7 @@ module Ocr
       translation = translate.translate text, to: target_language
       translation.text
     rescue => e
+      Rails.logger.debug "Error translating text: #{e.message}"
       "Error translating text: #{e.message}"
     end
   end
@@ -69,8 +68,8 @@ module Ocr
             elsif file_path.downcase.end_with?('.pdf')
               process_pdf(file_path)
             else
-              puts "Unsupported file type"
-              nil
+              Rails.logger.debug "Unsupported file type"
+              "Unsupported file type"
             end
     prompt
   end
