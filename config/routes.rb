@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   post 'document', to: 'document#create'
   post 'document/retrieve', to: 'document#retrieve'
   post 'login', to: 'login#create'
+  resources :chatbot
 end
