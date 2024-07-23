@@ -128,9 +128,9 @@ export default function NaviBar({ open, setOpen }) {
                     ['Resources', '/resources'],
                 ].map(([title, url]) => (
                     // eslint-disable-next-line react/jsx-key
-                    <Link href={url} className="py-4 font-bold">{title}</Link>
+                    <Link href={url} className="py-4 font-bold text-darkblue">{title}</Link>
                 ))}
-                <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md` : null}`}>
+                <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md bg-white hover:bg-white` : `hover:bg-white hover:bg-opacity-25`}`}>
                     <Image
                         src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} width={1} height={1}
                         alt="Open notifications" className={`w-5 ${unread ? `animate-pulse` : ``}`} />
