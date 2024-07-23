@@ -7,53 +7,53 @@ import Image from 'next/image';
 export default function NotificationPage({ open}) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
-    const placeholderStr = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica";
-    const recentPlaceholder = [
-        {
-            unread: true,
-            time: "15m",
-            notifStatus: "Document Upload Success",
-            text: placeholderStr,
-        },
-        {
-            unread: true,
-            time: "3d",
-            notifStatus: "Verification Success",
-            text: placeholderStr,
-        },
-        {
-            unread: false,
-            time: "2w",
-            notifStatus: "Notice",
-            text: placeholderStr,
-        }
-    ];
-    const pastPlaceholder = [
-        {
-            unread: false,
-            time: "4w",
-            notifStatus: "Document Upload Failed",
-            text: placeholderStr,
-        },
-        {
-            unread: false,
-            time: "5w",
-            notifStatus: "Verification Failed",
-            text: placeholderStr,
-        },
-        {
-            unread: false,
-            time: "6w",
-            notifStatus: "Notice",
-            text: placeholderStr,
-        },
-        {
-            unread: false,
-            time: "5w",
-            notifStatus: "Verification Pending",
-            text: placeholderStr,
-        },
-    ];
+    // const placeholderStr = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica";
+    // const recentPlaceholder = [
+    //     {
+    //         unread: true,
+    //         time: "15m",
+    //         notifStatus: "Document Upload Success",
+    //         text: placeholderStr,
+    //     },
+    //     {
+    //         unread: true,
+    //         time: "3d",
+    //         notifStatus: "Verification Success",
+    //         text: placeholderStr,
+    //     },
+    //     {
+    //         unread: false,
+    //         time: "2w",
+    //         notifStatus: "Notice",
+    //         text: placeholderStr,
+    //     }
+    // ];
+    // const pastPlaceholder = [
+    //     {
+    //         unread: false,
+    //         time: "4w",
+    //         notifStatus: "Document Upload Failed",
+    //         text: placeholderStr,
+    //     },
+    //     {
+    //         unread: false,
+    //         time: "5w",
+    //         notifStatus: "Verification Failed",
+    //         text: placeholderStr,
+    //     },
+    //     {
+    //         unread: false,
+    //         time: "6w",
+    //         notifStatus: "Notice",
+    //         text: placeholderStr,
+    //     },
+    //     {
+    //         unread: false,
+    //         time: "5w",
+    //         notifStatus: "Verification Pending",
+    //         text: placeholderStr,
+    //     },
+    // ];
     useEffect(() => {
         // setRecent([]);
         setRecent(recentPlaceholder);
