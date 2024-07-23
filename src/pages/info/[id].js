@@ -87,8 +87,8 @@ export default function Info() {
                             <div className="block">
                                 <div className="flex flex-row xl:pr-[1vw]">
                                     <ProfilePic/>
-                                    <div className="flex flex-col">
-                                        <div className="text-left px-[10%] md:px-[11%] xl:px-[9%] ">
+                                    <div className="flex flex-col text-left">
+                                        <div className="text-left px-[10%] md:px-[11%] xl:px-[8%] ">
                                             <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xl text-darkblue">{data.name}</div>
                                             <div className="font-semibold text-[4vw] md:text-2xl xl:text-xl text-darkblue">000-000-00000{data.id}</div>
                                         </div>
