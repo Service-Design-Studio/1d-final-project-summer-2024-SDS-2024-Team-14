@@ -35,7 +35,7 @@ class UploadFile extends Component {
 
     onFileUpload = () => {
         const { selectedCategory, router } = this.props;
-        if (!selectedCategory || selectedCategory.id === null || selectedCategory.id === 0) {
+        if (!selectedCategory){
             Store.addNotification({
                 title: "Error",
                 message: "Please choose a category first before uploading",
@@ -56,7 +56,7 @@ class UploadFile extends Component {
                 formData.append("files[]", fileObj.file, fileObj.file.name);
             });
             formData.append("id", userId)
-            formData.append("category", selectedCategory.name)
+            formData.append("category", selectedCategory)
 
             axiosInstance.post("/document", formData).then((resp) => {
                 if (resp.status === 200 || resp.status === 201) {
@@ -91,7 +91,7 @@ class UploadFile extends Component {
                                     }}
                                     className="text-darkblue rounded-md flex justify-end ml-auto hover:text-lightblue "
                                 >
-                                    <Image className="md:w-[1.7vw] w-[3.5vw]" src={crossIcon} alt="cross icon"/>
+                                    <Image className="md:w-[1.7vw] w-[4.5vw]" src={crossIcon} alt="cross icon"/>
                                 </button>
                             </div>
                         </div>
