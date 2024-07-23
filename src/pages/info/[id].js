@@ -85,7 +85,7 @@ export default function Info() {
                     <div className="flex flex-col w-full">
                         {!loading && data && <div className="id-card">
                             <div className="block">
-                                <div className="flex flex-row">
+                                <div className="flex flex-row xl:pr-[1vw]">
                                     <ProfilePic/>
                                     <div className="flex flex-col">
                                         <div className="text-left px-[11%] xl:px-[9%] ">
