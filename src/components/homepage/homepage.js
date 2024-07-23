@@ -1,5 +1,4 @@
 import Features from "./features.js";
-import HomeHeader from "./home_header.js"
 import Loading from "../loading.js"
 import IdCard from "./id_card.js";
 import { useEffect, useState } from 'react';
@@ -30,7 +29,7 @@ export default function Homepage(props) {
 
     return (
         <>
-        <div className="flex lg:flex-row flex-col justify-center md:my-4 mb-4 px-4 md:px-0 gap-[4vw]">
+        <div onMouseDown={()=>props.setOpen(false)} className="flex lg:flex-row flex-col justify-center md:my-4 mb-4 px-4 md:px-0 gap-[4vw]">
             {!props.loading && data &&
                 <>
                     <IdCard data={data} loading={loading} />
