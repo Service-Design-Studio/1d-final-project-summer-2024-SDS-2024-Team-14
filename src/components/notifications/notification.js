@@ -1,13 +1,13 @@
 import Image from "next/image"
 export default function Notification({ notifStatus, text, time, unread}) {
     const icon = {
-        "upload success": "/images/upload_success.svg",
-        "upload fail": "/images/upload_fail.svg",
-        "approval success": "/images/verified_tick.svg",
-        "verification failed": "/images/verified_fail.svg",
-        "approval pending": "/images/verified_pending.svg",
-        "notice": "/images/default_mail.svg",
-        "create account": "/images/smiley_darkblue.svg",
+        "Upload Success": "/images/upload_success.svg",
+        "Upload Fail": "/images/upload_fail.svg",
+        "Approval Success": "/images/verified_tick.svg",
+        "Verification Failed": "/images/verified_fail.svg",
+        "Approval Pending": "/images/verified_pending.svg",
+        "Notice": "/images/default_mail.svg",
+        "Create Account": "/images/smiley_darkblue.svg",
     };
 
     const secMS = 1000;
