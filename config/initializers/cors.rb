@@ -5,7 +5,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
               "https://gebirah-frontend-2r6b52gguq-as.a.run.app",
               "https://enableid.gebirah.info",
               "https://www.enableid.gebirah.info",
-              "https://gebirah-frontend-training-2r6b52gguq-as.a.run.app",
+              "https://gebirah-frontend-training-2r6b52gguq-as.a.run.app"
   
       resource "*",
         headers: :any,
