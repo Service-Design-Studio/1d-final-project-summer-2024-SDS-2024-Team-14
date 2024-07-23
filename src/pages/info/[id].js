@@ -109,7 +109,7 @@ export default function Info() {
                         <div className="flex flex-row items-center justify-center bg-darkblue text-white font-semibold md:text-[3vw] xl:text-[1.5vw] py-1 md:py-2 rounded-lg ">
                             Download All
                             <div className="px-2">
-                                <Image className='items-center w-[4vw] md:w-[2.8vw] xl:w-[1.3vw] ' src={download}/>
+                                <Image className='items-center w-[4vw] md:w-[2.8vw] xl:w-[1.3vw]' src={download}/>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@ export default function Info() {
                         ></Image>
                     </div>
                 </div>
-            <div className="w-full xl:w-[65%] md:flex md:flex-col">
+            <div className="w-full xl:w-[60%] md:flex md:flex-col">
                 <div className="relative flex flex-row rounded-t-lg bg-[#E7E7E7] backdrop-blur-sm">
                     <span
                         className="absolute bottom-0 top-0 -z-10 flex overflow-hidden transition-all duration-300"
