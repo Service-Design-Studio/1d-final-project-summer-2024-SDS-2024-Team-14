@@ -1,6 +1,5 @@
 require 'httparty'
 require 'json'
-require 'googleauth'
 
 module Dialogagent
   def get_resp(prompt_text, session_id)

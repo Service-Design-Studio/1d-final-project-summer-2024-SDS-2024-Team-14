@@ -60,7 +60,6 @@ gem 'httparty'
 
 group :development, :production do
   gem "google-cloud-storage", "~> 1.11", require: false
-  gem "google-auth"
 end
 
 group :development, :test do
