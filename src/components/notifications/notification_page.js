@@ -61,7 +61,6 @@ export default function NotificationPage({ open }) {
             let userID = localStorage.getItem("userID")
             try {
                 await axiosInstance.get(`/notifications/${userID}`).then((resp) => {
-                    console.log("response data: ", resp.data)
                     let res = resp.data;
                     res.forEach(element => {
                         if (element.read) {
@@ -111,14 +110,7 @@ export default function NotificationPage({ open }) {
                     idArr.forEach(element => formData.append('id[]', element))
                     await axiosInstance.post(`notifications/read/`,
                         formData
-                    ).then((resp) => {
-                        if (resp.status === 200 || resp.status === 201) {
-                            console.log("notifications read")
-                        }
-                        else {
-                            console.log("error updating notificaitons read status")
-                        }
-                    })
+                    )
                 }
             }, 150);
         }
@@ -126,7 +118,11 @@ export default function NotificationPage({ open }) {
 
     return (
         <div className={`${open ? `w-screen shadow-md` : `w-0 hidden`} min-h-screen h-full bg-white transition-all-500`}>
-            <Header text={"Notifications"} onClick={() => { }} />
+            <div 
+            className="flex flex-row items-center w-11/12 lg:w-11/12 h-fit mb-3 pt-4 text-darkblue text-3xl sm:text-4xl font-semibold mx-auto sticky top-0 bg-white shadow-white shadow-lg">
+                <span>Notifications</span>
+            </div>
+
             <div className="flex flex-col w-11/12 mx-auto">
                 <span className="notif-subheader">Recent</span>
                 {recent.length > 0 ? recent.map((i, index) => {
