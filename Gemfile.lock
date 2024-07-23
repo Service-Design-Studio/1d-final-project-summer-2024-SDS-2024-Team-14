@@ -94,6 +94,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
+    bouncy-castle-java (1.5.0147)
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -157,6 +158,12 @@ GEM
       google-apis-core (>= 0.11.0, < 2.a)
     google-apis-storage_v1 (0.31.0)
       google-apis-core (>= 0.11.0, < 2.a)
+    google-auth (0.0.2)
+      jruby-openssl
+      multi_json
+      omniauth
+      omniauth-google
+      rack
     google-cloud-core (1.7.0)
       google-cloud-env (>= 1.0, < 3.a)
       google-cloud-errors (~> 1.0)
@@ -239,6 +246,7 @@ GEM
       googleapis-common-protos-types (~> 1.0)
     hashdiff (1.1.0)
     hashery (2.1.2)
+    hashie (2.1.2)
     httparty (0.22.0)
       csv
       mini_mime (>= 1.0.0)
@@ -257,6 +265,8 @@ GEM
     jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jruby-openssl (0.9.4)
+      bouncy-castle-java (>= 1.5.0147)
     json (2.7.2)
     jsonapi-renderer (0.2.2)
     jwt (2.8.2)
@@ -297,6 +307,22 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
+    oauth (1.1.0)
+      oauth-tty (~> 1.0, >= 1.0.1)
+      snaky_hash (~> 2.0)
+      version_gem (~> 1.1)
+    oauth-tty (1.0.5)
+      version_gem (~> 1.1, >= 1.1.1)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-google (1.0.2)
+      multi_json
+      omniauth (~> 1.0)
+      omniauth-oauth
+    omniauth-oauth (1.2.0)
+      oauth
+      omniauth (>= 1.0, < 3)
     os (1.1.4)
     pdf-reader (2.12.0)
       Ascii85 (~> 1.0)
@@ -400,6 +426,9 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    snaky_hash (2.0.1)
+      hashie
+      version_gem (~> 1.1, >= 1.1.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -435,6 +464,7 @@ GEM
       tzinfo (>= 1.0.0)
     uber (0.1.0)
     uri (0.13.0)
+    version_gem (1.1.4)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -466,6 +496,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails (~> 2.7)
+  google-auth
   google-cloud-storage (~> 1.11)
   google-cloud-translate
   httparty
