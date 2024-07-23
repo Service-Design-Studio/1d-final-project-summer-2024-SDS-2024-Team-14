@@ -8,6 +8,7 @@ import '../../styles/globals.css';
 import axiosInstance from "@/utils/axiosInstance";
 import Image from "next/image";
 import Accordion from "../../components/document_manager/Accordion"
+import Loading from '../../components/loading';
 
 
 const DocumentStatusPage = () => {
@@ -45,7 +46,7 @@ const DocumentStatusPage = () => {
     }
   }, [category]);
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (!data) {
@@ -53,7 +54,7 @@ const DocumentStatusPage = () => {
   }
 
   if (!category) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   // Group documents by status

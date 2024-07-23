@@ -5,11 +5,10 @@ import "../../styles/globals.css";
 import { useState, useEffect } from 'react';
 import axiosInstance from "../../utils/axiosInstance";
 import Image from 'next/image';
-export default function NotificationPage({ open}) {
+export default function NotificationPage({ open }) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
     const [loading, setLoading] = useState(false);
-    // const placeholderStr = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica";
     // const recentPlaceholder = [
     //     {
     //         unread: true,
@@ -56,35 +55,74 @@ export default function NotificationPage({ open}) {
     //         text: placeholderStr,
     //     },
     // ];
-
-
-    const [data, setData] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             let userID = localStorage.getItem("userID")
             try {
                 await axiosInstance.get(`/notifications/${userID}`).then((resp) => {
-                    setData(resp.data)
+                    console.log("response data: ", resp.data)
+                    let res = resp.data;
+                    res.forEach(element => {
+                        if (element.read) {
+                            setPast((prev) => {
+                                return [...prev, element]
+                            })
+                        } else {
+                            setRecent((prev) => {
+                                return [...prev, element]
+                            })
+                        }
+                    });
                 }
                 );
             } catch (error) {
                 console.error(error.message);
+            } finally {
+                setPast((prev) => {
+                    prev.sort((i1, i2) => {
+                        return new Date(i2.created_at) - new Date(i1.created_at);
+                    })
+                    return prev
+                })
+                setRecent((prev) => {
+                    prev.sort((i1, i2) => {
+                        return new Date(i2.created_at) - new Date(i1.created_at);
+                    })
+                    return prev
+                })
+                setLoading(false);
             }
-            setLoading(false);
         }
         fetchData();
     }, []);
 
     useEffect(() => {
-        // setRecent([]);
-        setRecent(recentPlaceholder);
-        // setPast([]);
-        setPast(pastPlaceholder);
-    }, []);
-
-
+        let userID = localStorage.getItem("userID")
+        if (open && userID) {
+            setTimeout(async () => {
+                if (open && userID) {
+                    let idArr = [];
+                    recent.forEach(element => {
+                        idArr.push(element.id)
+                    });
+                    let formData = new FormData();
+                    formData.append("user_id", userID);
+                    idArr.forEach(element => formData.append('id[]', element))
+                    await axiosInstance.post(`notifications/read/`,
+                        formData
+                    ).then((resp) => {
+                        if (resp.status === 200 || resp.status === 201) {
+                            console.log("notifications read")
+                        }
+                        else {
+                            console.log("error updating notificaitons read status")
+                        }
+                    })
+                }
+            }, 150);
+        }
+    }, [open])
 
     return (
         <div className={`${open ? `w-screen shadow-md` : `w-0 hidden`} min-h-screen h-full bg-white transition-all-500`}>
@@ -93,11 +131,11 @@ export default function NotificationPage({ open}) {
                 <span className="notif-subheader">Recent</span>
                 {recent.length > 0 ? recent.map((i, index) => {
                     return (<Notification
-                        key={index}
-                        unread={i.unread}
-                        time={i.time}
-                        text={i.text}
-                        notifStatus={i.notifStatus}
+                        key={i.id}
+                        unread={!i.read}
+                        time={i.created_at}
+                        text={i.content}
+                        notifStatus={i.category}
                     />)
                 }) :
                     <div className='flex flex-col w-full mx-auto items-center'>
@@ -109,11 +147,11 @@ export default function NotificationPage({ open}) {
                 <span className="notif-subheader">Past Notifications</span>
                 {past.length > 0 ? past.map((i, index) => {
                     return (<Notification
-                        key={index}
-                        unread={i.unread}
-                        time={i.time}
-                        text={i.text}
-                        notifStatus={i.notifStatus}
+                        key={i.id}
+                        unread={!i.read}
+                        time={i.created_at}
+                        text={i.content}
+                        notifStatus={i.category}
                     />)
                 }) :
                     <div className='flex flex-col w-full mx-auto items-center'>

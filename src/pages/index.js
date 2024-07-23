@@ -17,7 +17,7 @@ export default function Home({ session }) {
       }, [])
   return (
     <main className="overflow-hidden flex flex-col align-middle min-h-screen bg-white transition-all-500 bg-local
-    bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover">
+    bg-[url('/images/background/gebirah-bluebg.png')] bg-cover">
         <NaviBar/>
       <Homepage />
         <ChatBot/>
