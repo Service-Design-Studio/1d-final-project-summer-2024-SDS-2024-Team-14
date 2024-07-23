@@ -9,7 +9,8 @@ module.exports = {
   theme: {
     extend: {
       transitionProperty: {
-        'height': 'height'
+        'height': 'height',
+        'width': 'width'
       },
       screens: {
         'xxs': '0px',
@@ -102,6 +103,7 @@ module.exports = {
       'gray': '#C0C0C0',
       'lightgray': '#E0E0E0',
       'lightergray': '#F0F0F0',
+      'lightestgray': '#FAFAFA',
       'blue-50': '#E2F1FB',
       'blue-100': '#BBDEFB',
       'green':'#22c55e',

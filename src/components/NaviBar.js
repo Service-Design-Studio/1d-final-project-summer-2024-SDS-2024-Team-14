@@ -2,9 +2,9 @@ import Link from "next/link";
 import EnableId from "../../public/images/enable_id_logo.svg"
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import documentIcon from "../../public/images/icons/document.svg"
-import familyIcon from "../../public/images/icons/family.svg"
-import resourceIcon from "../../public/images/icons/home.svg"
+import documentIcon from "../../public/images/folder_darkblue.svg"
+import familyIcon from "../../public/images/family.svg"
+import resourceIcon from "../../public/images/map.svg"
 import notificationIcon from "../../public/images/filled_bell.svg"
 import alertNotificationIcon from "../../public/images/unfilled_alert_bell.svg"
 import unfilledNotificationIcon from "../../public/images/unfilled_bell.svg"
@@ -94,12 +94,12 @@ export default function NaviBar({ open, setOpen }) {
                         <>
                             <div className="py-4 flex items-center">
                                 <div className="w-[8vw] inline-block">
-                                    <Image src={img} layout="responsive" alt="navigation icon" />
+                                    <Image src={img} layout="responsive" alt={`navigation ${title} icon`} />
                                 </div>
                                 <li className='inline-block ml-3 items-center'>
                                     <Link href={url} onClick={() => {
                                         setNavState(!navState)
-                                    }} smooth={true} className="md:text-[2vw] text-[4vw] font-semibold">{title}</Link>
+                                    }} smooth={true} className="md:text-[2vw] text-[4vw] font-semibold text-darkblue">{title}</Link>
                                 </li>
                             </div>
                         </>
@@ -107,13 +107,13 @@ export default function NaviBar({ open, setOpen }) {
                     )}
                     <div className="py-4 flex items-center">
                         <div className="w-[8vw] inline-block">
-                            <Image src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} layout="responsive" alt="navigation icon" />
+                            <Image className={`max-w-[5vw] mx-auto ${unread ? `animate-pulse`: ``}`} src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && notificationIcon)} layout="responsive" alt="navigation icon" />
                         </div>
                         <li className='inline-block ml-3 items-center'>
-                            <Button onClick={() => {
+                            <Link onClick={() => {
                                 setOpen(!open)
                                 setNavState(!navState)
-                            }} smooth={true} className="md:text-[2vw] text-[4vw] font-semibold">Notification</Button>
+                            }} smooth={true} href={""} className="md:text-[2vw] text-[4vw] font-semibold text-darkblue">Navigation</Link>
                         </li>
                     </div>
                 </ul>
@@ -133,7 +133,7 @@ export default function NaviBar({ open, setOpen }) {
                 <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md` : null}`}>
                     <Image
                         src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} width={1} height={1}
-                        alt="Open notifications" className="w-5" />
+                        alt="Open notifications" className={`w-5 ${unread ? `animate-pulse` : ``}`} />
                 </Button>
             </div>
             <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>
