@@ -21,7 +21,7 @@ const Modal = ({ isOpen, onClose }) => {
             Files
           </Link>
           <Link href={`/documents/scanner`} id="scanner" className="scanner dw-full py-2 bg-blue-500 text-black rounded hover:bg-blue-600 flex items-center justify-center">
-            <FontAwesomeIcon icon={faQrcode} className="mr-2" /> {/* Upload Icon */}
+            <FontAwesomeIcon icon={faQrcode} className="mr-2" /> {/* Category Icon */}
             Scan Document
           </Link>
         </div>
