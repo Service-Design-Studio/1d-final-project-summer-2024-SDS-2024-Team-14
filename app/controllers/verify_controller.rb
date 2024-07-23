@@ -7,6 +7,7 @@ class VerifyController < ApplicationController
             else
                 @user.verification_status = "Approved"
                 if @user.save
+                    NotificationService.verified_user_notification(@user.id)
                     render json: {message: "Approval for #{@user.name} successful" }, status: :ok
                 end
             end
