@@ -9,8 +9,11 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :verify
+  resources :notifications
   post 'document', to: 'document#create'
   post 'document/retrieve', to: 'document#retrieve'
   post 'login', to: 'login#create'
+  get 'notifications/:id', to: 'notifications#show'
+  post 'notifications/read', to: 'notifications#mark_all_as_read'
   resources :chatbot
 end
