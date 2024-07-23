@@ -74,7 +74,7 @@ export default function Info() {
     }, data);
 
     return (
-        <div className="bg-local bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover w-screen h-screen text-center px-[3vw] xl:px-[12vw] px-[2vw]">
+        <div className="bg-local bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover w-screen text-center lg:px-[4vw] xl:px-[12vw]">
             <div className="flex items-center pt-4 ml-4">
                 <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block"/>
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
@@ -84,25 +84,22 @@ export default function Info() {
                 <div className="flex flex-row justify-between xl:flex xl:flex-col lg:mr-[2vw]">
                     <div className="flex flex-col w-full">
                         {!loading && data && <div className="id-card">
-                            <div className="block">
-                                <div className="flex flex-row xl:pr-[1vw]">
-                                    <ProfilePic/>
-                                    <div className="flex flex-col text-left">
-                                        <div className="text-left px-[10%] md:px-[11%] xl:px-[8%] ">
-                                            <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xl text-darkblue">{data.name}</div>
-                                            <div className="font-semibold text-[4vw] md:text-2xl xl:text-xl text-darkblue">000-000-00000{data.id}</div>
-                                        </div>
-                                        <PersonalInfo
-                                            sex={data.gender}
-                                            status={data.verification_status}
-                                            issuedDate={"no column"}
-                                            expiryDate={"no column"}
-                                            idNo={ `000-000-00000${data.id}`}
-                                            dob={data.date_birth}
-                                            country={data.country}
-                                        />
-                                    </div>
+                            <div className="flex justify-center">
+                              <ProfilePic />
+                              <div className="flex flex-col pl-[2vw] text-left flex-grow">
+                                <div className="text-left pb-[1.1vw]">
+                                  <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xl text-darkblue">{data.name}</div>
+                                  <div className="text-[4vw] md:text-2xl xl:text-xl text-darkblue">000-000-00000{data.id}</div>
                                 </div>
+                                <PersonalInfo
+                                  sex={data.gender}
+                                  status={data.verification_status}
+                                  issuedDate={"no column"}
+                                  expiryDate={"no column"}
+                                  dob={data.date_birth}
+                                  country={data.country}
+                                />
+                              </div>
                             </div>
                         </div>}
                     <div className="py-10 w-full">
