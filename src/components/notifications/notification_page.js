@@ -3,10 +3,12 @@ import Header from "../scanner/header";
 import Notification from "./notification";
 import "../../styles/globals.css";
 import { useState, useEffect } from 'react';
+import axiosInstance from "../../utils/axiosInstance";
 import Image from 'next/image';
 export default function NotificationPage({ open}) {
     const [recent, setRecent] = useState([]);
     const [past, setPast] = useState([]);
+    const [loading, setLoading] = useState(false);
     // const placeholderStr = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica";
     // const recentPlaceholder = [
     //     {
@@ -54,6 +56,27 @@ export default function NotificationPage({ open}) {
     //         text: placeholderStr,
     //     },
     // ];
+
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            let userID = localStorage.getItem("userID")
+            try {
+                await axiosInstance.get(`/notifications/${userID}`).then((resp) => {
+                    setData(resp.data)
+                }
+                );
+            } catch (error) {
+                console.error(error.message);
+            }
+            setLoading(false);
+        }
+        fetchData();
+    }, []);
+
     useEffect(() => {
         // setRecent([]);
         setRecent(recentPlaceholder);

@@ -21,28 +21,28 @@ const DocumentStatusPage = () => {
   const validCategories = ['health', 'career', 'education', 'family', 'finance', 'property', 'pattern'];
 
   useEffect(() => {
-      // const filteredDocuments = mockData.filter((doc) => doc.category === category);
-      // setDocuments(filteredDocuments);
-      if (category){
-          if (!validCategories.includes(category)) {
-            localStorage.setItem('notificationMessage', 'That was not a valid category!');
-             window.location.replace('/documents')
-          }
-          const fetchData = async () => {
-              userID = localStorage.getItem("userID")
-              try {
-                  await axiosInstance.post(`/document/retrieve`, {id: userID, category: category}).then((resp) => {
-                          setData(resp.data)
-                      }
-                  );
-              } catch (error) {
-                  console.error(error.message);
-              } finally {
-                  setLoading(false);
-              }
-          }
-          fetchData();
+    // const filteredDocuments = mockData.filter((doc) => doc.category === category);
+    // setDocuments(filteredDocuments);
+    if (category) {
+      if (!validCategories.includes(category)) {
+        localStorage.setItem('notificationMessage', 'That was not a valid category!');
+        window.location.replace('/documents')
       }
+      const fetchData = async () => {
+        userID = localStorage.getItem("userID")
+        try {
+          await axiosInstance.post(`/document/retrieve`, { id: userID, category: category }).then((resp) => {
+            setData(resp.data)
+          }
+          );
+        } catch (error) {
+          console.error(error.message);
+        } finally {
+          setLoading(false);
+        }
+      }
+      fetchData();
+    }
   }, [category]);
   if (loading) {
     return <div>Loading...</div>;
@@ -64,15 +64,15 @@ const DocumentStatusPage = () => {
 
   return (
     <div className="min-h-screen bg-white p-4 flex flex-col">
-        <div className="flex-grow">
-        <Header title={category} backButton={backButtonUrl}/>
-      {/*<div className="flex-1">*/}
-          {/*<h2 className="text-3xl text-blue-600 font-bold mb-8">Pending Documents:</h2>*/}
-        {data && <Accordion title="Approved Documents" documents={approvedDocuments}/>}
-        {data && <Accordion title="Pending Documents" documents={pendingDocuments}/>}
-        {data && <Accordion title="Rejected Documents" documents={rejectedDocuments}/>}
-        </div>
-        {/*<div className="grid grid-cols-2 w-[95%] mx-auto gap-6 sm:gap-8 md:gap-12 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex-grow">*/}
+      <div className="flex-grow">
+        <Header title={category} backButton={backButtonUrl} />
+        {/*<div className="flex-1">*/}
+        {/*<h2 className="text-3xl text-blue-600 font-bold mb-8">Pending Documents:</h2>*/}
+        {data && <Accordion title="Approved Documents" documents={approvedDocuments} />}
+        {data && <Accordion title="Pending Documents" documents={pendingDocuments} />}
+        {data && <Accordion title="Rejected Documents" documents={rejectedDocuments} />}
+      </div>
+      {/*<div className="grid grid-cols-2 w-[95%] mx-auto gap-6 sm:gap-8 md:gap-12 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 flex-grow">*/}
       {/*    {data && data.documents ? (*/}
       {/*  data.documents.map((document) => (*/}
       {/*    <Card url={document.file_url} title={document.name}/>*/}
@@ -80,9 +80,9 @@ const DocumentStatusPage = () => {
       {/*) : (*/}
       {/*  <p>No documents available</p>*/}
       {/*)}*/}
-          {/*{pendingDocuments.map((doc) => (*/}
-          {/*  <DocumentCard key={doc.id} document={doc} />*/}
-          {/*))}*/}
+      {/*{pendingDocuments.map((doc) => (*/}
+      {/*  <DocumentCard key={doc.id} document={doc} />*/}
+      {/*))}*/}
       {/*  </div>*/}
       {/*  <div>*/}
       {/*    <h2 className="text-3xl text-blue-600 font-bold my-8">Verified Documents:</h2>*/}
