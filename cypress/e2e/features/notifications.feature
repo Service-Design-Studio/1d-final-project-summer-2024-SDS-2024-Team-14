@@ -13,7 +13,7 @@ Background:
 Scenario: When I upload a document, I should see a new notification
     When I click the "dropzone" button
     And I add new files
-    Then I should see "preview"
+    And I should see "preview"
     And I submit my documents by the upload button
     And I should be redirected to the documents page 
     # remove next line when nav header is implemented in documents
