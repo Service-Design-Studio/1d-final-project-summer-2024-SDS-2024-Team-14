@@ -18,17 +18,17 @@ export default function IdCard(props) {
 
     return (
         <>
-            <div className="flex items-center flex-col" data-aos='fade-right' data-aos-delay='300'>
-                <span className="card mx-auto md:my-4 mb-4 pb-0 shadow-none text-3xl font-medium text-darkblue">ID Card</span>
-                <div className="w-full md:w-auto md:p-[2vw] id-card transition duration-500 ">
+            <div className="flex lg:items-center flex-col" data-aos='fade-right' data-aos-delay='300'>
+                <span className="card lg:mx-auto md:my-4 mb-4 pb-0 shadow-none text-3xl font-medium text-darkblue">ID Card</span>
+                <div className="w-11/12 mx-auto md:w-full md:p-[2vw] id-card transition duration-500 ">
                     {/* {console.log(props.loading, "\n", props.data)} */}
-                    <div className="flex justify-center">
+                    <div className="flex justify-around">
                         <ProfilePic />
                         <div className="mx-[5vw] lg:mx-0">
                             <div className="flex flex-col pl-[2vw] text-left flex-grow">
                                 <div className="text-left pb-[0.5vw]">
-                                    <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xxl text-darkblue">{props.data.name}</div>
-                                    <div className="text-[3.8vw] md:text-2xl xl:text-xxl text-darkblue">000-000-00000{props.data.id}</div>
+                                    <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-[1.4vw] text-darkblue">{props.data.name}</div>
+                                    <div className="text-[3.8vw] md:text-2xl xl:text-[1.4vw] text-darkblue">000-000-00000{props.data.id}</div>
                                 </div>
                             {isOpen ?
                                 <PersonalInfo userName={props.data.name} sex={props.data.gender}
