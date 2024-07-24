@@ -34,7 +34,7 @@ export default function CameraView({ cameraRef, setImage }) {
                         setTimeout(() => setAlert(false), 1500);
                     }
                 }}
-            ><Image src={hover} className="w-fit" width={1} height={1} alt='Upload document' /></Button>
+            ><Image src={hover} className="w-fit" width={1} height={1} alt='Category document' /></Button>
 
             <Camera priority ref={cameraRef} facingMode="environment" aspectRatio={1 / 1.4142} />
         </div>

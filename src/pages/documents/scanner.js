@@ -213,7 +213,7 @@ export default function Scanner() {
                         onMouseLeave={() => setUploadBtn("/images/upload.svg")}
                         onClick={() => {
                             setOpen(true);
-                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Upload document' />Upload Document</Button>
+                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Category Document</Button>
                 </div>
 
             </div>
@@ -224,7 +224,7 @@ export default function Scanner() {
                     fullWidth={true}
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
-                        <DialogTitle>Confirm Upload?</DialogTitle>
+                        <DialogTitle>Confirm Category?</DialogTitle>
                         <DialogContentText>
                             <span>Confirm document upload?</span>
                         </DialogContentText>
