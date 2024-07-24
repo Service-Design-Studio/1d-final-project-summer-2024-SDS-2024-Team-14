@@ -7,6 +7,7 @@ import send from "../../public/images/chatbot/send.svg"
 
 import Image from "next/image";
 import axiosInstance from "@/utils/axiosInstance";
+import {setListInLocalStorage, getListFromLocalStorage} from "@/utils/localStorage";
 
 export default function ChatBot() {
     const [chatState, setChatState] = useState(false)
@@ -25,7 +26,16 @@ export default function ChatBot() {
     useEffect(() => {
       const feed = document.getElementById('chat-feed');
       feed.scrollTop = feed.scrollHeight;
+
   }, [messages]);
+
+    useEffect(() => {
+        const botMessages = getListFromLocalStorage('botMessages')
+        console.log(botMessages)
+        if (botMessages) {
+            setMessages(botMessages);
+        }
+    }, []);
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
@@ -52,8 +62,8 @@ export default function ChatBot() {
         // Mock response from backend
         await axiosInstance.post("/chatbot", {userID, text}).then((resp) => {
             const botMessage = {text: resp.data.message, sender: 'bot'};
-            console.log(botMessage)
             setMessages((prevMessages) => [...prevMessages, botMessage]);
+            setListInLocalStorage('botMessages', messages);
         })
     };
 
