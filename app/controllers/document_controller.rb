@@ -1,32 +1,6 @@
 class DocumentController < ApplicationController
     include Ocr
     include Llmapi
-#     LLM_DICT = {
-#   "education": [
-#     "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
-#     "overall GPA", "institution name", "graduation date"
-#   ],
-#   "health": [
-#     "name", "date of birth", "medical record number", "insurance number", "primary physician",
-#     "medical history", "current medications", "allergies", "vaccination records"
-#   ],
-#   "career": [
-#     "name", "date of birth", "job title", "company name", "employment start date", 
-#     "employment end date", "job responsibilities", "reference contact", "salary"
-#   ],
-#   "family": [
-#     "name", "date of birth", "relationship", "dependent status", "spouse name", 
-#     "number of children", "children's names", "children's dates of birth", "emergency contact"
-#   ],
-#   "finance": [
-#     "name", "date of birth", "bank account number", "bank name", "account type", 
-#     "balance", "income source", "monthly income", "debts"
-#   ],
-#   "property": [
-#     "name", "date of birth", "property address", "property type", "ownership status", 
-#     "purchase date", "property value", "mortgage details", "insurance details"
-#   ]
-# }
     def create 
         # Get user
         user = params[:id]
@@ -34,7 +8,7 @@ class DocumentController < ApplicationController
         begin
             @user = User.find(user)
         rescue ActiveRecord::RecordNotFound
-            render json: { message: "User does not exist" }, status: :unprocessable_entity
+            render json: { message: "User does not exist" }, status: :unprocessable_entity and return
         end
         # get files
         uploaded_files = params[:files]
@@ -67,7 +41,7 @@ class DocumentController < ApplicationController
         begin
             @user = User.find(user)
         rescue ActiveRecord::RecordNotFound
-            render json: { message: "User does not exist" }, status: :unprocessable_entity
+            render json: { message: "User does not exist" }, status: :unprocessable_entity and return
         end
         @documents = @user.documents.where(category: category)
         if @documents
