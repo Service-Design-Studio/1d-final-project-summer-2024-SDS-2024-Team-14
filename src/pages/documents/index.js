@@ -8,6 +8,7 @@ import pdfIcon from "../../../public/images/icons/pdf_icon.svg";
 import docxIcon from "../../../public/images/icons/docx_icon.svg";
 import picIcon from "../../../public/images/icons/pic_icon.svg";
 import {mockData} from "@/components/verification/mockdata";
+import Link from "next/link";
 
 const categories = ['health', 'career', 'education', 'family', 'finance', 'property'];
 
@@ -41,7 +42,7 @@ const DocumentManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [uploadCategory, setUploadCategory] = useState('Health');
+  const [uploadCategory, setUploadCategory] = useState('health');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedDocument, setSelectedDocument] = useState(null);
   const itemsPerPage = 10;
@@ -86,43 +87,12 @@ const DocumentManager = () => {
     setSelectedCategory(category);
     setStatusFilter('All');
     setCurrentPage(1);
-    setUploadCategory(category);
+    setUploadCategory(category.toLowerCase());
   };
 
   const handleStatusFilterClick = (status) => {
     setStatusFilter(status);
     setCurrentPage(1);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
-
-  const handleUploadClick = () => {
-    router.push({
-      pathname: '/documents/upload',
-      query: { category: uploadCategory }
-    });
-  };
-
-  const handleScannerClick = () => {
-    router.push({
-      pathname: '/documents/scanner',
-      query: { category: uploadCategory }
-    });
-  };
-
-  const handleUploadCategoryChange = (category) => {
-    setUploadCategory(category);
-    setDropdownOpen(false);
   };
 
   const handleDocumentClick = (document) => {
@@ -254,16 +224,17 @@ const DocumentManager = () => {
     <div className="min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
       <NaviBar open={open} setOpen={ setOpen} />
           {/* category button row */}
-      <div className="mx-10">
-        <div className="flex flex-row justify-between">
+      <div className="mx-10 mt-10">
+        <div className="flex flex-row justify-between items-center">
           <h1 className="text-xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
           {/* web searchbar (hidden on phone) */}
-          <div className="flex items-center bg-lightgray rounded-full px-1">
-            <Image className="w-[2vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
+          <div className="flex items-center bg-lightgray rounded-full px-3 py-2">
+            <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
             <input
                 type="text"
-                placeholder="Search in Documents Manager"
-                className="border-none bg-lightgray text-darkblue placeholder:text-[1vw] placeholder:text-darkblue placeholder:opacity-[79%] outline-none"
+                placeholder="Search in Documents"
+                className="flex-grow text-darkblue w-contain bg-lightgray placeholder:text-[1.2vw] mx-auto ml-2 placeholder:text-darkblue placeholder:opacity-[79%]
+                focus:outline-none text-[1.2vw]"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
             />
@@ -283,10 +254,10 @@ const DocumentManager = () => {
                     {category}
                   </button>
               ))}
-              <hr className="border-t-2 border-[#B0B0B0]/50 w-10/12 my-4 mx-auto" />
+            </div>
           </div>
+        <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto" />
         </div>
-      </div>
       {/* Status filter buttons for phone */}
         <div className="status-filter-buttons flex flex-wrap gap-0 border-t border-lightgray pt-2 md:hidden">
           <button
@@ -343,15 +314,15 @@ const DocumentManager = () => {
               {rejectedCount} <b>Rejected</b>
             </button>
           </div>
-          <div className="upload-button-container flex items-center">
-            <button className="upload-button flex items-center py-2 px-10 bg-darkblue text-white rounded-xl font-bold mr-2" onClick={handleUploadClick}>
-              <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="mr-2 invert" />
+          <div className="flex items-center">
+            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-10 bg-darkblue text-white rounded-xl font-bold">
+              <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw]" />
               Upload
-            </button>
-            <button className="scanner-button flex items-center py-2 px-10 bg-darkblue text-white rounded-xl font-bold" onClick={handleScannerClick}>
-              <Image src="/images/icons/scanner.svg" alt="Scanner Icon" width={24} height={24} className="mr-2 invert" />
+            </Link>
+            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-10 bg-darkblue text-white rounded-xl font-bold">
+              <Image src="/images/icons/scanner.svg" alt="Scanner Icon" width={24} height={24} className="w-[2vw]" />
               Scanner
-            </button>
+            </Link>
           </div>
         </div>
 
