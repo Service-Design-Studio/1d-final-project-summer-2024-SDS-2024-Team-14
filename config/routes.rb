@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :notifications
   post 'document', to: 'document#create'
   post 'document/retrieve', to: 'document#retrieve'
+  post 'document/status', to: 'document#status'
   post 'login', to: 'login#create'
   get 'notifications/:id', to: 'notifications#show'
   post 'notifications/read', to: 'notifications#mark_all_as_read'
