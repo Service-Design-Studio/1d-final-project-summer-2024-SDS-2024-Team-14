@@ -80,7 +80,7 @@ class DocumentController < ApplicationController
         render json: {document: @document, message: params[:message]}, status: :ok
       else
         # Rails.logger.info "user id in status: #{@document.category}"
-        render json: {message: "document status is already #{@document.status}. No change applied.", document: @document, optional: params[:message]}, status: :ok
+        render json: {message: "Document status is already #{@document.status}. No change applied.", document: @document, optional: params[:message]}, status: :ok
       end
     end
 end
