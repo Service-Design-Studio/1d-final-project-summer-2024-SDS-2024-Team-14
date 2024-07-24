@@ -28,7 +28,8 @@ module Dialogagent
 
     response = HTTParty.post("#{base_url}", headers: headers, body: body)
     if response.code == 200
-      resp = JSON.parse(response.body)
+      parsed_resp = JSON.parse(response.body)
+      resp = parsed_resp["queryResult"]["responseMessages"][0]["text"]["text"][0]
     else
       nil
     end
