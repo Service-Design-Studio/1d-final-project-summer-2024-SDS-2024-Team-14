@@ -64,7 +64,6 @@ class DocumentController < ApplicationController
 
     def status
       newStatus = params[:status]
-      message = params[:message]
       begin
         @document = Document.find(params[:id])        
       rescue ActiveRecord::RecordNotFound
@@ -73,15 +72,15 @@ class DocumentController < ApplicationController
       if (@document.status != newStatus)
         @document.update(status: newStatus)
         if (newStatus == "Approved")
-          NotificationService.document_approved_notification(@document.user_id,@document.name)
+          NotificationService.document_approved_notification(@document.user_id,@document.name, params[:message])
         elsif (newStatus == "Rejected")
-          NotificationService.document_rejected_notification(@document.user_id,@document.name)
+          NotificationService.document_rejected_notification(@document.user_id,@document.name, params[:message])
         end
         # Rails.logger.info "user id in status: #{@document.name}"
-        render json: {document: @document, message: message}, status: :ok
+        render json: {document: @document, message: params[:message]}, status: :ok
       else
         # Rails.logger.info "user id in status: #{@document.category}"
-        render json: {message: "document status is already #{@document.status}. No change applied.", document: @document}, status: :ok
+        render json: {message: "document status is already #{@document.status}. No change applied.", document: @document, optional: params[:message]}, status: :ok
       end
     end
 end
