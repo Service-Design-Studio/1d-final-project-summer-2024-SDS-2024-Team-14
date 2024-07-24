@@ -107,7 +107,7 @@ export default function NaviBar({ open, setOpen }) {
                     )}
                     <div className="py-4 flex items-center">
                         <div className="w-[8vw] inline-block">
-                            <Image className={`max-w-[5vw] mx-auto ${unread ? `animate-pulse`: ``}`} src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && notificationIcon)} layout="responsive" alt="navigation icon" />
+                            <Image className={`max-w-[5vw] mx-auto ${unread ? `animate-pulse new_notification_icon`: `notification_icon`}`} src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && notificationIcon)} layout="responsive" alt="navigation icon" />
                         </div>
                         <li className='inline-block ml-3 items-center'>
                             <Link onClick={() => {

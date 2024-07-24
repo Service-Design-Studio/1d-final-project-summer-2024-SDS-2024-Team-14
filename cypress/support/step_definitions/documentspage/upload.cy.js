@@ -7,14 +7,15 @@ import 'cypress-file-upload';
 // })
 const apiUrl = '/document';
 
-Given(/^I have clicked to the (.+) page$/i, (page) => {
-    const baseUrl = Cypress.config().baseUrl;
-    const uploadPageUrl = `${baseUrl}documents/upload`;
 
-    cy.visit(uploadPageUrl);
+// Given(/^I have clicked to the (.+) page$/i, (page) => {
+//     const baseUrl = Cypress.config().baseUrl;
+//     const uploadPageUrl = `${baseUrl}documents/upload`;
 
-    cy.url().should("eq", uploadPageUrl);
-})
+//     cy.visit(uploadPageUrl);
+
+//     cy.url().should("eq", uploadPageUrl);
+// })
 
 When('I add new files', () => {
     const fileName = 'example-file.pdf'; // Change to the path of your test PDF file
@@ -46,6 +47,7 @@ When('I submit my documents by the upload button', () => {
   }).as('uploadFile');
   // Trigger the upload button click
   cy.get('#upload').click();
+  cy.intercept('POST',)
 });
 
 Then('I should then return to the documents page', ()=>{

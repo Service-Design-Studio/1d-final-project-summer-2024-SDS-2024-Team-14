@@ -12,7 +12,7 @@
 #     Then I should see the message "Please choose a category first before uploading"
 
 Scenario: If no documents uploaded, error message received
-    Then I should not be able to click the "upload" button
+    Then I should not be able to click "upload"
     #not done with error notification
 
 Scenario: Successfully uploading documents to education category
