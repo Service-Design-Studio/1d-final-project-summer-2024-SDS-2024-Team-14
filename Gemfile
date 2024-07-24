@@ -93,6 +93,3 @@ group :production do
 end
 
 gem "appengine", "~> 0.7.0"
-gem "minitest"
-gem "minitest-focus"
-gem "minitest-rg"

@@ -1,0 +1,95 @@
+require 'rails_helper'
+
+RSpec.describe DocumentController, type: :controller do
+    before do
+        stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD3eT6P2yBnWsO_9CvpEX8PWod0joKUUUE")
+        .with(headers: {'Content-Type'=>'application/json'})
+        .to_return(status: 200, body: { candidates: [{ content: { parts: [{ text: {"name": "Timothy Tang Long Zun", "date of birth": "10/04/2001", "student ID": "1006266", "degree": "Bachelor of Science (Design And Artificial Intelligence) with Design Accreditation", "highest education": "", "date obtained": "",
+                  "overall GPA": "4.42", "institution name": "Singapore University of Technology and Design (SUTD)", "graduation date": "August 2026"} }] } }] }.to_json, headers: {})
+    end
+    describe 'POST #create' do
+        let(:user) { User.create(
+            id: 1,
+            email: 'test1@gmail.com',
+            password: 'test123',
+            password_confirmation: 'test123',
+            "name": "testUser1",
+            "country": "Myanmar",
+            ethnicity: 'Bantu',
+            "religion": "Buddhist",
+            "gender": "Female",
+            "date_birth": "10-06-2001",
+            "date_arrival": "10-06-2024",
+            "verification_status": "Pending approval"
+            ) }
+        let(:category) { 'education' }
+        let(:file) { fixture_file_upload('spec/fixtures/mockresume.pdf') }
+
+        context 'with valid parameters' do
+            it 'creates a new document' do
+                expect {
+                post :create, params: { id: user.id, category: category, files: [file] }
+                }.to change(Document, :count).by(1)
+            end
+
+            it 'returns a success response' do
+                post :create, params: { id: user.id, category: category, files: [file] }
+                expect(response).to have_http_status(:ok)
+            end
+        end
+
+        context 'with invalid parameters' do
+            it 'returns an error response when user is not found' do
+                post :create, params: {id: 2, category: category, files: [file] }
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(JSON.parse(response.body)['message']).to eq("User does not exist")
+            end
+
+            it 'returns an error response when file is not provided' do
+                post :create, params: { id: user.id, category: category }
+                expect(response).to have_http_status(:unprocessable_entity)
+            end
+        end
+    end
+
+    describe 'GET #retrieve' do
+        let(:user) { User.create(
+            id: 1,
+            email: 'test1@gmail.com',
+            password: 'test123',
+            password_confirmation: 'test123',
+            "name": "testUser1",
+            "country": "Myanmar",
+            ethnicity: 'Bantu',
+            "religion": "Buddhist",
+            "gender": "Female",
+            "date_birth": "10-06-2001",
+            "date_arrival": "10-06-2024",
+            "verification_status": "Pending approval"
+            ) }
+        let(:category) { 'education' }
+        let!(:document) { Document.create(user: user, category: category) }
+
+        context 'with valid parameters' do
+            it 'returns a list of documents' do
+                get :retrieve, params: { id: user.id, category: category }
+                expect(response).to have_http_status(:ok)
+                expect(JSON.parse(response.body)['documents']).not_to be_empty
+            end
+        end
+
+        context 'with invalid parameters' do
+            it 'returns an error response when user is not found' do
+                get :retrieve, params: {id: 2, category: category }
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(JSON.parse(response.body)['message']).to eq("User does not exist")
+            end
+
+            it 'returns an error response when no documents are found' do
+                get :retrieve, params: { id: user.id, category: 'non_existent_category' }
+                expect(response).to have_http_status(:ok)
+                expect(JSON.parse(response.body)['documents']).to be_empty
+            end
+        end
+    end
+end

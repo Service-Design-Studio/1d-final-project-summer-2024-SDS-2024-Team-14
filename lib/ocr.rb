@@ -13,7 +13,7 @@ module Ocr
       text = ocr.to_s.strip
       if text.empty?
         Rails.logger.debug "OCR result is empty."
-        nil
+        "OCR result is empty."
       else
         # Translate the text to English
         translated = translate_text(text, 'en')
@@ -36,7 +36,7 @@ module Ocr
 
       if text.empty?
         Rails.logger.debug "OCR result is empty."
-        nil
+        "OCR result is empty."
       else
 
       # Translate the text to English
