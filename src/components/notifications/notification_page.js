@@ -90,12 +90,14 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
             <div className="flex flex-col w-11/12 mx-auto">
                 <span className="notif-subheader text-lg  md:text-2xl">Recent</span>
                 {recent.length > 0 ? recent.map((i, index) => {
+                    console.log(i)
                     return (<Notification
                         key={i.id}
                         unread={!i.read}
                         time={i.created_at}
                         text={i.content}
                         notifStatus={i.category}
+                        message={i.message || ""}
                     />)
                 }) :
                     <div className='flex flex-col w-full mx-auto items-center'>
@@ -112,6 +114,7 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
                         time={i.created_at}
                         text={i.content}
                         notifStatus={i.category}
+                        message={i.message || "" }
                     />)
                 }) :
                     <div className='flex flex-col w-full mx-auto items-center'>
