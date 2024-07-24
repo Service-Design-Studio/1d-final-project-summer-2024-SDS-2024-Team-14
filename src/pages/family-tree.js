@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import "../styles/globals.css"
 import Link from "next/link"
 import useAuth from "@/hooks/useAuth";
+import ChatBot from "@/components/ChatBot";
 export default function FamilyTree() {
     const router = useRouter();
     useAuth();
@@ -10,5 +11,6 @@ export default function FamilyTree() {
         <br />User id: {router.query.id}
         <br />
         <Link href={"/"}><span className="underline">back</span></Link>
+        <ChatBot/>
     </div>)
 }

@@ -1,5 +1,5 @@
 import "../styles/globals.css"
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import Image from 'next/image';
 import LoginCarousel from '../components/loginpage/login_carousel';
@@ -12,6 +12,7 @@ import axiosInstance from "../utils/axiosInstance";
 import dayjs from "dayjs";
 import LoginForm from "../components/loginpage/login_form";
 import SignUpForm from "../components/loginpage/signup_form";
+import ChatBot from "@/components/ChatBot";
 
 export default function Login({ session }) {
     const router = useRouter();
@@ -39,22 +40,22 @@ export default function Login({ session }) {
     useEffect(() => {
         const message = localStorage.getItem('notificationMessage');
         if (message) {
-        Store.addNotification({
-                    title: "Error",
-                    message: message,
-                    type: "danger",
-                    insert: "bottom",
-                    container: "bottom-right",
-                    animationIn: ["animate__animated", "animate__fadeIn"],
-                    animationOut: ["animate__animated", "animate__fadeOut"],
-                    dismiss: {
-                        duration: 5000,
-                        onScreen: true
-                    }
-                });
-        localStorage.removeItem('notificationMessage'); // Clear the message after displaying
-    }
-  }, []);
+            Store.addNotification({
+                title: "Error",
+                message: message,
+                type: "danger",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+            localStorage.removeItem('notificationMessage'); // Clear the message after displaying
+        }
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -90,25 +91,26 @@ export default function Login({ session }) {
         }).then(
             (resp) => {
                 if (resp.status === 200 || resp.status === 201) {
-                localStorage.setItem('userID', resp.data.user_id)
-                router.push('/');
-            }
-        }).catch((error) => {
-            Store.addNotification({
-                title: "Error",
-                message: error.response.data.message,
-                type: "danger",
-                insert: "top",
-                container: "bottom-right",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                    duration: 5000,
-                    onScreen: true
+                    localStorage.setItem('userID', resp.data.user_id)
+                    router.push('/');
                 }
-            });
+            }).catch((error) => {
+                Store.removeAllNotifications();
+                Store.addNotification({
+                    title: "Error",
+                    message: error.message,
+                    type: "danger",
+                    insert: "top",
+                    container: "bottom-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 3000,
+                        onScreen: true
+                    }
+                });
             }
-        );
+            );
     }
 
     function LogInHandler(req) {
@@ -123,16 +125,17 @@ export default function Login({ session }) {
                 router.push('/');
             }
         }).catch((error) => {
+            Store.removeAllNotifications();
             Store.addNotification({
                 title: "Error",
-                message: error.response.data.message,
+                message: error.message,
                 type: "danger",
                 insert: "top",
                 container: "bottom-right",
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 5000,
+                    duration: 3000,
                     onScreen: true
                 }
             });
@@ -149,7 +152,7 @@ export default function Login({ session }) {
             <div className='flex flex-col mt-6 w-full lg:w-1/2 transition-all-50 bg-opacity-70 backdrop-blur-sm'>
                 <LoginCarousel onLoginTab={onLoginTab} setOnLoginTab={setOnLoginTab} />
                 <div className='flex flex-col text-center bg-gradient-to-b from-white/100 to-white/65 rounded-b-xl pt-5'>
-                    {onLoginTab ? <LoginForm onLoginTab={onLoginTab} setFormState={setFormState} /> : <SignUpForm onLoginTab={onLoginTab} formState={formState} setFormState={setFormState}/>}
+                    {onLoginTab ? <LoginForm onLoginTab={onLoginTab} setFormState={setFormState} /> : <SignUpForm onLoginTab={onLoginTab} formState={formState} setFormState={setFormState} />}
                     {onLoginTab ? <a href="#" className="underline mt-5 text-darkblue">Forgot Password</a> : null}
                     <FormControl className="w-fit h-fit my-5 mx-auto text-default text-normal"><InputLabel id="language">Language</InputLabel>
                         <Select labelId="language" label="Language" defaultValue={"English"} className="flex w-40 h-10 flex-row">
@@ -162,6 +165,7 @@ export default function Login({ session }) {
                 </div>
             </div>
         </Box>
+        <ChatBot/>
     </>
     );
 }

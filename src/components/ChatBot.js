@@ -6,14 +6,13 @@ import greenDot from "../../public/images/chatbot/greendot.svg"
 import send from "../../public/images/chatbot/send.svg"
 
 import Image from "next/image";
-import EnableId from "../../public/images/enable_id_logo.svg";
+import axiosInstance from "@/utils/axiosInstance";
 
 export default function ChatBot() {
     const [chatState, setChatState] = useState(false)
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState("")
     const messagesEndRef = useRef(null);
-
   // useEffect(() => {
   //   scrollToBottom();
   // }, [messages]);
@@ -47,12 +46,15 @@ export default function ChatBot() {
         }
     };
 
-    const receiveMessage = (userMessage) => {
+    const receiveMessage = async (text) => {
+        text = text.text
+        const userID = localStorage.getItem("userID")
         // Mock response from backend
-        setTimeout(() => {
-          const botMessage = { text: `What you want?`, sender: 'bot' };
-          setMessages((prevMessages) => [...prevMessages, botMessage]);
-        }, 1000);
+        await axiosInstance.post("/chatbot", {userID, text}).then((resp) => {
+            const botMessage = {text: resp.data.message, sender: 'bot'};
+            console.log(botMessage)
+            setMessages((prevMessages) => [...prevMessages, botMessage]);
+        })
     };
 
     return (
@@ -86,17 +88,17 @@ export default function ChatBot() {
                         </div>
                     </div>
                     <div id="chat-feed" className="overflow-y-scroll px-4 sm:py-2 py-1
-                     lg:h-[21.5vw] md:h-[37.5vw] sm:h-[43vw] h-[62vw]">
+                     lg:h-[21.5vw] md:h-[37.5vw] sm:h-[43vw] h-[62vw] w-full">
                         <div className="my-2 py-2 px-4 w-3/4 rounded-2xl clear-both bg-[#C6E8FA] float-left text-black">
                             <h4 className="lg:text-[0.8vw] sm:text-[2vw] text-[2.5vw]">
                                 Hi, I am the Enable ID FAQ Chatbot. Ask me any questions about this website and I will try to answer them.
-                                You can ask questions such as &quot;How do I upload a document&quot; or &quot;Please redirect me to the resource locator page&quot;.
+                                You can ask questions such as &quot;How do I upload a document&quot; or &quot;Where do I find the resources available&quot;.
                             </h4>
                         </div>
                         {messages.map((message, index) => (
                           <div
                             key={index}
-                            className={`py-2 px-4 rounded-2xl clear-both ${
+                            className={`py-2 px-4 my-2 rounded-2xl max-w-[70%] clear-both ${
                               message.sender === 'user' ? 'bg-darkblue float-right text-white' : 'bg-[#C6E8FA] float-left text-black'
                             }`}
                           >

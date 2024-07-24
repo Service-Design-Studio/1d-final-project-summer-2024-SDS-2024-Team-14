@@ -7,6 +7,7 @@ import useAuth from "@/hooks/useAuth";
 import {ReactNotifications, Store} from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css'
 import {useRouter} from "next/router";
+import ChatBot from "@/components/ChatBot";
 
 
 // const DocumentManager = () => {
@@ -102,6 +103,7 @@ const DocumentManager = () => {
        </div>
           <Footer/>
       </div>
+      <ChatBot/>
       </>
   );
 };
