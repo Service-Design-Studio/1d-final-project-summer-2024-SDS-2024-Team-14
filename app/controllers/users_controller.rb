@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     def create
         @user = User.create(user_params)
         if @user.save
+            NotificationService.pending_user_notification(@user.id)
+            NotificationService.welcome_notification(@user.id, @user.name)
             render json: {message: "Signup for user #{@user.name} successful", user_id: @user.id}, status: :created
         else
             render json: @user.errors, status: :unprocessable_entity
