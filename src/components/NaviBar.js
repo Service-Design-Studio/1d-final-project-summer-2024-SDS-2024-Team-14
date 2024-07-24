@@ -124,12 +124,12 @@ export default function NaviBar({ open, setOpen }) {
                     ['Home', '/', ""],
                     ['Documents', '/documents'],
                     ['Family', '/family-tree'],
-                    ['Community', '', ""],
                     ['Resources', '/resources'],
                 ].map(([title, url]) => (
                     // eslint-disable-next-line react/jsx-key
                     <Link href={url} className="py-4 font-bold text-darkblue">{title}</Link>
                 ))}
+                <a href={"https://www.gebirah.org/"} target="_blank" className="py-4 font-bold text-darkblue"> Community </a>
                 <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md bg-white hover:bg-white` : `hover:bg-white hover:bg-opacity-25`}`}>
                     <Image
                         src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} width={1} height={1}

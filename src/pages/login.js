@@ -12,6 +12,7 @@ import axiosInstance from "../utils/axiosInstance";
 import dayjs from "dayjs";
 import LoginForm from "../components/loginpage/login_form";
 import SignUpForm from "../components/loginpage/signup_form";
+import ChatBot from "@/components/ChatBot";
 
 export default function Login({ session }) {
     const router = useRouter();
@@ -164,6 +165,7 @@ export default function Login({ session }) {
                 </div>
             </div>
         </Box>
+        <ChatBot/>
     </>
     );
 }

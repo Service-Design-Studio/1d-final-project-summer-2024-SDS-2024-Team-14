@@ -11,6 +11,7 @@ import {useRouter} from "next/router";
 import documentDecoration from "../../../../public/images/upload/document_decoration.svg";
 import Image from "next/image";
 import EnableId from "../../../../public/images/enable_id_logo.svg";
+import ChatBot from "@/components/ChatBot";
 
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);
@@ -70,6 +71,7 @@ export default function Upload() {
         </div>
     
       </div>
+    <ChatBot/>
       </>
 );
 }

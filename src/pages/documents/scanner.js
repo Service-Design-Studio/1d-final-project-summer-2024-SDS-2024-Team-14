@@ -10,6 +10,7 @@ import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem
 import PDFDocument from 'pdfkit'
 import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
+import ChatBot from "@/components/ChatBot";
 
 export default function Scanner() {
     const fs = require('fs') //filesystem for upload pdf test
@@ -254,5 +255,7 @@ export default function Scanner() {
                     </DialogActions>
                 </Dialog>
             }
-        </div>)
+        <ChatBot/>
+        </div>
+    )
 }
