@@ -44,7 +44,6 @@ When('I submit my documents by the upload button', () => {
       fixture: 'example-file.pdf'
     });
   }).as('uploadFile');
-
   // Trigger the upload button click
   cy.get('#upload').click();
 });
