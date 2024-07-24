@@ -101,7 +101,7 @@ body {
     @apply max-w-lg card-width p-1 sm:p-2 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-2xl;
   }
   .id-card {
-    @apply p-2 sm:p-2 md:w-[30vw] w-11/12 mx-auto xxs:p-3 rounded-xl shadow-md overflow-hidden px-6 pt-4 bg-gradient-to-r from-[#BEE3F7] to-white transition-all-500;
+    @apply p-2 sm:p-2 lg:w-[30vw] xl:w-[11/12] w-11/12 mx-auto xxs:p-3 rounded-xl shadow-md overflow-hidden px-6 pt-4 bg-gradient-to-r from-[#BEE3F7] to-white transition-all-500;
   }
   .feature-card {
     @apply card flex flex-row mb-4 mx-auto bg-darkblue text-white hover:bump transition-all duration-300;
@@ -110,7 +110,7 @@ body {
     @apply w-fit text-2xl font-semibold text-darkblue;
   }
   .grid-2-cols-4-rows {
-    @apply grid grid-cols-2 grid-rows-3 gap-y-2 my-auto gap-x-2 md:py-2;
+    @apply grid grid-cols-2 grid-rows-3 gap-y-2 my-auto gap-x-2 lg:gap-x-1 md:py-2 ;
   }
   .embla {
   @apply overflow-hidden;

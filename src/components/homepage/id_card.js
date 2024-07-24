@@ -23,6 +23,10 @@ export default function IdCard(props) {
                 <div className="id-card transition duration-500 ">
                     {/* {console.log(props.loading, "\n", props.data)} */}
                     <div className="flex">
+                            <div className="text-left pb-[0.5vw]">
+                                    <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xl text-darkblue">{data.name}</div>
+                                    <div className="text-[4vw] md:text-2xl xl:text-xl text-darkblue">000-000-00000{data.id}</div>
+                            </div>
                         <ProfilePic />
                         {isOpen ?
                             <PersonalInfo userName={props.data.name} sex={props.data.gender}
