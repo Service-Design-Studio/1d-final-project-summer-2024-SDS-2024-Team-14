@@ -227,7 +227,6 @@ const DocumentManager = () => {
       <div className="mx-10 mt-10">
         <div className="flex flex-row justify-between items-center">
           <h1 className="text-xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
-          {/* web searchbar (hidden on phone) */}
           <div className="flex items-center bg-lightgray rounded-full px-3 py-2">
             <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
             <input
@@ -258,36 +257,9 @@ const DocumentManager = () => {
           </div>
         <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto" />
         </div>
-      {/* Status filter buttons for phone */}
-        <div className="status-filter-buttons flex flex-wrap gap-0 border-t border-lightgray pt-2 md:hidden">
-          <button
-            onClick={() => handleStatusFilterClick('All')}
-            className={`mx-1 py-1 px-2 rounded-md text-[3.5vw] ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-          >
-            {allCount} <b>All</b>
-          </button>
-          <button
-            onClick={() => handleStatusFilterClick('Approved')}
-            className={`mx-1 py-1 px-2 rounded-md text-[3.5vw] ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-          >
-            {approvedCount} <b>Approved</b>
-          </button>
-          <button
-            onClick={() => handleStatusFilterClick('Pending')}
-            className={`mx-1 py-1 px-2 rounded-md text-[3.5vw] ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-          >
-            {pendingCount} <b>Pending</b>
-          </button>
-          <button
-            onClick={() => handleStatusFilterClick('Rejected')}
-            className={`mx-1 py-1 px-2 rounded-md text-[3.5vw] ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-          >
-            {rejectedCount} <b>Rejected</b>
-          </button>
-        </div>
 
         {/* Upload and Scanner buttons container for web */}
-        <div className="status-upload-container flex justify-between items-center mb-5 ml-10 mr-10 hidden md:flex">
+        <div className="flex justify-between items-center mb-5 ml-10 mr-10 hidden md:flex">
           <div className="status-filter-buttons flex">
             <button
               onClick={() => handleStatusFilterClick('All')}
@@ -314,57 +286,17 @@ const DocumentManager = () => {
               {rejectedCount} <b>Rejected</b>
             </button>
           </div>
-          <div className="flex items-center">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-10 bg-darkblue text-white rounded-xl font-bold">
-              <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw]" />
+          <div className="flex gap-4 items-center">
+            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
+              <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Upload
             </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-10 bg-darkblue text-white rounded-xl font-bold">
-              <Image src="/images/icons/scanner.svg" alt="Scanner Icon" width={24} height={24} className="w-[2vw]" />
+            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
+              <Image src="/images/icons/scanner.svg" alt="Scanner Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Scanner
             </Link>
           </div>
         </div>
-
-
-
-
-      {/* DOCUMENT CONTAINER */}
-      {/* DOCUMENT CONTAINER for Phone */}
-      <div className="md:hidden bg-white mt-5 mb-24 px-2">
-        {sortedDocuments.length > 0 ? (
-          sortedDocuments.map((document) => {
-            const isImage = ['jpg', 'png', 'img', 'images'].includes(document.name.split('.').pop());
-            return (
-              <div
-                className="grid grid-cols-[50px_1fr] gap-4 py-3 border-b border-lightgray"
-                key={document.id}
-                onClick={() => handleDocumentClick(document)}
-              >
-                <div className="flex justify-center items-center">
-                  <Image
-                    src={getIconForFilename(document.name).src}
-                    alt={`${document.name} icon`}
-                    width={getIconForFilename(document.name).width}
-                    height={getIconForFilename(document.name).height}
-                    className={isImage ? 'ml-2' : ''} // Slightly shift image icons to the right
-                  />
-                </div>
-                <div>
-                  <div className="font-bold text-darkblue">
-                    {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
-                  </div>
-                  <div className="text-[2.5vw] text-darkgray">
-                    Upload date: {document.lastModifiedDate}
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <div className="no-documents text-lg text-center w-full py-5 text-lightgray">No documents available</div>
-        )}
-      </div>
 
       {/* DOCUMENT CONTAINER for Web */}
       <div className="document-container hidden md:block bg-white p-5 rounded-xl shadow-md mt-5 mb-24 mr-10 ml-10 h-[calc(100vh-450px)] overflow-y-auto">
@@ -383,7 +315,6 @@ const DocumentManager = () => {
             <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
           </div>
         </div>
-
         <div className="document-list">
           {sortedDocuments.length > 0 ? (
             sortedDocuments.map((document) => {
@@ -419,11 +350,6 @@ const DocumentManager = () => {
           )}
         </div>
       </div>
-
-
-
-
-
       {selectedDocument && (
         <>
           <div className="document-preview-overlay fixed top-0 left-0 w-full h-full bg-default bg-opacity-75 flex justify-center items-center z-50">
