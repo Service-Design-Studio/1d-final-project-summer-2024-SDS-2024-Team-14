@@ -59,4 +59,26 @@ class DocumentController < ApplicationController
             render json: {message: "No documents found for this user"}, status: :unprocessable_entity
         end
     end
+
+    def status
+      newStatus = params[:status]
+      begin
+        @document = Document.find(params[:id])        
+      rescue ActiveRecord::RecordNotFound
+        render json: {message: "Document does not exist"}, status: :unprocessable_entity
+      end
+      if (@document.status != newStatus)
+        @document.update(status: newStatus)
+        if (newStatus == "Approved")
+          NotificationService.document_approved_notification(@document.user_id,@document.name, params[:message])
+        elsif (newStatus == "Rejected")
+          NotificationService.document_rejected_notification(@document.user_id,@document.name, params[:message])
+        end
+        # Rails.logger.info "user id in status: #{@document.name}"
+        render json: {document: @document, message: params[:message]}, status: :ok
+      else
+        # Rails.logger.info "user id in status: #{@document.category}"
+        render json: {message: "Document status is already #{@document.status}. No change applied.", document: @document, optional: params[:message]}, status: :ok
+      end
+    end
 end
