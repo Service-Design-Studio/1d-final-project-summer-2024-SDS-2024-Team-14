@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import "../../styles/globals.css";
-import ScannedImage from '@/components/scanner/scanned_item';
-import CameraView from '../../components/scanner/camera';
+import ScannedImage from '@/components/scanner2/scanned_item';
+import CameraView from '../../components/scanner2/camera';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
 import NaviBar from '../../components/NaviBar';
@@ -10,7 +10,9 @@ import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem
 import PDFDocument from 'pdfkit'
 import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
-import ChatBot from "@/components/ChatBot";
+import NextPage from "../../../public/images/scanner2/rightchev.svg"
+import PrevPage from "../../../public/images/scanner2/leftchev.svg"
+import Background from "../../../public/images/background/gebirah-bluebg.png"
 
 export default function Scanner() {
     const fs = require('fs') //filesystem for upload pdf test
@@ -27,6 +29,7 @@ export default function Scanner() {
     const backButtonUrl = "/documents";
     const [slideCount, setSlideCount] = useState(1);
     const [fileName, setFileName] = useState(null);
+    const [selectedImages, setSelectedImages] = useState({});
     const fileCategories = [
         {
             value: "Career",
@@ -126,10 +129,26 @@ export default function Scanner() {
         }
     }, [notif])
 
+    const handleSelectImage = (key) => {
+        setSelectedImages((prev) => ({
+          ...prev,
+          [key]: !prev[key],
+        }));
+      };
+
+    const handleDelete = () => {
+    Object.keys(selectedImages).forEach((key) => {
+      if (selectedImages[key]) {
+        removeImage(key);
+      }
+    });
+    setSelectedImages({});
+    };
+
     return (
-        <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
+        <div className='bg-[Background] flex flex-col min-w-full min-h-screen h-full items-center'>
             <div className="w-11/12 mt-4">
-                <NaviBar title={"Scanner"} backButton={backButtonUrl} />
+                <NaviBar/>
             </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
@@ -158,21 +177,17 @@ export default function Scanner() {
                     </div>
 
                 </div>
-                <div className=' text-darkblue text-xl sm:text-3xl mt-5 lg:ml-20 lg:mt-0 w-full lg:w-7/12  font-semibold'>
+                <div className='text-darkblue text-xl sm:text-3xl mt-5 lg:ml-20 lg:mt-0 w-full lg:w-7/12  font-semibold'>
                     <span className='w-full'>{count} Scanned Documents</span>
-                    <div className='flex flex-row w-full'>
-                        <Button
-                            className='w-fit px-0 mx-0 embla__button embla__button--prev'
-                            onClick={() => {
-                                if (slideCount > 0) {
-                                    onPrevButtonClick()
-                                    setSlideCount((prev) => prev--)
-                                }
-                            }}
-                        ><Image src="/images/previous_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view previous scanned documents" /></Button>
+                    <div className='flex justify-end items-center mb-4'>
+                        <Button onClick={handleDelete} className='bg-red text-white px-4 py-2 rounded-md'>Delete</Button>
+                    </div>
+                    <div className='bg-white rounded-md drop-shadow-lg flex flex-col items-center'>
+                        <div className='border border-black'>
 
+                        </div>
                         <div ref={emblaRef} className='embla__viewport flex flex-row w-10/12 min-h-[150px] overflow-hidden'>
-                            <div ref={imageRef} className=' embla__container w-[500px] px-100'>
+                            <div ref={imageRef} className=' embla__container w-[50vw] px-[20vw]'>
                                 {Object.entries(imageList).map((kv, i) => {
                                     return (<ScannedImage
                                         src={kv[1]}
@@ -185,36 +200,38 @@ export default function Scanner() {
                                 <div className={`embla__slide min-w-[200px] max-w-[200px]`}></div>
                             </div>
                         </div>
-                        <Button
-                            className={`w-1/12 embla__buttons embla__button embla__controls  {embla__button--next}`}
-                            onClick={() => {
-                                if (slideCount < count) {
-                                    onNextButtonClick()
-                                    setSlideCount((prev) => prev++)
-                                }
-                            }}
-                        ><Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
-                    </div>
-                    <FormControl required className='w-full mt-10'>
-                        <span className='mb-3'>Document Details</span>
-                        {/* <TextField onChange={(e) => {
-                            setFileName(e.target.value)
-                        }} fullWidth sx={{ "marginBottom": 3 }} ref={fileNameRef} required label="Input File Name" rows={1} variant='outlined' placeholder="File name"></TextField> */}
+                        <div className='flex flex-row items-center'>
+                            <div
+                                className='w-fit px-0 embla__button embla__button--prev'
+                                onClick={() => {
+                                    if (slideCount > 0) {
+                                        onPrevButtonClick()
+                                        setSlideCount((prev) => prev--)
+                                    }
+                                }}
+                            ><Image src={PrevPage} className='w-[1vw]' alt="view previous scanned documents" /></div>
 
-                        <TextField onChange={(e) => {
-                            setCategory(e.target.value)
-                        }} required select fullWidth sx={{ "marginBottom": 3, }} ref={fileCategoryRef} label="Category" placeholder="Category" rows={1} variant='outlined' defaultValue={`${fileCategories[0].label}`}>
-                            {fileCategories.map((val) => {
-                                return (<MenuItem key={val.value} value={val.value}>{val.label}</MenuItem>)
-                            })}
-                        </TextField>
-                    </FormControl>
+                            <div className='text-darkblue px-2 text-[2vw]'>
+                                showing {count} out of 15 results
+                            </div>
+
+                            <div
+                                className={`w-fit embla__buttons embla__button embla__controls  {embla__button--next}`}
+                                onClick={() => {
+                                    if (slideCount < count) {
+                                        onNextButtonClick()
+                                        setSlideCount((prev) => prev++)
+                                    }
+                                }}
+                            ><Image src={NextPage} className='w-[1vw]' width={1} height={1} alt="view next scanned documents" /></div>
+                            </div>
+                        </div>
                     <Button
                         onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
                         onMouseLeave={() => setUploadBtn("/images/upload.svg")}
                         onClick={() => {
                             setOpen(true);
-                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Category Document</Button>
+                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Upload document' />Upload Document</Button>
                 </div>
 
             </div>
@@ -225,7 +242,7 @@ export default function Scanner() {
                     fullWidth={true}
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
-                        <DialogTitle>Confirm Category?</DialogTitle>
+                        <DialogTitle>Confirm Upload?</DialogTitle>
                         <DialogContentText>
                             <span>Confirm document upload?</span>
                         </DialogContentText>
@@ -255,7 +272,5 @@ export default function Scanner() {
                     </DialogActions>
                 </Dialog>
             }
-        <ChatBot/>
-        </div>
-    )
+        </div>)
 }
