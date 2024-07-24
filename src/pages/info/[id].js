@@ -83,23 +83,25 @@ export default function Info() {
             <div className="flex flex-col xl:flex-row overflow-hidden">
                 <div className="flex flex-row justify-between xl:flex xl:flex-col lg:mr-[2vw]">
                     <div className="flex flex-col w-full">
-                        {!loading && data && <div className="id-card">
+                        {!loading && data && <div className="md:w-auto md:p-[2vw] lg:p-5 id-card transition duration-500">
                             <div className="flex justify-center">
-                              <ProfilePic />
-                              <div className="flex flex-col pl-[2vw] text-left flex-grow">
-                                <div className="text-left pb-[0.5vw]">
-                                  <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xl text-darkblue">{data.name}</div>
-                                  <div className="text-[4vw] md:text-2xl xl:text-xl text-darkblue">000-000-00000{data.id}</div>
-                                </div>
+                                <ProfilePic />
+                                <div className="flex flex-col pl-[2vw] text-left flex-grow">
+                                    <div className="text-left pb-[0.5vw]">
+                                        <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xxl text-darkblue">{data.name}</div>
+                                        <div className="text-[4vw] md:text-2xl xl:text-xl text-darkblue">000-000-00000{data.id}</div>
+                                    </div>
                                 <PersonalInfo
-                                  sex={data.gender}
-                                  status={data.verification_status}
-                                  issuedDate={"no column"}
-                                  expiryDate={"no column"}
-                                  dob={data.date_birth}
-                                  country={data.country}
+                                    sex={data.gender}
+                                    status={data.verification_status}
+                                    issuedDate={"no column"}
+                                    expiryDate={"no column"}
+                                    dob={data.date_birth}
+                                    country={data.country}
+                                    religion={data.religion}
+                                    ethnicity={data.ethnicity }
                                 />
-                              </div>
+                                </div>
                             </div>
                         </div>}
                     <div className="pt-10 mx-4 md:mx-[4vw] lg:mx-2">
@@ -111,14 +113,14 @@ export default function Info() {
                         </div>
                     </div>
                     </div>
-                    <div className="hidden xl:flex xl:w-full xl:justify-center xl:items-center">
+                    <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center">
                         <Image 
                             src={vector}
                             className="w-auto h-auto"
                         ></Image>
                     </div>
                 </div>
-            <div className="w-full px-4 md:px-[4vw] pt-[6vw] xl:w-[60%] lg:pt-0 md:flex md:flex-col">
+            <div className="w-full px-4 md:px-[4vw] lg:px-0 pt-[6vw] xl:w-[60%] lg:pt-0 md:flex md:flex-col">
                 <div className="relative flex flex-row w-fit md:w-full rounded-t-lg bg-[#E7E7E7] backdrop-blur-sm">
                     <span
                         className="absolute bottom-0 top-0 -z-10 flex overflow-hidden transition-all duration-300"
