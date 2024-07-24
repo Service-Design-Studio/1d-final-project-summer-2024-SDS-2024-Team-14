@@ -1,0 +1,22 @@
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/bootsnap-1.18.3/ext/bootsnap
+/Users/ElliotPhua/.rbenv/versions/3.3.1/bin/ruby extconf.rb
+checking for fdatasync() in unistd.h... yes
+checking for whether -D_GNU_SOURCE is accepted as CPPFLAGS... yes
+checking for whether -O3 is accepted as CFLAGS... yes
+checking for whether -std=c99 is accepted as CFLAGS... yes
+creating Makefile
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/bootsnap-1.18.3/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-co21rm sitelibdir\=./.gem.20240724-22454-co21rm clean
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/bootsnap-1.18.3/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-co21rm sitelibdir\=./.gem.20240724-22454-co21rm
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/bootsnap-1.18.3/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-co21rm sitelibdir\=./.gem.20240724-22454-co21rm install
+/opt/homebrew/bin/ginstall -c -m 0755 bootsnap.bundle ./.gem.20240724-22454-co21rm/bootsnap
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/bootsnap-1.18.3/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-co21rm sitelibdir\=./.gem.20240724-22454-co21rm clean
