@@ -1,9 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle, faFileText } from '@fortawesome/free-solid-svg-icons';
 import shortid from 'shortid';
 import { ReactNotifications, Store } from "react-notifications-component";
 import fileIcon from "../../../public/images/icons/file_darkblue.svg";

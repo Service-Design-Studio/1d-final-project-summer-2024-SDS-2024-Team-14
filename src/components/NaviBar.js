@@ -85,7 +85,7 @@ export default function NaviBar({ open, setOpen }) {
                 <ul className="text-black pl-4 pr-16">
                     {[
                         // ['Home', '/', ""],
-                        ['Documents', '/documents', documentIcon],
+                        ['Documents Manager', '/documents', documentIcon],
                         ['Family', '/family-tree', familyIcon],
                         // ['Community', '', ""],
                         ['Resources', '/resources', resourceIcon],

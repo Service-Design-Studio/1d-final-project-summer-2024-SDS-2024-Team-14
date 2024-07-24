@@ -97,7 +97,7 @@ body {
     @apply px-2 my-auto max-w-12 max-h-12;
   }
   .card {
-    @apply max-w-lg card-width p-1 sm:p-2 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-2xl;
+    @apply max-w-lg card-width p-2 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-2xl;
   }
   .id-card {
     @apply card px-6 pt-6 bg-gradient-to-r from-[#BEE3F7] to-white transition-all-500;
