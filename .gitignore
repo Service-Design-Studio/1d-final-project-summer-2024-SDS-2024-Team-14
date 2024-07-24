@@ -43,3 +43,5 @@
 
 #ignore coverage
 /coverage
+
+/vendor

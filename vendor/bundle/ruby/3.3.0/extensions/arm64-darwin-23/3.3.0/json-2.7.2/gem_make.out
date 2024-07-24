@@ -1,0 +1,16 @@
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+/Users/ElliotPhua/.rbenv/versions/3.3.1/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-jca300 sitelibdir\=./.gem.20240724-22454-jca300 clean
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-jca300 sitelibdir\=./.gem.20240724-22454-jca300
+make: Nothing to be done for `all'.
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-jca300 sitelibdir\=./.gem.20240724-22454-jca300 install
+
+current directory: /Users/ElliotPhua/HiddenDesktop/somethingSoon/SUTD/Y3S1/SDS/gebirah_backend/vendor/bundle/ruby/3.3.0/gems/json-2.7.2/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20240724-22454-jca300 sitelibdir\=./.gem.20240724-22454-jca300 clean
