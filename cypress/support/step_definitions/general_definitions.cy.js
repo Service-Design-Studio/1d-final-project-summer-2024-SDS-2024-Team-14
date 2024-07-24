@@ -1,16 +1,16 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 Given(/^I am on the (.+) page$/i, (page) => {
-    cy.visit(page.toLowerCase() === "home" ? "/" : `/${page.toLowerCase().replace(' ', '/')}`);
+    cy.visit(page.toLowerCase() === "home" ? "/" : `/${page.toLowerCase().replace(/ /g, '/')}`);
 })
+
+
+// When(/^I click the "(.+)" button$/i, (btn) => {
+//     cy.get(`#${btn}`).click();
+// })
 
 
 When(/^I click the "(.+)" button$/i, (btn) => {
-    cy.get(`#${btn}`).click();
-})
-
-
-When(/^I click the "(.+)"$/i, (btn) => {
     cy.get(`.${btn}`).click();
 })
 
@@ -19,7 +19,7 @@ When(/^I fill in "(.+)" with "(.+)"$/i, (e1, e2) => {
 })
 
 When(/^I do not fill in "(.+)"$/i, (e1) => {
-    cy.get(`#${e1}`).should('have.value','');
+    cy.get(`#${e1}`).should('have.value', '');
 })
 
 Then(/^I should (not )?see the message "(.+)"$/i, (not, msg) => {
@@ -33,13 +33,17 @@ Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
 })
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
-    cy.url().should("eq", Cypress.config().baseUrl + (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(' ', '/')}`));
+    cy.url().should("eq", Cypress.config().baseUrl + (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(/ /g, '/')}`));
 })
 
 Then(/^I should (not )?see the "(.+)" element$/, (not, element) => {
     if (not) {
-      cy.get(`#${element}`).should('not.exist');
+        cy.get(`#${element}`).should('not.exist');
     } else {
-      cy.get(`#${element}`).should('exist');
+        cy.get(`#${element}`).should('exist');
     }
-  });
+});
+
+Then(/^I should not be able to click the "(.+)" button$/, (btn) => {
+    cy.get(`.${btn}`).should('be.disabled')
+});

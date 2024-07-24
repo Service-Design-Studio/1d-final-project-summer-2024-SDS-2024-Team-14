@@ -78,7 +78,7 @@ class UploadFile extends Component {
                     {this.state.selectedFiles.map(fileObj => (
                         <div key={fileObj.id} className="mt-4 text-[4vw] sm:text-[2.5vw] md:text-[1.2vw] lg:text-[1vw] break-words">
                             <div
-                                className="bg-[#F3FBFF] rounded-lg shadow-md px-4 md:py-2 py-4 flex justify-start items-center cursor-pointer hover:bg-lightblue "
+                                className="bg-[#F3FBFF] rounded-lg shadow-md px-4 md:py-2 py-4 flex justify-start items-center cursor-pointer hover:bg-lightblue preview"
                                 onClick={() => this.handleCardClick(fileObj)}
                             >
                                 <Image className="md:w-[3vw] w-[7.5vw]" src={fileIcon} alt="file icon"/>
@@ -136,7 +136,7 @@ class UploadFile extends Component {
                         className="md:w-1/2 flex flex-col items-center
                         justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 py-4"
                     >
-                        <div id="dropzone" className="w-full flex flex-col items-center justify-center py-8 md:py-20 ">
+                        <div className="dropzone w-full flex flex-col items-center justify-center py-8 md:py-20 ">
                             <Image className="w-[15vw] md:w-[6.5vw]" src={fileUpload} alt="file Upload" />
                             <p className="mb-2 mt-2 text-xl md:text-2xl text-lightblue font-semibold">
                                 Upload a file
@@ -175,8 +175,9 @@ class UploadFile extends Component {
                         <button
                             id="upload"
                             onClick={this.onFileUpload}
-                            className={uploadButtonClasses}
+                            className={"upload"}
                             disabled={this.state.selectedFiles.length === 0}
+                            aria-label={this.state.selectedFiles.length === 0 ? "disabled" : "enabled" }
                         >
                             Upload
                         </button>

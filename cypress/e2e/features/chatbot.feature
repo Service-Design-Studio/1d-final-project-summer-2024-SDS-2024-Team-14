@@ -22,4 +22,7 @@ Feature: Chatbot
         Then I should see the Chatbot element
         Then I fill in "Input" with "Where is Tony?"
         Then I should see a message "I'm sorry, I cannot answer that question. Please click the Community link above to contact us if you would like more assistance."
-        
+    
+    Scenario: Persist chat history
+        When I click the "Chatbot" button
+        T

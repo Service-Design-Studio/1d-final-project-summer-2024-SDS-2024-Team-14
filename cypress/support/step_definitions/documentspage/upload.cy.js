@@ -16,7 +16,7 @@ Given(/^I have clicked to the (.+) page$/i, (page) => {
     cy.url().should("eq", uploadPageUrl);
 })
 
-Then('I should be able to add new files', () => {
+When('I add new files', () => {
     const fileName = 'example-file.pdf'; // Change to the path of your test PDF file
     cy.fixture(fileName, 'base64').then(fileContent => {
       const file = {
