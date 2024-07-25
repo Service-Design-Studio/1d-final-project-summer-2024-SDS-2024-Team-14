@@ -22,7 +22,7 @@ class DocumentController < ApplicationController
                 # LLM
                 llm_json = llm_process(ocr_text, category)
                 if llm_json.nil?
-                    render json: {message: "The document you uploaded was too blurry or it was in an invalid format. Please try again."}, status: :unprocessable_entity
+                    render json: {message: "The document you uploaded was too blurry or it was in an invalid format. Please try again."}, status: :unprocessable_entity and return
                 else
                     document.important = llm_json.to_s
                     document.save
@@ -44,7 +44,7 @@ class DocumentController < ApplicationController
             render json: { message: "User does not exist" }, status: :unprocessable_entity and return
         end
         @documents = @user.documents.where(category: category)
-        if @documents
+        if !@documents.empty?
             documents_with_files = @documents.map do |document|
                 {
                   id: document.id,
