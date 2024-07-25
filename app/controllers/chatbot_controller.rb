@@ -6,7 +6,7 @@ class ChatbotController < ApplicationController
     @session_id = params[:userID]
     resp = get_resp(@text, @session_id)
     if resp.nil? 
-      render json: {message: "There was an issue sending your message to our bot. Pleaese try again later."}, status: :unprocessable_entity
+      render json: {message: "There was an issue sending your message to our bot. Please try again later."}, status: :unprocessable_entity
     else
       render json: {message: resp}, status: :ok
     end
