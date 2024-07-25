@@ -37,19 +37,19 @@ class DocumentController < ApplicationController
   end
 
 
-    def retrieve
-        user = params[:id]
-        category = params[:category]&.downcase
-        begin
-            @user = User.find(user)
-        rescue ActiveRecord::RecordNotFound
-            render json: { message: "User does not exist" }, status: :unprocessable_entity
-        end
-        if category
-          @documents = @user.documents.where(category: category)
-        else
-          @documents = @user.documents
-        end
+  def retrieve
+      user = params[:id]
+      category = params[:category]&.downcase
+      begin
+          @user = User.find(user)
+      rescue ActiveRecord::RecordNotFound
+          render json: { message: "User does not exist" }, status: :unprocessable_entity
+      end
+      if category
+        @documents = @user.documents.where(category: category)
+      else
+        @documents = @user.documents
+      end
         if @documents
             documents_with_files = @documents.map do |document|
                 {
