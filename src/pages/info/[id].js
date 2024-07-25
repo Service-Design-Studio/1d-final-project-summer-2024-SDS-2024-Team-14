@@ -2,7 +2,6 @@
 import PersonalInfo from "../../components/homepage/id_card/personal_info";
 import ProfilePic from "../../components/homepage/id_card/profile_pic";
 import Loading from "../../components/loading"
-import ExtendedInfo from "../../components/extended_info"
 import { useRouter } from "next/router";
 import { useRef, useEffect, useState } from "react";
 import axios from "axios";
