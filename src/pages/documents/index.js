@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import NaviBar from '../../components/NaviBar';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -7,27 +7,12 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import pdfIcon from "../../../public/images/icons/pdf_icon.svg";
 import docxIcon from "../../../public/images/icons/docx_icon.svg";
 import picIcon from "../../../public/images/icons/pic_icon.svg";
-import {mockData} from "@/components/verification/mockdata";
 import Link from "next/link";
+import ChatBot from "@/components/ChatBot";
+import axiosInstance from "@/utils/axiosInstance";
 
 const categories = ['health', 'career', 'education', 'family', 'finance', 'property'];
 
-const counts = categories.map(category => {
-  const categoryDocs = mockData.filter(doc => doc.category === category);
-  const verified = categoryDocs.filter(doc => doc.status === 'verified').length;
-  const pending = categoryDocs.filter(doc => doc.status === 'pending').length;
-  const rejected = categoryDocs.filter(doc => doc.status === 'rejected').length;
-  return {
-    category,
-    counts: {
-      verified,
-      pending,
-      rejected
-    }
-  };
-});
-
-console.log(counts);
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -41,47 +26,60 @@ const DocumentManager = () => {
   const [allCount, setAllCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [uploadCategory, setUploadCategory] = useState('health');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [data, setData] = useState(null);
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  let userID;
+
 
   useEffect(() => {
     if (selectedCategory) {
-      fetchDocuments(selectedCategory, statusFilter, currentPage, itemsPerPage);
+      fetchDocuments();
     }
-  }, [selectedCategory, statusFilter, currentPage]);
+  }, []);
+
+  const fetchDocuments = async () => {
+
+    userID = localStorage.getItem("userID");
+    try {
+      await axiosInstance.post(`/document/retrieve`, {id: userID}).then((resp) => {
+        setData(resp.data.documents)
+    })
+    } catch (error) {
+      console.error(error.message);
+    };
+  }
+  useEffect(() => {
+    if (data != null) {
+      const categoryDocs = data.filter(doc => doc.category === selectedCategory.toLowerCase());
+      setAllCount(categoryDocs.length);
+      setApprovedCount(categoryDocs.filter(doc => doc.status === 'Approved').length);
+      setPendingCount(categoryDocs.filter(doc => doc.status === 'Pending').length);
+      setRejectedCount(categoryDocs.filter(doc => doc.status === 'Rejected').length);
+    }
+  }, [data, selectedCategory]);
 
   useEffect(() => {
-    handleSearch(searchTerm);
-  }, [searchTerm, documents]);
+    if (data != null) {
+      const filteredDocuments = data.filter(
+          doc => doc.category === selectedCategory.toLowerCase() && (statusFilter === 'All' || doc.status === statusFilter)
+        );
 
-  const fetchDocuments = async (category, status, page, limit) => {
-    try {
-      console.log(mockData)
-      const filteredDocuments = mockData.filter(
-        doc => doc.category === category.toLowerCase() && (status === 'All' || doc.status === status)
-      );
+        setDocuments(filteredDocuments);
+        setFilteredDocuments(filteredDocuments);
 
-      setDocuments(filteredDocuments);
-      setFilteredDocuments(filteredDocuments);
-
-      if (status === 'All') {
-        const categoryDocs = mockData.filter(doc => doc.category === category.toLowerCase());
-        setAllCount(categoryDocs.length);
-        setApprovedCount(categoryDocs.filter(doc => doc.status === 'Approved').length);
-        setPendingCount(categoryDocs.filter(doc => doc.status === 'Pending').length);
-        setRejectedCount(categoryDocs.filter(doc => doc.status === 'Rejected').length);
+        setTotalPages(Math.ceil(filteredDocuments.length / itemsPerPage));
       }
 
-      setTotalPages(Math.ceil(filteredDocuments.length / limit));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [selectedCategory, statusFilter, currentPage, data]);
+
+  // useEffect(() => {
+  //   handleSearch(searchTerm);
+  // }, [searchTerm];
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -101,6 +99,16 @@ const DocumentManager = () => {
 
   const handleClosePreview = () => {
     setSelectedDocument(null);
+  };
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    if (term.trim() === '') {
+      setFilteredDocuments(documents)
+    } else {
+      const filtered = documents.filter(doc => doc.name.toLowerCase().includes(term.toLowerCase()));
+      setFilteredDocuments(filtered);
+    }
   };
 
   const parseDate = (dateStr) => {
@@ -169,17 +177,7 @@ const DocumentManager = () => {
       case 'images':
         return { src: picIcon};
       default:
-        return { src: '/images/icons/default_icon.svg', width: 30, height: 30 };
-    }
-  };
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-    if (term.trim() === '') {
-      setFilteredDocuments(documents);
-    } else {
-      const filtered = documents.filter(doc => doc.name.toLowerCase().includes(term.toLowerCase()));
-      setFilteredDocuments(filtered);
+        return { src: picIcon};
     }
   };
 
@@ -297,7 +295,6 @@ const DocumentManager = () => {
             </Link>
           </div>
         </div>
-
       {/* DOCUMENT CONTAINER for Web */}
       <div className="bg-white rounded-xl shadow-md mb-10 mr-10 ml-10">
         <div className="flex font-bold py-3 text-darkblue">
@@ -362,7 +359,7 @@ const DocumentManager = () => {
           </div>
         </>
       )}
-
+      <ChatBot/>
     </div>
   );
 };

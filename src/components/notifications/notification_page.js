@@ -90,7 +90,6 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
             <div className="flex flex-col w-11/12 mx-auto">
                 <span className="notif-subheader text-lg  md:text-xl">Recent</span>
                 {recent.length > 0 ? recent.map((i, index) => {
-                    console.log(i)
                     return (<Notification
                         key={i.id}
                         unread={!i.read}

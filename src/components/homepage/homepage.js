@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axiosInstance from "../../utils/axiosInstance";
 export default function Homepage(props) {
-    const router = useRouter();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     let userID;
