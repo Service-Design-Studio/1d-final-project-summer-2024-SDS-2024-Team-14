@@ -10,7 +10,7 @@ class NotificationsController < ApplicationController
     begin
       @user = User.find(user)
     rescue ActiveRecord::RecordNotFound
-      render json: {message: "User does not exist"}, status: :unprocessable_entity
+      render json: {message: "User does not exist"}, status: :unprocessable_entity and return
     end
     @notifications = Notification.where("user_id": user)
     render json: @notifications, status: :ok
@@ -22,7 +22,7 @@ class NotificationsController < ApplicationController
     begin
       @user = User.find(user)
     rescue ActiveRecord::RecordNotFound
-      render json: {message: "User does not exist"}, status: :unprocessable_entity
+      render json: {message: "User does not exist"}, status: :unprocessable_entity and return
     end
     Notification.where("user_id": user, "id": id).update_all("read": true)
     render json: {success: true}

@@ -38,6 +38,17 @@ RSpec.describe "llmapi", type: :request do
             "name", "date of birth", "student ID", "degree", "highest education", "date obtained",
             "overall GPA", "institution name", "graduation date"
             ])
-        expect(text).to eq("name: Timothy Tang Long Zun, date of birth: 10/04/2001, student ID: 1006266, degree: Bachelor of Science (Design And Artificial Intelligence) with Design Accreditation, highest education: , date obtained: , overall GPA: 4.42, institution name: Singapore University of Technology and Design (SUTD), graduation date: August 2026")
+        expect(text).to include({
+                "date obtained" => "",
+                "date of birth" => "10/04/2001",
+                "graduation date" => "August 2026",
+                "highest education" => "",
+                "degree" => "Bachelor of Science (Design And Artificial Intelligence) with Design Accreditation",
+                "institution name" => "Singapore University of Technology and Design (SUTD)", 
+                "name" => "Timothy Tang Long Zun", 
+                "overall GPA" => "4.42", 
+                "student ID" => 
+                "1006266"
+        })
     end
 end
