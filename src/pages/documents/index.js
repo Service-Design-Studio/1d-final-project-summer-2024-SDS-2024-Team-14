@@ -160,14 +160,14 @@ const DocumentManager = () => {
     const extension = filename.split('.').pop();
     switch (extension) {
       case 'pdf':
-        return { src: pdfIcon, width: 45, height: 45 };
+        return { src: pdfIcon};
       case 'docx':
-        return { src: docxIcon, width: 45, height: 45 };
+        return { src: docxIcon};
       case 'jpg':
       case 'png':
       case 'img':
       case 'images':
-        return { src: picIcon, width: 30, height: 30 };
+        return { src: picIcon};
       default:
         return { src: '/images/icons/default_icon.svg', width: 30, height: 30 };
     }
@@ -258,9 +258,9 @@ const DocumentManager = () => {
         <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto" />
         </div>
 
-        {/* Upload and Scanner buttons container for web */}
+        {/* Upload and Category buttons container for web */}
         <div className="flex justify-between items-center mb-5 ml-10 mr-10 hidden md:flex">
-          <div className="status-filter-buttons flex">
+          <div className="flex">
             <button
               onClick={() => handleStatusFilterClick('All')}
               className={`mx-2 py-2 px-4 rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
@@ -292,79 +292,72 @@ const DocumentManager = () => {
               Upload
             </Link>
             <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
-              <Image src="/images/icons/scanner.svg" alt="Scanner Icon" width={24} height={24} className="w-[2vw] pr-2" />
-              Scanner
+              <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
+              Category
             </Link>
           </div>
         </div>
 
       {/* DOCUMENT CONTAINER for Web */}
-      <div className="document-container hidden md:block bg-white p-5 rounded-xl shadow-md mt-5 mb-24 mr-10 ml-10 h-[calc(100vh-450px)] overflow-y-auto">
-        <div className="document-headers flex font-bold text-darkblue pb-2 border-b border-lightgray">
+      <div className="bg-white rounded-xl shadow-md mb-10 mr-10 ml-10">
+        <div className="flex font-bold py-3 text-darkblue">
           <div className="flex items-center" style={{ width: '80px' }}></div>
-          <div className="document-header flex items-center pl-5" style={{ width: 'calc(70% - 80px)' }} onClick={() => requestSort('name')}>
+          <div className="flex items-center pl-5" style={{ width: 'calc(70% - 80px)' }} onClick={() => requestSort('name')}>
             <span>Name</span>
             <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
           </div>
-          <div className="type-header flex items-center" style={{ width: '15%' }} onClick={() => requestSort('type')}>
+          <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('type')}>
             <span>Type</span>
             <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
           </div>
-          <div className="date-header flex items-center" style={{ width: '15%' }} onClick={() => requestSort('lastModifiedDate')}>
+          <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('lastModifiedDate')}>
             <span>Last Modified Date</span>
             <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
           </div>
         </div>
-        <div className="document-list">
+        <div className="">
           {sortedDocuments.length > 0 ? (
             sortedDocuments.map((document) => {
-              const isImage = ['jpg', 'png', 'img', 'images'].includes(document.name.split('.').pop());
               return (
-                <div className="document-row flex justify-between h-20 border-b border-lightgray py-2 text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
-                  <div className="document-icon-cell flex items-center" style={{ width: '80px' }}>
-                    <div className={`icon-container flex justify-center items-center ${isImage ? 'pl-2' : ''}`}>
-                      <Image
-                        src={getIconForFilename(document.name).src}
-                        alt={`${document.name} icon`}
-                        width={getIconForFilename(document.name).width}
-                        height={getIconForFilename(document.name).height}
-                      />
-                    </div>
-                  </div>
-                  <div className="document-name-cell flex items-center flex-grow text-lg">
-                    <div className="ml-5">
+                <div className="flex justify-between h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
+                  <Image className="md:w-[3vw] w-[5vw] ml-8"
+                    src={getIconForFilename(document.name).src}
+                    alt={`${document.name} icon`}
+                  />
+                  <div className="flex items-center flex-grow text-lg">
+                    <div className="ml-5 font-bold">
                       {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
                     </div>
                   </div>
-                  <div className={`document-type-cell flex items-center ${isImage ? 'ml-[-10px]' : ''}`} style={{ width: '15%' }}>
+                  <div className={`flex items-center ml-[-10px]`} style={{ width: '15%' }}>
                     <span className="text-lg text-darkblue">{document.name.split('.').pop()}</span>
                   </div>
-                  <div className="document-date-cell flex items-center" style={{ width: '15%' }}>
+                  <div className="flex items-center" style={{ width: '15%' }}>
                     <span className="text-lg text-darkblue">{document.lastModifiedDate}</span>
                   </div>
                 </div>
               );
             })
           ) : (
-            <div className="no-documents text-lg text-center w-full py-5 text-lightgray">No documents available</div>
+            <div className="text-lg text-center w-full py-5 text-lightgray">No documents available</div>
           )}
         </div>
       </div>
       {selectedDocument && (
         <>
-          <div className="document-preview-overlay fixed top-0 left-0 w-full h-full bg-default bg-opacity-75 flex justify-center items-center z-50">
-            <div className="document-preview-container flex bg-white rounded-xl overflow-hidden w-4/5 h-4/5 relative">
-              <div className="document-preview flex-1 p-5">
+          <div className="fixed top-0 left-0 w-full h-full bg-default bg-opacity-75 flex justify-center items-center z-50">
+            <div className="flex bg-white rounded-xl overflow-hidden w-4/5 h-4/5 relative">
+              <div className="flex-1 px-5">
                 {selectedDocument.file_url ? (
                   <iframe src={selectedDocument.file_url} width="100%" height="100%"></iframe>
                 ) : (
                   <p>Document preview not available</p>
                 )}
               </div>
-              <div className="important-info-container flex-1 p-5 overflow-y-auto">
+              <div className="flex-1 p-5 overflow-y-auto">
                 {selectedDocument.important ? renderImportantInfo(selectedDocument.important) : <p>No additional information available</p>}
               </div>
-              <button className="close-preview absolute top-2 right-2 bg-darkblue text-white rounded-xl py-2 px-5 text-lg" onClick={handleClosePreview}>Close</button>
+              <button className="top-2 right-2 bg-darkblue text-white rounded-xl py-2 px-5 text-lg" onClick={handleClosePreview}>Close</button>
             </div>
           </div>
         </>

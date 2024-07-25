@@ -1,18 +1,19 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import "../../styles/globals.css";
+import "../../../styles/globals.css";
 import ScannedImage from '@/components/scanner/scanned_item';
-import CameraView from '../../components/scanner/camera';
+import CameraView from '../../../components/scanner/camera';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
-import NaviBar from '../../components/NaviBar';
+import NaviBar from '../../../components/NaviBar';
 import CloseIcon from '@mui/icons-material/Close';
 import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
 import PDFDocument from 'pdfkit'
+import Header from '@/components/document_manager/dm_header';
 import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
 import ChatBot from "@/components/ChatBot";
 
-export default function Scanner() {
+export default function Category() {
     const fs = require('fs') //filesystem for upload pdf test
     const [imageList, setImageList] = useState({});
     const [uploadBtn, setUploadBtn] = useState("/images/upload.svg");
@@ -54,7 +55,6 @@ export default function Scanner() {
         }
     ]
     const router = useRouter();
-    const [category, setCategory] = useState(fileCategories[0].value)
     const onPrevButtonClick = useCallback(() => {
         if (!emblaApi) return
         emblaApi.scrollPrev()
@@ -77,7 +77,7 @@ export default function Scanner() {
 
     function uploadImages() {
         const userId = localStorage.getItem('userID');
-        // const category =
+        const category = router.query.category;
         const formData = new FormData();
         Object.values(imageList).forEach((image, index) => {
             const contentType = image.split(',')[1]
@@ -129,7 +129,7 @@ export default function Scanner() {
     return (
         <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
             <div className="w-11/12 mt-4">
-                <NaviBar title={"Scanner"} backButton={backButtonUrl} />
+                <Header title={"Scanner"} backButton={backButtonUrl} />
             </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
@@ -195,20 +195,6 @@ export default function Scanner() {
                             }}
                         ><Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                     </div>
-                    <FormControl required className='w-full mt-10'>
-                        <span className='mb-3'>Document Details</span>
-                        {/* <TextField onChange={(e) => {
-                            setFileName(e.target.value)
-                        }} fullWidth sx={{ "marginBottom": 3 }} ref={fileNameRef} required label="Input File Name" rows={1} variant='outlined' placeholder="File name"></TextField> */}
-
-                        <TextField onChange={(e) => {
-                            setCategory(e.target.value)
-                        }} required select fullWidth sx={{ "marginBottom": 3, }} ref={fileCategoryRef} label="Category" placeholder="Category" rows={1} variant='outlined' defaultValue={`${fileCategories[0].label}`}>
-                            {fileCategories.map((val) => {
-                                return (<MenuItem key={val.value} value={val.value}>{val.label}</MenuItem>)
-                            })}
-                        </TextField>
-                    </FormControl>
                     <Button
                         onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
                         onMouseLeave={() => setUploadBtn("/images/upload.svg")}
