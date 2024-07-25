@@ -105,9 +105,9 @@ export default function NaviBar({ open, setOpen }) {
                         </>
                     )
                     )}
-                    <div className="py-4 flex items-center">
+                    <div className={`py-4 flex items-center ${unread ? `animate-pulse new_notification_icon`: `notification_icon`}`}>
                         <div className="w-[8vw] inline-block">
-                            <Image className={`max-w-[5vw] mx-auto ${unread ? `animate-pulse new_notification_icon`: `notification_icon`}`} src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && notificationIcon)} layout="responsive" alt="navigation icon" />
+                            <Image className={`max-w-[5vw] mx-auto `} src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && notificationIcon)} layout="responsive" alt="navigation icon" />
                         </div>
                         <li className='inline-block ml-3 items-center'>
                             <Link onClick={() => {
@@ -130,10 +130,10 @@ export default function NaviBar({ open, setOpen }) {
                     <Link href={url} className="py-4 font-bold text-darkblue">{title}</Link>
                 ))}
                 <a href={"https://www.gebirah.org/"} target="_blank" className="py-4 font-bold text-darkblue"> Community </a>
-                <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md bg-white hover:bg-white` : `hover:bg-white hover:bg-opacity-25`}`}>
+                <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md bg-white hover:bg-white` : `hover:bg-white hover:bg-opacity-25`} notification`}>
                     <Image
                         src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} width={1} height={1}
-                        alt="Open notifications" className={`w-5 ${unread ? `animate-pulse` : ``}`} />
+                        alt="Open notifications" className={`w-5 ${unread ? `animate-pulse new_notification_icon` : ``} notificaiton_icon`} />
                 </Button>
             </div>
             <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>

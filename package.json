@@ -28,7 +28,6 @@
     "@zxing/library": "^0.21.1",
     "aos": "^2.3.4",
     "axios": "^1.7.2",
-    "cypress-localstorage-commands": "^2.2.6",
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.1.5",
     "http-proxy-agent": "^7.0.2",

@@ -4,11 +4,7 @@ Feature: Notification Bar
     # I should have a feature that checks transition to login page
 
 Background: 
-    Given I am on the login page
-    And I fill in "email" with "elliotphua@gmail.com"
-    And I fill in "password" with "Password123"
-    And I click the "submit" button
-    When I am on the documents upload education page
+    Given I am on the documents upload education page
 
 Scenario: When I upload a document, I should see a new notification
     When I click the "dropzone" button

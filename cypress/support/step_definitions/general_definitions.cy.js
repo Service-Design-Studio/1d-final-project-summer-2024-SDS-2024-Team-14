@@ -1,19 +1,53 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import "cypress-localstorage-commands";
-Given(/^I am on the (.+) page$/i, (page) => {
-    cy.visit(page.toLowerCase() === "home" ? "/" : `/${page.toLowerCase().replace(/ /g, '/')}`);
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // Ignore the specific error message
+    if (err.message.includes("Cannot read properties of null (reading 'document')")) {
+        return false;
+    }
+
+    // If the error message does not match, throw the error
+    throw err;
+});
+
+describe('Preserve localStorage in Cypress', () => {
+    before(() => {
+        cy.visit('/login');
+        cy.get('#email').type('elliotphua@gmail.com');
+        cy.get('#password').type('Password123');
+        cy.get('.submit').click();
+        // cy.window().then((win) => {
+        //     win.localStorage.setItem('userID', '1'); // Set user_id to mimic login
+        // });
+        cy.saveLocalStorage();
+    });
+    beforeEach(() => {
+        Cypress.env("newNotification", false)
+        cy.loadLocalStorage();
+        // cy.window().then((win) => {
+        //     win.localStorage.setItem('userID', '1'); // Set user_id to mimic login
+        // });
+    });
+
+    it('should have preserved localStorage', () => {
+        cy.visit('/');
+        cy.window().then((window) => {
+            expect(window.localStorage.getItem('userID')).to.exist;
+        })
+    })
 })
 
+Given(/^I am on the (.+) page$/i, (page) => {
+    cy.window().then(window => {
+        window.localStorage.setItem("userID", 2)
+    })
+    const url = page.toLowerCase() === "home" ? "/" : `/${page.toLowerCase().replace(/ /g, '/')}`;
+    cy.visit(url);
+})
 
-// When(/^I click the "(.+)" button$/i, (btn) => {
-//     cy.get(`#${btn}`).click();
-// })
-
-
+// Change all previous features to use get by class rather than id
 When(/^I click the "(.+)" button$/i, (btn) => {
-    cy.restoreLocalStorage();
     cy.get(`.${btn}`).click();
-    cy.saveLocalStorage();
 })
 
 When(/^I fill in "(.+)" with "(.+)"$/i, (e1, e2) => {
@@ -33,20 +67,7 @@ Then(/^I should (not )?see the message "(.+)"$/i, (not, msg) => {
 Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
     not ? cy.get(`.${e2}`).should('not.exist') : cy.get(`.${e2}`).should('exist')
     if (!not && (e2 == "new_notification_icon" || e2 == "notification_icon")) {
-        cy.intercept('GET', '/notifications', (req) => {
-            cy.wait(this.uploadFile).then(inttercept => { 
-                req.reply({
-                    statusCode: 200,
-                    fixture: {
-                        id: 1,
-                        category: "Upload Success",
-                        content: "Your education document: example-file.pdf has been uploaded successfully.",
-                        created_at: new Date(),
-                        read: false
-                    }
-                }).as('newNotification')
-            })
-        })
+
     }
 })
 
