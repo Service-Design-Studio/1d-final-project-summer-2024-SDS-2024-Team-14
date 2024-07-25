@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NotificationService, type: :service do
-  let(:document) { Document.create(user: user, category: category) }
+  let(:document) { Document.create(user: user, category: category, name: 'Test Document') }
   let(:user) { User.create(
             id: 1,
             email: 'test1@gmail.com',
@@ -18,7 +18,7 @@ RSpec.describe NotificationService, type: :service do
             ) }
   let(:doc_category) {'passport'}
   let(:category) {'passport'}
-  let(:user_id) {user.id}
+  # let(:user_id) {user.id}
 
   describe '.create_document_upload_success_notification' do
     it 'creates a notification with the correct attributes' do

@@ -56,7 +56,7 @@ class NotificationService
 
   def self.document_approved_notification(user_id, document_name, message)
     Rails.logger.info "Creating approved document notification for user #{user_id}"
-    Notification.create(
+    notification = Notification.create(
       user_id: user_id,
       category: "Document Approved",
       content: "Your document: #{document_name.length > 20 ? document_name[0..17] + document_name[18..-1].gsub(/...$/, '...') : document_name} has been approved." ,
@@ -68,7 +68,7 @@ class NotificationService
 
   def self.document_rejected_notification(user_id, document_name, message)
     Rails.logger.info "Creating rejected document notification for user #{user_id}"
-    Notification.create(
+    notification = Notification.create(
       user_id: user_id,
       category: "Document Rejected",
       content: "Your document: #{document_name.length > 20 ? document_name[0..17] + document_name[18..-1].gsub(/...$/, '...') : document_name} has been rejected." ,
