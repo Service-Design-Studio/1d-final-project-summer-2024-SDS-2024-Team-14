@@ -8,6 +8,7 @@ class NotificationService
       read: false
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 
   def self.create_document_upload_fail_notification(user_id, document, doc_category)
@@ -19,6 +20,7 @@ class NotificationService
       read: false
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 
   def self.welcome_notification(user_id, user_name)
@@ -30,6 +32,7 @@ class NotificationService
       read: false
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 
   def self.pending_user_notification(user_id)
@@ -41,6 +44,7 @@ class NotificationService
       read: false
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 
   def self.verified_user_notification(user_id)
@@ -52,6 +56,7 @@ class NotificationService
       read: false
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 
   def self.document_approved_notification(user_id, document_name, message)
@@ -64,6 +69,7 @@ class NotificationService
       message: message
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 
   def self.document_rejected_notification(user_id, document_name, message)
@@ -76,5 +82,6 @@ class NotificationService
       message: message
     )
     Rails.logger.info "Notification created: #{notification.id}" if notification.persisted?
+    notification
   end
 end

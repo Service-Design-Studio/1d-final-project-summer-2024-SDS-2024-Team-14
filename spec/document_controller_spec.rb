@@ -24,6 +24,7 @@ RSpec.describe DocumentController, type: :controller do
             ) }
         let(:category) { 'education' }
         let(:file) { fixture_file_upload('spec/fixtures/mockresume.pdf') }
+        let(:fileno) { fixture_file_upload('spec/fixtures/mockeng.docx') }
 
         context 'with valid parameters' do
             it 'creates a new document' do
@@ -49,6 +50,13 @@ RSpec.describe DocumentController, type: :controller do
                 post :create, params: { id: user.id, category: category }
                 expect(response).to have_http_status(:unprocessable_entity)
             end
+
+            it 'returns an error response when the file is blurry or in the incorrect format' do
+              allow_any_instance_of(DocumentController).to receive(:llm_process).and_return(nil)
+              post :create, params: {id: user.id, category: category, files: [fileno] }
+              expect(response).to have_http_status(:unprocessable_entity)
+              expect(JSON.parse(response.body)['message']).to eq("The document you uploaded was too blurry or it was in an invalid format. Please try again.")
+            end      
         end
     end
 
@@ -84,11 +92,15 @@ RSpec.describe DocumentController, type: :controller do
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(JSON.parse(response.body)['message']).to eq("User does not exist")
             end
+          end
 
-            it 'returns an error response when no documents are found' do
-                get :retrieve, params: { id: user.id, category: 'non_existent_category' }
-                expect(response).to have_http_status(:ok)
-                expect(JSON.parse(response.body)['documents']).to be_empty
+        context 'with no documents' do
+            it 'returns an error response' do
+              allow(User).to receive(:find).with(user.id.to_s) {user} #idk why need user.id to be string, if not keep failing
+              allow(user).to receive(:documents) { double(where: []) }
+                get :retrieve, params: { id: user.id, category: category } 
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(JSON.parse(response.body)['message']).to eq("No documents found for this user")
             end
         end
     end
