@@ -6,8 +6,7 @@ module Dialogagent
     begin
       base_url = "https://asia-southeast1-dialogflow.googleapis.com/v3/projects/gebirah-14/locations/asia-southeast1/agents/cce15a8e-975a-43a7-876a-f84f942198ac/sessions/#{session_id}:detectIntent"
 
-      stdout, stderr, status = Open3.capture3("gcloud auth print-access-token")
-      access_token = stdout.strip
+      access_token = "ya29.a0AXooCguln4MhuzNu2BfpTn_pDyTV_kSQt97PCulg8H4CIUsfBX8fVr7AsUpOTPJ-rk9PrmFk8B6z-4Gi8axFN3DYUOolwP9kS-9BR2UzewZWVq7jKy-JMPCv5zK-T_KyTu0jq2M9R3xaCq7mgaLlhFa4VrHgL2JGcEVtdNoK1eaAaCgYKAaESARMSFQHGX2MiSkgyfuBytGGwpz3VKKWDWw0179"
 
       headers = {
         'Content-Type' => 'application/json; charset=utf-8',
