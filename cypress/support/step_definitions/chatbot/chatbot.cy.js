@@ -10,6 +10,8 @@ When('I press the enter key', () => {
         fixture: 'chatbot1.json'
       });
     }).as('chatbot');
+
+    cy.get()
 });
 
 Then(/^I should see a reply "(.+)"$/i, (msg) => {
