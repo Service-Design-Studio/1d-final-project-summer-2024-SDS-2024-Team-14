@@ -65,7 +65,7 @@ export default function ChatBot() {
                     className={`cursor-pointer fixed sm:bottom-10 sm:right-10 bottom-4 right-4 ${chatState ? "hidden" : "inline-block"}`}
                     onClick={() => setChatState(!chatState)}
                 >
-                    <Image className="w-[12.5vw] sm:w-[10vw] lg:w-[3.5vw]" src={chatBot} />
+                    <Image  className="w-[12.5vw] sm:w-[10vw] lg:w-[3.5vw]" src={chatBot} />
                 </button>
                 <div className={`bg-white rounded-xl overflow-hidden lg:w-[20vw] lg:h-[30vw] 
                 md:w-[55vw] md:h-[65vw] sm:w-[50vw] sm:h-[65vw] w-[65vw] h-[90vw] 

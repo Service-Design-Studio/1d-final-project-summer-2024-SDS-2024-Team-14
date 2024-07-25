@@ -1,5 +1,9 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
+When('I click "Chatbot" button', () => {
+  cy.get(`#Chatbot`).click()
+})
+
 When(/^I type - (.+)$/i, (scenario) => {
   if (scenario === "my query on how do I upload my documents"){
     cy.get('#Input').type("How do I upload my documents");
@@ -18,6 +22,7 @@ When(/^I type - (.+)$/i, (scenario) => {
   }
 
 })
+
 
 When('I press the enter key', () => {
     cy.intercept('POST', '/chatbot', (req) => {
