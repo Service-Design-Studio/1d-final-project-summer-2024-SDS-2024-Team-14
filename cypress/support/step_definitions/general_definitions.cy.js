@@ -57,7 +57,18 @@ When(/^I fill in "(.+)" with "(.+)"$/i, (e1, e2) => {
 When(/^I do not fill in "(.+)"$/i, (e1) => {
     cy.get(`#${e1}`).should('have.value', '');
 })
-
+When(/^my document is (.+)$/i, (status) => {
+    cy.intercept("GET", "/notifications/*", {
+        statusCode: 200,
+        fixture: `${status}_doc.json`
+    })
+})
+When(/^my refugee status is (.+)$/i, (status) => { 
+    cy.intercept("GET", "/notifications/*", {
+        statusCode: 200,
+        fixture: `refugee_status_${status}`
+    })
+})
 Then(/^I should (not )?see the message "(.+)"$/i, (not, msg) => {
     cy.on(window.alert, (txt) => {
         not ? expect(txt).to.not.contains(msg) : expect(txt).to.contains(msg);
@@ -69,6 +80,10 @@ Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
     if (!not && (e2 == "new_notification_icon" || e2 == "notification_icon")) {
 
     }
+})
+
+Then(/^I should see the text, "(.+)"$/i, (msg) => {
+    cy.get('body').should('contain', msg)
 })
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
