@@ -65,7 +65,7 @@ class DocumentController < ApplicationController
       begin
         @document = Document.find(params[:id])        
       rescue ActiveRecord::RecordNotFound
-        render json: {message: "Document does not exist"}, status: :unprocessable_entity
+        render json: {message: "Document does not exist"}, status: :unprocessable_entity and return
       end
       if (@document.status != newStatus)
         @document.update(status: newStatus)
