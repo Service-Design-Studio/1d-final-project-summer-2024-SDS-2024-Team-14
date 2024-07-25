@@ -200,7 +200,7 @@ export default function Category() {
                         onMouseLeave={() => setUploadBtn("/images/upload.svg")}
                         onClick={() => {
                             setOpen(true);
-                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Category Document</Button>
+                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Documents</Button>
                 </div>
 
             </div>

@@ -41,7 +41,7 @@ module.exports = {
         },
       },
       animation: {
-        grow: 'grow 0.8s ease-out forwards',
+        grow: 'grow 0.6s ease-out forwards',
         shrink: 'shrink 0.5s ease-out forwards',
         slideIn: 'slideIn 1s ease-in-out forwards',
         slideOut: 'slideOut 1s ease-in-out forwards',
@@ -76,6 +76,7 @@ module.exports = {
       'pink-600': '#D81B60',
       'gray': '#909090',
       'lightgray':'#797979',
+      'lightergray': '#F0F0F0',
       'green':'#22c55e',
       'lightgreen':'#bbf7d0',
       'yellow':'#ffa000',

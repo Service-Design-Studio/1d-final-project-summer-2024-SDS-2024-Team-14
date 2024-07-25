@@ -7,28 +7,12 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import pdfIcon from "../../../public/images/icons/pdf_icon.svg";
 import docxIcon from "../../../public/images/icons/docx_icon.svg";
 import picIcon from "../../../public/images/icons/pic_icon.svg";
-import {mockData} from "@/components/verification/mockdata";
+import crossIcon from "../../../public/images/upload/cross_icon.svg";
 import Link from "next/link";
 import ChatBot from "@/components/ChatBot";
-
-const categories = ['health', 'career', 'education', 'family', 'finance', 'property'];
-
-const counts = categories.map(category => {
-  const categoryDocs = mockData.filter(doc => doc.category === category);
-  const verified = categoryDocs.filter(doc => doc.status === 'verified').length;
-  const pending = categoryDocs.filter(doc => doc.status === 'pending').length;
-  const rejected = categoryDocs.filter(doc => doc.status === 'rejected').length;
-  return {
-    category,
-    counts: {
-      verified,
-      pending,
-      rejected
-    }
-  };
-});
-
-console.log(counts);
+import axiosInstance from "@/utils/axiosInstance";
+import {ReactNotifications, Store} from "react-notifications-component";
+import 'react-notifications-component/dist/theme.css';
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -42,47 +26,91 @@ const DocumentManager = () => {
   const [allCount, setAllCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [uploadCategory, setUploadCategory] = useState('health');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [data, setData] = useState(null);
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
-  const router = useRouter();
+  let userID;
+
 
   useEffect(() => {
     if (selectedCategory) {
-      fetchDocuments(selectedCategory, statusFilter, currentPage, itemsPerPage);
+      fetchDocuments();
     }
-  }, [selectedCategory, statusFilter, currentPage]);
+      const message = localStorage.getItem('notificationMessage');
+      const status = localStorage.getItem('status');
+      if (message) {
+          if (status==="success") {
+              Store.addNotification({
+                  title: "Success",
+                  message: message,
+                  type: "success",
+                  insert: "bottom",
+                  container: "bottom-right",
+                  animationIn: ["animate__animated", "animate__fadeIn"],
+                  animationOut: ["animate__animated", "animate__fadeOut"],
+                  dismiss: {
+                      duration: 5000,
+                      onScreen: true
+                  }
+              });
+          }
+          else {
+              Store.addNotification({
+                  title: "Error",
+                  message: message,
+                  type: "danger",
+                  insert: "bottom",
+                  container: "bottom-right",
+                  animationIn: ["animate__animated", "animate__fadeIn"],
+                  animationOut: ["animate__animated", "animate__fadeOut"],
+                  dismiss: {
+                      duration: 5000,
+                      onScreen: true
+                  }
+              });
+          }
+      localStorage.removeItem('notificationMessage'); // Clear the message after displaying
+      localStorage.removeItem('status'); // Clear the message after displaying
+    }
+  }, []);
+
+  const fetchDocuments = async () => {
+
+    userID = localStorage.getItem("userID");
+    try {
+      await axiosInstance.post(`/document/retrieve`, {id: userID}).then((resp) => {
+        setData(resp.data.documents)
+    })
+    } catch (error) {
+      console.error(error.message);
+    };
+  }
+  useEffect(() => {
+    if (data != null) {
+      const categoryDocs = data.filter(doc => doc.category === selectedCategory.toLowerCase());
+      setAllCount(categoryDocs.length);
+      setApprovedCount(categoryDocs.filter(doc => doc.status === 'Approved').length);
+      setPendingCount(categoryDocs.filter(doc => doc.status === 'Pending').length);
+      setRejectedCount(categoryDocs.filter(doc => doc.status === 'Rejected').length);
+    }
+  }, [data, selectedCategory]);
 
   useEffect(() => {
-    handleSearch(searchTerm);
-  }, [searchTerm, documents]);
+    if (data != null) {
+      const filteredDocuments = data.filter(
+          doc => doc.category === selectedCategory.toLowerCase() && (statusFilter === 'All' || doc.status === statusFilter)
+        );
 
-  const fetchDocuments = async (category, status, page, limit) => {
-    try {
-      console.log(mockData)
-      const filteredDocuments = mockData.filter(
-        doc => doc.category === category.toLowerCase() && (status === 'All' || doc.status === status)
-      );
+        setDocuments(filteredDocuments);
+        setFilteredDocuments(filteredDocuments);
 
-      setDocuments(filteredDocuments);
-      setFilteredDocuments(filteredDocuments);
-
-      if (status === 'All') {
-        const categoryDocs = mockData.filter(doc => doc.category === category.toLowerCase());
-        setAllCount(categoryDocs.length);
-        setApprovedCount(categoryDocs.filter(doc => doc.status === 'Approved').length);
-        setPendingCount(categoryDocs.filter(doc => doc.status === 'Pending').length);
-        setRejectedCount(categoryDocs.filter(doc => doc.status === 'Rejected').length);
+        setTotalPages(Math.ceil(filteredDocuments.length / itemsPerPage));
       }
 
-      setTotalPages(Math.ceil(filteredDocuments.length / limit));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  }, [selectedCategory, statusFilter, currentPage, data]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -102,6 +130,16 @@ const DocumentManager = () => {
 
   const handleClosePreview = () => {
     setSelectedDocument(null);
+  };
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    if (term.trim() === '') {
+      setFilteredDocuments(documents)
+    } else {
+      const filtered = documents.filter(doc => doc.name.toLowerCase().includes(term.toLowerCase()));
+      setFilteredDocuments(filtered);
+    }
   };
 
   const parseDate = (dateStr) => {
@@ -170,17 +208,7 @@ const DocumentManager = () => {
       case 'images':
         return { src: picIcon};
       default:
-        return { src: '/images/icons/default_icon.svg', width: 30, height: 30 };
-    }
-  };
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-    if (term.trim() === '') {
-      setFilteredDocuments(documents);
-    } else {
-      const filtered = documents.filter(doc => doc.name.toLowerCase().includes(term.toLowerCase()));
-      setFilteredDocuments(filtered);
+        return { src: picIcon};
     }
   };
 
@@ -188,31 +216,34 @@ const DocumentManager = () => {
     try {
       const parsedImportant = JSON.parse(important);
       return (
-        <div className="important-info">
+        <div className="">
           {Object.keys(parsedImportant).map((key, index) => (
-            <div key={key}>
-              {index !== 0 && <div className="mt-5"></div>} {/* Add margin before each new header */}
-              <strong className="text-lg text-lightgray">{key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
-              <ul className="leading-loose">
-                {Array.isArray(parsedImportant[key])
-                  ? parsedImportant[key].map((item, index) => (
-                      <li key={index} className="text-2xl text-darkblue">
-                        {typeof item === 'object' ? (
-                          <>
-                            {Object.keys(item).map((itemKey) => (
-                              <div key={itemKey}>
-                                {`${itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${item[itemKey]}`}
-                              </div>
-                            ))}
-                          </>
-                        ) : (
-                          item
-                        )}
-                      </li>
-                    ))
-                  : <span className="text-2xl text-darkblue">{parsedImportant[key]}</span>}
-              </ul>
-            </div>
+          <div key={key}>
+            {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
+            <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
+              {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
+            </strong>
+            <ul className="leading-loose">
+              {Array.isArray(parsedImportant[key])
+                ? parsedImportant[key].map((item, idx) => (
+                    <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
+                      {typeof item === 'object' ? (
+                        <>
+                         {Object.keys(item).map((itemKey) => (
+                            <div key={itemKey} className="ml-4">
+                              <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
+                              {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                        item
+                      )}
+                    </li>
+                  ))
+                : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
+            </ul>
+          </div>
           ))}
         </div>
       );
@@ -222,6 +253,8 @@ const DocumentManager = () => {
   };
 
   return (
+    <>
+    <ReactNotifications />
     <div className="min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
       <NaviBar open={open} setOpen={ setOpen} />
           {/* category button row */}
@@ -294,11 +327,10 @@ const DocumentManager = () => {
             </Link>
             <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
               <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
-              Category
+              Scanner
             </Link>
           </div>
         </div>
-
       {/* DOCUMENT CONTAINER for Web */}
       <div className="bg-white rounded-xl shadow-md mb-10 mr-10 ml-10">
         <div className="flex font-bold py-3 text-darkblue">
@@ -346,26 +378,39 @@ const DocumentManager = () => {
       </div>
       {selectedDocument && (
         <>
-          <div className="fixed top-0 left-0 w-full h-full bg-default bg-opacity-75 flex justify-center items-center z-50">
-            <div className="flex bg-white rounded-xl overflow-hidden w-4/5 h-4/5 relative">
-              <div className="flex-1 px-5">
-                {selectedDocument.file_url ? (
-                  <iframe src={selectedDocument.file_url} width="100%" height="100%"></iframe>
-                ) : (
-                  <p>Document preview not available</p>
-                )}
+          <div className="fixed top-0 left-0 w-full h-full
+          bg-default justify-center bg-opacity-75 z-50 flex items-center">
+            <div className="bg-white mx-auto my-auto rounded-xl w-2/3 h-[80%]">
+              <div className ="px-6">
+                <div className="flex justify-between pt-4 pb-1">
+                  <h1 className="text-[2.5vw] md:text-[1.5vw] font-bold text-darkblue">{selectedDocument.name}</h1>
+                  <Image className="md:w-[2vw] w-[4vw] mb-2" src={crossIcon} alt="close window" onClick={handleClosePreview}/>
+                </div>
+              </div>
+            <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
+            <div className="flex bg-white overflow-hidden w-auto h-[80%] relative">
+              <div className="flex w-1/2">
+                <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
+                  {selectedDocument.file_url ? (
+                    <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%" height="100%"></iframe>
+                  ) : (
+                    <p>Document preview not available</p>
+                  )}
+                </div>
               </div>
               <div className="flex-1 p-5 overflow-y-auto">
                 {selectedDocument.important ? renderImportantInfo(selectedDocument.important) : <p>No additional information available</p>}
               </div>
-              <button className="top-2 right-2 bg-darkblue text-white rounded-xl py-2 px-5 text-lg" onClick={handleClosePreview}>Close</button>
+              </div>
+              <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
+              </div>
             </div>
-          </div>
           <ChatBot/>
         </>
       )}
-
+      <ChatBot/>
     </div>
+      </>
   );
 };
 

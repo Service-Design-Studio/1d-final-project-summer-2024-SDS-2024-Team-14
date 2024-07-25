@@ -14,15 +14,6 @@ export default function ChatBot() {
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState("")
     const messagesEndRef = useRef(null);
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
-  //
-  // const scrollToBottom = () => {
-  //   if (messagesEndRef.current) {
-  //     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  //   }
-  // };
     useEffect(() => {
       const feed = document.getElementById('chat-feed');
       feed.scrollTop = feed.scrollHeight;
@@ -31,7 +22,6 @@ export default function ChatBot() {
 
     useEffect(() => {
         const botMessages = getListFromLocalStorage('botMessages')
-        console.log(botMessages)
         if (botMessages) {
             setMessages(botMessages);
         }
@@ -79,7 +69,7 @@ export default function ChatBot() {
                 </button>
                 <div className={`bg-white rounded-xl overflow-hidden lg:w-[20vw] lg:h-[30vw] 
                 md:w-[55vw] md:h-[65vw] sm:w-[50vw] sm:h-[65vw] w-[65vw] h-[90vw] 
-                drop-shadow-lg ${chatState ? "animate-grow" : "animate-shrink"}`}>
+                drop-shadow-lg ${chatState ? "animate-grow" : "hidden"}`}>
                     <div className="bg-darkblue sm:py-3 py-2 flex justify-between items-center">
                         <div className="flex sm:ml-4 ml-2 items-center">
                             {/*Avatar Bot*/}
