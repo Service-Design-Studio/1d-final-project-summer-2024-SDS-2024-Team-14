@@ -10,7 +10,7 @@ Scenario: Log In Successful
     And I fill in "email" with "test123@gmail.com"
     And I fill in "password" with "p@ssw0rd"
     And I click on the "submitBtn" button - login success
-    Then I should be directed to the Home page
+    Then I should be redirected to the Home page
 
 Scenario: Log In wrong password
     When I click the "loginTab" button
@@ -40,7 +40,7 @@ Scenario: Signup successful
     And I fill in "password" with "Passw0rd!"
     And I fill in "confirmPassword" with "Passw0rd!"
     And I click on the "submitBtn" button - signup success
-    Then I should be directed to the Home page
+    Then I should be redirected to the Home page
 
 Scenario: Signing Up Unsuccessfully
     When I click the "signUpTab" button
