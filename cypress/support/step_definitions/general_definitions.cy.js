@@ -82,8 +82,8 @@ Then(/^I should (not )?see "(.+)"$/, (not, e2) => {
     }
 })
 
-Then(/^I should see the text, "(.+)"$/i, (msg) => {
-    cy.get('body').should('contain', msg)
+Then(/^I should (not )?see the text, "(.+)"$/, (not, msg) => {
+    cy.get('body').should(`${not? `not.`:``}contain`, msg)
 })
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
