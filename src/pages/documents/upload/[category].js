@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UploadDropdown from '../../../components/uploadpage/dropdown.js';
 import '../../../styles/globals.css';
-import 'react-notifications-component/dist/theme.css';
 import { Icon } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import UploadFile from '../../../components/uploadpage/upload_file.js';
@@ -26,10 +25,6 @@ export default function Upload() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  };
-
-  const handleDropdownChange = (event) => {
-    setDropdownValue(event.target.value);
   };
 
   if (!isMounted) {

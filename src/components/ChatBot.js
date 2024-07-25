@@ -68,7 +68,7 @@ export default function ChatBot() {
                 </button>
                 <div className={`bg-white rounded-xl overflow-hidden lg:w-[20vw] lg:h-[30vw] 
                 md:w-[55vw] md:h-[65vw] sm:w-[50vw] sm:h-[65vw] w-[65vw] h-[90vw] 
-                drop-shadow-lg ${chatState ? "animate-grow" : "animate-shrink"}`}>
+                drop-shadow-lg ${chatState ? "animate-grow" : "hidden"}`}>
                     <div className="bg-darkblue sm:py-3 py-2 flex justify-between items-center">
                         <div className="flex sm:ml-4 ml-2 items-center">
                             {/*Avatar Bot*/}
