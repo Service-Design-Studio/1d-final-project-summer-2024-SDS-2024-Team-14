@@ -9,6 +9,7 @@ import docxIcon from "../../../public/images/icons/docx_icon.svg";
 import picIcon from "../../../public/images/icons/pic_icon.svg";
 import {mockData} from "@/components/verification/mockdata";
 import Link from "next/link";
+import ChatBot from "@/components/ChatBot";
 
 const categories = ['health', 'career', 'education', 'family', 'finance', 'property'];
 
@@ -360,6 +361,7 @@ const DocumentManager = () => {
               <button className="top-2 right-2 bg-darkblue text-white rounded-xl py-2 px-5 text-lg" onClick={handleClosePreview}>Close</button>
             </div>
           </div>
+          <ChatBot/>
         </>
       )}
 
