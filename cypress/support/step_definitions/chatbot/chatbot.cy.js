@@ -13,7 +13,7 @@ When('I press the enter key in S1', () => {
     cy.get('#Input').type('{enter}');
 });
 
-When('in S2 I press enter', () => {
+When('I press the enter key in S2', () => {
     // Intercept the axios call before triggering the upload button
     cy.intercept('POST', '/chatbot', (req) => {
       req.reply({

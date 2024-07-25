@@ -14,7 +14,7 @@ Feature: Chatbot
     Scenario: Asked Chatbot invalid question
         When I click the "Chatbot" button 
         Then I fill in "Input" with "qwert"
-        When in S2 I press enter
+        When I press the enter key in S2
         Then I should see a reply "I'm sorry, I don't understand. Could you please rephrase your question?"
 
 
