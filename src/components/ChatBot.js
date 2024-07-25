@@ -14,15 +14,6 @@ export default function ChatBot() {
     const [messages, setMessages] = useState([])
     const [input, setInput] = useState("")
     const messagesEndRef = useRef(null);
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
-  //
-  // const scrollToBottom = () => {
-  //   if (messagesEndRef.current) {
-  //     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-  //   }
-  // };
     useEffect(() => {
       const feed = document.getElementById('chat-feed');
       feed.scrollTop = feed.scrollHeight;
@@ -31,7 +22,6 @@ export default function ChatBot() {
 
     useEffect(() => {
         const botMessages = getListFromLocalStorage('botMessages')
-        console.log(botMessages)
         if (botMessages) {
             setMessages(botMessages);
         }
