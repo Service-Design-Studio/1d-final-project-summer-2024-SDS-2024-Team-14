@@ -18,9 +18,10 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
             try {
                 await axiosInstance.get(`/notifications/${userID}`).then((resp) => {
                     let res = resp.data;
+                    console.log("response: ",resp.data)
                     const currentDate = new Date();
                     res.forEach(element => {
-                        if (!element.read && currentDate - new Date(element.created_at) > 1000 * 60 * 60 * 24) {
+                        if (element.read && currentDate - new Date(element.created_at) > 1000 * 60 * 60 * 24) {
                             setPast((prev) => {
                                 return [...prev, element]
                             })
@@ -90,7 +91,6 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
             <div className="flex flex-col w-11/12 mx-auto">
                 <span className="notif-subheader text-lg  md:text-xl">Recent</span>
                 {recent.length > 0 ? recent.map((i, index) => {
-                    console.log(i)
                     return (<Notification
                         key={i.id}
                         unread={!i.read}
