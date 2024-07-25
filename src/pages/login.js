@@ -31,12 +31,6 @@ export default function Login({ session }) {
         arrivalDate: dayjs(),
         gender: null,
     });
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [confirmError, setConfirmError] = useState(false);
-    const [firstNameError, setFirstNameError] = useState(false);
-    const [lastNameError, setLastNameError] = useState(false);
-    // const [errorState, setErrorState] = useState(true);
     useEffect(() => {
         const message = localStorage.getItem('notificationMessage');
         if (message) {
@@ -95,10 +89,10 @@ export default function Login({ session }) {
                     router.push('/');
                 }
             }).catch((error) => {
-                Store.removeAllNotifications();
+                console.log(error)
                 Store.addNotification({
                     title: "Error",
-                    message: error.message,
+                    message: error.response.data.message,
                     type: "danger",
                     insert: "top",
                     container: "bottom-right",
@@ -128,7 +122,7 @@ export default function Login({ session }) {
             Store.removeAllNotifications();
             Store.addNotification({
                 title: "Error",
-                message: error.message,
+                message: error.response.data.message,
                 type: "danger",
                 insert: "top",
                 container: "bottom-right",

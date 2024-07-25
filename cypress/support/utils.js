@@ -28,7 +28,7 @@ class HomePage {
             const fullUrl = reader.decodeFromCanvas(originalCanvas).getText();
             // Copy the content from the original canvas to the new canvas
             expect(reader.decodeFromCanvas(originalCanvas).getText()).to.equal(
-                'https://gebirah-frontend-2r6b52gguq-as.a.run.app/info/1')
+                'http://127.0.0.1:3000/info/1')
         })
     }
 

@@ -29,7 +29,7 @@ export default function Homepage(props) {
 
     return (
         <>
-        <div onMouseDown={()=>props.setOpen(false)} className="flex lg:flex-row flex-col justify-center md:my-4 mb-4 px-4 md:px-0 gap-[4vw]">
+        <div onMouseDown={()=>props.setOpen(false)} className="flex lg:flex-row flex-col justify-around md:my-4 md:mb-4 mb-10 mx-[3vw] md:px-0">
             {!props.loading && data &&
                 <>
                     <IdCard data={data} loading={loading} />
