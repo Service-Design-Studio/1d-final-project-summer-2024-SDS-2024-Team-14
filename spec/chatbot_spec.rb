@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'dialogagent'
+include Dialogagent
 
 RSpec.describe ChatbotController, type: :controller do
   describe '#create' do
