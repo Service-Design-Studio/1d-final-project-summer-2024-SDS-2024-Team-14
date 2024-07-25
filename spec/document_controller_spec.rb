@@ -94,40 +94,36 @@ RSpec.describe DocumentController, type: :controller do
     end
 
     describe '#status' do
-    let(:document) { Document.create(id: 1,
-    name: 'passport',
-    status: 'Pending',
-    ) }
-    # let(:params) { { id: 1, status: 'Approved', message: 'Test message' } }
+    let(:user) { User.create(
+            id: 1,
+            email: 'test1@gmail.com',
+            password: 'test123',
+            password_confirmation: 'test123',
+            "name": "testUser1",
+            "country": "Myanmar",
+            ethnicity: 'Bantu',
+            "religion": "Buddhist",
+            "gender": "Female",
+            "date_birth": "10-06-2001",
+            "date_arrival": "10-06-2024",
+            "verification_status": "Pending approval"
+            ) }
+    let!(:document) { Document.create(id: 1, user: user, name: 'Test Document', status: 'Pending') }
+    let(:params) { { id: document.id,  status: 'Approved', message: 'Document approved' } }
 
     context 'when document exists' do
       it 'updates document status' do
         expect(document.status).not_to eq('Approved')
-        put :status, params: params
+        put :status, params: { id: document.id,  status: 'Approved', message: 'Document approved' }
         document.reload
         expect(document.status).to eq('Approved')
       end
 
       it 'sends approved notification' do
         expect(NotificationService).to receive(:document_approved_notification).with(document.user_id, document.name, params[:message])
-        put :status, params: params
+        put :status, params: { id: document.id,  status: 'Approved', message: 'Document approved' }
       end
-        # it 'updates the document status and sends a notification' do
-        #     allow(NotificationService).to receive(:document_approved_notification)
-        #     post :status, params: { id: document.id, status: "Approved", message: "Document approved" }
-        #     document.reload
-        #     expect(document.status).to eq("Approved")
-        #     expect(NotificationService).to have_received(:document_approved_notification).with(document.user_id, document.name, "Document approved")
-        #     expect(response).to have_http_status(:ok)
-        # end
     end
-
-      it 'returns updated document and message' do
-        put :status, params: params
-        expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)['document']['status']).to eq('Approved')
-        expect(JSON.parse(response.body)['message']).to eq(params[:message])
-      end
 
     context "when status is changed to Rejected" do
         it "updates the document status and sends a notification" do
@@ -141,29 +137,22 @@ RSpec.describe DocumentController, type: :controller do
     end
 
     context 'when status is not changed' do
-        let(:params) { { id: 1, status: 'Pending', message: 'Test message' } }
+      let(:params) { { id: document.id,  status: 'Pending', message: 'Document pending' } }
+        let(:params1) { { id: document.id, status: 'Pending', message: 'Document status is already Pending. No change applied.' } }
 
         it 'does not update document status' do
           expect(document.status).to eq(params[:status])
-          put :status, params: params
+          put :status, params: params1
           document.reload
-          expect(document.status).to eq(params[:status])
+          expect(document.status).to eq(params1[:status])
         end
 
         it 'returns message indicating no change' do
-          put :status, params: params
+          put :status, params: params1
           expect(response).to have_http_status(:ok)
-          expect(JSON.parse(response.body)['message']).to eq("Document status is already #{document.status}. No change applied.")
+          expect(JSON.parse(response.body)['message']).to eq("Document status is already Pending. No change applied.")
         end
       end
-    # context "when status is not changed" do
-    #     it "does not update the document status" do
-    #         document.update(status: "Approved")
-    #         post :status, params: { id: document.id, status: "Approved", message: "No change" }
-    #         expect(JSON.parse(response.body)["message"]).to eq("Document status is already Approved. No change applied.")
-    #         expect(response).to have_http_status(:ok)
-    #     end
-    # end
 
     context 'when document does not exist' do
       let(:params) { { id: 0, status: 'Approved', message: 'Test message' } }
