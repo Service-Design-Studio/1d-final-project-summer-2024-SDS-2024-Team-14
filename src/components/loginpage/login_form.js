@@ -35,7 +35,7 @@ export default function LoginForm({ onLoginTab, setFormState}) {
                 placeholder={"Password"}
             />
             <div onClick={() => { setRememberPassword(!rememberPassword); setFormState(prevState => ({ ...prevState, rememberPassword: !document.getElementById("rememberPassword").checked })) }} className="px-6 mt-3 self-start cursor-pointer"><Checkbox id="rememberPassword" className="my-auto" label="Remember Password" variant="outlined" checked={rememberPassword} /><span className="align-middle my-auto">Remember Password</span></div>
-            <Button type="submit" id="submitBtn" variant="contained" className="mx-5 pt-3 mt-5 text-xl">Login</Button>
+            <Button type="submit" id="submitBtn" variant="contained" className="mx-5 pt-3 mt-5 text-xl submit">Login</Button>
             
        </div>
     )
