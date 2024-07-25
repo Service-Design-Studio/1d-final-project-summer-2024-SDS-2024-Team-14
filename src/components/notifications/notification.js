@@ -43,7 +43,7 @@ export default function Notification({ notifStatus, text, time, unread, message}
 
     return (
         <>
-            <div className={`w-full rounded-lg flex flex-row p-3 my-2 ${unread ? `bg-blue-50 hover:bg-blue-100` : `hover:bg-lightgray`} transition-all-500 items-center`}>
+            <div className={`w-full rounded-lg flex flex-row p-3 my-2 ${unread ? `bg-blue-50 hover:bg-blue-100 new_notification` : `hover:bg-lightgray`} transition-all-500 items-center`}>
                 <Image src={icon[notifStatus] || icon["Notice"]} className="md:w-[5vw] md:min-w-15 xsm:w-[1.5vw] min-w-8 md:max-w-10 align-middle" width={1} height={1} alt={"Notification row icon"}></Image>
                 <div className="ml-4 flex-1"><span className=" line-clamp-3  text-[1em] sm:text-[1.3em] md:text-[0.8vw] overflow-ellipsis "><p className="font-semibold md:text-[1.3vw] capitalize">{notifStatus}</p> {text}{message }</span></div>
                 <span className="text-darkblue self-end">{timeSince(new Date(time))}</span>
