@@ -48,7 +48,7 @@ export default function Upload() {
           <div className='p-4 text-darkblue'>
               <div className="flex flex-row justify-between">
                   <div className="inline-block">
-                    <h1 className='text-darkblue font-semibold sm:text-[3.5vw] md:text-[2.3vw] text-[6.5vw]'>Upload Document</h1>
+                    <h1 className='text-darkblue font-semibold sm:text-[3.5vw] md:text-[2.3vw] text-[6.5vw]'>Upload <span className="capitalize">{router.query.category}</span> Document</h1>
                     <p className='md:my-2 text-[4vw] md:text-[1.5vw] my-4'>Start uploading your important documents here</p>
                     <p className='text-[4vw] md:text-[1.5vw] md:mb-0 mb-[5vw]'>Please upload all relevant documents by selecting one or multiple files</p>
                   </div>

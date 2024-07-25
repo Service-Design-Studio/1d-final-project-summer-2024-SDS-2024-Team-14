@@ -11,9 +11,6 @@ import Link from "next/link";
 import ChatBot from "@/components/ChatBot";
 import axiosInstance from "@/utils/axiosInstance";
 
-const categories = ['health', 'career', 'education', 'family', 'finance', 'property'];
-
-
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
   const [statusFilter, setStatusFilter] = useState('All');
@@ -32,7 +29,6 @@ const DocumentManager = () => {
   const [data, setData] = useState(null);
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
-  const router = useRouter();
   let userID;
 
 
@@ -185,31 +181,33 @@ const DocumentManager = () => {
     try {
       const parsedImportant = JSON.parse(important);
       return (
-        <div className="important-info">
+        <div className="">
           {Object.keys(parsedImportant).map((key, index) => (
-            <div key={key}>
-              {index !== 0 && <div className="mt-5"></div>} {/* Add margin before each new header */}
-              <strong className="text-lg text-lightgray">{key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
-              <ul className="leading-loose">
-                {Array.isArray(parsedImportant[key])
-                  ? parsedImportant[key].map((item, index) => (
-                      <li key={index} className="text-2xl text-darkblue">
-                        {typeof item === 'object' ? (
-                          <>
-                            {Object.keys(item).map((itemKey) => (
-                              <div key={itemKey}>
-                                {`${itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${item[itemKey]}`}
-                              </div>
-                            ))}
-                          </>
-                        ) : (
-                          item
-                        )}
-                      </li>
-                    ))
-                  : <span className="text-2xl text-darkblue">{parsedImportant[key]}</span>}
-              </ul>
-            </div>
+          <div key={key}>
+            {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
+            <strong className="md:text-[1.5vw] text-[3.5vw] text-lightgray">
+              {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
+            </strong>
+            <ul className="leading-loose">
+              {Array.isArray(parsedImportant[key])
+                ? parsedImportant[key].map((item, idx) => (
+                    <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
+                      {typeof item === 'object' ? (
+                        <>
+                          {Object.keys(item).map((itemKey) => (
+                            <div key={itemKey} className={itemKey === 'institution' ? 'text-lg font-semibold text-darkblue' : 'ml-4'}>
+                              {`${itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                        item
+                      )}
+                    </li>
+                  ))
+                : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
+            </ul>
+          </div>
           ))}
         </div>
       );
@@ -291,7 +289,7 @@ const DocumentManager = () => {
             </Link>
             <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
               <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
-              Category
+              Scanner
             </Link>
           </div>
         </div>
