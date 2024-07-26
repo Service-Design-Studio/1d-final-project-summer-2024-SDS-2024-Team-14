@@ -468,6 +468,7 @@ DEPENDENCIES
   dotenv-rails (~> 2.7)
   google-cloud-storage (~> 1.11)
   google-cloud-translate
+  googleauth
   httparty
   importmap-rails
   jbuilder
