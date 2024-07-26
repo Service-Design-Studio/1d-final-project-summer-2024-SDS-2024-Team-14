@@ -38,6 +38,21 @@ steps:
         "--region", "${_REGION}",
         "--image", "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
       ]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Checking PATH..."
+        echo $PATH
+        echo "Checking gcloud version..."
+        gcloud version
+        echo "Checking environment variables..."
+        echo $GOOGLE_APPLICATION_CREDENTIALS
+        echo $GOOGLE_CLOUD_PROJECT
+        gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+        gcloud config set project $GOOGLE_CLOUD_PROJECT
+        gcloud auth print-access-token
 
 options:
   logging: CLOUD_LOGGING_ONLY
