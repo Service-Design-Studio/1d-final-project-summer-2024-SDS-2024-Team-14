@@ -255,25 +255,26 @@ const DocumentManager = () => {
   return (
     <>
     <ReactNotifications />
-    <div className="min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
+    <div className="overflow-hidden min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
       <NaviBar open={open} setOpen={ setOpen} />
           {/* category button row */}
-      <div className="mx-10 mt-10">
-        <div className="flex flex-row justify-between items-center">
+      <div className="mx-3 md:mx-10 md:mt-10">
+        <div className="px-1.5 flex flex-row justify-between items-center">
           <h1 className="text-xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
-          <div className="flex items-center bg-lightgray rounded-full px-3 py-2">
+          <Image className="md:hidden w-[4vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
+          <div open={open} setOpen={setOpen} className="hidden md:flex items-center bg-lightgray rounded-full px-3 py-2">
             <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
             <input
                 type="text"
                 placeholder="Search in Documents"
-                className="flex-grow text-darkblue w-contain bg-lightgray placeholder:text-[1.2vw] mx-auto ml-2 placeholder:text-darkblue placeholder:opacity-[79%]
-                focus:outline-none text-[1.2vw]"
+                className="flex-grow text-darkblue w-contain bg-lightgray md:placeholder:text-[1.2vw] mx-auto ml-2 placeholder:text-darkblue placeholder:opacity-[79%]
+                focus:outline-none text-[2vw] md:text-[1.2vw]"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
         </div>
-          <div className="flex flex-col justify-between items-center my-5 ml-0 mr-0 md:flex-row">
+          <div className="flex justify-between items-center my-5 ml-0 mr-0 md:flex-row">
             {/* gap in btw cat buttons */}
             <div className="category-buttons flex flex-wrap gap-2 pl-1.5">
               {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
@@ -281,8 +282,8 @@ const DocumentManager = () => {
                       key={category}
                       onClick={() => handleCategoryClick(category)}
                       // CATEGORY BUTTONS
-                      className={`py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
-                  ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+                      className={`py-0.5 px-2 md:py-1.5 md:px-3 rounded-md font-bold text-[3vw] md:text-[1.2vw] 
+                  ${selectedCategory === category ? 'bg-darkblue text-white' : 'bg-white md:bg-opacity-0 text-darkblue'}`}
                   >
                     {category}
                   </button>
@@ -293,34 +294,34 @@ const DocumentManager = () => {
         </div>
 
         {/* Upload and Category buttons container for web */}
-        <div className="flex justify-between items-center mb-5 ml-10 mr-10 hidden md:flex">
-          <div className="flex">
+        <div className="flex justify-between items-center mb-5 mx-2 md:mx-10 md:flex">
+          <div className="flex text-[3vw] md:text-[1vw]">
             <button
               onClick={() => handleStatusFilterClick('All')}
-              className={`mx-2 py-2 px-4 rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
               {allCount} <b>All</b>
             </button>
             <button
               onClick={() => handleStatusFilterClick('Approved')}
-              className={`mx-2 py-2 px-4 rounded-xl ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
               {approvedCount} <b>Approved</b>
             </button>
             <button
               onClick={() => handleStatusFilterClick('Pending')}
-              className={`mx-2 py-2 px-4 rounded-xl ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
               {pendingCount} <b>Pending</b>
             </button>
             <button
               onClick={() => handleStatusFilterClick('Rejected')}
-              className={`mx-2 py-2 px-4 rounded-xl ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
               {rejectedCount} <b>Rejected</b>
             </button>
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="hidden md:flex md:gap-4 md:items-center">
             <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
               <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Upload
@@ -332,18 +333,18 @@ const DocumentManager = () => {
           </div>
         </div>
       {/* DOCUMENT CONTAINER for Web */}
-      <div className="bg-white rounded-xl shadow-md mb-10 mr-10 ml-10">
-        <div className="flex font-bold py-3 text-darkblue">
-          <div className="flex items-center" style={{ width: '80px' }}></div>
-          <div className="flex items-center pl-5" style={{ width: 'calc(70% - 80px)' }} onClick={() => requestSort('name')}>
+      <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
+        <div className="flex font-bold py-3 text-[2.5vw] md:text-[0.8vw] text-darkblue">
+          <div className="flex items-center w-50 md:w-80"></div>
+          <div className="flex items-center pl-5 w-[50%] md:w-[70%]" onClick={() => requestSort('name')}>
             <span>Name</span>
             <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
           </div>
-          <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('type')}>
+          <div className="flex items-center w-[15%]" onClick={() => requestSort('type')}>
             <span>Type</span>
             <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
           </div>
-          <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('lastModifiedDate')}>
+          <div className="flex items-center md:w-[15%]" onClick={() => requestSort('lastModifiedDate')}>
             <span>Last Modified Date</span>
             <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
           </div>
@@ -372,7 +373,7 @@ const DocumentManager = () => {
               );
             })
           ) : (
-            <div className="text-lg text-center w-full py-5 text-lightgray">No documents available</div>
+            <div className="text-md md:text-lg text-center w-full py-5 text-lightgray">No documents available</div>
           )}
         </div>
       </div>
