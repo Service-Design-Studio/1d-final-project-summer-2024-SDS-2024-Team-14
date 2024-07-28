@@ -2,24 +2,6 @@ import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import "../general_definitions.cy.js";
 import { homePage } from "../../utils";
 
-/* Scenario: Clicking UNHCR button as approved user */
-
-Given("My verification status is already approved", () => {
-  homePage.verified()
-})
-
-When("I click on the Show UNHCR Card button", () => {
-  homePage.clickCardButton()
-})
-
-Then("I should see the identification number revealed", () => {
-  homePage.checkIdentificationNumber()
-})
-
-Then("I should see a QR Code within this card", () => {
-  homePage.checkQrCodeExist()
-})
-
 Then("the QR Code should have my id bounded to it", () => {
   homePage.checkQrCodeUrl()
 })

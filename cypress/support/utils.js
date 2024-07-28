@@ -7,7 +7,7 @@ class HomePage {
     }
 
     clickCardButton() {
-        this.elements.idCard().get("#idCardButton").click()
+        cy.get("#idCardButton").click()
     }
 
     checkIdentificationNumber() {
@@ -17,18 +17,13 @@ class HomePage {
     }
 
     checkQrCodeExist() {
-        this.elements.idCard().get('canvas').should('exist');
+        this.elements.idCard().get('#id-canvas').should('exist');
     }
 
     checkQrCodeUrl() {
         const reader = new BrowserMultiFormatReader();
-        this.elements.idCard().get('canvas').then(($canvas) => {
-            // $canvas is a jQuery-wrapped DOM element, get the raw DOM element
-            const originalCanvas = $canvas[0];
-            const fullUrl = reader.decodeFromCanvas(originalCanvas).getText();
-            // Copy the content from the original canvas to the new canvas
-            expect(reader.decodeFromCanvas(originalCanvas).getText()).to.equal(
-                'http://127.0.0.1:3000/info/1')
+        cy.get('#id-canvas').invoke("text").then(text => { 
+            cy.expect(text).equal("http://localhost:3000/info/1")
         })
     }
 

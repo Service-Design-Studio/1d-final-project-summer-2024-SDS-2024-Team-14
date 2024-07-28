@@ -5,31 +5,31 @@ Testing features of Login Page
 Background: 
     Given I am on the login page
 
-Scenario: Log In Successful
-    When I click the "loginTab" button
-    And I fill in "email" with "test123@gmail.com"
-    And I fill in "password" with "p@ssw0rd"
-    And I click on the "submitBtn" button - login success
+Scenario: Log in successfully with correct credential
+    When I click the "login_tab" button
+    And I fill in "email" with "elliotphua@gmail.com"
+    And I fill in "password" with "Password123"
+    And I click on the "login" button
     Then I should be redirected to the Home page
 
-Scenario: Log In wrong password
-    When I click the "loginTab" button
-    And I fill in "email" with "test123@gmail.com"
+Scenario: Log in unsuccessfully with wrong password
+    When I click the "login_tab" button
+    And I fill in "email" with "elliotphua@gmail.com"
     And I fill in "password" with "p@ssw0rd1"
-    And I click on the "submitBtn" button - wrong password
-    And I should be notified of the wrong password
+    And I click on the "login" button
+    And I should see the text, "Login failed. Please make sure that your password is correct."
     Then I should remain on the Login page
 
-Scenario: Log In invalid email
-    When I click the "loginTab" button
+Scenario: Log in unsuccessfully with invalid email
+    When I click the "login_tab" button
     And I fill in "email" with "-@gmail.com"
     And I fill in "password" with "p@ssw0rd"
-    And I click on the "submitBtn" button - invalid email
-    And I should be notified of the invalid email
+    And I click on the "login" button
+    And I should see the text, "Login failed. The email you have entered is invalid. Please enter a valid email."
     Then I should remain on the Login page
 
 Scenario: Signup successful
-    When I click the "signUpTab" button
+    When I click the "signup_tab" button
     And I fill in "firstName" with "Abdul"
     And I fill in "lastName" with "Ahmed"
     And I fill in "originCountry" with "Africa"
@@ -39,17 +39,17 @@ Scenario: Signup successful
     And I fill in "email" with "e@gmail.com"
     And I fill in "password" with "Passw0rd!"
     And I fill in "confirmPassword" with "Passw0rd!"
-    And I click on the "submitBtn" button - signup success
+    And I click on the "signup" button
     Then I should be redirected to the Home page
 
 Scenario: Signing Up Unsuccessfully
-    When I click the "signUpTab" button
+    When I click the "signup_tab" button
     And I do not fill in "firstName"
     And I fill in "lastName" with "Ahmed"
     And I fill in "email" with "e@gmail.com"
     And I fill in "password" with "Passw0rd!"
     And I fill in "confirmPassword" with "Passw0rd!"
-    And I click the "submitBtn" button
+    And I click on the "signup" button
     Then I should remain on the Login Page
 # I should have a feature that checks if the login is unsuccessful when the email is not entered
 # I should have a feature that checks if the login is unsuccessful when the password is not entered
