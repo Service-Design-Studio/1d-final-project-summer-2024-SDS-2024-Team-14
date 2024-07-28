@@ -32,6 +32,11 @@ const DocumentManager = () => {
   const [data, setData] = useState(null);
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
+  const [showInput, setShowInput] = useState(false);
+  const toggleInput = () => {
+    setShowInput(!showInput);
+  };
+
   let userID;
 
 
@@ -258,11 +263,27 @@ const DocumentManager = () => {
     <div className="overflow-hidden min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
       <NaviBar open={open} setOpen={ setOpen} />
           {/* category button row */}
-      <div className="mx-3 md:mx-10 md:mt-10">
+      <div className="mx-3 md:mx-10 md:mt-10 ">
         <div className="px-1.5 flex flex-row justify-between items-center">
-          <h1 className="text-xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
-          <Image className="md:hidden w-[4vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
-          <div open={open} setOpen={setOpen} className="hidden md:flex items-center bg-lightgray rounded-full px-3 py-2">
+          <h1 className="text-lg md:text-3xl font-bold text-darkblue">Documents Manager</h1>
+          <div className="md:hidden flex items-center bg-lightgray rounded-full px-1 md:px-3 py-1 md:py-2">
+            <div className="flex items-center">
+              <div className="cursor-pointer " onClick={toggleInput}>
+                <Image className="w-[4vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24}/>
+              </div>
+              {showInput && (
+                <input
+                  type="text"
+                  placeholder="Search in Documents"
+                  className={`flex-grow text-darkblue w-full mx-auto ml-2 bg-lightgray md:placeholder:text-[1.2vw] placeholder:text-darkblue placeholder:opacity-[79%] placeholder:text-[2.5vw]
+                  focus:outline-none text-[2.5vw] md:text-[1.2vw]`}
+                  value={searchTerm}
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+              )}
+            </div>
+          </div>
+          <div className="hidden md:flex items-center bg-lightgray rounded-full px-3 py-2">
             <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
             <input
                 type="text"
@@ -336,7 +357,7 @@ const DocumentManager = () => {
       <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
         <div className="flex font-bold py-3 text-[2.5vw] md:text-[0.8vw] text-darkblue">
           <div className="flex items-center w-50 md:w-80"></div>
-          <div className="flex items-center pl-5 w-[50%] md:w-[70%]" onClick={() => requestSort('name')}>
+          <div className="flex items-center pl-5 w-[50%] md:w-[50vw]" onClick={() => requestSort('name')}>
             <span>Name</span>
             <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
           </div>
@@ -353,21 +374,21 @@ const DocumentManager = () => {
           {sortedDocuments.length > 0 ? (
             sortedDocuments.map((document) => {
               return (
-                <div className="flex justify-between h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
-                  <Image className="md:w-[3vw] w-[5vw] ml-8"
+                <div className="flex h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
+                  <Image className="ml-3 w-[1vw] md:w-[3vw] w-[5vw] md:ml-8"
                     src={getIconForFilename(document.name).src}
                     alt={`${document.name} icon`}
                   />
-                  <div className="flex items-center flex-grow text-lg">
-                    <div className="ml-5 font-bold">
+                  <div className="flex items-center flex-grow text-[2vw] md:text-lg">
+                    <div className="w-[60%] ml-2 md:ml-5 font-bold">
                       {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
                     </div>
                   </div>
-                  <div className={`flex items-center ml-[-10px]`} style={{ width: '15%' }}>
-                    <span className="text-lg text-darkblue">{document.name.split('.').pop()}</span>
+                  <div className={`flex items-center justify-center md:ml-[-10px]`} style={{ width: '15%' }}>
+                    <span className="mr-[10vw] text-[2vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
                   </div>
-                  <div className="flex items-center" style={{ width: '15%' }}>
-                    <span className="text-lg text-darkblue">{document.lastModifiedDate}</span>
+                  <div className="mr-[15vw] flex items-center justify-center" style={{ width: '15%' }}>
+                    <span className="text-[2vw] md:text-lg text-darkblue">{document.lastModifiedDate}28 July 2024</span>
                   </div>
                 </div>
               );
@@ -381,7 +402,7 @@ const DocumentManager = () => {
         <>
           <div className="fixed top-0 left-0 w-full h-full
           bg-default justify-center bg-opacity-75 z-50 flex items-center">
-            <div className="bg-white mx-auto my-auto rounded-xl w-2/3 h-[80%]">
+            <div className="bg-white mx-auto my-auto rounded-xl md:w-2/3 h-[80%]">
               <div className ="px-6">
                 <div className="flex justify-between pt-4 pb-1">
                   <h1 className="text-[2.5vw] md:text-[1.5vw] font-bold text-darkblue">{selectedDocument.name}</h1>
@@ -389,8 +410,8 @@ const DocumentManager = () => {
                 </div>
               </div>
             <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
-            <div className="flex bg-white overflow-hidden w-auto h-[80%] relative">
-              <div className="flex w-1/2">
+            <div className="md:flex flex-col bg-white overflow-hidden w-auto h-[80%] relative">
+              <div className="flex h-1/2 md:w-1/2">
                 <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
                   {selectedDocument.file_url ? (
                     <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%" height="100%"></iframe>
