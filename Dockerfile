@@ -18,7 +18,11 @@ ENV RAILS_MASTER_KEY=${MASTER_KEY}
 
 COPY Gemfile Gemfile.lock ./
 
-RUN apt-get update -qq && apt-get install -y python3-distutils && apt-get install -y libpq-dev && apt-get install -y tesseract-ocr
+RUN apt-get update -qq && apt-get install -y python3-distutils && apt-get install -y libpq-dev && apt-get install -y tesseract-ocr \ 
+tesseract-ocr-eng \
+tesseract-ocr-msa \
+tesseract-ocr-mya \
+tesseract-ocr-ara
     
 RUN gem install bundler && \
     bundle config set --local deployment 'true' && \

@@ -6,15 +6,22 @@ require 'google/cloud/storage'
 
 
 module Ocr
-  def process_image(image_path)
+  LANG_DICT = {
+    "english" => "eng",
+    "malay" => "msa",
+    "burmese" => "mya",
+    "arabic" => "ara"
+  }.freeze
+  def process_image(image_path, language)
     begin
       # Use RTesseract to do OCR on the image
-      ocr = RTesseract.new(image_path)
+      ocr = RTesseract.new(image_path, lang:LANG_DICT[language])
       text = ocr.to_s.strip
       if text.empty?
         Rails.logger.debug "OCR result is empty."
         "OCR result is empty."
       else
+        Rails.logger.debug text
         # Translate the text to English
         translated = translate_text(text, 'en')
         translated
@@ -62,9 +69,9 @@ module Ocr
     end
   end
 
-  def ocr(file_path)
+  def ocr(file_path, language)
     prompt = if file_path.downcase.end_with?('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif', '.webp')
-              process_image(file_path)
+              process_image(file_path, language)
             elsif file_path.downcase.end_with?('.pdf')
               process_pdf(file_path)
             else
