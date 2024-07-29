@@ -53,7 +53,7 @@ export default function ChatBot() {
         await axiosInstance.post("/chatbot", {userID, text}).then((resp) => {
             const botMessage = {text: resp.data.message, sender: 'bot'};
             setMessages((prevMessages) => [...prevMessages, botMessage]);
-            setListInLocalStorage('botMessages', messages);
+            setListInLocalStorage('botMessages', messages );
         })
     };
 
@@ -61,14 +61,15 @@ export default function ChatBot() {
         <>
             <div className="fixed sm:bottom-10 sm:right-10 bottom-4 right-4">
                 <button
+                    id={`Chatbot`}
                     className={`cursor-pointer fixed sm:bottom-10 sm:right-10 bottom-4 right-4 ${chatState ? "hidden" : "inline-block"}`}
                     onClick={() => setChatState(!chatState)}
                 >
-                    <Image className="w-[12.5vw] sm:w-[10vw] lg:w-[3.5vw]" src={chatBot} />
+                    <Image  className="w-[12.5vw] sm:w-[10vw] lg:w-[3.5vw]" src={chatBot} />
                 </button>
                 <div className={`bg-white rounded-xl overflow-hidden lg:w-[20vw] lg:h-[30vw] 
                 md:w-[55vw] md:h-[65vw] sm:w-[50vw] sm:h-[65vw] w-[65vw] h-[90vw] 
-                drop-shadow-lg ${chatState ? "animate-grow" : "animate-shrink"}`}>
+                drop-shadow-lg ${chatState ? "animate-grow" : "hidden"}`}>
                     <div className="bg-darkblue sm:py-3 py-2 flex justify-between items-center">
                         <div className="flex sm:ml-4 ml-2 items-center">
                             {/*Avatar Bot*/}
@@ -97,6 +98,7 @@ export default function ChatBot() {
                         </div>
                         {messages.map((message, index) => (
                           <div
+                            id="botMessages"
                             key={index}
                             className={`py-2 px-4 my-2 rounded-2xl max-w-[70%] clear-both ${
                               message.sender === 'user' ? 'bg-darkblue float-right text-white' : 'bg-[#C6E8FA] float-left text-black'
@@ -112,7 +114,7 @@ export default function ChatBot() {
                     <div className="bg-white absolute bottom-0 w-full">
                         <hr className="border-t-2 border-[#B0B0B0]/50 mx-auto" />
                         <div className="flex items-center mx-3 lg:my-3 my-4">
-                            <input className="placeholder:text-slate-400 placeholder:sm:text-[2vw] placeholder:text-[2.5vw] placeholder:lg:text-[0.7vw]
+                            <input id='Input' className="placeholder:text-slate-400 placeholder:sm:text-[2vw] placeholder:text-[2.5vw] placeholder:lg:text-[0.7vw]
                             text-slate-400 lg:text-[0.7vw] sm:text-[2vw] text-[2.5vw] bg-[#E8EBF0] w-10/12 rounded-full
                             lg:py-2 sm:py-4 py-2 px-5 mx-2 focus:outline-none focus:ring-sky-500 focus:ring-1"
                                    placeholder="Type your message here ..." value={input} onChange={handleInputChange}
