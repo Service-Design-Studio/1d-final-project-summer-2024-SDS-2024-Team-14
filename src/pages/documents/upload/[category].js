@@ -11,10 +11,12 @@ import documentDecoration from "../../../../public/images/upload/document_decora
 import Image from "next/image";
 import EnableId from "../../../../public/images/enable_id_logo.svg";
 import ChatBot from "@/components/ChatBot";
+import Dropdown from "@/components/DropDown";
 
 export default function Upload() {
   const [isMounted, setIsMounted] = useState(false);
-  const [dropdownValue, setDropdownValue] = useState('');
+  const [language, setLanguage] = useState('English');
+  const langList = ['English', 'Malay', "Burmese", "Arabic"]
   const router = useRouter();
 
   useEffect(() => {
@@ -45,7 +47,8 @@ export default function Upload() {
                   <div className="inline-block">
                     <h1 className='text-darkblue font-semibold sm:text-[3.5vw] md:text-[2.3vw] text-[6.5vw]'>Upload <span className="capitalize">{router.query.category}</span> Document</h1>
                     <p className='md:my-2 text-[4vw] md:text-[1.5vw] my-4'>Start uploading your important documents here</p>
-                    <p className='text-[4vw] md:text-[1.5vw] md:mb-0 mb-[5vw]'>Please upload all relevant documents by selecting one or multiple files</p>
+                    <p className='text-[4vw] md:text-[1.5vw] md:mb-2 mb-[5vw]'>Please upload all relevant documents by selecting one or multiple files</p>
+                    <Dropdown selectedVariable={language} setSelectedVariable={setLanguage} variableList={langList} field="language"/>
                   </div>
                   <div className="w-[13vw] mr-[4vw] md:inline-block hidden">
                       <Image src={documentDecoration} alt="Document Decoration"/>
@@ -59,7 +62,7 @@ export default function Upload() {
                     noValidate={false}
                 >
                 <div className="mb-4 flex flex-col">
-                    <UploadFile selectedCategory={router.query.category} router={router} className="flex flex-col items-center justify-center" />
+                    <UploadFile selectedCategory={router.query.category} selectedLanguage={language} router={router} className="flex flex-col items-center justify-center" />
                 </div>
                 </form>
             </div>
