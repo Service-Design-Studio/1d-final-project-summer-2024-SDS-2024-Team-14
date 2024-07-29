@@ -18,6 +18,7 @@ Scenario: When I upload a document, I should see a new notification
     When I click the "notification" button
     Then I should see "new_notification"
     Then I should see the text, "Your education document: example-file.pdf has been uploaded successfully."
+    
 Scenario: When I have not uploaded any document, I should not see any new notification
     When I am on the home page
     Then I should see "notification_icon"
