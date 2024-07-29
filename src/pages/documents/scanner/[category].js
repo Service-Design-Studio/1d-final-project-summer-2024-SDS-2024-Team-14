@@ -23,38 +23,16 @@ export default function Category() {
     const [notif, setNotif] = useState(false);
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start' });
     const imageRef = useRef(null);
-    const fileNameRef = useRef(null);
-    const fileCategoryRef = useRef(null);
     const backButtonUrl = "/documents";
     const [slideCount, setSlideCount] = useState(1);
-    const [fileName, setFileName] = useState(null);
-    const fileCategories = [
-        {
-            value: "Career",
-            label: "Career"
-        },
-        {
-            value: "Education",
-            label: "Education"
-        },
-        {
-            value: "Family",
-            label: "Family"
-        },
-        {
-            value: "Finance",
-            label: "Finance"
-        },
-        {
-            value: "Health",
-            label: "Health"
-        },
-        {
-            value: "Property",
-            label: "Property"
-        }
-    ]
+    const [fileName, setFileName] = useState("");
     const router = useRouter();
+    const category = router.query.category;
+    const [categoryName, setCategoryName] = useState(null);
+    useEffect(() => {
+        if (category && !categoryName) setCategoryName(category[0].toUpperCase() + category.slice(1))
+    }, [category])
+    
     const onPrevButtonClick = useCallback(() => {
         if (!emblaApi) return
         emblaApi.scrollPrev()
@@ -77,7 +55,6 @@ export default function Category() {
 
     function uploadImages() {
         const userId = localStorage.getItem('userID');
-        const category = router.query.category;
         const formData = new FormData();
         Object.values(imageList).forEach((image, index) => {
             const contentType = image.split(',')[1]
@@ -129,7 +106,7 @@ export default function Category() {
     return (
         <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
             <div className="w-11/12 mt-4">
-                <Header title={"Scanner"} backButton={backButtonUrl} />
+                <Header title={`${categoryName} Document Scanner`} backButton={backButtonUrl} />
             </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
@@ -195,25 +172,40 @@ export default function Category() {
                             }}
                         ><Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                     </div>
-                    <Button
-                        onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
-                        onMouseLeave={() => setUploadBtn("/images/upload.svg")}
-                        onClick={() => {
-                            setOpen(true);
-                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Documents</Button>
+                    <FormControl className='w-full'>
+                        <span className='mt-3 mb-3'>Document Name</span>
+                        <TextField
+                            required={ true}
+                            id="file_name"
+                            className='mb-6'
+                            label="Document Name"
+                            onChange={(e)=> setFileName(e.target.value)}
+                            defaultValue={fileName.length > 0 ? fileName : ""}
+                            placeholder="Document Name"
+                            helperText={fileName.length > 0 ? `Your document will appear as '${fileName}.pdf' in '${categoryName}' category.` : "Please fill in document name"}
+                        />
+                        <Button
+                            type="submit"
+                            onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
+                            onMouseLeave={() => setUploadBtn("/images/upload.svg")}
+                            onClick={() => {
+                                setOpen(true);
+                            }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Upload Documents</Button>
+                    </FormControl>
+                    
                 </div>
 
             </div>
-            {count > 0 ?
+            {count > 0 && fileName.length > 0 ?
                 <Dialog
                     open={open}
                     onClose={() => setOpen(false)}
                     fullWidth={true}
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
-                        <DialogTitle>Confirm Category?</DialogTitle>
+                        <DialogTitle>Confirm Upload?</DialogTitle>
                         <DialogContentText>
-                            <span>Confirm document upload?</span>
+                            <span>{`Upload document '${fileName}.pdf' with ${count} pages?`}</span>
                         </DialogContentText>
                     </div>
 
@@ -234,7 +226,7 @@ export default function Category() {
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
                         <DialogTitle >No document to submit</DialogTitle>
-                        <DialogContentText>Please add more documents before uploading.</DialogContentText>
+                        <DialogContentText>Please add 1 or more document and fill in document name before uploading.</DialogContentText>
                     </div>
                     <DialogActions>
                         <Button onClick={() => setOpen(false)}>Close</Button>

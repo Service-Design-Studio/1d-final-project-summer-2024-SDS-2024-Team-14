@@ -261,7 +261,7 @@ export default function ScannedImage(props) {
 
         <div ref={holderRef} className="flex flex-col embla__slide items-center min-w-[100px max-w-[100px]  h-auto mr-3">
             <div ref={containerRef}></div>
-            <span>{props.index}</span>
+            <span>{props.index + 1}</span>
             <Button className="text-red underline flex flex-row items-center text-md xsm:text-xl" onClick={() => {
                 props.remove()
             }
