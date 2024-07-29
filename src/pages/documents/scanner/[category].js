@@ -6,15 +6,14 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
 import NaviBar from '../../../components/NaviBar';
 import CloseIcon from '@mui/icons-material/Close';
-import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
-import PDFDocument from 'pdfkit'
+import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
+import { jsPDF } from "jspdf";
 import Header from '@/components/document_manager/dm_header';
 import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
 import ChatBot from "@/components/ChatBot";
 
 export default function Category() {
-    const fs = require('fs') //filesystem for upload pdf test
     const [imageList, setImageList] = useState({});
     const [uploadBtn, setUploadBtn] = useState("/images/upload.svg");
     const [image, setImage] = useState(null);
@@ -29,6 +28,8 @@ export default function Category() {
     const router = useRouter();
     const category = router.query.category;
     const [categoryName, setCategoryName] = useState(null);
+    const doc = new jsPDF();
+
     useEffect(() => {
         if (category && !categoryName) setCategoryName(category[0].toUpperCase() + category.slice(1))
     }, [category])
@@ -43,24 +44,26 @@ export default function Category() {
         emblaApi.scrollNext()
     }, [emblaApi])
 
-    function base64ToBlob(base64, contentType) {
-        const byteCharacters = atob(base64.split(',')[1]);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        return new Blob([byteArray], { type: contentType });
-    }
+    // function base64ToBlob(base64, contentType) {
+    //     const byteCharacters = atob(base64.split(',')[1]);
+    //     const byteNumbers = new Array(byteCharacters.length);
+    //     for (let i = 0; i < byteCharacters.length; i++) {
+    //         byteNumbers[i] = byteCharacters.charCodeAt(i);
+    //     }
+    //     const byteArray = new Uint8Array(byteNumbers);
+    //     return new Blob([byteArray], { type: contentType });
+    // }
 
     function uploadImages() {
         const userId = localStorage.getItem('userID');
         const formData = new FormData();
         Object.values(imageList).forEach((image, index) => {
-            const contentType = image.split(',')[1]
-            const blob = base64ToBlob(image, contentType);
-            formData.append("files[]", blob, `photo${index}.jpg`);
+            // const contentType = image.split(',')[1]
+            // const blob = base64ToBlob(image, contentType);
+            doc.addImage(image, 'PNG', 0, 0, 210, 297)
+            doc.addPage()
         });
+        formData.append("files[]", doc.output('blob'), `${fileName}.jpg`);
         formData.append("id", userId)
         formData.append("category", category)
         axiosInstance.post("/document", formData).then((resp)=>{
