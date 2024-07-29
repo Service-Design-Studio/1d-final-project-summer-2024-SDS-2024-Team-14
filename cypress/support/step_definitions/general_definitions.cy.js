@@ -81,7 +81,7 @@ Then(/^I should (not )?see the text, "(.+)"$/, (not, msg) => {
 })
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
-    const url =  (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(/ /g, '/')}`)
+    let url =  (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(/ /g, '/')}`)
     if (e1 == "info") url = "info/1"
     cy.url().should("eq", Cypress.config().baseUrl + url);
 })
