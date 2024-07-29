@@ -34,7 +34,7 @@ export default function Upload() {
   return (
     <>
     <ReactNotifications />
-      <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-bluebg.png')] md:px-[12vw] px-[2vw]">
+      <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover md:px-[12vw] px-[2vw]">
           {/*<NaviBar />*/}
           <div className="md:flex md:items-center pt-4 ml-4">
             <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />

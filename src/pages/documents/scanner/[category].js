@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import "../../../styles/globals.css";
 import ScannedImage from '@/components/scanner/scanned_item';
 import CameraView from '../../../components/scanner/camera';
@@ -12,6 +12,7 @@ import Header from '@/components/document_manager/dm_header';
 import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
 import ChatBot from "@/components/ChatBot";
+import EnableId from "../../../../public/images/enable_id_logo.svg";
 
 export default function Category() {
     const [imageList, setImageList] = useState({});
@@ -57,13 +58,13 @@ export default function Category() {
     function uploadImages() {
         const userId = localStorage.getItem('userID');
         const formData = new FormData();
-        Object.values(imageList).forEach((image, index) => {
-            // const contentType = image.split(',')[1]
-            // const blob = base64ToBlob(image, contentType);
-            doc.addImage(image, 'PNG', 0, 0, 210, 297)
-            doc.addPage()
+        Object.values(imageList).forEach((image, index, array) => {
+            doc.addImage(image, 'PNG', 0, 0, 210, 297);
+            if (index < array.length - 1) {
+                doc.addPage();
+            }
         });
-        formData.append("files[]", doc.output('blob'), `${fileName}.jpg`);
+        formData.append("files[]", doc.output('blob'), `${fileName}.pdf`);
         formData.append("id", userId)
         formData.append("category", category)
         axiosInstance.post("/document", formData).then((resp)=>{
@@ -107,10 +108,11 @@ export default function Category() {
     }, [notif])
 
     return (
-        <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
-            <div className="w-11/12 mt-4">
-                <Header title={`${categoryName} Document Scanner`} backButton={backButtonUrl} />
-            </div>
+        <div className="flex flex-col min-h-screen bg-[url('/images/background/gebirah-bluebg.png')] bg-cover ">
+            <div className="md:flex md:items-center pt-4 ml-4">
+                <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
+                <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
+          </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
                 severity='error'
@@ -125,7 +127,7 @@ export default function Category() {
                         <CloseIcon fontSize="inherit" />
                     </IconButton>
                 }><AlertTitle>No document detected</AlertTitle>Please adjust camera and try again.</Alert> : null}
-            <div className='flex flex-col lg:flex-row w-10/12 lg:ml-10 mx-auto'>
+            <div className='flex flex-col pt-6 pb-14 lg:flex-row w-10/12 lg:ml-10 mx-auto'>
                 <div className='lg:w-5/12 '>
                     <div className="flex flex-col w-full ">
                         <div className='flex flex-col w-full'>
