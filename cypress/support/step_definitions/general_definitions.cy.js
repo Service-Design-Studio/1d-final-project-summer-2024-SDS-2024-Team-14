@@ -57,7 +57,7 @@ When(/^my document is (.+)$/i, (status) => {
 When(/^my refugee status is (.+)$/i, (status) => {
     cy.intercept("GET", "/notifications/*", {
         statusCode: 200,
-        fixture: `refugee_status_${status}`
+        fixture: status == "approved" ? "refugee_status_approved" : "refugee_status_rejected"
     })
     cy.intercept("GET", "/users/*", (res) => { 
         res.reply({
@@ -81,7 +81,9 @@ Then(/^I should (not )?see the text, "(.+)"$/, (not, msg) => {
 })
 
 Then(/^I should (be redirected to|remain on) the (.+) page$/i, (e1, page) => {
-    cy.url().should("eq", Cypress.config().baseUrl + (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(/ /g, '/')}`));
+    const url =  (page.toLowerCase() === "home" ? "" : `${page.toLowerCase().replace(/ /g, '/')}`)
+    if (e1 == "info") url = "info/1"
+    cy.url().should("eq", Cypress.config().baseUrl + url);
 })
 
 Then(/^I should (not )?be able to click "(.+)"$/, (not, element) => {

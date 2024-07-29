@@ -17,13 +17,17 @@ class HomePage {
     }
 
     checkQrCodeExist() {
-        this.elements.idCard().get('#id-canvas').should('exist');
+        cy.get('#id-card').should('exist')
     }
 
     checkQrCodeUrl() {
         const reader = new BrowserMultiFormatReader();
-        cy.get('#id-canvas').invoke("text").then(text => { 
-            cy.expect(text).equal("http://localhost:3000/info/1")
+        this.elements.idCard().get('Canvas').then(($canvas) => {
+            // $canvas is a jQuery-wrapped DOM element, get the raw DOM element
+            const originalCanvas = $canvas[0];
+            const fullUrl = reader.decodeFromCanvas(originalCanvas).getText();
+            // Copy the content from the original canvas to the new canvas
+            expect(fullUrl).to.equal("https://127.0.0.1:3000/info/1")
         })
     }
 

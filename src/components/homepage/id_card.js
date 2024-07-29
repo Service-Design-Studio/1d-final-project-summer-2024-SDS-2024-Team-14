@@ -44,14 +44,14 @@ export default function IdCard(props) {
                     </div>
                     {props.data.verification_status == "Approved" ?
                         <ShowBtn isOpen={isOpen} onClick={expandCard} classStyle={"btn-darkblue Show_UNHCR_Card"} hoverIcon={isOpen ? "/images/close_eye_blue.svg" : "/images/open_eye_blue.svg"} text={(isOpen ? "Hide" : "Show") + " UNHCR Card"} icon={isOpen ? "/images/close_eye.svg" : "/images/open_eye.svg"} /> :
-                        <ShowBtn classStyle={"btn-disabled Show_UNHCR_Card"} icon={"/images/close_eye_blue.svg"} hoverIcon={"/images/close_eye_blue.svg"} text={"Pending Approval"} />
+                        <ShowBtn classStyle={"btn-disabled id_card_button"} icon={"/images/close_eye_blue.svg"} hoverIcon={"/images/close_eye_blue.svg"} text={"Pending Approval"} />
                     }
                     <div className={`min-w-full text-darkblue overflow-hidden transition-all duration-500 ${isOpen && props.verification_status !== "Approved" ? "mt-5 max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
                         <span className="btn-text my-4">Scan For Documents</span>
                         <Link href={`/info/${props.data.id}`}>
                             <div className={`mx-auto w-fit py-4 ${props.data.verification_status == "Approved" ? "QR_code" : ""}`}>
                                 <Canvas
-                                    id="id-canvas"
+                                    
                                     data-cy={"qrCode"}
                                     text={process.env.NEXT_PUBLIC_FRONTEND + 'info/' + props.data.id}
                                     options={{

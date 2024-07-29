@@ -14,12 +14,12 @@ Feature: Home Page
     And I click the "Show_UNHCR_Card" button
     And I should see "QR_code"
     When I scan the QRCode
-    Then I should be redirected to the information page of the user
+    Then I should be redirected to the info page
     And I should see more information on the user
 
   Scenario: Verification status not approved
-    Given My verification status is not approved yet
-	  And I should see the "Show_UNHCR_Card" has text "Pending Approval"
+    Given My refugee status is not approved
+	  And I should see the "id_card_button" has text "Pending Approval"
     And I should not see "QR_code"
 
 
