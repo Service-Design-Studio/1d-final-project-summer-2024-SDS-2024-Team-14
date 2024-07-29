@@ -93,12 +93,5 @@ class LoginPage {
     }
 }
 
-class DocumentPage{
-    elements={
-        popupmenu: () => cy.get(".popupmenu")
-    }
-}
-
 export const homePage = new HomePage();
 export const loginPage = new LoginPage();
-export const documentPage = new DocumentPage();

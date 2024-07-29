@@ -26,9 +26,8 @@ describe('Preserve localStorage in Cypress', () => {
 })
 
 Given(/^I am on the (.+) page$/i, (page) => {
-    // cy.log("userID: ", localStorage.getItem("userID"))
     cy.window().then(window => {
-        window.localStorage.setItem("userID", 2)
+        window.localStorage.setItem("userID", 1)
     })
     cy.intercept("POST", "/notifications/read/", {
         statusCode: 200,
