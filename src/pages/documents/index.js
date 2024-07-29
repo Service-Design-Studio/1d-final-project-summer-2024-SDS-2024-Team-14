@@ -281,7 +281,7 @@ const DocumentManager = () => {
                       key={category}
                       onClick={() => handleCategoryClick(category)}
                       // CATEGORY BUTTONS
-                      className={`py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
+                      className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
                   ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
                   >
                     {category}
@@ -321,11 +321,11 @@ const DocumentManager = () => {
             </button>
           </div>
           <div className="flex gap-4 items-center">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
+            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold upload">
               <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Upload
             </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
+            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold scanner">
               <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Scanner
             </Link>
@@ -352,7 +352,7 @@ const DocumentManager = () => {
           {sortedDocuments.length > 0 ? (
             sortedDocuments.map((document) => {
               return (
-                <div className="flex justify-between h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
+                <div className={`flex justify-between h-20 border-t border-lightgray text-lg ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
                   <Image className="md:w-[3vw] w-[5vw] ml-8"
                     src={getIconForFilename(document.name).src}
                     alt={`${document.name} icon`}

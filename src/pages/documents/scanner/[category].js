@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import "../../../styles/globals.css";
 import ScannedImage from '@/components/scanner/scanned_item';
 import CameraView from '../../../components/scanner/camera';
@@ -6,15 +6,15 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image'
 import NaviBar from '../../../components/NaviBar';
 import CloseIcon from '@mui/icons-material/Close';
-import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, MenuItem, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
-import PDFDocument from 'pdfkit'
+import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, TextField, Alert, AlertTitle, IconButton, FormControl, } from '@mui/material';
+import { jsPDF } from "jspdf";
 import Header from '@/components/document_manager/dm_header';
 import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
 import ChatBot from "@/components/ChatBot";
+import EnableId from "../../../../public/images/enable_id_logo.svg";
 
 export default function Category() {
-    const fs = require('fs') //filesystem for upload pdf test
     const [imageList, setImageList] = useState({});
     const [uploadBtn, setUploadBtn] = useState("/images/upload.svg");
     const [image, setImage] = useState(null);
@@ -23,38 +23,18 @@ export default function Category() {
     const [notif, setNotif] = useState(false);
     const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'start' });
     const imageRef = useRef(null);
-    const fileNameRef = useRef(null);
-    const fileCategoryRef = useRef(null);
     const backButtonUrl = "/documents";
     const [slideCount, setSlideCount] = useState(1);
-    const [fileName, setFileName] = useState(null);
-    const fileCategories = [
-        {
-            value: "Career",
-            label: "Career"
-        },
-        {
-            value: "Education",
-            label: "Education"
-        },
-        {
-            value: "Family",
-            label: "Family"
-        },
-        {
-            value: "Finance",
-            label: "Finance"
-        },
-        {
-            value: "Health",
-            label: "Health"
-        },
-        {
-            value: "Property",
-            label: "Property"
-        }
-    ]
+    const [fileName, setFileName] = useState("");
     const router = useRouter();
+    const category = router.query.category;
+    const [categoryName, setCategoryName] = useState(null);
+    const doc = new jsPDF();
+
+    useEffect(() => {
+        if (category && !categoryName) setCategoryName(category[0].toUpperCase() + category.slice(1))
+    }, [category])
+    
     const onPrevButtonClick = useCallback(() => {
         if (!emblaApi) return
         emblaApi.scrollPrev()
@@ -65,25 +45,26 @@ export default function Category() {
         emblaApi.scrollNext()
     }, [emblaApi])
 
-    function base64ToBlob(base64, contentType) {
-        const byteCharacters = atob(base64.split(',')[1]);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        return new Blob([byteArray], { type: contentType });
-    }
+    // function base64ToBlob(base64, contentType) {
+    //     const byteCharacters = atob(base64.split(',')[1]);
+    //     const byteNumbers = new Array(byteCharacters.length);
+    //     for (let i = 0; i < byteCharacters.length; i++) {
+    //         byteNumbers[i] = byteCharacters.charCodeAt(i);
+    //     }
+    //     const byteArray = new Uint8Array(byteNumbers);
+    //     return new Blob([byteArray], { type: contentType });
+    // }
 
     function uploadImages() {
         const userId = localStorage.getItem('userID');
-        const category = router.query.category;
         const formData = new FormData();
-        Object.values(imageList).forEach((image, index) => {
-            const contentType = image.split(',')[1]
-            const blob = base64ToBlob(image, contentType);
-            formData.append("files[]", blob, `photo${index}.jpg`);
+        Object.values(imageList).forEach((image, index, array) => {
+            doc.addImage(image, 'PNG', 0, 0, 210, 297);
+            if (index < array.length - 1) {
+                doc.addPage();
+            }
         });
+        formData.append("files[]", doc.output('blob'), `${fileName}.pdf`);
         formData.append("id", userId)
         formData.append("category", category)
         axiosInstance.post("/document", formData).then((resp)=>{
@@ -127,10 +108,11 @@ export default function Category() {
     }, [notif])
 
     return (
-        <div className='flex flex-col min-w-full min-h-screen h-full bg-white items-center'>
-            <div className="w-11/12 mt-4">
-                <Header title={"Scanner"} backButton={backButtonUrl} />
-            </div>
+        <div className="flex flex-col min-h-screen bg-[url('/images/background/gebirah-bluebg.png')] bg-cover ">
+            <div className="md:flex md:items-center pt-4 ml-4">
+                <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
+                <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
+          </div>
             {notif ? <Alert
                 className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
                 severity='error'
@@ -145,7 +127,7 @@ export default function Category() {
                         <CloseIcon fontSize="inherit" />
                     </IconButton>
                 }><AlertTitle>No document detected</AlertTitle>Please adjust camera and try again.</Alert> : null}
-            <div className='flex flex-col lg:flex-row w-10/12 lg:ml-10 mx-auto'>
+            <div className='flex flex-col pt-6 pb-14 lg:flex-row w-10/12 lg:ml-10 mx-auto'>
                 <div className='lg:w-5/12 '>
                     <div className="flex flex-col w-full ">
                         <div className='flex flex-col w-full'>
@@ -195,25 +177,40 @@ export default function Category() {
                             }}
                         ><Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                     </div>
-                    <Button
-                        onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
-                        onMouseLeave={() => setUploadBtn("/images/upload.svg")}
-                        onClick={() => {
-                            setOpen(true);
-                        }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Documents</Button>
+                    <FormControl className='w-full'>
+                        <span className='mt-3 mb-3'>Document Name</span>
+                        <TextField
+                            required={ true}
+                            id="file_name"
+                            className='mb-6'
+                            label="Document Name"
+                            onChange={(e)=> setFileName(e.target.value)}
+                            defaultValue={fileName.length > 0 ? fileName : ""}
+                            placeholder="Document Name"
+                            helperText={fileName.length > 0 ? `Your document will appear as '${fileName}.pdf' in '${categoryName}' category.` : "Please fill in document name"}
+                        />
+                        <Button
+                            type="submit"
+                            onMouseEnter={() => setUploadBtn("/images/upload_darkblue.svg")}
+                            onMouseLeave={() => setUploadBtn("/images/upload.svg")}
+                            onClick={() => {
+                                setOpen(true);
+                            }} className='btn-submit'><Image src={uploadBtn} className=" w-5 mx-2 hover:fill-darkblue" width={1} height={1} alt='Category document' />Upload Documents</Button>
+                    </FormControl>
+                    
                 </div>
 
             </div>
-            {count > 0 ?
+            {count > 0 && fileName.length > 0 ?
                 <Dialog
                     open={open}
                     onClose={() => setOpen(false)}
                     fullWidth={true}
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
-                        <DialogTitle>Confirm Category?</DialogTitle>
+                        <DialogTitle>Confirm Upload?</DialogTitle>
                         <DialogContentText>
-                            <span>Confirm document upload?</span>
+                            <span>{`Upload document '${fileName}.pdf' with ${count} pages?`}</span>
                         </DialogContentText>
                     </div>
 
@@ -234,7 +231,7 @@ export default function Category() {
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
                         <DialogTitle >No document to submit</DialogTitle>
-                        <DialogContentText>Please add more documents before uploading.</DialogContentText>
+                        <DialogContentText>Please add 1 or more document and fill in document name before uploading.</DialogContentText>
                     </div>
                     <DialogActions>
                         <Button onClick={() => setOpen(false)}>Close</Button>

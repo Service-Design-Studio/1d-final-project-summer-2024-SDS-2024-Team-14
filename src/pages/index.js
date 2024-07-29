@@ -17,7 +17,7 @@ export default function Home({ session }) {
     }, [])
   const [open, setOpen] = useState(false);
   return (
-    <main className="overflow-hidden flex flex-col align-middle min-h-screen bg-white transition-all-500 bg-local
+    <main className="overflow-hidden flex flex-col align-middle min-h-screen transition-all-500
     bg-[url('/images/background/gebirah-bluebg.png')] bg-cover">
       <NaviBar open={open} setOpen={ setOpen} />
       <Homepage setOpen={setOpen } />

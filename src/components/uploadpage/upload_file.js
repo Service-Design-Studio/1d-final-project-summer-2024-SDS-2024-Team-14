@@ -31,7 +31,7 @@ class UploadFile extends Component {
     };
 
     onFileUpload = () => {
-        const { selectedCategory, router } = this.props;
+        const { selectedCategory, router, selectedLanguage } = this.props;
         if (!selectedCategory){
             Store.addNotification({
                 title: "Error",
@@ -54,6 +54,7 @@ class UploadFile extends Component {
             });
             formData.append("id", userId)
             formData.append("category", selectedCategory)
+            formData.append("language", selectedLanguage)
 
             axiosInstance.post("/document", formData).then((resp) => {
                 if (resp.status === 200 || resp.status === 201) {
