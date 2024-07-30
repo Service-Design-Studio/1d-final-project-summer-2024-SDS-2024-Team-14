@@ -23,9 +23,9 @@ RUN apt-get update -qq && apt-get install -y python3-distutils && apt-get instal
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata/
 
 # Download and install all Tesseract language data files
-RUN wget -O ${TESSDATA_PREFIX}/ara.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/ara.traineddata \
-  && wget -O ${TESSDATA_PREFIX}/msa.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/msa.traineddata \
-  && wget -O ${TESSDATA_PREFIX}/mya.traineddata https://github.com/tesseract-ocr/tessdata/raw/main/mya.traineddata 
+RUN wget -O ${TESSDATA_PREFIX}/ara.traineddata https://github.com/tesseract-ocr/tessdata_best/raw/main/ara.traineddata \
+  && wget -O ${TESSDATA_PREFIX}/msa.traineddata https://github.com/tesseract-ocr/tessdata_best/raw/main/msa.traineddata \
+  && wget -O ${TESSDATA_PREFIX}/mya.traineddata https://github.com/tesseract-ocr/tessdata_best/raw/main/mya.traineddata 
 
 # Verify installed Tesseract languages
 RUN tesseract --list-langs
