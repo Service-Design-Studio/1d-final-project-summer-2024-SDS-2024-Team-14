@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import shortid from 'shortid';
 import { ReactNotifications, Store } from "react-notifications-component";
+import tickIcon from "../../../public/images/icons/tick_success.svg"
 import infoIcon from "../../../public/images/icons/info.svg"
 import fileIcon from "../../../public/images/icons/file_darkblue.svg";
 import crossIcon from "../../../public/images/upload/cross_icon.svg";
@@ -161,40 +162,29 @@ class UploadFile extends Component {
                         </label>
 
                         {/**Upload Notice */}
-                        <div className="flex flex-col items-start justify-start mt-4">
-                            <div className="flex md:space-x-2 space-x-8 border-radius-19px rounded-md bg-[#E3E3E3] md:w-full justify-start">
-                                <Image className="pl-2 w-[8vw] md:w-[2vw]" src={infoIcon} alt="info icon" />
+                        <div className="flex flex-col items-start justify-between mt-4">
+                            <div className="flex md:space-x-2 space-x-8 border-radius-19px rounded-md bg-[#E3E3E3] md:w-full justify-between">
+                                <Image 
+                                        className="pl-2 w-[8vw] md:w-[2vw]" 
+                                        src={this.state.selectedFiles.length > 0 ? tickIcon : infoIcon} 
+                                        alt="info icon"
+                                    />
+
 
                                 {/* Dynamic message based on file upload status */}
-                                <p className="pt-1.5 font-semibold text-lightblue text-[3.5vw] md:h-8 sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
-                                    {this.state.selectedFiles.length > 0 ? "Uploaded" : "No Image Uploaded"}
+                                <p className="justify-start items-start pt-1.5 font-semibold text-lightblue text-[3.5vw] md:h-8 sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                    {this.state.selectedFiles.length > 0 
+                                        ? `File Name: ${this.state.selectedFiles[0].file.name}` 
+                                        : "No Image Uploaded"}
                                 </p>
 
-                                {/**<label
-                                    className={`text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] 
-                                                px-5 py-2 text-white rounded-lg 
-                                                bg-[#4378DB] border-radius-19px 
-                                                cursor-pointer hover:bg-white hover:text-darkblue transition-all`}
-                                    onClick={() => {
-                                        document.getElementById('file-input').click(); // Open file dialog if no files are uploaded
-                                    }}
-                                >
-                                    Select File
-                                    <input
-                                        id="file-input"
-                                        type="file"
-                                        className="hidden"
-                                        accept="image/jpeg, image/png"
-                                        onChange={this.onFileChange}
-                                    />
-                                </label>*/}
                                 {this.state.selectedFiles.length > 0 && (
-                                    <button
+                                    <button 
                                         onClick={(e) => {
                                             e.stopPropagation(); // Prevent the label's onClick event
                                             this.clearAllFiles();
                                         }}
-                                        className="text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700"
+                                        className="ml-auto border-radius-19px bg-darkblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 hover:bg-white hover:text-darkblue transition-all duration-200 ease-in-out"
                                     >
                                         Remove
                                     </button>
