@@ -24,6 +24,8 @@ tesseract-ocr-msa \
 tesseract-ocr-mya \
 tesseract-ocr-ara
 
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata/
+
 # Verify installed Tesseract languages
 RUN tesseract --list-langs
     
