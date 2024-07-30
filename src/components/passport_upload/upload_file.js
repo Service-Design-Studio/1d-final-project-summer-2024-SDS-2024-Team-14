@@ -129,34 +129,83 @@ class UploadFile extends Component {
         return (
             <div className="flex flex-col h-full">
                 <div className="md:pt-8 pt-6 flex flex-col md:flex-row justify-between gap-4">
+                    <div className="flex flex-col w-full md:w-1/3">
                     {/* File Category Zone */}
-                    <label
-                        className="md:w-1/3 flex flex-col items-center
-                        justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 py-4"
-                    >
-                        <div className="dropzone w-full flex flex-col items-center justify-center md:py-20 ">
-                            <Image className="w-[15vw] md:w-[6.5vw]" src={fileUpload} alt="file Upload" />
-                            <p className="mb-2 mt-2 text-xl md:text-2xl text-lightblue font-semibold">
-                                Upload a file
-                            </p>
-                            <p className="mb-2 text-[3.5vw] md:text-lg text-lightblue">
-                                Drag and drop to choose a file
-                            </p>
-                        </div>
-                        <input
-                            type="file"
-                            className="hidden"
-                            multiple
-                            onChange={this.onFileChange}
-                        />
-                        <h1 className="text-lightblue text-md md:text-[1.2vw]">Files Supported: JPEG or PNG</h1>
-                    </label>
+                        <label className="flex flex-col items-center justify-center border border-[#4378DB] border-dashed rounded-3xl cursor-pointer bg-[#ECF8FF] bg-opacity-40 py-4">
+                            {this.state.selectedFiles.length === 0 ? (
+                                <div className="dropzone w-full flex flex-col items-center justify-center md:py-20 ">
+                                    <Image className="w-[15vw] md:w-[6.5vw]" src={fileUpload} alt="file Upload" />
+                                    <p className="mb-2 mt-2 text-xl md:text-2xl text-lightblue font-semibold">
+                                        Upload a file
+                                    </p>
+                                    <p className="mb-2 text-[3.5vw] md:text-lg text-lightblue">
+                                        Drag and drop to choose a file
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="dropzone w-full flex flex-col items-center justify-center md:py-20">
+                                    <img src={this.state.selectedFiles[0].preview} alt="file preview" className="w-full h-full object-cover rounded-3xl" />
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                className="hidden"
+                                multiple
+                                onChange={this.onFileChange}
+                            />
+                            {this.state.selectedFiles.length === 0 && (
+                                <h1 className="text-lightblue text-md md:text-[1.2vw]">
+                                    Files Supported: JPEG or PNG
+                                </h1>
+                            )}
+                        </label>
 
-                    {/* File Data Container */}
+                        {/**Upload Notice */}
+                        <div className="flex flex-col items-start justify-start mt-4">
+                            <div className="flex md:space-x-2 space-x-8 border-radius-19px rounded-md bg-[#E3E3E3] md:w-full justify-start">
+                                <Image className="pl-2 w-[8vw] md:w-[2vw]" src={infoIcon} alt="info icon" />
+
+                                {/* Dynamic message based on file upload status */}
+                                <p className="pt-1.5 font-semibold text-lightblue text-[3.5vw] md:h-8 sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                    {this.state.selectedFiles.length > 0 ? "Uploaded" : "No Image Uploaded"}
+                                </p>
+
+                                {/**<label
+                                    className={`text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] 
+                                                px-5 py-2 text-white rounded-lg 
+                                                bg-[#4378DB] border-radius-19px 
+                                                cursor-pointer hover:bg-white hover:text-darkblue transition-all`}
+                                    onClick={() => {
+                                        document.getElementById('file-input').click(); // Open file dialog if no files are uploaded
+                                    }}
+                                >
+                                    Select File
+                                    <input
+                                        id="file-input"
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/jpeg, image/png"
+                                        onChange={this.onFileChange}
+                                    />
+                                </label>*/}
+                                {this.state.selectedFiles.length > 0 && (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent the label's onClick event
+                                            this.clearAllFiles();
+                                        }}
+                                        className="text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700"
+                                    >
+                                        Remove
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                     <div className ="md:w-1/2 flex flex-col overflow-y-auto pt-4 ">
-                        <p className='ml-auto text-[4vw] md:text-[1.5vw] my-4'>Please upload a clear image of your face. Ensure that all facial features are unobstructed.</p>
-                        <p className='md:my-2 text-[4vw] md:text-[1.5vw] my-4'>This image will subsequently be compared to a face scan to speed up the verification process.</p>
-                        <p className='md:my-2 text-[4vw] md:text-[1.5vw] my-4'>Please click proceed only after your image has been uploaded</p>
+                        <p className='ml-auto text-[4vw] md:text-[1.3vw] my-4'>Please upload a clear image of your face. Ensure that all facial features are unobstructed.</p>
+                        <p className='md:my-2 text-[4vw] md:text-[1.3vw] my-4'>This image will subsequently be compared to a face scan to speed up the verification process.</p>
+                        <p className='md:my-2 text-[4vw] md:text-[1.3vw] my-4'>Please click proceed only after your image has been uploaded</p>
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                         <button
                             onClick={this.clearAllFiles}
@@ -167,27 +216,6 @@ class UploadFile extends Component {
                             Proceed to Face Scan
                         </button>
                     </div>
-
-                    </div>
-                    {/*<div className="w-full md:w-1/2 max-h-[35vh] md:max-h-[30vw] flex flex-col overflow-y-auto">
-                        <div className="md:pl-8 rounded-xl flex-1 overflow-auto h-full">
-                            {this.fileData()}
-                        </div>
-                    </div>*/}   
-                </div>
-                <div className="pt-4 flex flex-col items-start justify-start mt-auto ">
-                    <div className="flex md:space-x-4 space-x-8 bg-gray border-radius-19px rounded-md bg-[#C3C1C1] opacity-45 md:w-1/3 justify-between">
-                        <Image className="pl-2 w-[8vw] md:w-[3vw] " src={infoIcon} alt="file Upload" />
-                        <p className="pt-3 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">No Image Uploaded</p>
-                        <button
-                            onClick={this.clearAllFiles}
-                            className={`text-lg px-5 py-2 border-solid border-lightblue 
-                            border-radius-19px rounded-md ${this.state.selectedFiles.length > 0 ? "text-lightblue":
-                                "text-gray cursor-not-allowed"
-                            }`}
-                        >
-                            Clear All
-                        </button>
                     </div>
                 </div>
             </div>
