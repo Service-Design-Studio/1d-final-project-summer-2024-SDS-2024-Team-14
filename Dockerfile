@@ -23,6 +23,9 @@ tesseract-ocr-eng \
 tesseract-ocr-msa \
 tesseract-ocr-mya \
 tesseract-ocr-ara
+
+# Verify installed Tesseract languages
+RUN tesseract --list-langs
     
 RUN gem install bundler && \
     bundle config set --local deployment 'true' && \
