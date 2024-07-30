@@ -184,7 +184,7 @@ class UploadFile extends Component {
                                             e.stopPropagation(); // Prevent the label's onClick event
                                             this.clearAllFiles();
                                         }}
-                                        className="ml-auto border-radius-19px bg-darkblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700 hover:bg-white hover:text-darkblue transition-all duration-200 ease-in-out"
+                                        className="ml-auto border-radius-19px bg-[#4378DB] text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-darkblue transition-all duration-200 ease-in-out"
                                     >
                                         Remove
                                     </button>
@@ -198,9 +198,9 @@ class UploadFile extends Component {
                         <p className='md:my-2 text-[4vw] md:text-[1.3vw] my-4'>Please click proceed only after your image has been uploaded</p>
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                         <button
-                            onClick={this.clearAllFiles}
-                            className={`text-lg px-5 py-2 bg-gray
-                            border-radius-19px rounded-md ${this.state.selectedFiles.length > 0 ? "text-lightblue":"text-gray cursor-not-allowed"
+                            onClick={() => {}}
+                            className={`text-lg px-5 py-2 
+                            border-radius-19px rounded-md ${this.state.selectedFiles.length > 0 ? "bg-[#4378DB] text-white hover:bg-darkblue transition-all duration-200 ease-in-out" : "bg-gray text-white cursor-not-allowed"
                             }`}
                         >
                             Proceed to Face Scan
