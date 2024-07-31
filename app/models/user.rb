@@ -1,8 +1,12 @@
 class User < ApplicationRecord
     has_secure_password     #add password and password confirmation
-    validates :email, presence: true
+    validates :email, presence: true, uniqueness: true
     has_many :documents, dependent: :destroy
     has_many :notifications, dependent: :destroy
+    has_one_attached :photo, dependent: :destroy
+    has_many :missing_person, dependent: :destroy
+    has_many :matched_missing_people, class_name: 'MissingPerson', foreign_key: 'matched_user_id'
+
     # Fuzzy matching for names
     def self.name_match(input_name)
         users = User.all
