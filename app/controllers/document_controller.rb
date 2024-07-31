@@ -1,6 +1,7 @@
 class DocumentController < ApplicationController
   include Ocr
   include Llmapi
+  # Upload files (POST) - document/upload
   def create
     user_id = params[:id]
     category = params[:category].downcase
@@ -41,7 +42,7 @@ class DocumentController < ApplicationController
     end
   end
 
-
+  # Retrieve files given user id (POST) - /document/retrieve
   def retrieve
     user = params[:id]
     category = params[:category]&.downcase
@@ -71,6 +72,8 @@ class DocumentController < ApplicationController
           render json: {message: "No documents found for this user"}, status: :unprocessable_entity
       end
   end
+
+  # Approve/reject status of documents(POST) - /document/status
   def status
     newStatus = params[:status]
     begin
