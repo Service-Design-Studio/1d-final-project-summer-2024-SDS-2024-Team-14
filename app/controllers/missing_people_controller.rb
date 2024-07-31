@@ -1,0 +1,2 @@
+class MissingPeopleController < ApplicationController
+end
