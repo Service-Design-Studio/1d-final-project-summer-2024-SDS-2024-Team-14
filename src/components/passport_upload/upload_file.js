@@ -162,17 +162,16 @@ class UploadFile extends Component {
                         </label>
 
                         {/**Upload Notice */}
-                        <div className="flex flex-col items-start justify-between mt-4">
-                            <div className="flex md:space-x-2 space-x-8 border-radius-19px rounded-md bg-[#E3E3E3] md:w-full justify-between">
+                        <div className="flex flex-col w-full mt-4">
+                            <div className="flex items-center space-x-2 md:space-x-4 rounded-md bg-[#E3E3E3] w-full p-2">
                                 <Image 
-                                        className="pl-2 w-[8vw] md:w-[2vw]" 
-                                        src={this.state.selectedFiles.length > 0 ? tickIcon : infoIcon} 
-                                        alt="info icon"
-                                    />
-
+                                    className="w-[8vw] md:w-[2vw]" 
+                                    src={this.state.selectedFiles.length > 0 ? tickIcon : infoIcon} 
+                                    alt="info icon"
+                                />
 
                                 {/* Dynamic message based on file upload status */}
-                                <p className="justify-start items-start pt-1.5 font-semibold text-lightblue text-[3.5vw] md:h-8 sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                     {this.state.selectedFiles.length > 0 
                                         ? `File Name: ${this.state.selectedFiles[0].file.name}` 
                                         : "No Image Uploaded"}
@@ -184,7 +183,7 @@ class UploadFile extends Component {
                                             e.stopPropagation(); // Prevent the label's onClick event
                                             this.clearAllFiles();
                                         }}
-                                        className="ml-auto border-radius-19px bg-[#4378DB] text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-darkblue transition-all duration-200 ease-in-out"
+                                        className="border-radius-19px bg-[#4378DB] text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] px-5 py-2 text-white rounded-lg hover:bg-darkblue transition-all duration-200 ease-in-out"
                                     >
                                         Remove
                                     </button>
@@ -193,13 +192,13 @@ class UploadFile extends Component {
                         </div>
                     </div>
                     <div className ="md:w-1/2 flex flex-col overflow-y-auto pt-4 ">
-                        <p className='ml-auto text-[4vw] md:text-[1.3vw] my-4'>Please upload a clear image of your face. Ensure that all facial features are unobstructed.</p>
-                        <p className='md:my-2 text-[4vw] md:text-[1.3vw] my-4'>This image will subsequently be compared to a face scan to speed up the verification process.</p>
-                        <p className='md:my-2 text-[4vw] md:text-[1.3vw] my-4'>Please click proceed only after your image has been uploaded</p>
+                        <p className='ml-auto text-[3.5vw] md:text-[1.3vw] my-3'>Please upload a clear image of your face. Ensure that all facial features are unobstructed.</p>
+                        <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3'>This image will subsequently be compared to a face scan to speed up the verification process.</p>
+                        <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3'>Please click proceed only after your image has been uploaded</p>
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                         <button
                             onClick={() => {}}
-                            className={`text-lg px-5 py-2 
+                            className={`text-2mdd px-5 py-2  
                             border-radius-19px rounded-md ${this.state.selectedFiles.length > 0 ? "bg-[#4378DB] text-white hover:bg-darkblue transition-all duration-200 ease-in-out" : "bg-gray text-white cursor-not-allowed"
                             }`}
                         >
