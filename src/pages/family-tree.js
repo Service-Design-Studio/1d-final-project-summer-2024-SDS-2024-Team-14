@@ -5,10 +5,10 @@ import "../styles/globals.css"
 import Link from "next/link"
 import useAuth from "@/hooks/useAuth";
 import ChatBot from "@/components/ChatBot";
-import SuggestionCard from "@/components/missing_family/suggestion_card";
 import FamilyCard from "@/components/missing_family/family_card";
 import SideList from "@/components/missing_family/family_card_components/side_list";
 import FamilyForm from "@/components/missing_family/family_card_components/family_form";
+import PotentialMatches from "@/components/missing_family/potential_matches";
 export default function FamilyTree() {
     const router = useRouter();
     const [open, setOpen] = useState(false)
@@ -113,7 +113,7 @@ export default function FamilyTree() {
                     Click on the swap button to swap the missing family member
                 </div>
                 <div className="flex flex-row w-full md:mt-20">
-                    <div className="flex flex-row h-[24vw]">
+                    <div className="flex flex-row h-[26vw]">
                         <SideList
                             selected={selected}
                             setSelected={setSelected}
@@ -131,34 +131,10 @@ export default function FamilyTree() {
                             />}
                     </div>
 
-                    <div className="flex flex-col mx-10">
-                        <div className="flex-1">
-                            <span className="text-darkblue text-2xl font-semibold">
-                                Potential Matches
-                            </span>
-                            <p className="text-lg">
-                                Swipe right to explore more matches
-                            </p>
-                        </div>
-                        <div className="flex-1">
-                            <SuggestionCard
-                                src={"/images/family_member_placeholder.png"}
-                                name={"Abdul Ahmed"}
-                                gender={"M"}
-                                age={"12"}
-                                dob={"14 Jun 2000"}
-                                ethnicity={"Arab"}
-                                similarity={83}
-                            />
-                        </div>
-
-                    </div>
+                    <PotentialMatches />
 
                 </div>
             </div>
-
-
-
             <ChatBot />
         </div>)
 }

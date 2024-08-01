@@ -4,7 +4,7 @@ import CardDetails from "./suggestion_card_components/card_details"
 import Similarity from "./suggestion_card_components/similarity"
 export default function SuggestionCard(props) {
     return (
-        <div className="flex flex-col rounded-2xl w-[30vw] max-w-96 h-fit shadow-lg relative bg-white">
+        <div className="flex flex-col rounded-2xl min-w-96 h-fit shadow-lg relative bg-white my-20 mr-14">
             <div className="flex-1 relative overflow-ellipsis">
                 <Image
                     unoptimized
