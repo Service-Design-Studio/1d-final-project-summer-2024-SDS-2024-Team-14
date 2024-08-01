@@ -34,7 +34,7 @@ export default function Passport() {
                     <UploadFile className="flex flex-col items-center justify-center" />
                 </div>
             </div>
-            
+            <ChatBot/>
         </div>
         </>
     )
