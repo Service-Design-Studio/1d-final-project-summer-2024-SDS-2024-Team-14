@@ -1,10 +1,10 @@
 class NotificationsController < ApplicationController
-  # before_action :authenticate_user!
+  # get all Notifications(GET) - /notifications
   def index 
-    # puts "All Notification records:", Notification.all
     render json: Notification.all, status: :ok
   end
 
+  # get all Notifications(GET) - /notifications/[id]
   def show
     user = params[:id]
     begin
@@ -16,6 +16,7 @@ class NotificationsController < ApplicationController
     render json: @notifications, status: :ok
   end
 
+  # Mark all notifications as read(POST) - /notifications/read
   def mark_all_as_read
     user = params[:user_id]
     id = params[:id]

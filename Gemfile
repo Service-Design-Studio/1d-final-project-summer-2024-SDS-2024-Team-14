@@ -55,6 +55,10 @@ gem 'google-cloud-translate'
 
 gem 'httparty'
 
+gem 'aws-sdk-rekognition'
+
+gem 'fuzzy_match'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

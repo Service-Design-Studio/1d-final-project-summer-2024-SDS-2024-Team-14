@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-    #login --> /login
+    # Login given password and username (POST) - /login
     def create
         @user = User.find_by(email: params[:email])
         if !@user

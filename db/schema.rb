@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_022123) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_31_190219) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,6 +50,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_022123) do
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
+  create_table "missing_people", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.string "gender"
+    t.string "ethnicity"
+    t.boolean "matched"
+    t.date "date_birth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "matched_user_id"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_missing_people_on_user_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -73,9 +87,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_022123) do
     t.date "date_birth"
     t.date "date_arrival"
     t.string "verification_status", default: "Pending approval"
+    t.boolean "face_verified"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "missing_people", "users"
   add_foreign_key "notifications", "users"
 end

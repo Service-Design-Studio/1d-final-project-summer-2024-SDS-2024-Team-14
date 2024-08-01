@@ -1,6 +1,7 @@
 include Dialogagent
 
 class ChatbotController < ApplicationController
+  # return response from llm agent (POST) - /chatbot
   def create
     @text = params[:text]
     @session_id = params[:userID]

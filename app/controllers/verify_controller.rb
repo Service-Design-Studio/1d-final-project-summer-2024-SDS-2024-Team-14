@@ -1,4 +1,5 @@
 class VerifyController < ApplicationController
+    # Verify refugee status(GET) - /verify/[id] 
     def show 
         begin
             @user = User.find(params[:id])
