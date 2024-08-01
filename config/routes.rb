@@ -18,6 +18,6 @@ Rails.application.routes.draw do
   post 'notifications/read', to: 'notifications#mark_all_as_read'
   post 'missing/upload', to: 'missing#upload'
   resources :missing
-  resources :matched_users
+  resources :match
   resources :chatbot
 end
