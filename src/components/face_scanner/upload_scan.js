@@ -198,14 +198,22 @@ class UploadFile extends Component {
                         <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3'>Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame.</p>
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                         <button
-                            onClick={() => {}}
+                            onClick={() => {/**placeholder to start scan */}}
                             className={`text-2mdd px-5 py-2  
                             border-radius-19px rounded-md ${this.state.selectedFiles.length > 0 ? "bg-[#4378DB] text-white hover:bg-darkblue transition-all duration-200 ease-in-out" : "bg-gray text-white cursor-not-allowed"
                             }`}
                         >
                             Begin Face Scan
                         </button>
-                    </div>
+                        </div>
+                        <div className="flex justify-end pt-5">
+                        <button
+                            onClick={() => {/**placeholder for next page */}}
+                            className={`text-2mdd text-semibold text-[#4378DB] underline py-2 border-radius-19px rounded-md`}
+                        >
+                            Skip Face Scan
+                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
