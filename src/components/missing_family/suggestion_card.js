@@ -1,3 +1,4 @@
+
 import "../../styles/globals.css"
 import Image from "next/image"
 import CardDetails from "./suggestion_card_components/card_details"
@@ -28,3 +29,4 @@ export default function SuggestionCard(props) {
             <Similarity similarity={props.similarity} />
         </div>)
 }
+
