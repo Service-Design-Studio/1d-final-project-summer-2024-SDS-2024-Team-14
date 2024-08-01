@@ -16,7 +16,7 @@ export default function FamilyForm(props) {
                     <span className="w-fit">Photos</span>
                     <Button className="w-fit bg-darkblue text-white hover:bg-darkblue hover:opacity-75 self-end mx-3">Add Photo</Button>
                 </div>
-                <div>
+                <div className="w-full overflow-x-scroll">
                     {photos.map((item, index) => {
                         <Image src={item} width={10} height={ 10} className="aspect-square object-cover" alt="added photo" />
                     })}
