@@ -16,5 +16,8 @@ Rails.application.routes.draw do
   post 'login', to: 'login#create'
   get 'notifications/:id', to: 'notifications#show'
   post 'notifications/read', to: 'notifications#mark_all_as_read'
+  post 'missing/upload', to: 'missing#upload'
+  resources :missing
+  resources :match
   resources :chatbot
 end

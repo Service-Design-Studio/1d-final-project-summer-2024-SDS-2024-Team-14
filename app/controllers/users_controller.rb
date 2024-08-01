@@ -1,11 +1,13 @@
 require_dependency 'user_serializer'
 
 class UsersController < ApplicationController
+    # Get all users(GET) - /users
     def index
         @users = User.all
         render json: @users, status: :ok
     end
 
+    # Get users based on ID(GET) - /users/[id]
     def show
         begin
             @user = User.find(params[:id])
@@ -15,6 +17,7 @@ class UsersController < ApplicationController
         end
     end
 
+    # Create/signup user(POST) - /users
     def create
         @user = User.create(user_params)
         if @user.save
@@ -26,6 +29,7 @@ class UsersController < ApplicationController
         end
     end
 
+    # To ensure only these params are sent and required in create acc
     def user_params
         params.permit(:email, :password, :password_confirmation, :name, :country, :religion, :ethnicity, :gender, :date_birth, :date_arrival)
     end
