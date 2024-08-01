@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import "../styles/globals.css"
-import UploadFile from '../components/face_scanner/upload_scan.js'
+import UploadScan from '../components/face_scanner/upload_scan.js'
 import EnableId from "../../public/images/enable_id_logo.svg";
 import passportDeco from "../../public/images/passport/passport_deco.svg";
 import Link from "next/link"
@@ -28,7 +28,7 @@ export default function Passport() {
                     </div>
                 </div>
                 <div className="mb-4 flex flex-col">
-                    <UploadFile className="flex flex-col items-center justify-center" />
+                    <UploadScan className="flex flex-col items-center justify-center" />
                 </div>
             </div>
             <ChatBot/> 

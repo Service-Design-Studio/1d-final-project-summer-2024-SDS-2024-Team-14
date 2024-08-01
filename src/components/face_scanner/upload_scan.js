@@ -1,5 +1,3 @@
-// This file is imported as uploadFile in face-scanner
-
 import axios from "axios";
 import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
