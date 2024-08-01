@@ -1,5 +1,5 @@
 require 'fuzzy_match'
-include Compface
+include CompFace
 
 class User < ApplicationRecord
     has_secure_password     #add password and password confirmation

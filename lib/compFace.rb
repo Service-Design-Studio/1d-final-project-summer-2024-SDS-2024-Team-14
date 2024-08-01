@@ -1,6 +1,6 @@
 require 'aws-sdk-rekognition'
 
-module Compface
+module CompFace
   def compare_faces(face1 , face2)
     # Need to convert to bytes first for api call
     face1_bytes = File.read(face1)
