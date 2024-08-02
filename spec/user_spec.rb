@@ -142,3 +142,99 @@ RSpec.describe "Users", type: :request do
     end
 
 end
+
+# RSpec.describe User, type: :model do
+
+#     before do
+#         User.create(
+#             email: 'test1@gmail.com',
+#             password: 'test123',
+#             password_confirmation: 'test123',
+#             "name": "John Doe",
+#             "country": "Myanmar",
+#             ethnicity: 'Asian',
+#             "religion": "Buddhist",
+#             "gender": "Male",
+#             "date_birth": "10-06-2001",
+#             "date_arrival": "10-06-2024",
+#             "verification_status": "Pending approval",
+#             # "age": 25,
+#             )
+
+#         User.create(
+#             email: 'test1@gmail.com',
+#             password: 'test123',
+#             password_confirmation: 'test123',
+#             "name": "Jane Smith",
+#             "country": "Myanmar",
+#             ethnicity: 'Hispanic',
+#             "religion": "Buddhist",
+#             "gender": "Female",
+#             "date_birth": "10-06-2001",
+#             "date_arrival": "10-06-2024",
+#             "verification_status": "Pending approval",
+#             # "age": 30,
+#             )
+#     end
+
+#     # Methods
+#     describe '.name_match' do
+  
+#       it 'finds a user by name using fuzzy match' do
+#         expect(User.name_match('John')).to eq(user1)
+#         expect(User.name_match('Jane')).to eq(user2)
+#       end
+  
+#       it 'returns nil if no match is found' do
+#         expect(User.name_match('Nonexistent')).to be_nil
+#       end
+#     end
+  
+#     describe '.ethnicity_match' do
+  
+#       it 'finds users by ethnicity' do
+#         expect(User.ethnicity_match('Asian')).to include(user1)
+#         expect(User.ethnicity_match('Hispanic')).to include(user2)
+#       end
+  
+#       it 'returns an empty result if no match is found' do
+#         expect(User.ethnicity_match('Nonexistent')).to be_empty
+#       end
+#     end
+  
+#     describe '.age_match' do
+  
+#       it 'finds users within the age range of ±2 years' do
+#         expect(User.age_match(27)).to include(user1)
+#         expect(User.age_match(29)).to include(user2)
+#       end
+  
+#       it 'returns an empty result if no match is found' do
+#         expect(User.age_match(40)).to be_empty
+#       end
+#     end
+  
+#     describe '.gender_match' do
+  
+#       it 'finds users by gender' do
+#         expect(User.gender_match('Male')).to include(user1)
+#         expect(User.gender_match('Female')).to include(user2)
+#       end
+  
+#       it 'returns an empty result if no match is found' do
+#         expect(User.gender_match('Nonexistent')).to be_empty
+#       end
+#     end
+  
+#     describe '.find_matches' do
+  
+#       it 'finds users matching all criteria' do
+#         expect(User.find_matches('John', 'Asian', 25, 'Male')).to eq(1)
+#         expect(User.find_matches('Jane', 'Hispanic', 30, 'Female')).to eq(1)
+#       end
+  
+#       it 'returns zero if no match is found' do
+#         expect(User.find_matches('John', 'Hispanic', 25, 'Female')).to eq(0)
+#       end
+#     end
+#   end
