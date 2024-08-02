@@ -21,7 +21,7 @@ export default function FamilyTree() {
             "name": "Abdul Ahmed",
             "gender": "M",
             "age": "12",
-            "dob": "12 Jun 2012",
+            "Date Of Birth": "12 Jun 2012",
             "ethnicity": "Arab",
             "relationship": "Brother",
             "src": "/images/family_member_placeholder.png"
@@ -29,7 +29,7 @@ export default function FamilyTree() {
             "name": "Anita Bin Fatima",
             "gender": "F",
             "age": "5",
-            "dob": "23 April 1999",
+            "Date Of Birth": "23 April 1999",
             "ethnicity": "Malay",
             "relationship": "Father",
             "src": "/images/family_member_placeholder.png"
@@ -37,7 +37,7 @@ export default function FamilyTree() {
             "name": "John Sinclair",
             "gender": "F",
             "age": "69",
-            "dob": "12 Dec 1912",
+            "Date Of Birth": "12 Dec 1912",
             "ethnicity": "Chinese",
             "relationship": "Mother",
             "src": "/images/family_member_placeholder.png"
@@ -46,7 +46,7 @@ export default function FamilyTree() {
             "name": "Abdul Ahmed",
             "gender": "M",
             "age": "12",
-            "dob": "12 Jun 2012",
+            "Date Of Birth": "12 Jun 2012",
             "ethnicity": "Arab",
             "relationship": "Brother",
             "src": "/images/family_member_placeholder.png"
@@ -54,7 +54,7 @@ export default function FamilyTree() {
             "name": "Anita Bin Fatima",
             "gender": "F",
             "age": "5",
-            "dob": "23 April 1999",
+            "Date Of Birth": "23 April 1999",
             "ethnicity": "Malay",
             "relationship": "Father",
             "src": "/images/family_member_placeholder.png"
@@ -62,7 +62,7 @@ export default function FamilyTree() {
             "name": "John Sinclair",
             "gender": "F",
             "age": "69",
-            "dob": "12 Dec 1912",
+            "Date Of Birth": "12 Dec 1912",
             "ethnicity": "Chinese",
             "relationship": "Mother",
             "src": "/images/family_member_placeholder.png"
@@ -70,7 +70,7 @@ export default function FamilyTree() {
             "name": "Abdul Ahmed",
             "gender": "M",
             "age": "12",
-            "dob": "12 Jun 2012",
+            "Date Of Birth": "12 Jun 2012",
             "ethnicity": "Arab",
             "relationship": "Brother",
             "src": "/images/family_member_placeholder.png"
@@ -78,7 +78,7 @@ export default function FamilyTree() {
             "name": "Anita Bin Fatima",
             "gender": "F",
             "age": "5",
-            "dob": "23 April 1999",
+            "Date Of Birth": "23 April 1999",
             "ethnicity": "Malay",
             "relationship": "Father",
             "src": "/images/family_member_placeholder.png"
@@ -86,7 +86,7 @@ export default function FamilyTree() {
             "name": "John Sinclair",
             "gender": "F",
             "age": "69",
-            "dob": "12 Dec 1912",
+            "Date Of Birth": "12 Dec 1912",
             "ethnicity": "Chinese",
             "relationship": "Mother",
             "src": "/images/family_member_placeholder.png"
@@ -102,18 +102,18 @@ export default function FamilyTree() {
 
     useAuth();
     return (
-        <div className="bg-white w-screen px-20 min-h-screen bg-cover bg-[url('/images/background/gebirah-bluebg.png')] flex flex-col">
+        <div className="bg-white max-w-screen px-10 mx-auto md:px-20 min-h-screen bg-cover bg-[url('/images/background/gebirah-bluebg.png')] flex flex-col">
             <NaviBar open={open} setOpen={setOpen} />
-            <div className="flex flex-col w-full h-full ml-10 md:mt-20">
-                <div className="text-darkblue font-semibold sm:text-[3.5vw] md:text-[2.3vw] text-[6.5vw]">
+            <div className="flex flex-col w-full h-full md:ml-10 md:mt-20">
+                <div className="text-darkblue font-semibold lg:text-4xl md:text-3xl text-2xl">
                     Missing Family & Friends
                 </div>
-                <div className="md:my-2 text-[4vw] md:text-[1.5vw] my-4">
+                <div className="md:my-2 text-lg md:text-2xl my-4">
                     Add more pictures using the plus button to improve matches.<br />
                     Click on the swap button to swap the missing family member
                 </div>
-                <div className="flex flex-row w-full md:mt-20">
-                    <div className="flex flex-row h-[26vw]">
+                <div className="flex flex-col xl:flex-row w-full md:mt-20">
+                    <div className="flex flex-row lg:h-[50vh] h-[500px] xl:max-h-fit w-full  xl:mb-0 mb-10 overflow-y-scroll">
                         <SideList
                             selected={selected}
                             setSelected={setSelected}

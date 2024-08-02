@@ -115,8 +115,8 @@ export default function PotentialMatches() {
     }, [placeholderList])
     sortList(placeholderList)
     return (
-        <div className="flex flex-col mx-10 w-full">
-            <div className="flex-1">
+        <div className="flex flex-col xl:w-[70%] xl:pl-20">
+            <div className="ml-16 flex-1">
                 <span className="text-darkblue text-2xl font-semibold">
                     Potential Matches
                 </span>
@@ -133,7 +133,8 @@ export default function PotentialMatches() {
                             setSlideCount((prev) => prev--)
                         }
                     }}
-                ><Image src="/images/previous_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view previous scanned documents" /></Button>
+                ><Image src="/images/previous_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view previous scanned documents" />
+                </Button>
                 <div ref={emblaRef} className="embla__viewport overflow-x-hidden h-full w-[65vw]">
                     <div className="embla__container">
                         {placeholderList.map((data, index) => {
@@ -153,7 +154,7 @@ export default function PotentialMatches() {
                 </div>
 
                 <Button
-                    className={`w-1/12 embla__buttons embla__button embla__controls  {embla__button--next}`}
+                    className={`w-fit embla__buttons embla__button embla__controls  {embla__button--next}`}
                     onClick={() => {
                         if (slideCount < count) {
                             onNextButtonClick()
