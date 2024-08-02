@@ -89,7 +89,7 @@ group :test do
 end
 
 group :production do
-  gem "pg", "~> 1.5"
+  # gem "pg", "~> 1.5"
   gem "dotenv-rails", "~> 2.7"
 end
 
