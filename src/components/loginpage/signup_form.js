@@ -90,6 +90,7 @@ export default function SignUpForm({ formState, setFormState }) {
                             error={firstNameError}
                             setFormState={setFormState}
                             id={"firstName"}
+                            className="firstName"
                             label={"First Name"}
                             placeholder={"First Name"}
                         />
@@ -196,7 +197,7 @@ export default function SignUpForm({ formState, setFormState }) {
                             label={"Confirm Password"}
                             placeholder={"Confirm Password"}
                         />
-                        <Button type="submit" onClick={console.log(formState)} id="submitBtn" variant="contained" className="mx-5 pt-3 mt-5 text-xl">Create Account</Button>
+                        <Button type="submit" onClick={console.log(formState)} id="submitBtn" variant="contained" className="mx-5 pt-3 mt-5 text-xl signup">Create Account</Button>
                     </div>
                 </div>
             </div>

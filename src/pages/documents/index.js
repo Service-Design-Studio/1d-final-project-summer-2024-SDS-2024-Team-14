@@ -314,8 +314,8 @@ const capitalize = (str) => {
                       key={category}
                       onClick={() => handleCategoryClick(category)}
                       // CATEGORY BUTTONS
-                      className={`py-0.5 px-2 md:py-1.5 md:px-3 rounded-md font-bold text-[3vw] md:text-[1.2vw] 
-                  ${selectedCategory === category ? 'bg-darkblue text-white' : 'bg-white md:bg-opacity-0 text-darkblue'}`}
+                      className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
+                  ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
                   >
                     {category}
                   </button>
@@ -353,12 +353,12 @@ const capitalize = (str) => {
               {rejectedCount} <b>Rejected</b>
             </button>
           </div>
-          <div className="hidden md:flex md:items-center">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2.5 px-4 bg-darkblue text-white rounded-l-xl font-bold">
+          <div className="flex gap-4 items-center">
+            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold upload">
               <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Upload
             </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-6 bg-darkblue text-white rounded-r-xl font-bold">
+            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold scanner">
               <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Scan
             </Link>
@@ -459,8 +459,8 @@ const capitalize = (str) => {
           {sortedDocuments.length > 0 ? (
             sortedDocuments.map((document) => {
               return (
-                <div className="flex h-10 md:h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
-                  <Image className="ml-3 w-[1vw] md:w-[3vw] w-[5vw] md:ml-8"
+                <div className={`flex justify-between h-20 border-t border-lightgray text-lg ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
+                  <Image className="md:w-[3vw] w-[5vw] ml-8"
                     src={getIconForFilename(document.name).src}
                     alt={`${document.name} icon`}
                   />
