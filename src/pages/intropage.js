@@ -11,13 +11,13 @@ const IntroPage = () => {
 
     return (
         <div className="overflow-hidden flex flex-col align-middle min-h-screen bg-white transition-all-500 bg-local
-        bg-[url('/images/background/gebirah-bluebg.png')] bg-cover pb-20">
+        bg-[url('/images/background/gebirah-bluebg.png')] bg-cover pb">
             <div className="md:flex md:items-center pt-4 ml-4">
                 <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
             </div>
             <div className="bg-white rounded-xl p-[2rem] w-[70%] mx-auto mt-12" style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
-                <h1 style={{ display: 'block', fontSize: '2em', margin: '0 0 1rem 0', fontWeight: 'bold', textAlign: 'center', color: '#405DB5' }}>
+                <h1 className="block text-2xl mb-4 font-bold text-center text-darkblue">
                     {slides[currentSlide].title}
                 </h1>
                 <Image
@@ -27,7 +27,7 @@ const IntroPage = () => {
                     width={800}
                     height={600}
                 />
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '1rem 0' }}>
+                <div className="flex justify-center items-center my-4">
                     {slides.map((_, index) => (
                         <span
                             key={index}
@@ -44,7 +44,7 @@ const IntroPage = () => {
                         />
                     ))}
                 </div>
-                <p style={{ color: '#405DB5', fontSize: '1em', marginTop: '3em', marginBottom: '3rem', paddingLeft: '5rem', paddingRight: '5rem', textAlign: 'center' }}>
+                <p className="text-darkblue text-base mt-12 mb-12 px-20 text-center">
                     {slides[currentSlide].text}
                 </p>
                 <div className="flex justify-between">
