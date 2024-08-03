@@ -35,6 +35,7 @@ module Dialogagent
       }
       }.to_json  # Convert body to JSON format
 
+      # make api request
       response = HTTParty.post("#{base_url}", headers: headers, body: body)
       if response.code == 200
         parsed_resp = JSON.parse(response.body)

@@ -88,6 +88,18 @@ GEM
       google-cloud-env (~> 1.4)
       google-serverless-exec (>= 0.1, < 2.a)
       stackdriver (~> 0.21)
+    aws-eventstream (1.3.0)
+    aws-partitions (1.960.0)
+    aws-sdk-core (3.201.3)
+      aws-eventstream (~> 1, >= 1.3.0)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.8)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-rekognition (1.102.0)
+      aws-sdk-core (~> 3, >= 3.201.0)
+      aws-sigv4 (~> 1.5)
+    aws-sigv4 (1.9.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.8)
@@ -135,6 +147,7 @@ GEM
       net-http
     faraday-retry (2.2.1)
       faraday (~> 2.0)
+    fuzzy_match (2.1.0)
     gapic-common (0.20.0)
       faraday (>= 1.9, < 3.a)
       faraday-retry (>= 1.0, < 3.a)
@@ -257,6 +270,7 @@ GEM
     jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.2)
     json (2.7.2)
     jsonapi-renderer (0.2.2)
     jwt (2.8.2)
@@ -460,11 +474,13 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   appengine (~> 0.7.0)
+  aws-sdk-rekognition
   bcrypt (~> 3.1.7)
   bootsnap
   capybara
   debug
   dotenv-rails (~> 2.7)
+  fuzzy_match
   google-cloud-storage (~> 1.11)
   google-cloud-translate
   googleauth
