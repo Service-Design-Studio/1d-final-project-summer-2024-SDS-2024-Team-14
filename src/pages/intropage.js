@@ -44,7 +44,7 @@ const IntroPage = () => {
                         />
                     ))}
                 </div>
-                <p className="text-darkblue text-base mt-12 mb-12 px-20 text-center">
+                <p className="text-darkblue text-base mt-12 mb-12 px-100 text-center">
                     {slides[currentSlide].text}
                 </p>
                 <div className="flex justify-between">
