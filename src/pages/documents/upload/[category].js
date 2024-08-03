@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import UploadDropdown from '../../../components/uploadpage/dropdown.js';
 import '../../../styles/globals.css';
-import { Icon } from '@mui/material';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import UploadFile from '../../../components/uploadpage/upload_file.js';
-//import Header from '../../components/header.js';
 import {ReactNotifications, Store} from "react-notifications-component";
 import {useRouter} from "next/router";
 import documentDecoration from "../../../../public/images/upload/document_decoration.svg";
