@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
-    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroicons/react": "^2.1.4",
     "@material/textfield": "^14.0.0",
@@ -53,15 +53,15 @@
     "@cypress/webpack-preprocessor": "^6.0.2",
     "@types/node": "20.14.5",
     "@types/react": "18.3.3",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "cypress": "^13.13.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-file-upload": "^5.0.8",
     "esbuild": "^0.19.12",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.4"
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7"
   },
   "browser": {
     "fs": false,
