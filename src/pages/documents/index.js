@@ -13,6 +13,7 @@ import ChatBot from "@/components/ChatBot";
 import axiosInstance from "@/utils/axiosInstance";
 import {ReactNotifications, Store} from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css';
+import DropdownArrow from "../../../public/images/icons/dropdown.svg"
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -32,6 +33,16 @@ const DocumentManager = () => {
   const [data, setData] = useState(null);
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
+
+const capitalize = (str) => {
+  if (typeof str !== 'string') return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+  const toggleDropdown = () => {
+    setOpen(!open);
+  };
+
   const [showInput, setShowInput] = useState(false);
   const toggleInput = () => {
     setShowInput(!showInput);
@@ -342,15 +353,89 @@ const DocumentManager = () => {
               {rejectedCount} <b>Rejected</b>
             </button>
           </div>
-          <div className="hidden md:flex md:gap-4 md:items-center">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
+          <div className="hidden md:flex md:items-center">
+            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2.5 px-4 bg-darkblue text-white rounded-l-xl font-bold">
               <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw] pr-2" />
               Upload
             </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold">
+            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-6 bg-darkblue text-white rounded-r-xl font-bold">
               <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
-              Scanner
+              Scan
             </Link>
+            <div className='px-2'>
+                <div className="relative inline-block text-left">
+                <div>
+                  <button
+                    onClick={toggleDropdown}
+                    type="button"
+                    className="flex items-center w-full px-4 py-2 text-[0.9vw] font-bold text-darkblue"
+                    id="menu-button"
+                    aria-expanded="true"
+                    aria-haspopup="true"
+                  >
+                    in "
+                    <span className='captitalize'>{uploadCategory}"</span>
+                    <div className='pl-2'>
+                      <Image src={DropdownArrow} />
+                    </div>
+                  </button>
+                </div>
+
+                {open && (
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-opacity-5"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                  >
+                    <div className="py-1" role="none">
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                      >
+                        Health
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                      >
+                        Career
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                      >
+                        Education
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                      >
+                        Family
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                      >
+                        Finance
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                      >
+                        Property
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       {/* DOCUMENT CONTAINER for Web */}
@@ -374,20 +459,20 @@ const DocumentManager = () => {
           {sortedDocuments.length > 0 ? (
             sortedDocuments.map((document) => {
               return (
-                <div className="flex h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
+                <div className="flex h-10 md:h-20 border-t border-lightgray text-lg" key={document.id} onClick={() => handleDocumentClick(document)}>
                   <Image className="ml-3 w-[1vw] md:w-[3vw] w-[5vw] md:ml-8"
                     src={getIconForFilename(document.name).src}
                     alt={`${document.name} icon`}
                   />
                   <div className="flex items-center flex-grow text-[2vw] md:text-lg">
-                    <div className="w-[60%] ml-2 md:ml-5 font-bold">
+                    <div className="w-[60%] md:w-[70%] ml-2 md:ml-5 font-bold">
                       {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
                     </div>
                   </div>
                   <div className={`flex items-center justify-center md:ml-[-10px]`} style={{ width: '15%' }}>
-                    <span className="mr-[10vw] text-[2vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
+                    <span className="mr-[15vw] md:mr-[5vw] text-[2vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
                   </div>
-                  <div className="mr-[15vw] flex items-center justify-center" style={{ width: '15%' }}>
+                  <div className="mr-[15vw] md:mr-[4vw] flex items-center justify-center" style={{ width: '15%' }}>
                     <span className="text-[2vw] md:text-lg text-darkblue">{document.lastModifiedDate}28 July 2024</span>
                   </div>
                 </div>
