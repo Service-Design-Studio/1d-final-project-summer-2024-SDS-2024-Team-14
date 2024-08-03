@@ -42,8 +42,8 @@ export default function FaceCamera({ cameraRef, isCameraOn }) {
                         <Image 
                             className="w-[10vw] md:w-[4vw]"
                             src = {CameraIcon} />
-                        <p className="text-white text-mdd">No camera device detected</p>
-                        <p className="text-white text-mdd">Please enable camera and reload</p>
+                        <p className="text-white text-mdd">Press Begin Face Scan to turn on camera </p>
+                        <p className="text-white text-mdd">and begin scanning</p>
                     </div>
                 )}
             </div>

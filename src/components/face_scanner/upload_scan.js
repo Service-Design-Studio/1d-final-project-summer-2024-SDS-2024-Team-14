@@ -86,7 +86,7 @@ class UploadFile extends Component {
                                 <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                     {this.state.selectedFiles.length > 0 
                                         ? `File Name: ${this.state.selectedFiles[0].file.name}` 
-                                        : "Your camera device is not enabled"}
+                                        : "Press Begin Face Scan to start scanning"}
                                 </p>
 
                                 {this.state.selectedFiles.length > 0 && (
@@ -130,7 +130,7 @@ class UploadFile extends Component {
                                 onClick={this.toggleCamera}
                                 className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
                             >
-                                {this.state.isCameraOn ? (this.state.isScanning ? "Stop Face Scan" : "Begin Face Scan") : "Enable Camera"}
+                                {this.state.isCameraOn ? (this.state.isScanning ? "Stop Face Scan" : "Begin Face Scan") : "Begin Face Scan"}
                             </button>
                         </div>
                         <div className="flex justify-end pt-5">
