@@ -1,7 +1,5 @@
-import axios from "axios";
-import React, { Component, createRef } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import FaceCamera from './face_camera'; // Import the CameraView component
+import FaceCamera from './face_camera'; // Ensure the correct import path
 import shortid from 'shortid';
 import { ReactNotifications, Store } from "react-notifications-component";
 import tickIcon from "../../../public/images/icons/tick_success.svg";
@@ -11,6 +9,7 @@ import crossIcon from "../../../public/images/upload/cross_icon.svg";
 import fileUpload from "../../../public/images/upload/file_upload.svg";
 import 'react-notifications-component/dist/theme.css';
 import Image from "next/image"; // Import the modal component
+import { Component, createRef } from 'react';
 
 class UploadFile extends Component {
     state = {
@@ -68,11 +67,12 @@ class UploadFile extends Component {
             <div className="flex flex-col h-full">
                 <div className="md:pt-8 pt-6 flex flex-col md:flex-row justify-between gap-4">
                     <div className="flex flex-col w-full md:w-1/3">
-                        {/* Conditionally render the CameraView component */}
-                        {this.state.isCameraOn && (
-                            <FaceCamera cameraRef={this.cameraRef} capturedFrames={this.state.capturedFrames} />
-                        )}
-                        
+                        {/* Always render the CameraView container */}
+                        <FaceCamera 
+                            cameraRef={this.cameraRef} 
+                            isCameraOn={this.state.isCameraOn} 
+                        />
+
                         {/* Upload file UI taken out */}
                         <div className="flex flex-col w-full mt-4">
                             <div className="flex items-center space-x-2 md:space-x-4 rounded-md bg-[#E3E3E3] w-full p-2">
@@ -101,6 +101,20 @@ class UploadFile extends Component {
                                     </button>
                                 )}
                             </div>
+                        </div>
+
+                        {/* Display the captured frames */}
+                        <div className="mt-4">
+                            {this.state.capturedFrames.length > 0 && (
+                                <div>
+                                    <h2 className="text-lg font-bold">Captured Frames:</h2>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {this.state.capturedFrames.map((frame, index) => (
+                                            <img key={index} src={frame} alt={`Captured Frame ${index}`} className="rounded-lg border-2 border-darkblue" />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -135,3 +149,4 @@ class UploadFile extends Component {
 }
 
 export default UploadFile;
+

@@ -1,9 +1,10 @@
 import Image from "next/image";
+import CameraIcon from "../../../public/images/icons/camera.svg"
 import { Camera } from "react-camera-pro";
 import { useState, useEffect } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 
-export default function CameraView({ cameraRef, capturedFrames }) {
+export default function FaceCamera({ cameraRef, isCameraOn }) {
     const [hasAlert, setAlert] = useState(false);
     const [cameraLoaded, setCameraLoaded] = useState(false);
 
@@ -28,29 +29,28 @@ export default function CameraView({ cameraRef, capturedFrames }) {
             ) : null}
 
             <div className="relative w-80 h-80 rounded-full overflow-hidden border-4 border-darkblue shadow-lg">
-                <Camera
-                    priority
-                    ref={cameraRef}
-                    facingMode="environment"
-                    aspectRatio={1}
-                    className="object-cover w-full h-full"
-                />
-            </div>
-
-            {/* Testing for captured frames -- uncomment the bottom part */}
-            {/*{capturedFrames.length > 0 && (
-                <div className="mt-4">
-                    <h2 className="text-lg font-bold">Captured Frames:</h2>
-                    <div className="grid grid-cols-3 gap-2">
-                        {capturedFrames.map((frame, index) => (
-                            <img key={index} src={frame} alt={`Captured Frame ${index}`} className="rounded-lg border-2 border-darkblue" />
-                        ))}
+                {isCameraOn ? (
+                    <Camera
+                        priority
+                        ref={cameraRef}
+                        facingMode="environment"
+                        aspectRatio={1}
+                        className="object-cover w-full h-full"
+                    />
+                ) : (
+                    <div className="flex-col w-full h-full bg-[#5E5E5E] flex items-center justify-center bg-[url('/images/icons/face_scanner.svg')] ">
+                        <Image 
+                            className="w-[10vw] md:w-[4vw]"
+                            src = {CameraIcon} />
+                        <p className="text-white text-mdd">No camera device detected</p>
+                        <p className="text-white text-mdd">Please enable camera and reload</p>
                     </div>
-                </div>
-            )}*/}
+                )}
+            </div>
         </div>
     );
 }
+
 
             
             
