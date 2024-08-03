@@ -33,14 +33,15 @@ const DocumentManager = () => {
   const [data, setData] = useState(null);
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
-const capitalize = (str) => {
-  if (typeof str !== 'string') return '';
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
+  const capitalize = (str) => {
+    if (typeof str !== 'string') return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
 
   const toggleDropdown = () => {
-    setOpen(!open);
+    setDropdownOpen(!dropdownOpen);
   };
 
   const [showInput, setShowInput] = useState(false);
@@ -133,7 +134,9 @@ const capitalize = (str) => {
     setStatusFilter('All');
     setCurrentPage(1);
     setUploadCategory(category.toLowerCase());
+    setDropdownOpen(false);
   };
+  
 
   const handleStatusFilterClick = (status) => {
     setStatusFilter(status);
@@ -308,15 +311,14 @@ const capitalize = (str) => {
         </div>
           <div className="flex justify-between items-center my-5 ml-0 mr-0 md:flex-row">
             {/* gap in btw cat buttons */}
-            <div className="category-buttons flex flex-wrap gap-2 pl-1.5">
+            <div className="flex flex-wrap gap-2 pl-1.5">
               {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
                   <button
                       key={category}
                       onClick={() => handleCategoryClick(category)}
-                      // CATEGORY BUTTONS
                       className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
-                  ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-                  >
+                      ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+                      >
                     {category}
                   </button>
               ))}
@@ -370,18 +372,18 @@ const capitalize = (str) => {
                     type="button"
                     className="flex items-center w-full px-4 py-2 text-[0.9vw] font-bold text-darkblue"
                     id="menu-button"
-                    aria-expanded="true"
+                    aria-expanded={dropdownOpen}
                     aria-haspopup="true"
                   >
                     in "
-                    <span className='captitalize'>{uploadCategory}"</span>
+                    <span className='captitalize'>{selectedCategory}"</span>
                     <div className='pl-2'>
                       <Image src={DropdownArrow} />
                     </div>
                   </button>
                 </div>
 
-                {open && (
+                {dropdownOpen && (
                   <div
                     className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-opacity-5"
                     role="menu"
@@ -389,48 +391,17 @@ const capitalize = (str) => {
                     aria-labelledby="menu-button"
                   >
                     <div className="py-1" role="none">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                        role="menuitem"
-                      >
-                        Health
+                      {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
+                        <a
+                          key={category}
+                          href="#"
+                          className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                          role="menuitem"
+                          onClick={() => handleCategoryClick(category)}
+                        >
+                          {category}
                       </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                        role="menuitem"
-                      >
-                        Career
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                        role="menuitem"
-                      >
-                        Education
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                        role="menuitem"
-                      >
-                        Family
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                        role="menuitem"
-                      >
-                        Finance
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                        role="menuitem"
-                      >
-                        Property
-                      </a>
+                      ))}
                     </div>
                   </div>
                 )}
