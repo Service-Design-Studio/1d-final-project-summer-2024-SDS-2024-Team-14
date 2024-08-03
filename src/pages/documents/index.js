@@ -466,8 +466,8 @@ const DocumentManager = () => {
                 </div>
               </div>
             <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
-            <div className="md:flex flex-col bg-white overflow-hidden w-auto h-[80%] relative">
-              <div className="flex h-1/2 md:w-1/2">
+            <div className="md:flex flex-col md:flex-row bg-white overflow-hidden w-auto h-[80%] relative">
+              <div className="flex h-1/2 md:h-full md:w-1/2">
                 <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
                   {selectedDocument.file_url ? (
                     <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%" height="100%"></iframe>
