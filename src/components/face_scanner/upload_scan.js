@@ -11,7 +11,7 @@ import 'react-notifications-component/dist/theme.css';
 import Image from "next/image"; // Import the modal component
 import { Component, createRef } from 'react';
 
-class UploadFile extends Component {
+class UploadScan extends Component {
     state = {
         selectedFiles: [],
         showModal: false,
@@ -148,5 +148,5 @@ class UploadFile extends Component {
     }
 }
 
-export default UploadFile;
+export default UploadScan;
 
