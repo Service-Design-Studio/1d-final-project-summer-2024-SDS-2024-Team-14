@@ -103,7 +103,7 @@ class UploadFile extends Component {
                             </div>
                         </div>
 
-                        {/* Test to display frames*/}
+                        {/* Test to display frames -- can remove*/}
                         <div className="mt-4">
                             {this.state.capturedFrames.length > 0 && (
                                 <div>
