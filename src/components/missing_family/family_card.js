@@ -1,12 +1,29 @@
 import "../../styles/globals.css";
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { Button } from "@mui/material"
+import axiosInstance from "../,,/../../utils/axiosInstance";
 import CardDetails from "./suggestion_card_components/card_details";
 export default function FamilyCard(props) {
-    return (
+    const [deletePerson, setDeletePerson] = useState(null)
+    //TODO: let user delete missing person entry
 
+    useEffect(() => {
+        if (deletePerson != null) {
+            axiosInstance.post("/missing/delete",
+                {
+                    "id": deletePerson
+                }
+            );
+            setDeletePerson(null);
+            props.setFetch(true);
+            props.setSelected()
+        }
+    }, [deletePerson])
+    
+    return (
         <div className="relative flex flex-col rounded-r-2xl shadow-lg bg-white">
-            {props.selectedData ?
+            {props.selectedData && props.selected >= 0 ?
                 <div>
                     <div className="flex-1 relative overflow-ellipsis min-w-96 lg:max-w-none lg:min-w-[16vw]">
                         <Image
@@ -38,7 +55,7 @@ export default function FamilyCard(props) {
                             className="hover:underline-offset-4 hover:underline text-darkblue h-full"
                             onClick={() => {
                                 props.setAddNew(false);
-                                onDelete();
+                                setDeletePerson(props.selectedData.id);
                             }}>
                             <Image width={1} height={1} className="h-full w-auto" src={"/images/cross_icon.svg"} alt="Delete Entry" /> Delete
                         </Button>
@@ -48,7 +65,6 @@ export default function FamilyCard(props) {
                     <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-[80%] my-10 opacity-75 mx-auto" alt="" />
                     Select an available entry on the left to view
                 </div>}
-
         </div>
     )
 }

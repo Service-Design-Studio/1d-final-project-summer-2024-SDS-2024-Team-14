@@ -43,7 +43,6 @@ export default function FamilyTree() {
         if (selectedData) {
             try {
                 //TODO: fix get match/id in backend
-
                 // axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
                 //     setMatches(res.data);
                 // })
@@ -92,7 +91,7 @@ export default function FamilyTree() {
                             selected={selected}
                             setSelected={setSelected}
                             data={data}
-                            setData={ setData}
+                            setData={setData}
                             addNew={addNew}
                             setAddNew={setAddNew}
                         />
@@ -102,9 +101,13 @@ export default function FamilyTree() {
                         />}
                         {!addNew &&
                             <FamilyCard
-                                setAddNew={setAddNew}
-                                selectedData={selectedData}
+                            setAddNew={setAddNew}
+                            selectedData={selectedData}
+                            setFetch={setFetch}
+                            setSelected={setSelected}
+                            selected={ selected}
                             />}
+                        
                     </div>
 
                     <PotentialMatches

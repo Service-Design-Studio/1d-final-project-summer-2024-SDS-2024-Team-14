@@ -53,21 +53,7 @@ export default function FamilyForm(props) {
         setFiles();
         props.setFetch(true);
     }
-    //TODO: let user delete missing person entry
-    let onDelete = () => {
-        axiosInstance.post("",
-            {
 
-            }
-        );
-        setData({
-            "name": "",
-            "gender": "Male",
-            "age": "",
-            "date_birth": "",
-            "ethnicity": ""
-        });
-    }
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
