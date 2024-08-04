@@ -10,7 +10,7 @@ export default function FamilyCard(props) {
                     <div className="flex-1 relative overflow-ellipsis min-w-96 lg:max-w-none lg:min-w-[16vw]">
                         <Image
                             unoptimized
-                            src={props.selectedData.src}
+                            src={props.selectedData.src ? props.selectedData.src[0] : "/images/default_profile_pic.svg"}
                             width={1}
                             height={1}
                             alt={`${props.selectedData.name}`}
@@ -28,8 +28,8 @@ export default function FamilyCard(props) {
                         ethnicity={props.selectedData.ethnicity}
                         // relationship={props.selectedData.relationship}
                     /> </div> :
-                <div className="self-center my-auto text-darkblue font-semibold">
-                    <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-0.8 my-10 opacity-75 mx-auto" alt="" />
+                <div className="self-center my-auto text-darkblue font-semibold min-w-96 lg:max-w-none lg:min-w-[16vw] text-center">
+                    <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-[80%] my-10 opacity-75 mx-auto" alt="" />
                     Select an available entry on the left to view
                 </div>}
 

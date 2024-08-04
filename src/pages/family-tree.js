@@ -16,6 +16,7 @@ export default function FamilyTree() {
     const [data, setData] = useState([])
     const [fetch, setFetch] = useState(true);
     const [selectedData, setSelectedData] = useState();
+    const [matches, setMatches] = useState([]);
     const [addNew, setAddNew] = useState(false)
     let getMissingPersons = async () => {
         let userID = localStorage.getItem("userID");
@@ -36,8 +37,36 @@ export default function FamilyTree() {
     }, [fetch])
 
     useEffect(() => {
-        setSelectedData(data[selected])
+        if (data && selected < data.length) {
+            setSelectedData(data[selected])
+        }
     }, [selected])
+
+    useEffect(() => {
+        if (selectedData) {
+            try {
+                //TODO: fix get match/id in backend
+                /*
+                axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
+                    setMatches(res.data);
+                })
+                */
+            } catch (error) {
+                setMatches([])
+            } finally {
+                if (matches && matches.length > 1) {
+                    setMatches((prev) => {
+                        prev.sort((i1, i2) => {
+                            return i2["percentage"] - i1["percentage"]
+                        })
+                    })
+                } else {
+                    setMatches([])
+                }
+            }
+        }
+    }, [selectedData])
+
 
     useAuth();
     return (
@@ -62,7 +91,7 @@ export default function FamilyTree() {
                         />
                         {addNew && <FamilyForm
                             setAddNew={setAddNew}
-                            setFetch={ setFetch}
+                            setFetch={setFetch}
                         />}
                         {!addNew &&
                             <FamilyCard
@@ -71,7 +100,10 @@ export default function FamilyTree() {
                             />}
                     </div>
 
-                    <PotentialMatches />
+                    <PotentialMatches
+                        selected={selected}
+                        matches={matches}
+                    />
 
                 </div>
             </div>
