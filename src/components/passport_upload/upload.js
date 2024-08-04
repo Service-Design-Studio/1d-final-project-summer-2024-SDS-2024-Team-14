@@ -51,13 +51,7 @@ class Upload extends Component {
         formData.append("id", userId)
 
         axiosInstance.post("/authentication/upload", formData).then((resp) => {
-            if (resp.status === 200 || resp.status === 201) {
-                localStorage.setItem('notificationMessage', 'You have successfully uploaded the file. Please check that the file is in your folder.');
-                localStorage.setItem('status', 'success')
-            } else {
-                localStorage.setItem('notificationMessage', 'There was an error uploading the file. Please contact your administrator for help.');
-                localStorage.setItem('status', 'error')
-            }
+            // add notification
             router.push("/verify")
         })
     };
