@@ -36,7 +36,6 @@ class UploadScan extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // Use componentDidUpdate to act on state changes
         if (prevState.isMatched !== this.state.isMatched && this.state.isMatched !== null) {
             if (this.state.isMatched) {
                 // Stop recording and allow progression forward
@@ -47,9 +46,14 @@ class UploadScan extends Component {
                 // Handle the case where the user is not verified
                 console.log("Verification failed, please try again.");
                 this.setState({
-                    scanningText: "Face verification failed. Your face did not match the submitted passport photo. Please try again or skip Face Scan for now."
+                    scanningText: (
+                        <div className="flex items-start">
+                        <Image src={infoIcon} alt="Failed Icon" className="w-9 h-9 mr-2" />
+                        <span>Face verification failed. Your face did not match the submitted passport photo. Please try again or skip Face Scan for now.</span>
+                    </div>
+                    )
                 });
-                this.stopScanning(); // Stop scanning on verification failure
+                this.stopScanning(false); // Stop scanning on verification failure without resetting the text
             }
         }
     }
@@ -65,8 +69,12 @@ class UploadScan extends Component {
     }
 
     startScanning = () => {
-        this.setState({ isScanning: true, scanningText: "Scanning in progress. Please keep your face in the frame.", countdown: 10 });
-
+        this.setState({ 
+            isScanning: true, 
+            scanningText: "Scanning in progress. Please keep your face in the frame.", 
+            countdown: 10 
+        });
+    
         // Start capturing and sending frames every second
         this.intervalRef = setInterval(() => {
             const photo = this.cameraRef.current.takePhoto(); // Capture the image from camera
@@ -75,27 +83,30 @@ class UploadScan extends Component {
                 capturedFrames: [...prevState.capturedFrames, photo] // Add the captured frame to the state
             }));
         }, 1000); // 1 frame per second
-
+    
         // Stop scanning after 10 seconds
         this.timeoutRef = setTimeout(() => {
             this.stopScanning();
             console.log("Scanning stopped after 10 seconds.");
         }, 10000); // 10 seconds in milliseconds
-
+    
         // Update the countdown timer every second
         this.countdownRef = setInterval(() => {
             this.setState(prevState => ({ countdown: prevState.countdown - 1 }));
         }, 1000);
     }
 
-    stopScanning = () => {
-        this.setState({ 
-            isScanning: false, 
-            scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame.", 
+    stopScanning = (resetText = true) => {
+        this.setState(prevState => ({
+            isScanning: false,
+            scanningText: resetText 
+                ? "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame."
+                : prevState.scanningText, 
             countdown: 10, // Reset the countdown timer
             capturedFrames: [], // Clear the captured frames
             isCameraOn: false // Turn off the camera
-        });
+        }));
+    
         if (this.intervalRef) {
             clearInterval(this.intervalRef); // Stop the interval
             this.intervalRef = null;
@@ -135,7 +146,7 @@ class UploadScan extends Component {
                             cameraRef={this.cameraRef} 
                             isCameraOn={this.state.isCameraOn} 
                         />
-
+    
                         {/* Upload file UI taken out */}
                         <div className="flex flex-col w-full mt-4">
                             <div className="flex items-center space-x-2 md:space-x-4 rounded-md bg-[#E3E3E3] w-full p-2">
@@ -144,14 +155,14 @@ class UploadScan extends Component {
                                     src={this.state.selectedFiles.length > 0 ? tickIcon : infoIcon} 
                                     alt="info icon"
                                 />
-
+    
                                 {/* Dynamic message based on file upload status */}
                                 <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                     {this.state.selectedFiles.length > 0 
                                         ? `File Name: ${this.state.selectedFiles[0].file.name}` 
                                         : "Press Begin Face Scan to start scanning"}
                                 </p>
-
+    
                                 {this.state.selectedFiles.length > 0 && (
                                     <button 
                                         onClick={(e) => {
@@ -165,15 +176,15 @@ class UploadScan extends Component {
                                 )}
                             </div>
                             {this.state.isScanning && (
-                            <div className="flex flex-col justify-center items-center">
-                                <h2 className='font-bold text-[3.5vw] md:text-[3vw] my-3'>
-                                {this.state.countdown}s...
-                                </h2>
-                                <p className="text-bold">Verification in Progress...</p>
-                            </div>
+                                <div className="flex flex-col justify-center items-center">
+                                    <h2 className='font-bold text-[3.5vw] md:text-[3vw] my-3'>
+                                        {this.state.countdown}s...
+                                    </h2>
+                                    <p className="text-bold">Verification in Progress...</p>
+                                </div>
                             )}
                         </div>
-
+    
                         {/* Test to display frames */}
                         <div className="mt-4">
                             {this.state.capturedFrames.length > 0 && (
@@ -188,9 +199,9 @@ class UploadScan extends Component {
                             )}
                         </div>
                     </div>
-
+    
                     <div className="md:w-1/2 flex flex-col overflow-y-auto pt-4">
-                        {!this.state.isScanning && (
+                        {!this.state.isScanning && this.state.isMatched !== false && (
                             <p className='ml-auto text-[3.5vw] md:text-[1.3vw] my-3'>
                                 The face scanning allows us to expedite the verification of your identity.
                             </p>
@@ -198,14 +209,7 @@ class UploadScan extends Component {
                         <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3'>
                             {this.state.scanningText}
                         </p>
-
-                        {/**Countdown UI */}
-                        {/*{this.state.isScanning && (
-                            <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3 text-red-500'>
-                                Time remaining: {this.state.countdown} seconds
-                            </p>
-                        )}*/}
-
+    
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                             <button
                                 onClick={this.toggleCamera}
@@ -223,7 +227,7 @@ class UploadScan extends Component {
                                 Skip Face Scan
                             </button>
                         </div>
-
+    
                         {/* Buttons for simulating verification */}
                         <div className="flex justify-end pt-5">
                             <button
