@@ -39,6 +39,7 @@ class MatchController < ApplicationController
     end
   end
 
+  # return associated user details (GET) - /match/associated/[id]
   def associated
     begin
       @missing = MissingPerson.find(params[:id])
