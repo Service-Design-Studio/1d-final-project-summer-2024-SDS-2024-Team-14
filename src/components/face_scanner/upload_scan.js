@@ -20,6 +20,8 @@ class UploadScan extends Component {
         isCameraOn: false, // State to control camera view
         isScanning: false, // State to control scanning
         capturedFrames: [], // State to store captured frames
+        isMatched: null, // State to store verification result
+        scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame."
     };
 
     constructor(props) {
@@ -28,28 +30,44 @@ class UploadScan extends Component {
         this.intervalRef = null; // Ref for the interval
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        // Use componentDidUpdate to act on state changes
+        if (prevState.isMatched !== this.state.isMatched && this.state.isMatched !== null) {
+            if (this.state.isMatched) {
+                // Stop recording and allow progression forward
+                console.log("User verified, proceed.");
+                this.stopScanning(); // Stop scanning on successful verification
+            } else {
+                // Handle the case where the user is not verified
+                console.log("Verification failed, please try again.");
+            }
+        }
+    }
+
     handleCapture = async (image) => {
         const userID = localStorage.getItem("userID");
         try {
-            await axiosInstance.post(`/authentication/verify`, {frame: image, id: userID}).then((resp) => {
-                console.log(resp.data)
-            })
+            const resp = await axiosInstance.post(`/authentication/verify`, { frame: image, id: userID });
+            this.setState({ isMatched: resp.data.matched });
         } catch (error) {
             console.error(error.message);
         };
     }
 
     startScanning = () => {
-        this.setState({ isScanning: true });
+        this.setState({ isScanning: true, scanningText: "Scanning in progress. Please keep your face in the frame." });
         // Start capturing and sending frames every second
         this.intervalRef = setInterval(() => {
             const photo = this.cameraRef.current.takePhoto(); // Capture the image from camera
             this.handleCapture(photo); // Handle the captured image
+            this.setState(prevState => ({
+                capturedFrames: [...prevState.capturedFrames, photo] // Add the captured frame to the state
+            }));
         }, 1000); // 1 frame per second
     }
 
     stopScanning = () => {
-        this.setState({ isScanning: false });
+        this.setState({ isScanning: false, scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame." });
         if (this.intervalRef) {
             clearInterval(this.intervalRef); // Stop the interval
             this.intervalRef = null;
@@ -64,6 +82,10 @@ class UploadScan extends Component {
                 this.stopScanning(); // Stop scanning if camera is turned off
             }
         });
+    };
+
+    simulateVerification = (matched) => {
+        this.setState({ isMatched: matched });
     };
 
     render() {
@@ -107,7 +129,7 @@ class UploadScan extends Component {
                             </div>
                         </div>
 
-                        {/* Test to display frames -- can remove*/}
+                        {/* Test to display frames */}
                         <div className="mt-4">
                             {this.state.capturedFrames.length > 0 && (
                                 <div>
@@ -123,18 +145,20 @@ class UploadScan extends Component {
                     </div>
 
                     <div className="md:w-1/2 flex flex-col overflow-y-auto pt-4">
-                        <p className='ml-auto text-[3.5vw] md:text-[1.3vw] my-3'>
-                            The face scanning allows us to expedite the verification of your identity.
-                        </p>
+                        {!this.state.isScanning && (
+                            <p className='ml-auto text-[3.5vw] md:text-[1.3vw] my-3'>
+                                The face scanning allows us to expedite the verification of your identity.
+                            </p>
+                        )}
                         <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3'>
-                            Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame.
+                            {this.state.scanningText}
                         </p>
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                             <button
                                 onClick={this.toggleCamera}
                                 className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
                             >
-                                {this.state.isCameraOn ? (this.state.isScanning ? "Stop Face Scan" : "Begin Face Scan") : "Begin Face Scan"}
+                                {this.state.isCameraOn ? (this.state.isScanning ? "Please wait..." : "Begin Face Scan") : "Begin Face Scan"}
                             </button>
                         </div>
                         <div className="flex justify-end pt-5">
@@ -145,6 +169,22 @@ class UploadScan extends Component {
                                 Skip Face Scan
                             </button>
                         </div>
+
+                        {/* Buttons for simulating verification */}
+                        <div className="flex justify-end pt-5">
+                            <button
+                                onClick={() => this.simulateVerification(true)}
+                                className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#28a745] text-white mr-2`}
+                            >
+                                Simulate Success
+                            </button>
+                            <button
+                                onClick={() => this.simulateVerification(false)}
+                                className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#dc3545] text-white`}
+                            >
+                                Simulate Failure
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -153,4 +193,8 @@ class UploadScan extends Component {
 }
 
 export default UploadScan;
+
+
+
+
 
