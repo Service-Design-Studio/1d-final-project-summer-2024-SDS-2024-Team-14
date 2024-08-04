@@ -1,5 +1,5 @@
 import "../../../styles/globals.css"
-import { Button, Input} from "@mui/material"
+import { Button, Input } from "@mui/material"
 import { useState, useEffect } from "react"
 import FormField from "./form_field"
 import Image from "next/image"
@@ -14,12 +14,22 @@ export default function FamilyForm(props) {
             "date_birth": "",
             "ethnicity": ""
         });
-    const [photos, setPhotos] = useState([])
+    const [photos, setPhotos] = useState([]);
+    // const [files, setFiles] = useState([]);
+
+    function base64ToBlob(base64, contentType) {
+        const byteCharacters = atob(base64.split(',')[1]);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        return new Blob([byteArray], { type: contentType });
+    }
 
     let onSaveChanges = () => {
         axiosInstance.post("/missing",
             {
-
                 ...data,
                 "user_id": localStorage.getItem('userID'),
 
@@ -27,11 +37,26 @@ export default function FamilyForm(props) {
                 if (resp.status === 200 || resp.status === 201) {
                     localStorage.setItem('notificationMessage', 'You have successfully saved.');
                     localStorage.setItem('status', 'success');
+                    if (photos.length > 0) {
+                        try {
+                            const blob = base64ToBlob(photos[0], photos[0].type)
+                            const formData = new FormData();
+                            formData.append('id', resp.data.missing_id);
+                            formData.append('photo', blob, photos[0].name)
+                            axiosInstance.post("/missing/upload", formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                        } catch (error) {
+                            console.error('Error uploading image', error);
+                        }
+                    }
                 } else {
                     localStorage.setItem('notificationMessage', 'There was an error in saving, Please retry again later.');
                     localStorage.setItem('status', 'error');
                 }
-            });
+            })
         setData({});
         props.setFetch(true);
     }
@@ -46,6 +71,7 @@ export default function FamilyForm(props) {
     }
     const handleFileChange = (event) => {
         const file = event.target.files[0];
+        // setFiles(prev => [...prev, file])
         if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -68,12 +94,25 @@ export default function FamilyForm(props) {
                     <Input
                         type="file"
                         className="w-fit border-none self-end mx-3"
-                        onChange={ handleFileChange}>
+                        onChange={handleFileChange}>
                     </Input>
                 </div>
-                <div className="flex flex-row w-full overflow-x-scroll my-10 h-40 p-0">
+                <div className="flex flex-row w-full overflow-x-scroll my-10 p-0">
                     {photos.map((item, index) => {
-                        return <Image key={ index} src={item} width={1} height={1} className="aspect-square object-cover w-28 h-28 mx-5 border-darkblue border-2" alt="added photo" />
+                        return (
+                            <div key={index} className="flex flex-col items-center">
+                                <Image src={item} width={1} height={1} className="aspect-square object-cover w-28 mx-5 border-darkblue border-2" alt="added photo" />
+                                <div
+                                    className="underline"
+                                    onClick={() => {
+                                        setPhotos(prev => {
+                                            return prev.filter((item, i) => i != index)
+                                        })
+                                    }}>
+                                    Remove
+                                </div>
+                            </div>)
+
                     })}
                 </div>
             </div>
