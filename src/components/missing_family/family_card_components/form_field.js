@@ -1,17 +1,43 @@
 import "../../../styles/globals.css"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input, ButtonGroup, Button } from "@mui/material"
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from "dayjs";
 export default function FormField(props) {
     const [gender, setGender] = useState("Male");
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    const [ethnicity, setEthnicity] = useState("");
+    const [dateBirth, setDateBirth] = useState();
+    useEffect(() => {
+        switch (props.title) {
+            case "Gender":
+                setGender(props.default || "Male");
+                break;
+            case "Name":
+                setName(props.default);
+                break;
+            case "Age":
+                setAge(props.default);
+                break;
+            case "Ethnicity":
+                setEthnicity(props.default);
+                break;
+            case "Date Of Birth":
+                setDateBirth(dayjs(props.default, "DD-MM-YYYY", true));
+                break;
+        }
+    }, [props.default])
+
     return (
         <div className="flex flex-col w-full lg:min-w-96 my-3">
             <span className="text-lg">{props.title}</span>
             {props.title == "Age" &&
                 <span>
                     <Input
+                        value={age}
                         placeholder={props.placeholder}
                         inputProps={props.title}
                         onChange={(e) => props.setData((prev) => {
@@ -30,6 +56,7 @@ export default function FormField(props) {
                         label={props.title}
                         disableFuture={true}
                         placeholder={props.placeholder}
+                        value={dateBirth}
                         onChange={(e) => props.setData((prev) => {
                             return {
                                 ...prev,
@@ -46,11 +73,12 @@ export default function FormField(props) {
                         variant={gender == "Male" ? "contained" : "outlined"}
                         onClick={() => {
                             setGender("Male");
-                            props.setData((prev) => 
-                            {return {
-                                ...prev,
-                                "gender": "Male"
-                            }})
+                            props.setData((prev) => {
+                                return {
+                                    ...prev,
+                                    "gender": "Male"
+                                }
+                            })
                         }}>
                         Male
                     </Button>
@@ -72,7 +100,8 @@ export default function FormField(props) {
             }
             {props.title != "Date Of Birth" && props.title != "Age" && props.title != "Gender" &&
                 <Input
-                    placeholder={props.placeholder}
+                placeholder={props.placeholder}
+                value={props.title == "Name" ? name : ethnicity}
                     inputProps={props.title}
                     onChange={(e) => props.setData((prev) => {
                         return {

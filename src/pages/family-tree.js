@@ -9,6 +9,7 @@ import FamilyCard from "@/components/missing_family/family_card";
 import SideList from "@/components/missing_family/family_card_components/side_list";
 import FamilyForm from "@/components/missing_family/family_card_components/family_form";
 import PotentialMatches from "@/components/missing_family/potential_matches";
+import EditForm from "@/components/missing_family/family_card_components/edit_form";
 export default function FamilyTree() {
     const router = useRouter();
     const [open, setOpen] = useState(false)
@@ -17,7 +18,8 @@ export default function FamilyTree() {
     const [fetch, setFetch] = useState(true);
     const [selectedData, setSelectedData] = useState();
     const [matches, setMatches] = useState([]);
-    const [addNew, setAddNew] = useState(false)
+    const [addNew, setAddNew] = useState(false);
+    const [edit, setEdit] = useState(null);
     let getMissingPersons = async () => {
         let userID = localStorage.getItem("userID");
         try {
@@ -37,7 +39,6 @@ export default function FamilyTree() {
         }
     };
     useEffect(() => {
-
         getMissingPersons();
         setFetch(false);
         if (selectedData) {
@@ -93,20 +94,27 @@ export default function FamilyTree() {
                             data={data}
                             setData={setData}
                             addNew={addNew}
+                            setEdit={ setEdit}
                             setAddNew={setAddNew}
                         />
-                        {addNew && <FamilyForm
+                        {addNew && !edit && <FamilyForm
                             setAddNew={setAddNew}
                             setFetch={setFetch}
                         />}
-                        {!addNew &&
+                        {!addNew && !edit &&
                             <FamilyCard
                             setAddNew={setAddNew}
                             selectedData={selectedData}
                             setFetch={setFetch}
                             setSelected={setSelected}
-                            selected={ selected}
+                            selected={selected}
+                            setEdit={ setEdit}
                             />}
+                        {edit && edit >= 0 && <EditForm
+                            setFetch={setFetch}
+                            setEdit={setEdit}
+                            selectedData={ selectedData}
+                        />}
                         
                     </div>
 

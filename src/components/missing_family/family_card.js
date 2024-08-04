@@ -20,7 +20,7 @@ export default function FamilyCard(props) {
             props.setSelected()
         }
     }, [deletePerson])
-    
+
     return (
         <div className="relative flex flex-col rounded-r-2xl shadow-lg bg-white">
             {props.selectedData && props.selected >= 0 ?
@@ -47,7 +47,12 @@ export default function FamilyCard(props) {
                     // relationship={props.selectedData.relationship}
                     />
                     <div className="w-fit flex flex-row px-10 text-center h-fit p-0 justify-center items-center lg:mt-20">
-                        <Button className="bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-full">
+                        <Button
+                            className="bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-full"
+                            onClick={
+                                () => props.setEdit(props.selectedData.id)
+                            }
+                        >
                             <Image width={1} height={1} className="h-fit w-auto mx-3" src={"/images/edit.svg"} alt="Edit Entry" />
                             Edit
                         </Button>
