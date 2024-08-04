@@ -41,16 +41,18 @@ class MissingController < ApplicationController
     end
   end
 
-  def photo
-    begin
-      @missing = MissingPerson.find(params[:id])
-      if @missing.photo.attach?
-        render json: { photo_url: url_for(@missing.photo) }, status: :ok
-      end
-    rescue ActiveRecord::RecordNotFound
-      render json: { message: "No missing people found" }, status: :unprocessable_entity
+ def photo
+  begin
+    @missing = MissingPerson.find(params[:id])
+    if @missing.photo.attached?
+      render json: { photo_url: url_for(@missing.photo) }, status: :ok
+    else
+      render json: { message: "Photo not found" }, status: :not_found
     end
+  rescue ActiveRecord::RecordNotFound
+    render json: { message: "No missing people found" }, status: :unprocessable_entity
   end
+end
 
   def missing_params
     params.permit(:name, :age, :gender, :ethnicity, :date_birth)
