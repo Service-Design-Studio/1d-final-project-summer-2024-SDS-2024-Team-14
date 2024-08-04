@@ -22,10 +22,12 @@ class MatchController < ApplicationController
     end
   end
 
+
   # return matched users (GET) - /match/[id]
   def show
+    # TODO - do a check if they have been matched, if matched already just return the matched user's info
     begin
-      @missing = MissingPerson.find(params[:missing])
+      @missing = MissingPerson.find(params[:id])
     rescue ActiveRecord::RecordNotFound
         render json: { message: "Missing person does not exist" }, status: :unprocessable_entity
     end
@@ -37,3 +39,4 @@ class MatchController < ApplicationController
     end
   end
 end
+
