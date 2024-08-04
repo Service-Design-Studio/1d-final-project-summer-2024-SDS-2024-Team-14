@@ -10,7 +10,8 @@ import fileUpload from "../../../public/images/upload/file_upload.svg";
 import 'react-notifications-component/dist/theme.css';
 import Image from "next/image"; // Import the modal component
 import { Component, createRef } from 'react';
-import { withRouter } from 'next/router'; 
+import { withRouter } from 'next/router';
+import { useRouter } from 'next/router'; // Import useRouter
 
 class UploadScan extends Component {
     state = {
@@ -22,13 +23,16 @@ class UploadScan extends Component {
         isScanning: false, // State to control scanning
         capturedFrames: [], // State to store captured frames
         isMatched: null, // State to store verification result
-        scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame."
+        scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame.",
+        countdown: 10 // State to store the countdown timer
     };
 
     constructor(props) {
         super(props);
         this.cameraRef = createRef(); // Create a ref for the camera
         this.intervalRef = null; // Ref for the interval
+        this.timeoutRef = null; // Ref for the timeout
+        this.countdownRef = null; // Ref for the countdown interval
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -42,6 +46,10 @@ class UploadScan extends Component {
             } else {
                 // Handle the case where the user is not verified
                 console.log("Verification failed, please try again.");
+                this.setState({
+                    scanningText: "Face verification failed. Your face did not match the submitted passport photo. Please try again or skip Face Scan for now."
+                });
+                this.stopScanning(); // Stop scanning on verification failure
             }
         }
     }
@@ -57,7 +65,8 @@ class UploadScan extends Component {
     }
 
     startScanning = () => {
-        this.setState({ isScanning: true, scanningText: "Scanning in progress. Please keep your face in the frame." });
+        this.setState({ isScanning: true, scanningText: "Scanning in progress. Please keep your face in the frame.", countdown: 10 });
+
         // Start capturing and sending frames every second
         this.intervalRef = setInterval(() => {
             const photo = this.cameraRef.current.takePhoto(); // Capture the image from camera
@@ -66,13 +75,38 @@ class UploadScan extends Component {
                 capturedFrames: [...prevState.capturedFrames, photo] // Add the captured frame to the state
             }));
         }, 1000); // 1 frame per second
+
+        // Stop scanning after 10 seconds
+        this.timeoutRef = setTimeout(() => {
+            this.stopScanning();
+            console.log("Scanning stopped after 10 seconds.");
+        }, 10000); // 10 seconds in milliseconds
+
+        // Update the countdown timer every second
+        this.countdownRef = setInterval(() => {
+            this.setState(prevState => ({ countdown: prevState.countdown - 1 }));
+        }, 1000);
     }
 
     stopScanning = () => {
-        this.setState({ isScanning: false, scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame." });
+        this.setState({ 
+            isScanning: false, 
+            scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame.", 
+            countdown: 10, // Reset the countdown timer
+            capturedFrames: [], // Clear the captured frames
+            isCameraOn: false // Turn off the camera
+        });
         if (this.intervalRef) {
             clearInterval(this.intervalRef); // Stop the interval
             this.intervalRef = null;
+        }
+        if (this.timeoutRef) {
+            clearTimeout(this.timeoutRef); // Clear the timeout
+            this.timeoutRef = null;
+        }
+        if (this.countdownRef) {
+            clearInterval(this.countdownRef); // Clear the countdown interval
+            this.countdownRef = null;
         }
     }
 
@@ -91,6 +125,7 @@ class UploadScan extends Component {
     };
 
     render() {
+        const { router } = this.props; // Destructure router from props
         return (
             <div className="flex flex-col h-full">
                 <div className="md:pt-8 pt-6 flex flex-col md:flex-row justify-between gap-4">
@@ -129,6 +164,14 @@ class UploadScan extends Component {
                                     </button>
                                 )}
                             </div>
+                            {this.state.isScanning && (
+                            <div className="flex flex-col justify-center items-center">
+                                <h2 className='font-bold text-[3.5vw] md:text-[3vw] my-3'>
+                                {this.state.countdown}s...
+                                </h2>
+                                <p className="text-bold">Verification in Progress...</p>
+                            </div>
+                            )}
                         </div>
 
                         {/* Test to display frames */}
@@ -155,17 +198,26 @@ class UploadScan extends Component {
                         <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3'>
                             {this.state.scanningText}
                         </p>
+
+                        {/**Countdown UI */}
+                        {/*{this.state.isScanning && (
+                            <p className='md:my-2 text-[3.5vw] md:text-[1.3vw] my-3 text-red-500'>
+                                Time remaining: {this.state.countdown} seconds
+                            </p>
+                        )}*/}
+
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                             <button
                                 onClick={this.toggleCamera}
                                 className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
+                                disabled={this.state.isScanning} // Disable the button during scanning
                             >
                                 {this.state.isCameraOn ? (this.state.isScanning ? "Please wait..." : "Begin Face Scan") : "Begin Face Scan"}
                             </button>
                         </div>
                         <div className="flex justify-end pt-5">
                             <button
-                                onClick={() => { /* placeholder for next page */ }}
+                                onClick={() => router.push('../../')}
                                 className={`text-2mdd text-semibold text-[#4378DB] underline py-2 border-radius-19px rounded-md`}
                             >
                                 Skip Face Scan
@@ -195,8 +247,4 @@ class UploadScan extends Component {
 }
 
 export default withRouter(UploadScan);
-
-
-
-
 

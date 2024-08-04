@@ -36,6 +36,7 @@ export default function Passport() {
                 </div>
                 <div className="flex justify-end pt-5">
                     <button
+                        onClick={() => router.push('../../')}
                         className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white`}
                     >
                         Proceed
