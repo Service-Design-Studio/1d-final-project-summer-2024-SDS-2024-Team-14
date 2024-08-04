@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :verify
-  resources :notifications
+  resources :missing
+  resources :match
+  resources :chatbot
   post 'document', to: 'document#create'
   post 'document/retrieve', to: 'document#retrieve'
   post 'document/status', to: 'document#status'
@@ -17,7 +19,7 @@ Rails.application.routes.draw do
   get 'notifications/:id', to: 'notifications#show'
   post 'notifications/read', to: 'notifications#mark_all_as_read'
   post 'missing/upload', to: 'missing#upload'
-  resources :missing
-  resources :match
-  resources :chatbot
+  post 'authentication/upload', to: 'authentication#upload'
+  post 'authentication/verify', to: 'authentication#verify'
+  get 'match/associated/:id', to: 'match#associated'
 end

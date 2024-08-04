@@ -18,10 +18,10 @@ class MissingController < ApplicationController
       begin
         @missing = MissingPerson.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        render json: { message: "User does not exist" }, status: :unprocessable_entity and return
+        render json: { message: "Missing person does not exist" }, status: :unprocessable_entity and return
       end
       begin
-        missing.photo.attach(@photo)
+        @missing.photo.attach(@photo)
       rescue => e
         render json: { message: "Failed to upload photo: #{e.message}" }, status: :unprocessable_entity and return
       end
