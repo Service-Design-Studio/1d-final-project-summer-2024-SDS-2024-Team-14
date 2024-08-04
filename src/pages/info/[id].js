@@ -29,7 +29,11 @@ export default function Info() {
   const router = useRouter();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [docuData, setDocuData] = useState(null);
+  const [docuData, setDocuData] = useState([]);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
+  const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("Health");
 
   const categories = [
     { name: "Health", index: 0 },
@@ -41,9 +45,6 @@ export default function Info() {
   ];
 
   const tabsRef = useRef([]);
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
-  const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
   useEffect(() => {
     const setTabPosition = () => {
@@ -54,16 +55,19 @@ export default function Info() {
       }
     };
 
+
     setTabPosition();
+    const category = categories.find(cat => cat.index === activeTabIndex);
+    setSelectedCategory(category.name)
   }, [activeTabIndex]);
-  
-  let userID;
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const { data: res } = await axiosInstance.get("/users/" + router.query.id);
         setData(res);
+        await fetchDocuments();
       } catch (error) {
         console.error(error.message);
       }
@@ -73,22 +77,68 @@ export default function Info() {
     if (router.query.id) {
       fetchData();
     }
-  }, [router.query.id]);
-
+  }, [selectedCategory]);
 
   const fetchDocuments = async () => {
-
-    userID = localStorage.getItem("userID");
-    try {
-      await axiosInstance.post(`/document/retrieve`, {id: userID}).then((resp) => {
-        setData(resp.data.documents)
-    })
-    } catch (error) {
-      console.error(error.message);
-    };
-  }; 
+    const userID = router.query.id
+    if (!userID) {
+      console.log('No userID found in localStorage');
+      return;
+    }
   
+    const payload = {
+      id: userID,
+      category: selectedCategory, 
+    };
+  
+    try {
+      const { data: res } = await axiosInstance.post(`/document/retrieve`, payload);
+      setDocuData(res.documents);
+      
+    } catch (error) {
+      console.error('Error fetching documents:', error.message);
+    }
+  };
 
+  const renderImportantInfo = (important) => {
+    try {
+      const parsedImportant = JSON.parse(important);
+      return (
+        <div className="">
+          {Object.keys(parsedImportant).map((key, index) => (
+            <div key={key}>
+              {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
+              <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
+                {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
+              </strong>
+              <ul className="leading-loose">
+                {Array.isArray(parsedImportant[key])
+                  ? parsedImportant[key].map((item, idx) => (
+                      <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
+                        {typeof item === 'object' ? (
+                          <div className="ml-4">
+                            {Object.keys(item).map((itemKey) => (
+                              <div key={itemKey}>
+                                <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
+                                {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          item
+                        )}
+                      </li>
+                    ))
+                  : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
+              </ul>
+            </div>
+          ))}
+        </div>
+      );
+    } catch (error) {
+      return <p>Error parsing important information</p>;
+    }
+  };
   return (
     <div className="bg-local bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover min-h-screen text-center lg:px-[8vw]">
       <div className="flex items-center pt-4 ml-4">
@@ -178,20 +228,33 @@ export default function Info() {
               );
             })}
           </div>
-          <div className="bg-white w-full px-[2vw] rounded-b-lg rounded-r-lg md:rounded-b-lg md:rounded-tr-none">
-            <div className="flex flex-row py-[2vw] lg:py-[0.1vw] items-center justify-between">
-              <h1 className="text-darkblue text-[4vw] md:text-[3vw] xl:text-[1.4vw] py-[1vw] inline-block font-bold">
-                {docuData ? docuData.map((documents, idx) => (
-                  <div key={idx}>{documents.name}</div>
-                )) : 'No Documents Available'}
-              </h1>
-              <Image className="w-[8%] md:w-[8%]" src={DownloadIndiv} />
+          <div className="w-full rounded-b-lg rounded-r-lg md:rounded-b-lg md:rounded-tr-none">
+            {loading && <Loading text={"Loading..."} />}
+            {!loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
+            <div className="flex flex-col space-y-4">
+                {console.log(docuData)}
+                {docuData.length > 0 ? (
+                docuData.map((document) => (
+                    <div key={document.id} className="bg-white w-full px-[2vw] py-[2vw] lg:py-[0.1vw] rounded-lg flex flex-row items-center relative">
+                    <div>
+                        {document.important ? (
+                        renderImportantInfo(document.important)
+                        ) : (
+                        <p>No additional information available</p>
+                        )}
+                    </div>
+                    {document.important && (
+                        <Image className="w-[8%] md:w-[8%] absolute top-0 right-0" src={DownloadIndiv} />
+                    )}
+                    </div>
+                ))
+                ) : (
+                <p>No documents available for the selected category.</p>
+                )}
             </div>
-          </div>
+            </div>
         </div>
       </div>
-      {loading && <Loading text={"Loading..."} />}
-      {!loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
     </div>
   );
 }

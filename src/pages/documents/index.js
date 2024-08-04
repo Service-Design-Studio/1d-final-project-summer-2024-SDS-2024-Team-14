@@ -14,6 +14,8 @@ import axiosInstance from "@/utils/axiosInstance";
 import {ReactNotifications, Store} from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css';
 import DropdownArrow from "../../../public/images/icons/dropdown.svg"
+import ScannerIcon from "../../../public/images/icons/scanner.svg"
+import UploadIcon from "../../../public/images/icons/upload_icon.svg"
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -34,6 +36,11 @@ const DocumentManager = () => {
   const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [activeLink, setActiveLink] = useState(null);
+
+  const handleClick = (link) => {
+    setActiveLink(link);
+  };
 
   const capitalize = (str) => {
     if (typeof str !== 'string') return '';
@@ -231,38 +238,39 @@ const DocumentManager = () => {
     }
   };
 
+
   const renderImportantInfo = (important) => {
     try {
       const parsedImportant = JSON.parse(important);
       return (
         <div className="">
           {Object.keys(parsedImportant).map((key, index) => (
-          <div key={key}>
-            {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
-            <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
-              {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
-            </strong>
-            <ul className="leading-loose">
-              {Array.isArray(parsedImportant[key])
-                ? parsedImportant[key].map((item, idx) => (
-                    <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
-                      {typeof item === 'object' ? (
-                        <>
-                         {Object.keys(item).map((itemKey) => (
-                            <div key={itemKey} className="ml-4">
-                              <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
-                              {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
-                            </div>
-                          ))}
-                        </>
-                      ) : (
-                        item
-                      )}
-                    </li>
-                  ))
-                : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
-            </ul>
-          </div>
+            <div key={key}>
+              {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
+              <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
+                {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
+              </strong>
+              <ul className="leading-loose">
+                {Array.isArray(parsedImportant[key])
+                  ? parsedImportant[key].map((item, idx) => (
+                      <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
+                        {typeof item === 'object' ? (
+                          <>
+                            {Object.keys(item).map((itemKey) => (
+                              <div key={itemKey} className="ml-4">
+                                <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
+                                {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
+                              </div>
+                            ))}
+                          </>
+                        ) : (
+                          item
+                        )}
+                      </li>
+                    ))
+                  : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
+              </ul>
+            </div>
           ))}
         </div>
       );
@@ -355,28 +363,28 @@ const DocumentManager = () => {
               {rejectedCount} <b>Rejected</b>
             </button>
           </div>
-          <div className="flex gap-4 items-center">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold upload">
-              <Image src="/images/icons/upload_icon.svg" alt="Upload Icon" width={24} height={24} className="w-[2vw] pr-2" />
+          <div className="flex items-center">
+            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-[9px] px-4 bg-darkblue text-white rounded-l-xl font-bold upload">
+              <Image src={UploadIcon} alt="Upload Icon" className="w-[2vw] pr-2" />
               Upload
             </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="flex items-center py-2 px-4 bg-darkblue text-white rounded-xl font-bold scanner">
-              <Image src="/images/icons/scanner.svg" alt="Category Icon" width={24} height={24} className="w-[2vw] pr-2" />
+            <Link href={`/documents/scanner/${uploadCategory}`} className="border-darkblue border border-solid flex items-center py-[6.5px] px-4 bg-white text-gray rounded-r-xl font-bold scanner">
+              <Image src={ScannerIcon} alt="Category Icon" className="w-[2vw] pr-2" />
               Scan
             </Link>
-            <div className='px-2'>
+            <div className='pl-2'>
                 <div className="relative inline-block text-left">
                 <div>
                   <button
                     onClick={toggleDropdown}
                     type="button"
-                    className="flex items-center w-full px-4 py-2 text-[0.9vw] font-bold text-darkblue"
+                    className="focus:outline-none outline:none flex items-center w-full px-4 py-2 text-[0.9vw] font-bold text-darkblue"
                     id="menu-button"
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
                   >
                     in "
-                    <span className='captitalize'>{selectedCategory}"</span>
+                    <span>{selectedCategory}"</span>
                     <div className='pl-2'>
                       <Image src={DropdownArrow} />
                     </div>
@@ -385,7 +393,7 @@ const DocumentManager = () => {
 
                 {dropdownOpen && (
                   <div
-                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-opacity-5"
+                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white outline:none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="menu-button"
