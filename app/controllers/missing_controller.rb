@@ -11,6 +11,19 @@ class MissingController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      @missing = MissingPerson.find(params[:id])
+      if @missing.destroy
+        render json: {message: "The missing person entry has been deleted successfully"}, status: :ok
+      else
+        render json: {message: "Failed to delete missing person entry"}, status: :ok
+      end
+    rescue ActiveRecord::RecordNotFound
+    end
+    
+  end
+
   # Attach photo to missing person(POST) - /missing/upload
   def upload
     @photo = params[:photo]
@@ -47,7 +60,7 @@ class MissingController < ApplicationController
     if @missing.photo.attached?
       render json: { photo_url: url_for(@missing.photo) }, status: :ok
     else
-      render json: { message: "Photo not found" }, status: :not_found
+      render json: {photo_url: "" }, status: :ok
     end
   rescue ActiveRecord::RecordNotFound
     render json: { message: "No missing people found" }, status: :unprocessable_entity
