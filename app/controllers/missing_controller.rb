@@ -5,7 +5,7 @@ class MissingController < ApplicationController
     @missing = @user.missing_people.create(missing_params)
     if @missing.save
       # TODO - notification service
-      render json: {message: "The missing person #{@missing.name} has been created successfully", user_id: @user.id}, status: :created
+      render json: {message: "The missing person #{@missing.name} has been created successfully", user_id: @user.id, missing_id: @missing.id}, status: :created
     else
         render json: @user.errors, status: :unprocessable_entity
     end
@@ -41,6 +41,16 @@ class MissingController < ApplicationController
     end
   end
 
+  def photo
+    begin
+      @missing = MissingPerson.find(params[:id])
+      if @missing.photo.attach?
+        render json: { photo_url: url_for(@missing.photo) }, status: :ok
+      end
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: "No missing people found" }, status: :unprocessable_entity
+    end
+  end
 
   def missing_params
     params.permit(:name, :age, :gender, :ethnicity, :date_birth)
