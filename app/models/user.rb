@@ -70,7 +70,8 @@ class User < ApplicationRecord
             # Calculate similarity for each user
             similarity_scores = {}
             match_counts.each do |user, count|
-              similarity_scores[user] = compare_faces(user.photo, input_photo)
+                # TODO - need to convert into path to be read into bytes
+              similarity_scores[user] = compare_faces(user.photo.download, input_photo)
             end
         
             # Transform match_counts to an array of hashes with user and their match count
@@ -86,7 +87,6 @@ class User < ApplicationRecord
             end
         else
             result = match_counts.map do |user, count|
-                Rails.logger.debug count
                 percentage = (count.to_f / 8) * 100
                 serialized_user = ActiveModelSerializers::SerializableResource.new(user, serializer: UserMatchedSerializer).as_json
                 { user: serialized_user, percentage: percentage }
