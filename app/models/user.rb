@@ -70,6 +70,7 @@ class User < ApplicationRecord
             # Calculate similarity for each user
             similarity_scores = {}
             match_counts.each do |user, count|
+                # TODO - need to convert into path to be read into bytes
               similarity_scores[user] = compare_faces(user.photo, input_photo)
             end
         
