@@ -10,6 +10,7 @@ import fileUpload from "../../../public/images/upload/file_upload.svg";
 import 'react-notifications-component/dist/theme.css';
 import Image from "next/image"; // Import the modal component
 import { Component, createRef } from 'react';
+import { withRouter } from 'next/router'; 
 
 class UploadScan extends Component {
     state = {
@@ -37,6 +38,7 @@ class UploadScan extends Component {
                 // Stop recording and allow progression forward
                 console.log("User verified, proceed.");
                 this.stopScanning(); // Stop scanning on successful verification
+                this.props.router.push('../../verifysuccess'); // Redirect to verifysuccess page
             } else {
                 // Handle the case where the user is not verified
                 console.log("Verification failed, please try again.");
@@ -192,7 +194,7 @@ class UploadScan extends Component {
     }
 }
 
-export default UploadScan;
+export default withRouter(UploadScan);
 
 
 
