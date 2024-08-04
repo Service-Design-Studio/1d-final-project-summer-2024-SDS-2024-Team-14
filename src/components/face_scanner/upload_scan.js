@@ -74,31 +74,36 @@ class UploadScan extends Component {
             scanningText: "Please do not move while face scanning is in progress. The scan will be completed soon.", 
             countdown: 15
         });
-
+    
         this.intervalRef = setInterval(() => {
             const photo = this.cameraRef.current.takePhoto(); // Capture the image from camera
             this.handleCapture(photo); // Handle the captured image
         }, 3000); 
-
+    
         this.timeoutRef = setTimeout(() => {
-            this.stopScanning();
+            this.stopScanning(true, false); // Stop scanning with no match after the timeout
         }, 15000); 
-
+    
         this.countdownRef = setInterval(() => {
             this.setState(prevState => ({ countdown: prevState.countdown - 1 }));
         }, 1000);
     }
 
-    stopScanning = (resetText = true) => {
+    stopScanning = (resetText = true, isMatched = null) => {
+        if (isMatched === null) {
+            isMatched = false; // If no match, set to false to indicate failure
+        }
+    
         this.setState(prevState => ({
             isScanning: false,
+            isMatched,
             scanningText: resetText 
                 ? "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame."
                 : prevState.scanningText, 
             countdown: 15,
             isCameraOn: false // Turn off the camera
         }));
-
+    
         if (this.intervalRef) {
             clearInterval(this.intervalRef);
             this.intervalRef = null;
@@ -130,7 +135,8 @@ class UploadScan extends Component {
 
     // Function to confirm skipping the scan
     confirmSkip = () => {
-        this.setState({ showSuccessUI: true, showModal: false }); // Show success UI and close the modal
+        this.setState({ showModal: false }); // Show success UI and close the modal
+        this.props.router.push('/your-desired-path'); // Adjust path later to homepage?
     }
 
     // Function to cancel skipping the scan
@@ -183,14 +189,15 @@ class UploadScan extends Component {
     renderModal() {
         return (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white rounded-lg p-5">
-                    <h2 className="text-lg font-semibold">Are you sure you want to continue?</h2>
+                <div className="bg-white rounded-lg p-5 border border-darkblue">
+                    <h2 className="text-lg font-semibold">Are you sure you want to skip?</h2>
+                    <p className="pt-2 text-2mdd ">This may prolong your verification process.</p>
                     <div className="flex justify-end mt-4">
-                        <button onClick={this.confirmSkip} className="bg-[#4378DB] text-white px-4 py-2 rounded mr-2">
+                        <button onClick={this.confirmSkip} className="text-darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
                             Yes
                         </button>
-                        <button onClick={this.cancelSkip} className="border border-gray-300 px-4 py-2 rounded">
-                            No
+                        <button onClick={this.cancelSkip} className="border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
+                            No, I will stay
                         </button>
                     </div>
                 </div>
