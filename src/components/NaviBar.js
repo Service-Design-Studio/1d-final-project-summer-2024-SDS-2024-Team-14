@@ -1,3 +1,4 @@
+// src/components/NaviBar.js
 import Link from "next/link";
 import EnableId from "../../public/images/enable_id_logo.svg"
 import Image from "next/image";
@@ -8,11 +9,16 @@ import resourceIcon from "../../public/images/map.svg"
 import notificationIcon from "../../public/images/filled_bell.svg"
 import alertNotificationIcon from "../../public/images/unfilled_alert_bell.svg"
 import unfilledNotificationIcon from "../../public/images/unfilled_bell.svg"
+import QnMarkIcon from "../../public/images/tutorial/blueqnmark.svg";
 import { Button } from '@mui/material'
 import NotificationPage from "./notifications/notification_page";
+import Tutorial from './Tutorial';
+import famTreeContent from './modalContent/famtree'; // Adjust this import as needed
+
 export default function NaviBar({ open, setOpen }) {
     const [navState, setNavState] = useState(false)
     const [unread, setUnread] = useState(false)
+    const [tutorialOpen, setTutorialOpen] = useState(false); // Separate state for the tutorial modal
     const popupRef = useRef(null);
     const notifRef = useRef(null)
     const handleClickOutside = (event) => {
@@ -35,6 +41,7 @@ export default function NaviBar({ open, setOpen }) {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [navState]);
+
     useEffect(() => {
         if (open) {
             window.addEventListener('mousedown', handleClickOutside)
@@ -42,6 +49,7 @@ export default function NaviBar({ open, setOpen }) {
             window.removeEventListener('mousedown', handleClickOutside)
         }
     }, [open])
+
     return (
         <div className="flex justify-between items-center mt-2">
             {/*Logo for desktop*/}
@@ -84,27 +92,21 @@ export default function NaviBar({ open, setOpen }) {
                 {/*Links */}
                 <ul className="text-black pl-4 pr-16">
                     {[
-                        // ['Home', '/', ""],
                         ['Documents Manager', '/documents', documentIcon],
                         ['Family', '/family-tree', familyIcon],
-                        // ['Community', '', ""],
                         ['Resources', '/resources', resourceIcon],
                     ].map(([title, url, img]) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <>
-                            <div className="py-4 flex items-center">
-                                <div className="w-[8vw] inline-block">
-                                    <Image src={img} layout="responsive" alt={`navigation ${title} icon`} />
-                                </div>
-                                <li className='inline-block ml-3 items-center'>
-                                    <Link href={url} onClick={() => {
-                                        setNavState(!navState)
-                                    }} smooth={true} className="md:text-[2vw] text-[4vw] font-semibold text-darkblue">{title}</Link>
-                                </li>
+                        <div className="py-4 flex items-center" key={title}>
+                            <div className="w-[8vw] inline-block">
+                                <Image src={img} layout="responsive" alt={`navigation ${title} icon`} />
                             </div>
-                        </>
-                    )
-                    )}
+                            <li className='inline-block ml-3 items-center'>
+                                <Link href={url} onClick={() => setNavState(!navState)} smooth={true} className="md:text-[2vw] text-[4vw] font-semibold text-darkblue">
+                                    {title}
+                                </Link>
+                            </li>
+                        </div>
+                    ))}
                     <div className={`py-4 flex items-center ${unread ? `animate-pulse new_notification_icon`: `notification_icon`}`}>
                         <div className="w-[8vw] inline-block">
                             <Image className={`max-w-[5vw] mx-auto `} src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && notificationIcon)} layout="responsive" alt="navigation icon" />
@@ -113,7 +115,7 @@ export default function NaviBar({ open, setOpen }) {
                             <Link onClick={() => {
                                 setOpen(!open)
                                 setNavState(!navState)
-                            }} smooth={true} href={""} className="md:text-[2vw] text-[4vw] font-semibold text-darkblue">Navigation</Link>
+                            }} smooth={true} href={""} className="md:text-[2vw] text-[4vw] font-semibold text-darkblue">Notifications</Link>
                         </li>
                     </div>
                 </ul>
@@ -126,10 +128,14 @@ export default function NaviBar({ open, setOpen }) {
                     ['Family', '/family-tree'],
                     ['Resources', '/resources'],
                 ].map(([title, url]) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <Link href={url} className="py-4 font-bold text-darkblue">{title}</Link>
+                    <Link key={title} href={url} className="py-4 font-bold text-darkblue">
+                        {title}
+                    </Link>
                 ))}
                 <a href={"https://www.gebirah.org/"} target="_blank" className="py-4 font-bold text-darkblue"> Community </a>
+                <Button onClick={() => setTutorialOpen(true)} className="hover:bg-white hover:bg-opacity-25">
+                    <Image src={QnMarkIcon} width={30} height={30} alt="Open Tutorial" />
+                </Button>
                 <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md bg-white hover:bg-white` : `hover:bg-white hover:bg-opacity-25`} notification`}>
                     <Image
                         src={(open && notificationIcon) || (!open && unread && alertNotificationIcon) || (!open && !unread && unfilledNotificationIcon)} width={1} height={1}
@@ -137,6 +143,7 @@ export default function NaviBar({ open, setOpen }) {
                 </Button>
             </div>
             <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>
+            {tutorialOpen && <Tutorial title="Family Tree Tutorial" steps={famTreeContent} />}
         </div>
     )
 }
