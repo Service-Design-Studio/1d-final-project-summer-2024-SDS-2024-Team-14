@@ -31,7 +31,7 @@ class MatchController < ApplicationController
     rescue ActiveRecord::RecordNotFound
         render json: { message: "Missing person does not exist" }, status: :unprocessable_entity
     end
-    match_json = User.find_matches(@missing.name, @missing.ethnicity, @missing.age, @missing.gender, @missing.date_birth, @missing.photo.attached? ? @missing.photo : nil)
+    match_json = User.find_matches(@missing.name, @missing.ethnicity, @missing.age, @missing.gender, @missing.date_birth, @missing.photo.attached? ? @missing.photo.download : nil)
     unless match_json.nil? 
       render json: match_json, status: :ok
     else
