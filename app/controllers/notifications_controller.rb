@@ -1,9 +1,4 @@
 class NotificationsController < ApplicationController
-  # get all Notifications(GET) - /notifications
-  def index 
-    render json: Notification.all, status: :ok
-  end
-
   # get all Notifications(GET) - /notifications/[id]
   def show
     user = params[:id]
