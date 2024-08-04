@@ -38,5 +38,18 @@ class MatchController < ApplicationController
       render json: { message: "No similar matches were found for this person"}, status: :ok
     end
   end
+
+  def associated
+    begin
+      @missing = MissingPerson.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: "Missing person does not exist" }, status: :unprocessable_entity
+    end
+    if @missing.matched_user
+      render json: @missing.matched_user, status: :ok
+    else
+      render json: { message: "No users are associated with this missing person"}, status: :ok
+    end
+  end
 end
 
