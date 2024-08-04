@@ -47,9 +47,12 @@ class UploadScan extends Component {
                 console.log("Verification failed, please try again.");
                 this.setState({
                     scanningText: (
-                        <div className="flex items-start">
+                    <div className="flex items-start">
                         <Image src={infoIcon} alt="Failed Icon" className="w-9 h-9 mr-2" />
-                        <span>Face verification failed. Your face did not match the submitted passport photo. Please try again or skip Face Scan for now.</span>
+                        <div className="flex-col">
+                        <p>Face verification failed. Your face did not match the submitted passport photo. </p>
+                        <p className ="pt-4">Please try again or skip Face Scan for now.</p>
+                        </div>
                     </div>
                     )
                 });
@@ -228,7 +231,7 @@ class UploadScan extends Component {
                             </button>
                         </div>
     
-                        {/* Buttons for simulating verification */}
+                        {/* Test Buttons for simulating verification -- can remove */}
                         <div className="flex justify-end pt-5">
                             <button
                                 onClick={() => this.simulateVerification(true)}
