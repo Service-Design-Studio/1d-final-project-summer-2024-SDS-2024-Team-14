@@ -9,13 +9,19 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :verify
+  resources :missing do
+    member do
+      post 'upload'
+      get 'photo'
+    end
+  end
   post 'document', to: 'document#create'
   post 'document/retrieve', to: 'document#retrieve'
   post 'document/status', to: 'document#status'
   post 'login', to: 'login#create'
   get 'notifications/:id', to: 'notifications#show'
   post 'notifications/read', to: 'notifications#mark_all_as_read'
-  post 'missing/upload', to: 'missing#upload'
+  # post 'missing/upload', to: 'missing#upload'
   post 'authentication/upload', to: 'authentication#upload'
   post 'authentication/verify', to: 'authentication#verify'
   resources :missing
