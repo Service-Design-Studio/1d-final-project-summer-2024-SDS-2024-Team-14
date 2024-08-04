@@ -23,7 +23,7 @@ export default function SideList(props) {
                                     <Image
                                         unoptimized
                                         className=" w-[20%] object-cover aspect-square rounded-full mx-3"
-                                        src={data.src ? data.src[0] : "/images/default_profile_pic.svg"}
+                                        src={data.src ? data.src : "/images/default_profile_pic.svg"}
                                         width={10} height={10}
                                         alt="entry image" />
                                     <span className="flex-1 line-clamp-2 my-auto">{data.name}</span>

@@ -21,36 +21,33 @@ export default function FamilyTree() {
     let getMissingPersons = async () => {
         let userID = localStorage.getItem("userID");
         try {
-            await axiosInstance.get(`/missing/${userID}`).then((resp) => {
-                setData(resp.data)
-                // console.log("response: ", resp.data)
-            })
+            const resp = await axiosInstance.get(`/missing/${userID}`);
+            if (resp.data.length > 0) {
+                const updatedEntries = await Promise.all(
+                    resp.data.map(async (entry) => {
+                        const photoResp = await axiosInstance.get(`/missing/photo/${entry.id}`);
+                        entry["src"] = photoResp.data.photo_url;
+                        return entry;
+                    })
+                );
+                setData(updatedEntries);
+            }
         } catch (error) {
-            console.error(error.message)
+            console.error(error.message);
         }
-    }
+    };
     useEffect(() => {
-        if (fetch) {
-            getMissingPersons();
-            setFetch(false);
-        }
-    }, [fetch])
 
-    useEffect(() => {
-        if (data && selected < data.length) {
-            setSelectedData(data[selected])
-        }
-    }, [selected])
-
-    useEffect(() => {
+        getMissingPersons();
+        setFetch(false);
         if (selectedData) {
             try {
                 //TODO: fix get match/id in backend
-                /*
+
                 axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
                     setMatches(res.data);
                 })
-                */
+
             } catch (error) {
                 setMatches([])
             } finally {
@@ -65,8 +62,17 @@ export default function FamilyTree() {
                 }
             }
         }
-    }, [selectedData])
+    }, [fetch])
 
+    useEffect(() => {
+        if (data && selected < data.length) {
+            setSelectedData(data[selected])
+        }
+    }, [selected])
+
+    useEffect(() => {
+
+    }, [selectedData])
 
     useAuth();
     return (
