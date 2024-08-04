@@ -1,5 +1,5 @@
 import "../../../styles/globals.css"
-import { Button } from "@mui/material"
+import { Button, Input} from "@mui/material"
 import { useState, useEffect } from "react"
 import FormField from "./form_field"
 import Image from "next/image"
@@ -35,6 +35,7 @@ export default function FamilyForm(props) {
         setData({});
         props.setFetch(true);
     }
+    //TODO: let user delete missing person entry
     let onDelete = () => {
         axiosInstance.post("",
             {
@@ -42,6 +43,19 @@ export default function FamilyForm(props) {
             }
         );
         setData({});
+    }
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhotos(prev => [...prev, reader.result]);
+            }
+            reader.readAsDataURL(file);
+        } else {
+            //TODO: Popup for wrong file format selected
+            console.log("Selected file not in .jpeg or .png format");
+        }
     }
     return (
         <div className="flex flex-col rounded-r-2xl w-full h-full shadow-lg bg-white text-darkblue text-lg font-semibold px-3 overflow-scroll">
@@ -51,11 +65,15 @@ export default function FamilyForm(props) {
             <div className="mt-1 w-full">
                 <div className="flex flex-row w-full">
                     <span className="w-fit">Photos</span>
-                    <Button className="w-fit bg-darkblue text-white hover:bg-darkblue hover:opacity-75 self-end mx-3">Add Photo</Button>
+                    <Input
+                        type="file"
+                        className="w-fit border-none self-end mx-3"
+                        onChange={ handleFileChange}>
+                    </Input>
                 </div>
-                <div className="w-full overflow-x-scroll">
+                <div className="flex flex-row w-full overflow-x-scroll my-10 h-40 p-0">
                     {photos.map((item, index) => {
-                        <Image src={item} width={10} height={10} className="aspect-square object-cover" alt="added photo" />
+                        return <Image key={ index} src={item} width={1} height={1} className="aspect-square object-cover w-28 h-28 mx-5 border-darkblue border-2" alt="added photo" />
                     })}
                 </div>
             </div>
