@@ -60,7 +60,13 @@ export default function FamilyForm(props) {
 
             }
         );
-        setData({});
+        setData({
+            "name": "",
+            "gender": "Male",
+            "age": "",
+            "date_birth": "",
+            "ethnicity": ""
+        });
     }
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -78,6 +84,17 @@ export default function FamilyForm(props) {
             console.log("Selected file not in .jpeg or .png format");
         }
     }
+
+    useEffect(() => {
+        setData({
+            "name": "",
+            "gender": "Male",
+            "age": "",
+            "date_birth": "",
+            "ethnicity": ""
+        })
+    }, [props.addNew])
+    
     return (
         <div className="flex flex-col rounded-r-2xl w-full h-full shadow-lg bg-white text-darkblue text-lg font-semibold px-3 overflow-scroll">
             <div className="mt-3 text-2xl">
@@ -151,15 +168,6 @@ export default function FamilyForm(props) {
                         <Image width={1} height={1} className="h-0.8 w-auto mr-2 " src={"/images/save_icon.svg"} alt="Save Changes" /> Save Changes
                     </Button>
                 </div>
-
-                <Button
-                    className="underline text-darkblue my-3"
-                    onClick={() => {
-                        props.setAddNew(false);
-                        onDelete();
-                    }}>
-                    <Image width={1} height={1} className="h-full w-auto" src={"/images/cross_icon.svg"} alt="Delete All" /> Delete All
-                </Button>
             </div>
         </div>)
 }

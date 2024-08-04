@@ -16,6 +16,7 @@ export default function SideList(props) {
                             className={` w-full h-fit flex flex-col text-darkblue font-semibold text-xl justify-center py-3 border-t border-lightgray ${props.selected == idx ? "pointer-events-none bg-darkblue text-white" : "hover:bg-darkblue hover:bg-opacity-65 hover:text-white"}`}
                             onClick={() => {
                                 props.setSelected(idx)
+                                props.setAddNew(false)
                             }}
                         >
                             <div>

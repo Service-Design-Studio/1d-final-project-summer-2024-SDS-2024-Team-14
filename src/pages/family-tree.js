@@ -44,9 +44,9 @@ export default function FamilyTree() {
             try {
                 //TODO: fix get match/id in backend
 
-                axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
-                    setMatches(res.data);
-                })
+                // axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
+                //     setMatches(res.data);
+                // })
 
             } catch (error) {
                 setMatches([])
@@ -86,12 +86,13 @@ export default function FamilyTree() {
                     Add more pictures using the plus button to improve matches.<br />
                     Click on the swap button to swap the missing family member
                 </div>
-                <div className="flex flex-col xl:flex-row w-full md:mt-20">
-                    <div className="flex flex-row lg:h-[50vh] h-[500px] xl:max-h-fit w-full  xl:mb-0 mb-10 overflow-y-scroll">
+                <div className="flex flex-col xl:flex-row w-full md:mt-20 ">
+                    <div className="flex flex-row lg:h-[53vh] h-[500px] xl:max-h-fit w-full  xl:mb-0 mb-10 overflow-y-scroll">
                         <SideList
                             selected={selected}
                             setSelected={setSelected}
                             data={data}
+                            setData={ setData}
                             addNew={addNew}
                             setAddNew={setAddNew}
                         />
