@@ -1,10 +1,11 @@
 import "../../../styles/globals.css"
-import { Input } from "@mui/material"
+import { useState } from 'react';
+import { Input, ButtonGroup, Button } from "@mui/material"
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 export default function FormField(props) {
-
+    const [gender, setGender] = useState("Male");
     return (
         <div className="flex flex-col w-full lg:min-w-96 my-3">
             <span className="text-lg">{props.title}</span>
@@ -16,7 +17,7 @@ export default function FormField(props) {
                         onChange={(e) => props.setData((prev) => {
                             return {
                                 ...prev,
-                                [props.title]: e.target.value
+                                "age": e.target.value
                             }
                         })
                         }
@@ -32,20 +33,51 @@ export default function FormField(props) {
                         onChange={(e) => props.setData((prev) => {
                             return {
                                 ...prev,
-                                [props.title]: JSON.stringify(e)
+                                "date_birth": JSON.stringify(e)
                             }
                         })
                         }
                     />
                 </LocalizationProvider>}
-            {props.title != "Date Of Birth" && props.title != "Age" &&
+            {props.title == "Gender" &&
+                <ButtonGroup>
+                    <Button
+                        disableElevation
+                        variant={gender == "Male" ? "contained" : "outlined"}
+                        onClick={() => {
+                            setGender("Male");
+                            props.setData((prev) => 
+                            {return {
+                                ...prev,
+                                "gender": "Male"
+                            }})
+                        }}>
+                        Male
+                    </Button>
+                    <Button
+                        disableElevation
+                        variant={gender == "Female" ? "contained" : "outlined"}
+                        onClick={() => {
+                            setGender("Female");
+                            props.setData((prev) => {
+                                return {
+                                    ...prev,
+                                    "gender": "Female"
+                                }
+                            })
+                        }}>
+                        Female
+                    </Button>
+                </ButtonGroup>
+            }
+            {props.title != "Date Of Birth" && props.title != "Age" && props.title != "Gender" &&
                 <Input
                     placeholder={props.placeholder}
                     inputProps={props.title}
                     onChange={(e) => props.setData((prev) => {
                         return {
                             ...prev,
-                            [props.title]: e.target.value
+                            [String(props.title).toLowerCase()]: e.target.value
                         }
                     })
                     }

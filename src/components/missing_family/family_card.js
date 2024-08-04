@@ -24,9 +24,9 @@ export default function FamilyCard(props) {
                     <CardDetails
                         gender={props.selectedData.gender}
                         age={props.selectedData.age}
-                        dob={props.selectedData["Date Of Birth"]}
+                        dob={props.selectedData["date_birth"]}
                         ethnicity={props.selectedData.ethnicity}
-                        relationship={props.selectedData.relationship}
+                        // relationship={props.selectedData.relationship}
                     /> </div> :
                 <div className="self-center my-auto text-darkblue font-semibold">
                     <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-0.8 my-10 opacity-75 mx-auto" alt="" />

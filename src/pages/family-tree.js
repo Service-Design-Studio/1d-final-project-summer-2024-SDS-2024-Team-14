@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import NaviBar from "@/components/NaviBar";
 import "../styles/globals.css"
-import Link from "next/link"
+import axiosInstance from "../utils/axiosInstance";
 import useAuth from "@/hooks/useAuth";
 import ChatBot from "@/components/ChatBot";
 import FamilyCard from "@/components/missing_family/family_card";
@@ -14,90 +14,29 @@ export default function FamilyTree() {
     const [open, setOpen] = useState(false)
     const [selected, setSelected] = useState();
     const [data, setData] = useState([])
+    const [fetch, setFetch] = useState(true);
     const [selectedData, setSelectedData] = useState();
     const [addNew, setAddNew] = useState(false)
-    const placeholderData = [
-        {
-            "name": "Abdul Ahmed",
-            "gender": "M",
-            "age": "12",
-            "Date Of Birth": "12 Jun 2012",
-            "ethnicity": "Arab",
-            "relationship": "Brother",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "Anita Bin Fatima",
-            "gender": "F",
-            "age": "5",
-            "Date Of Birth": "23 April 1999",
-            "ethnicity": "Malay",
-            "relationship": "Father",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "John Sinclair",
-            "gender": "F",
-            "age": "69",
-            "Date Of Birth": "12 Dec 1912",
-            "ethnicity": "Chinese",
-            "relationship": "Mother",
-            "src": "/images/family_member_placeholder.png"
-        },
-        {
-            "name": "Abdul Ahmed",
-            "gender": "M",
-            "age": "12",
-            "Date Of Birth": "12 Jun 2012",
-            "ethnicity": "Arab",
-            "relationship": "Brother",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "Anita Bin Fatima",
-            "gender": "F",
-            "age": "5",
-            "Date Of Birth": "23 April 1999",
-            "ethnicity": "Malay",
-            "relationship": "Father",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "John Sinclair",
-            "gender": "F",
-            "age": "69",
-            "Date Of Birth": "12 Dec 1912",
-            "ethnicity": "Chinese",
-            "relationship": "Mother",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "Abdul Ahmed",
-            "gender": "M",
-            "age": "12",
-            "Date Of Birth": "12 Jun 2012",
-            "ethnicity": "Arab",
-            "relationship": "Brother",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "Anita Bin Fatima",
-            "gender": "F",
-            "age": "5",
-            "Date Of Birth": "23 April 1999",
-            "ethnicity": "Malay",
-            "relationship": "Father",
-            "src": "/images/family_member_placeholder.png"
-        }, {
-            "name": "John Sinclair",
-            "gender": "F",
-            "age": "69",
-            "Date Of Birth": "12 Dec 1912",
-            "ethnicity": "Chinese",
-            "relationship": "Mother",
-            "src": "/images/family_member_placeholder.png"
+    let getMissingPersons = async () => {
+        let userID = localStorage.getItem("userID");
+        try {
+            await axiosInstance.get(`/missing/${userID}`).then((resp) => {
+                setData(resp.data)
+                // console.log("response: ", resp.data)
+            })
+        } catch (error) {
+            console.error(error.message)
         }
-    ]
+    }
+    useEffect(() => {
+        if (fetch) {
+            getMissingPersons();
+            setFetch(false);
+        }
+    }, [fetch])
 
     useEffect(() => {
-        setData(placeholderData)
-    }, [])
-    useEffect(() => {
-        setSelectedData(placeholderData[selected])
+        setSelectedData(data[selected])
     }, [selected])
 
     useAuth();
@@ -123,6 +62,7 @@ export default function FamilyTree() {
                         />
                         {addNew && <FamilyForm
                             setAddNew={setAddNew}
+                            setFetch={ setFetch}
                         />}
                         {!addNew &&
                             <FamilyCard

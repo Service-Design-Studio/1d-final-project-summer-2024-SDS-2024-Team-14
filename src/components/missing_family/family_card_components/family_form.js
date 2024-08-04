@@ -6,13 +6,23 @@ import Image from "next/image"
 import axiosInstance from "../../../utils/axiosInstance";
 
 export default function FamilyForm(props) {
-    const [data, setData] = useState({});
+    const [data, setData] = useState(
+        {
+            "name": "",
+            "gender": "Male",
+            "age": "",
+            "date_birth": "",
+            "ethnicity": ""
+        });
     const [photos, setPhotos] = useState([])
+
     let onSaveChanges = () => {
-        axiosInstance.post("",
+        axiosInstance.post("/missing",
             {
-                "id": localStorage.getItem('userID'),
-                "data": data
+
+                ...data,
+                "user_id": localStorage.getItem('userID'),
+
             }).then(resp => {
                 if (resp.status === 200 || resp.status === 201) {
                     localStorage.setItem('notificationMessage', 'You have successfully saved.');
@@ -23,6 +33,7 @@ export default function FamilyForm(props) {
                 }
             });
         setData({});
+        props.setFetch(true);
     }
     let onDelete = () => {
         axiosInstance.post("",
@@ -50,10 +61,12 @@ export default function FamilyForm(props) {
             </div>
 
             <FormField title={"Name"} placeholder={"e.g. Abdul Ahmed"} setData={setData} />
+            <FormField title={"Gender"} placeholder={"e.g. M/F"} setData={setData} />
+
             <FormField title={"Age"} placeholder={""} setData={setData} />
             <FormField title={"Date Of Birth"} placeholder={Date.now} setData={setData} />
             <FormField title={"Ethnicity"} placeholder={"e.g. Arab"} setData={setData} />
-            <FormField title={"Relationship"} placeholder={"e.g. Brother"} setData={setData} />
+            {/* <FormField title={"Relationship"} placeholder={"e.g. Brother"} setData={setData} /> */}
             <div className="flex flex-col items-center my-5">
                 <div>
                     <Button
