@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'notifications/:id', to: 'notifications#show'
   post 'notifications/read', to: 'notifications#mark_all_as_read'
   post 'missing/upload', to: 'missing#upload'
+  post 'missing/update', to: 'missing#update'
   post 'missing/delete', to: 'missing#destroy'
   get 'missing/photo/:id', to: 'missing#photo'
   post 'authentication/upload', to: 'authentication#upload'

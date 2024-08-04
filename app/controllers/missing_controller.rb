@@ -23,7 +23,18 @@ class MissingController < ApplicationController
     end
     
   end
-
+def update
+  begin
+    @missing = MissingPerson.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { message: "Missing person does not exist" }, status: :unprocessable_entity and return
+  end
+  if @missing.update(missing_params)
+    render json: { message: "Missing person updated successfully", missing_person: @missing }, status: :ok
+  else
+    render json: { message: "Failed to update missing person", errors: @missing.errors.full_messages }, status: :unprocessable_entity
+  end
+end
   # Attach photo to missing person(POST) - /missing/upload
   def upload
     @photo = params[:photo]
