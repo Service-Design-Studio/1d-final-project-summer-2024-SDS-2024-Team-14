@@ -21,16 +21,16 @@ export default function Passport() {
             <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
             </div>
             <div className='p-4 text-darkblue'>
-                <div className="flex flex-row justify-between">
+                {/*<div className="flex flex-row justify-between">
                     <div className="inline-block">
                     <h1 className='text-darkblue font-semibold sm:text-[3.5vw] md:text-[2.3vw] text-[6.5vw]'>Face Scanner</h1>
                     <p className='md:my-2 text-[4vw] md:text-[1.5vw] my-4'>Please enable camera on your device to proceed</p>
                     </div>
-                </div>
+                </div>*/}
                 <div className="mb-4 flex flex-col">
                     <UploadScan className="flex flex-col items-center justify-center" />
                 </div>
-            </div>
+            </div>*
             <ChatBot/> 
         </div>
         </>
