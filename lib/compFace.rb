@@ -1,17 +1,14 @@
-require 'aws-sdk-rekognition'
-
 module CompFace
   def compare_faces(face1 , face2)
-    # Need to convert to bytes first for api call
-    face1_bytes = File.read(face1)
-    face2_bytes = File.read(face2)
 
     # Get singleton instance of AwsRekognition
     client = AwsRekognitionClient.instance.client
+    Rails.logger.debug face1
+    Rails.logger.debug face2 
 
     resp = client.compare_faces({
-      source_image: { bytes: source_image_bytes },
-      target_image: { bytes: target_image_bytes },
+      source_image: { bytes: face1 },
+      target_image: { bytes: face2 },
       similarity_threshold: 50
     })
     # if match
