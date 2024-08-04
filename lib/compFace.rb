@@ -3,13 +3,11 @@ module CompFace
 
     # Get singleton instance of AwsRekognition
     client = AwsRekognitionClient.instance.client
-    Rails.logger.debug face1
-    Rails.logger.debug face2 
 
     resp = client.compare_faces({
       source_image: { bytes: face1 },
       target_image: { bytes: face2 },
-      similarity_threshold: 50
+      similarity_threshold: 70
     })
     # if match
     if resp.face_matches.any?

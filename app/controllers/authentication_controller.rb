@@ -36,7 +36,8 @@ class AuthenticationController < ApplicationController
       # Gets decoded base 64 bytes
       image_data = @user.photo.download
       similarity_score = compare_faces(b64_decoded_frame , image_data)
-      if similarity_score > 70
+      if !similarity_score.nil?
+        @user.face_verified = true
         matched = true
       else
         matched = false
