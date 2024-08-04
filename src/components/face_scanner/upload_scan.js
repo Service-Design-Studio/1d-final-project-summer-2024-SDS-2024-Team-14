@@ -28,10 +28,15 @@ class UploadScan extends Component {
         this.intervalRef = null; // Ref for the interval
     }
 
-    handleCapture = (image) => {
-        this.setState(prevState => ({
-            capturedFrames: [image, ...prevState.capturedFrames.slice(0, 4)] // Save the latest 5 frames
-        }));
+    handleCapture = async (image) => {
+        const userID = localStorage.getItem("userID");
+        try {
+            await axiosInstance.post(`/authentication/verify`, {frame: image, id: userID}).then((resp) => {
+                console.log(resp.data)
+            })
+        } catch (error) {
+            console.error(error.message);
+        };
     }
 
     startScanning = () => {
@@ -40,7 +45,6 @@ class UploadScan extends Component {
         this.intervalRef = setInterval(() => {
             const photo = this.cameraRef.current.takePhoto(); // Capture the image from camera
             this.handleCapture(photo); // Handle the captured image
-            console.log("Sending frame to backend", photo); // Placeholder for backend sending logic
         }, 1000); // 1 frame per second
     }
 
