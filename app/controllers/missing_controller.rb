@@ -61,6 +61,19 @@ end
     end
   end
 
+  def photo
+    begin
+      @missing = MissingPerson.find(params[:id])
+      if @missing.photo.attached?
+        render json: { photo_url: url_for(@missing.photo) }, status: :ok
+      else
+        render json: {photo_url: "" }, status: :ok
+      end
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: "No missing people found" }, status: :unprocessable_entity
+    end
+  end
+
   # Return missing people based on id(GET) - /missing/[id]
   def show 
     begin
