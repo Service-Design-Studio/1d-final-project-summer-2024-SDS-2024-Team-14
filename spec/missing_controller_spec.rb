@@ -15,8 +15,17 @@ RSpec.describe MissingController, type: :controller do
         "date_arrival": "10-06-2024",
         "verification_status": "Pending approval"
         ) }
-  let(:missing_person_attributes) { attributes_for(:missing_person) }
-  let(:photo) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'files', 'photo.jpg'), 'image/jpeg') }
+        let(:missing_person_attributes) do
+          {
+            name: 'John Doe',
+            age: 30,
+            gender: 'male',
+            ethnicity: 'caucasian',
+            date_birth: '1994-05-15'
+          }
+        end
+        
+  let(:photo) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'photo.png'), 'image/jpeg') }
 
   describe 'POST #create' do
     context 'with valid parameters' do
@@ -42,12 +51,21 @@ RSpec.describe MissingController, type: :controller do
   end
 
   describe 'POST #upload' do
-    let(:missing_person) { create(:missing_person, user: user) }
-
+  let!(:missing_person) {
+    MissingPerson.create(
+      name: 'John Doe',
+      age: 30,
+      gender: 'Male',
+      ethnicity: 'Caucasian',
+      matched: false,
+      date_birth: Date.new(1993, 1, 15),
+      matched_user_id: nil
+    )
+  }
     context 'when photo is uploaded successfully' do
       it 'attaches a photo to the missing person' do
         post :upload, params: { id: missing_person.id, photo: photo }
-
+        puts response.body
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)['message']).to eq("Your photo has been uploaded successfully for #{missing_person.name}")
         expect(missing_person.reload.photo).to be_attached
@@ -75,7 +93,17 @@ RSpec.describe MissingController, type: :controller do
 
   describe 'GET #show' do
     context 'when user has missing people' do
-      let!(:missing_person) { create(:missing_person, user: user) }
+      let!(:missing_person) {
+          MissingPerson.create(
+            id: 1,
+            name: 'John Doe',
+            age: 30,
+            gender: 'Male',
+            ethnicity: 'Caucasian',
+            matched: false,
+            date_birth: Date.new(1993, 1, 15),
+            matched_user_id: nil
+          )}
 
       it 'returns the missing people' do
         get :show, params: { id: user.id }
