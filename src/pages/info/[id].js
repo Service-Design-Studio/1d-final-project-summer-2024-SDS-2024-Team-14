@@ -103,42 +103,62 @@ export default function Info() {
   const renderImportantInfo = (important) => {
     try {
       const parsedImportant = JSON.parse(important);
+  
+      if (!parsedImportant || typeof parsedImportant !== 'object') {
+        throw new Error("Invalid important information structure");
+      }
+  
+      const formatKey = (key) => key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+  
       return (
-        <div className="">
-          {Object.keys(parsedImportant).map((key, index) => (
-            <div key={key}>
-              {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
-              <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
-                {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
-              </strong>
-              <ul className="leading-loose">
-                {Array.isArray(parsedImportant[key])
-                  ? parsedImportant[key].map((item, idx) => (
-                      <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
+        <div className="text-left">
+          <ul className="leading-loose">
+            {Object.entries(parsedImportant).map(([key, value], idx) => (
+              <li key={idx}>
+                <div className="flex flex-row items-center md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">{formatKey(key)}:</div>
+                {Array.isArray(value) ? (
+                  <ul className="ml-4">
+                    {value.map((item, subIdx) => (
+                      <li key={subIdx} className="md:text-[1.2vw] text-[3.2vw] text-darkblue">
                         {typeof item === 'object' ? (
-                          <div className="ml-4">
-                            {Object.keys(item).map((itemKey) => (
-                              <div key={itemKey}>
-                                <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
-                                {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
-                              </div>
+                          <ul className="ml-4">
+                            {Object.entries(item).map(([subKey, subValue], subSubIdx) => (
+                              <li key={subSubIdx} className="flex flex-row items-center">
+                                <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                                <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
+                              </li>
                             ))}
-                          </div>
+                          </ul>
                         ) : (
-                          item
+                          <div className="md:text-[1.2vw] text-[3.2vw] font-semibold text-darkblue ">{item}</div>
                         )}
                       </li>
-                    ))
-                  : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
-              </ul>
-            </div>
-          ))}
+                    ))}
+                  </ul>
+                ) : typeof value === 'object' ? (
+                  <ul className="ml-4">
+                    {Object.entries(value).map(([subKey, subValue], subIdx) => (
+                      <li key={subIdx} className="flex flex-row items-center">
+                        <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                        <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{value}</div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       );
     } catch (error) {
+      console.error("Error parsing important information:", error.message, error.stack);
       return <p>Error parsing important information</p>;
     }
   };
+  
+  
   return (
     <div className="bg-local bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover min-h-screen text-center lg:px-[8vw]">
       <div className="flex items-center pt-4 ml-4">
@@ -234,20 +254,20 @@ export default function Info() {
             <div className="flex flex-col space-y-4">
                 {console.log(docuData)}
                 {docuData.length > 0 ? (
-                docuData.map((document) => (
-                    <div key={document.id} className="text-left bg-white w-full px-[2vw] py-[2vw] lg:py-[0.1vw] rounded-lg flex flex-row items-center relative">
-                    <div>
-                        {document.important ? (
-                        renderImportantInfo(document.important)
-                        ) : (
-                        <p>No additional information available</p>
+                    docuData.map((document) => (
+                        <div key={document.id} className="overflow-auto h-[500px] text-left bg-white w-full px-[2vw] py-[2vw] lg:py-[0.1vw] rounded-lg flex flex-row relative">
+                        <div>
+                            {document.important ? (
+                            renderImportantInfo(document.important)
+                            ) : (
+                            <p>No additional information available</p>
+                            )}
+                        </div>
+                        {document.important && (
+                            <Image className="w-[5%] md:w-[5%] absolute top-0 right-0 pr-2 pt-2" src={DownloadIndiv} />
                         )}
-                    </div>
-                    {document.important && (
-                        <Image className="w-[8%] md:w-[8%] absolute top-0 right-0" src={DownloadIndiv} />
-                    )}
-                    </div>
-                ))
+                        </div>
+                    ))
                 ) : (
                 <p>No documents available for the selected category.</p>
                 )}

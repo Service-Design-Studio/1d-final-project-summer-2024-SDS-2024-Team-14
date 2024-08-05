@@ -238,47 +238,66 @@ const DocumentManager = () => {
     }
   };
 
-
   const renderImportantInfo = (important) => {
     try {
       const parsedImportant = JSON.parse(important);
+  
+      if (!parsedImportant || typeof parsedImportant !== 'object') {
+        throw new Error("Invalid important information structure");
+      }
+  
+      const formatKey = (key) => key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+  
       return (
-        <div className="">
-          {Object.keys(parsedImportant).map((key, index) => (
-            <div key={key}>
-              {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
-              <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
-                {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
-              </strong>
-              <ul className="leading-loose">
-                {Array.isArray(parsedImportant[key])
-                  ? parsedImportant[key].map((item, idx) => (
-                      <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
+        <div className="text-left">
+          <ul className="leading-loose">
+            {Object.entries(parsedImportant).map(([key, value], idx) => (
+              <li key={idx}>
+                <div className="flex flex-row items-center md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">{formatKey(key)}:</div>
+                {Array.isArray(value) ? (
+                  <ul className="ml-4">
+                    {value.map((item, subIdx) => (
+                      <li key={subIdx} className="md:text-[1.2vw] text-[3.2vw] text-darkblue">
                         {typeof item === 'object' ? (
-                          <>
-                            {Object.keys(item).map((itemKey) => (
-                              <div key={itemKey} className="ml-4">
-                                <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
-                                {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
-                              </div>
+                          <ul className="ml-4">
+                            {Object.entries(item).map(([subKey, subValue], subSubIdx) => (
+                              <li key={subSubIdx} className="flex flex-row items-center">
+                                <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                                <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
+                              </li>
                             ))}
-                          </>
+                          </ul>
                         ) : (
-                          item
+                          <div className="md:text-[1.2vw] text-[3.2vw] font-semibold text-darkblue ">{item}</div>
                         )}
                       </li>
-                    ))
-                  : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
-              </ul>
-            </div>
-          ))}
+                    ))}
+                  </ul>
+                ) : typeof value === 'object' ? (
+                  <ul className="ml-4">
+                    {Object.entries(value).map(([subKey, subValue], subIdx) => (
+                      <li key={subIdx} className="flex flex-rowitems-center ">
+                        <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                        <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{value}</div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       );
     } catch (error) {
+      console.error("Error parsing important information:", error.message, error.stack);
       return <p>Error parsing important information</p>;
     }
   };
-
+  
+  
+  
   return (
     <>
     <ReactNotifications />
