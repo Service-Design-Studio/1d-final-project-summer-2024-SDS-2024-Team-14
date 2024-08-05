@@ -71,7 +71,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_04_080007) do
     t.string "category"
     t.string "content"
     t.boolean "read"
-    t.string "message"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
