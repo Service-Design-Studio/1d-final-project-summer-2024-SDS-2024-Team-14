@@ -1,6 +1,5 @@
 import axiosInstance from "../../utils/axiosInstance";
 import FaceCamera from './face_camera'; // Ensure the correct import path
-import shortid from 'shortid';
 import { ReactNotifications, Store } from "react-notifications-component";
 import tickIcon from "../../../public/images/icons/tick_success.svg";
 import infoIcon from "../../../public/images/icons/info.svg";
@@ -8,9 +7,6 @@ import 'react-notifications-component/dist/theme.css';
 import Image from "next/image"; // Import the modal component
 import { Component, createRef } from 'react';
 import { withRouter } from 'next/router';
-import { useRouter } from 'next/router'; // Import useRouter
-import EnableId from "../../../public/images/enable_id_logo.svg"; // Import the EnableID logo
-import ChatBot from "@/components/ChatBot"; // Import the ChatBot component
 
 class UploadScan extends Component {
     state = {
@@ -19,8 +15,7 @@ class UploadScan extends Component {
         currentFile: null,
         capturedImage: null, 
         isCameraOn: false,
-        isScanning: false,
-        isMatched: null, // State to store verification result
+        isMatched: false, // State to store verification result
         scanningText: "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame.", 
         countdown: 15, // State for the countdown timer
         showSuccessUI: false // State to toggle the success UI
@@ -38,22 +33,19 @@ class UploadScan extends Component {
         if (prevState.isMatched !== this.state.isMatched) {
             if (this.state.isMatched) {
                 console.log("User verified, showing success UI.");
-                this.stopScanning(); // Stop scanning on successful verification
+                if (this.intervalRef) {
+                    clearInterval(this.intervalRef);
+                    this.intervalRef = null;
+                }
+                if (this.timeoutRef) {
+                    clearTimeout(this.timeoutRef);
+                    this.timeoutRef = null;
+                }
+                if (this.countdownRef) {
+                    clearInterval(this.countdownRef);
+                    this.countdownRef = null;
+                }
                 this.setState({ showSuccessUI: true }); // Show success UI
-            } else {
-                console.log("Verification failed, please try again.");
-                this.setState({
-                    scanningText: (
-                        <div className="flex items-start">
-                            <Image src={infoIcon} alt="Failed Icon" className="w-9 h-9 mr-2" />
-                            <div className="flex-col">
-                                <p>Face verification failed. Your face did not match the submitted passport photo.</p>
-                                <p className="pt-4">Please try again or skip Face Scan for now.</p>
-                            </div>
-                        </div>
-                    )
-                });
-                this.stopScanning(false);
             }
         }
     }
@@ -70,7 +62,7 @@ class UploadScan extends Component {
 
     startScanning = () => {
         this.setState({ 
-            isScanning: true, 
+            isCameraOn: true,
             scanningText: "Please do not move while face scanning is in progress. The scan will be completed soon.", 
             countdown: 15
         });
@@ -81,7 +73,15 @@ class UploadScan extends Component {
         }, 3000); 
     
         this.timeoutRef = setTimeout(() => {
-            this.stopScanning(true, false); // Stop scanning with no match after the timeout
+            this.stopScanning(
+                        <div className="flex items-start">
+                            <Image src={infoIcon} alt="Failed Icon" className="w-9 h-9 mr-2" />
+                            <div className="flex-col">
+                                <p>Face verification failed. Your face did not match the submitted passport photo.</p>
+                                <p className="pt-4">Please try again or skip Face Scan for now.</p>
+                            </div>
+                        </div>
+                    ); // Stop scanning with no match after the timeout
         }, 15000); 
     
         this.countdownRef = setInterval(() => {
@@ -89,20 +89,13 @@ class UploadScan extends Component {
         }, 1000);
     }
 
-    stopScanning = (resetText = true, isMatched = null) => {
-        if (isMatched === null) {
-            isMatched = false; // If no match, set to false to indicate failure
-        }
+    stopScanning = (text) => {
     
-        this.setState(prevState => ({
-            isScanning: false,
-            isMatched,
-            scanningText: resetText 
-                ? "Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame."
-                : prevState.scanningText, 
+        this.setState({
+            scanningText: text,
             countdown: 15,
             isCameraOn: false // Turn off the camera
-        }));
+        });
     
         if (this.intervalRef) {
             clearInterval(this.intervalRef);
@@ -123,7 +116,7 @@ class UploadScan extends Component {
             if (this.state.isCameraOn) {
                 this.startScanning(); // Start scanning if camera is turned on
             } else {
-                this.stopScanning(); // Stop scanning if camera is turned off
+                this.stopScanning("Please enable your camera to proceed with the face scanning. Face forward and look directly into the camera. Please keep your face in the frame."); // Stop scanning if camera is turned off
             }
         });
     };
@@ -136,17 +129,13 @@ class UploadScan extends Component {
     // Function to confirm skipping the scan
     confirmSkip = () => {
         this.setState({ showModal: false }); // Show success UI and close the modal
-        this.props.router.push('/your-desired-path'); // Adjust path later to homepage?
+        this.props.router.push('../../'); // Adjust path later to homepage
     }
 
     // Function to cancel skipping the scan
     cancelSkip = () => {
         this.setState({ showModal: false }); // Close the modal
     }
-
-    simulateVerification = (matched) => {
-        this.setState({ isMatched: matched }); // Call this to simulate success or failure
-    };
 
     renderHeader() {
         return (
@@ -176,7 +165,7 @@ class UploadScan extends Component {
                 </div>
                 <div className="flex justify-end pt-5">
                     <button
-                        onClick={() => router.push('../../')}
+                        onClick={() => this.props.router.push('../../')}
                         className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white`}
                     >
                         Proceed
@@ -186,33 +175,8 @@ class UploadScan extends Component {
         );
     }
 
-    renderModal() {
-        return (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white rounded-lg p-5 border border-darkblue">
-                    <h2 className="text-lg font-semibold">Are you sure you want to skip?</h2>
-                    <p className="pt-2 text-2mdd ">This may prolong your verification process.</p>
-                    <div className="flex justify-end mt-4">
-                        <button onClick={this.confirmSkip} className="text-darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
-                            Yes
-                        </button>
-                        <button onClick={this.cancelSkip} className="border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
-                            No, I will stay
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     render() {
-        const { router } = this.props;
-
-        // Render modal if showModal is true
-        if (this.state.showModal) {
-            return this.renderModal();
-        }
-
         // If the success UI should be displayed
         if (this.state.showSuccessUI) {
             return this.renderSuccessUI();
@@ -251,7 +215,7 @@ class UploadScan extends Component {
                                     </button>
                                 )}
                             </div>
-                            {this.state.isScanning && (
+                            {this.state.isCameraOn && (
                                 <div className="flex flex-col justify-center items-center">
                                     <h2 className='font-bold text-[3.5vw] md:text-[3vw] my-3'>
                                         {this.state.countdown}s...
@@ -263,7 +227,7 @@ class UploadScan extends Component {
                     </div>
 
                     <div className="md:w-1/2 flex flex-col overflow-y-auto pt-4">
-                        {!this.state.isScanning && this.state.isMatched !== false && (
+                        {!this.state.isCameraOn && this.state.isMatched !== false && (
                             <p className='ml-auto text-[3.5vw] md:text-[1.3vw] my-3'>
                                 The face scanning allows us to expedite the verification of your identity.
                             </p>
@@ -275,10 +239,9 @@ class UploadScan extends Component {
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                             <button
                                 onClick={this.toggleCamera}
-                                className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
-                                disabled={this.state.isScanning} // Disable the button during scanning
+                                className={`text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
                             >
-                                {this.state.isCameraOn ? (this.state.isScanning ? "Please wait..." : "Begin Face Scan") : "Begin Face Scan"}
+                                {this.state.isCameraOn? "Stop Face Scan" : "Begin Face Scan"}
                             </button>
                         </div>
                         <div className="flex justify-end pt-5">
@@ -289,22 +252,24 @@ class UploadScan extends Component {
                                 Skip Face Scan
                             </button>
                         </div>
-                        <div className="flex justify-end pt-5">
-                            <button
-                                onClick={() => this.simulateVerification(true)}
-                                className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#28a745] text-white mr-2`}
-                            >
-                                Simulate Success
+                    </div>
+                </div>
+                {this.state.showModal &&
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white rounded-lg p-5 border border-darkblue">
+                        <h2 className="text-lg font-semibold mb-4">Are you sure you want to skip?</h2>
+                        <p className="pt-2 text-2md">This may prolong your verification process.</p>
+                        <div className="flex justify-end mt-4">
+                            <button onClick={this.confirmSkip} className="text- darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
+                                Yes
                             </button>
-                            <button
-                                onClick={() => this.simulateVerification(false)}
-                                className={`text-2mdd px-5 py-2 border-radius-19px rounded-md bg-[#dc3545] text-white`}
-                            >
-                                Simulate Failure
+                            <button onClick={this.cancelSkip} className="border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
+                                No, I will stay
                             </button>
                         </div>
                     </div>
                 </div>
+                }
             </div>
         );
     }
