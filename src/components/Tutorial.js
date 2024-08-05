@@ -79,11 +79,6 @@ const Tutorial = ({ title, steps, onClose }) => {
               {steps[currentStep].title}
             </h1>
             <div className="flex justify-center items-center h-[40vh] mb-8 relative">
-              {currentImageIndex > 0 && (
-                <button onClick={handlePrevImage} className="absolute left-0 ml-2 text-darkblue text-2xl">
-                  &#9664;
-                </button>
-              )}
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
@@ -91,11 +86,6 @@ const Tutorial = ({ title, steps, onClose }) => {
                 width={800}
                 height={600}
               />
-              {currentImageIndex < currentImages.length - 1 && (
-                <button onClick={handleNextImage} className="absolute right-0 mr-2 text-darkblue text-2xl">
-                  &#9654;
-                </button>
-              )}
             </div>
             <div className="flex justify-center items-center my-4">
               {currentImages.length > 1 ? (
@@ -117,18 +107,18 @@ const Tutorial = ({ title, steps, onClose }) => {
               </p>
             </div>
             <div className="flex justify-between mt-4">
-              {currentStep > 0 && (
+              {currentImageIndex > 0 && (
                 <button
-                  onClick={handlePrevStep}
+                  onClick={handlePrevImage}
                   className="bg-transparent border-none cursor-pointer text-[1em] text-darkblue flex items-center"
                 >
                   <span className="mr-1 text-lg">&larr;</span>
                   Back
                 </button>
               )}
-              {currentStep < steps.length - 1 && (
+              {currentImageIndex < currentImages.length - 1 && (
                 <button
-                  onClick={handleNextStep}
+                  onClick={handleNextImage}
                   className="bg-transparent border-none cursor-pointer text-[1rem] text-darkblue flex items-center ml-auto"
                 >
                   Next <span className="ml-1 text-lg">&rarr;</span>
