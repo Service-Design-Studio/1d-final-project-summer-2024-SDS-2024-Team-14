@@ -98,13 +98,18 @@ const Tutorial = ({ title, steps, onClose }) => {
               )}
             </div>
             <div className="flex justify-center items-center my-4">
-              {currentImages.length > 1 && currentImages.map((_, index) => (
-                <span
-                  key={index}
-                  onClick={() => setCurrentImageIndex(index)}
-                  className={`h-2 w-2 rounded-full mx-1 cursor-pointer ${index === currentImageIndex ? 'bg-darkblue' : 'bg-gray-300'}`} style={{ backgroundColor: index !== currentImageIndex ? '#E0E0E0' : '' }}
-                />
-              ))}
+              {currentImages.length > 1 ? (
+                currentImages.map((_, index) => (
+                  <span
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`h-2 w-2 rounded-full mx-1 cursor-pointer ${index === currentImageIndex ? 'bg-darkblue' : 'bg-gray-300'}`}
+                    style={{ backgroundColor: index !== currentImageIndex ? '#E0E0E0' : '' }}
+                  />
+                ))
+              ) : (
+                <span className="h-2 w-2 mx-1" style={{ visibility: 'hidden' }} />
+              )}
             </div>
             <div className="flex-grow flex items-center justify-center">
               <p className="text-darkblue text-xl mb-12 px-20 text-center leading-tight max-h-[13vh] overflow-auto">
