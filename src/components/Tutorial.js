@@ -55,7 +55,7 @@ const Tutorial = ({ title, steps, onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
       <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
-      <div className="relative flex flex-col bg-white rounded-xl w-[50vw] max-w-[50vw] h-[70vh] max-h-[70vh] mx-auto">
+      <div className="relative flex flex-col bg-white rounded-xl w-[60vw] max-w-[70vw] h-[70vh] max-h-[70vh] mx-auto">
         <div className="flex h-full">
           <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl" style={{ backgroundColor: '#F0F4FF' }}>
             <ul className="space-y-4 w-full font-semibold text-2xl">
@@ -87,7 +87,7 @@ const Tutorial = ({ title, steps, onClose }) => {
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
-                className="max-h-[40vh] w-auto rounded-lg"
+                className="max-h-[45vh] w-auto rounded-lg"
                 width={800}
                 height={600}
               />

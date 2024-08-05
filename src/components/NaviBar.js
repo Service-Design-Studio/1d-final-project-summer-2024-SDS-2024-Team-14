@@ -13,19 +13,17 @@ import QnMarkIcon from "../../public/images/tutorial/blueqnmark.svg";
 import { Button } from '@mui/material'
 import NotificationPage from "./notifications/notification_page";
 import Tutorial from './Tutorial';
-import { useRouter } from 'next/router';
-import famTreeContent from './modalContent/famtree';
-import docManContent from './modalContent/docman';
+import famTreeContent from './modalContent/famtree'; // Import for family-tree page
+import docManContent from './modalContent/docman'; // Import for documents page
+import homePageContent from './modalContent/homepage'; // Import for homepage
 
 export default function NaviBar({ open, setOpen }) {
     const [navState, setNavState] = useState(false)
     const [unread, setUnread] = useState(false)
     const [tutorialOpen, setTutorialOpen] = useState(false); // Separate state for the tutorial modal
+    const [currentPage, setCurrentPage] = useState(null); // Track current page for displaying correct tutorial content
     const popupRef = useRef(null);
     const notifRef = useRef(null)
-    const router = useRouter();
-    const { pathname } = router;
-
     const handleClickOutside = (event) => {
         if (popupRef.current && !popupRef.current.contains(event.target)) {
             setNavState(false);
@@ -53,20 +51,22 @@ export default function NaviBar({ open, setOpen }) {
         } else {
             window.removeEventListener('mousedown', handleClickOutside)
         }
-    }, [open]);
+    }, [open])
 
-    const getTutorialContent = () => {
-        switch (pathname) {
+    useEffect(() => {
+        setCurrentPage(window.location.pathname); // Set current page based on the URL path
+    }, []);
+
+    const getContent = () => {
+        switch (currentPage) {
             case '/documents':
-                return { title: 'Document Manager Tutorial', content: docManContent };
+                return docManContent;
             case '/family-tree':
-                return { title: 'Family Tree Tutorial', content: famTreeContent };
+                return famTreeContent;
             default:
-                return { title: '', content: [] };
+                return homePageContent;
         }
     };
-
-    const { title, content } = getTutorialContent();
 
     return (
         <div className="flex justify-between items-center mt-2">
@@ -161,7 +161,7 @@ export default function NaviBar({ open, setOpen }) {
                 </Button>
             </div>
             <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>
-            {tutorialOpen && <Tutorial title={title} steps={content} onClose={() => setTutorialOpen(false)} />}
+            {tutorialOpen && <Tutorial title="Tutorial" steps={getContent()} onClose={() => setTutorialOpen(false)} />}
         </div>
     )
 }
