@@ -16,13 +16,16 @@ RSpec.describe NotificationService, type: :service do
             "date_arrival": "10-06-2024",
             "verification_status": "Pending approval"
             ) }
-  let(:doc_category) {'passport'}
-  let(:category) {'passport'}
+  let(:doc_category) { 'passport' }
+  let(:category) { 'passport' }
   let(:user_id) { user.id }
+
+  before do
+    allow(Rails.logger).to receive(:info) # Mock logger to prevent actual logging during tests
+  end
 
   describe '.create_document_upload_success_notification' do
     it 'creates a notification with the correct attributes' do
-
       notification = NotificationService.create_document_upload_success_notification(user_id, document, doc_category)
 
       expect(notification.user_id).to eq(user_id)
@@ -32,8 +35,6 @@ RSpec.describe NotificationService, type: :service do
     end
 
     it 'logs the creation of the notification' do
-      notification = NotificationService.create_document_upload_success_notification(user_id, document, doc_category)
-      
       expect(Rails.logger).to receive(:info).with("Creating success notification for Document #{document.id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
 
@@ -43,7 +44,6 @@ RSpec.describe NotificationService, type: :service do
 
   describe '.create_document_upload_fail_notification' do
     it 'creates a notification with the correct attributes' do
-
       notification = NotificationService.create_document_upload_fail_notification(user_id, document, doc_category)
 
       expect(notification.user_id).to eq(user_id)
@@ -53,7 +53,6 @@ RSpec.describe NotificationService, type: :service do
     end
 
     it 'logs the creation of the notification' do
-      notification = NotificationService.create_document_upload_fail_notification(user_id, document, doc_category)
       expect(Rails.logger).to receive(:info).with("Creating fail notification for document #{document.id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
 
@@ -63,7 +62,6 @@ RSpec.describe NotificationService, type: :service do
 
   describe '.welcome_notification' do
     it 'creates a notification with the correct attributes' do
-
       notification = NotificationService.welcome_notification(user_id, user.name)
 
       expect(notification.user_id).to eq(user_id)
@@ -73,7 +71,6 @@ RSpec.describe NotificationService, type: :service do
     end
 
     it 'logs the creation of the notification' do
-      notification = NotificationService.welcome_notification(user_id, user.name)
       expect(Rails.logger).to receive(:info).with("Creating welcome notification for user #{user_id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
 
@@ -92,7 +89,6 @@ RSpec.describe NotificationService, type: :service do
     end
 
     it 'logs the creation of the notification' do
-      notification = NotificationService.pending_user_notification(user_id)
       expect(Rails.logger).to receive(:info).with("Creating pending notification for user #{user_id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
 
@@ -111,8 +107,6 @@ RSpec.describe NotificationService, type: :service do
     end
 
     it 'logs the creation of the notification' do
-      notification = NotificationService.verified_user_notification(user_id)
-
       expect(Rails.logger).to receive(:info).with("Creating verified notification for user #{user_id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
 
@@ -124,24 +118,23 @@ RSpec.describe NotificationService, type: :service do
     it 'creates a notification with the correct attributes' do
       document_name = 'passport'
       message = 'Your document has been approved.'
-  
+
       notification = NotificationService.document_approved_notification(user_id, document_name, message)
-  
+
       expect(notification.user_id).to eq(user_id)
       expect(notification.category).to eq('Document Approved')
       expect(notification.content).to include(document_name)
       expect(notification.read).to be(false)
       expect(notification.message).to eq(message)
     end
-  
+
     it 'logs the creation of the notification' do
       document_name = 'passport'
       message = 'Your document has been approved.'
-      notification = NotificationService.document_approved_notification(user_id, document_name, message)
-  
+
       expect(Rails.logger).to receive(:info).with("Creating approved document notification for user #{user_id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
-  
+
       NotificationService.document_approved_notification(user_id, document_name, message)
     end
   end
@@ -150,23 +143,23 @@ RSpec.describe NotificationService, type: :service do
     it 'creates a notification with the correct attributes' do
       document_name = 'passport'
       message = 'Your document has been rejected.'
-  
+
       notification = NotificationService.document_rejected_notification(user_id, document_name, message)
+
       expect(notification.user_id).to eq(user_id)
       expect(notification.category).to eq('Document Rejected')
       expect(notification.content).to include(document_name)
       expect(notification.read).to be(false)
       expect(notification.message).to eq(message)
     end
-  
+
     it 'logs the creation of the notification' do
       document_name = 'passport'
       message = 'Your document has been rejected.'
-      notification = NotificationService.document_rejected_notification(user_id, document_name, message)
-  
+
       expect(Rails.logger).to receive(:info).with("Creating rejected document notification for user #{user_id}")
       expect(Rails.logger).to receive(:info).with(/Notification created: \d+/).ordered
-  
+
       NotificationService.document_rejected_notification(user_id, document_name, message)
     end
   end

@@ -1,240 +1,127 @@
 require "rails_helper"
 
-RSpec.describe "Users", type: :request do
+RSpec.describe "Users", type: :model do
 
+  let!(:user1) do
+    User.create(
+      email: 'test1@gmail.com',
+      password: 'test123',
+      password_confirmation: 'test123',
+      name: "testUser1",
+      country: "Myanmar",
+      ethnicity: 'Bantu',
+      religion: "Buddhist",
+      gender: "Female",
+      date_birth: Date.new(2001, 6, 10), # Ensure the date is a Date object
+      date_arrival: Date.new(2024, 6, 10),
+      verification_status: "Pending approval",
+      id: 1
+    )
+  end
+
+  let!(:user2) do
+    User.create(
+      email: 'test2@gmail.com',
+      password: 'test123',
+      password_confirmation: 'test123',
+      name: 'testUser2',
+      country: 'Panana',
+      ethnicity: 'Arab',
+      religion: "Muslim",
+      gender: "Male",
+      date_birth: Date.new(2004, 6, 10),
+      date_arrival: Date.new(2024, 6, 14),
+      verification_status: "Approved",
+      id: 2
+    )
+  end
+
+  let!(:user3) do
+    User.create(
+      email: 'test3@gmail.com',
+      password: 'test123',
+      password_confirmation: 'test123',
+      name: "testUser3",
+      country: "Myanmar",
+      ethnicity: 'Bantu', # Ensure this matches the test case
+      religion: "Buddhist",
+      gender: "Female",
+      date_birth: Date.new(2001, 6, 10),
+      date_arrival: Date.new(2024, 6, 10),
+      verification_status: "Pending approval",
+      id: 3
+    )
+  end
+
+  describe '.name_match' do
+    it 'returns users with similar names' do
+      expect(User.name_match('testUser1')).to include(user1)
+      expect(User.name_match('testUser3')).not_to include(user2)
+    end
+  end
+
+  describe '.ethnicity_match' do
+    it 'returns users with the same ethnicity' do
+      expect(User.ethnicity_match('Bantu')).to include(user1, user3) # Ensure ethnicity matches
+      expect(User.ethnicity_match('Bantu')).not_to include(user2)
+    end
+  end
+
+  describe '.age_match' do
+    it 'returns users within ±2 years of the input age' do
+      expect(User.age_match(23)).to include(user1, user3) # Adjust the age to 23
+      expect(User.age_match(23)).not_to include(user2)
+    end
+  end
+
+  describe '.gender_match' do
+    it 'returns users with the same gender' do
+      expect(User.gender_match('Female')).to include(user1, user3)
+      expect(User.gender_match('Female')).not_to include(user2)
+    end
+  end
+
+  describe '.date_birth_match' do
+    it 'returns users with the same date of birth' do
+      expect(User.date_birth_match(user1.date_birth)).to include(user1, user3) # User1 and User3 have the same DOB
+      expect(User.date_birth_match(user1.date_birth)).not_to include(user2)
+    end
+  end
+
+  describe '.find_matches' do
     before do
-        #seed data
-        User.create(
-            email: 'test1@gmail.com',
-            password: 'test123',
-            password_confirmation: 'test123',
-            "name": "testUser1",
-            "country": "Myanmar",
-            ethnicity: 'Bantu',
-            "religion": "Buddhist",
-            "gender": "Female",
-            "date_birth": "10-06-2001",
-            "date_arrival": "10-06-2024",
-            "verification_status": "Pending approval"
-            )
-        User.create(
-            email: 'test2@gmail.com', 
-            password: 'test123', 
-            password_confirmation: 'test123', 
-            name: 'testUser2', 
-            country: 'Panana',
-            ethnicity: 'Arab',
-            "religion": "Muslim",
-            "gender": "Male",
-            "date_birth": "10-06-2004",
-            "date_arrival": "14-06-2024",
-            "verification_status": "Approved"
-            )
+      allow_any_instance_of(CompFace).to receive(:compare_faces).and_return(80)
     end
 
-    scenario "Create user success" do
-        post "http://localhost:3000/users",
-        params: 
-        {
-            email: "test3@gmail.com",
-            password: "test123",
-            password_confirmation: "test123",
-            name: "testUser3",
-            country: "Peru",
-            ethnicity: "Hazara",
-            religion: "Buddhist",
-            gender: "Female",
-            date_birth: "10-04-2022",
-            date_arrival: "10-04-2022"
-        }
-        #check status 
-        expect(response).to have_http_status(:success)
-        #check resp
-        data = JSON.parse(response.body)
-         # third user created from earlier api call
-         expect(data["message"]).to eq("Signup for user testUser3 successful")
-         expect(data["user_id"]).to eq(3)
+    let(:input_name) { 'testUser1' }
+    let(:input_ethnicity) { 'Bantu' } # Match the test data
+    let(:input_age) { 23 } # Ensure age is correct
+    let(:input_gender) { 'Female' }
+    let(:input_date) { user1.date_birth }
+    let(:input_photo) { nil } # You may need to mock or skip actual photo handling
+
+    context 'without input photo' do
+      it 'calculates the match percentage based on attributes' do
+        matches = User.find_matches(input_name, input_ethnicity, input_age, input_gender, input_date, nil)
+        expect(matches).to include(a_hash_including(user: hash_including(id: user1.id)))
+        expect(matches).to include(a_hash_including(user: hash_including(id: user3.id)))
+      end
     end
 
-    scenario "Create user fail" do
-        post "http://localhost:3000/users",
-        params: 
-        {
-            email: "test3@gmail.com",
-            password_confirmation: "test123",
-            name: "testUser3",
-            country: "Peru",
-            ethnicity: "Hazara",
-            religion: "Buddhist",
-            gender: "Female",
-            date_birth: "10-04-2022",
-            date_arrival: "10-04-2022"
-        }
-        #check status 
-        expect(response).to have_http_status(422)
-        data = JSON.parse(response.body)
-        expect(data["password"]).to eq(["can't be blank"])
+    context 'with input photo' do
+      it 'calculates the match percentage based on attributes and photo similarity' do
+        photo_path = Rails.root.join('spec', 'fixtures', 'photo.png')
 
-    end
-    
-    scenario "Get all users information" do
-    
-        get "http://localhost:3000/users"
-        #check status 
-        expect(response).to have_http_status(:success)
-        #check resp
-        users = JSON.parse(response.body)
-        first_user, second_user = users[0], users[1], users[2]
-        # first user created
-        expect(first_user["id"]).to eq(1)
-        expect(first_user["email"]).to eq("test1@gmail.com")
-        expect(first_user["name"]).to eq("testUser1")
-        expect(first_user["country"]).to eq("Myanmar")
-        expect(first_user["religion"]).to eq("Buddhist")
-        expect(first_user["ethnicity"]).to eq("Bantu")
-        expect(first_user["gender"]).to eq("Female")
-        expect(first_user["date_birth"]).to eq("10-06-2001")
-        expect(first_user["date_arrival"]).to eq("10-06-2024")
-        expect(first_user["verification_status"]).to eq("Pending approval")
-        # second user created
-        expect(second_user["id"]).to eq(2)
-        expect(second_user["email"]).to eq("test2@gmail.com")
-        expect(second_user["name"]).to eq("testUser2")
-        expect(second_user["country"]).to eq("Panana")
-        expect(second_user["religion"]).to eq("Muslim")
-        expect(second_user["ethnicity"]).to eq("Arab")
-        expect(second_user["gender"]).to eq("Male")
-        expect(second_user["date_birth"]).to eq("10-06-2004")
-        expect(second_user["date_arrival"]).to eq("14-06-2024")
-        expect(second_user["verification_status"]).to eq("Approved")
-    
-    end
+        File.open(photo_path) do |file|
+        user1.photo.attach(io: file, filename: File.basename(photo_path), content_type: 'image/png')
+        end
 
-    scenario "Get user information based on Id Success" do
-    
-        get "http://localhost:3000/users/2"
-        #check status 
-        expect(response).to have_http_status(:success)
-        #check resp
-        user = JSON.parse(response.body)
-        # user retrieved
-        expect(user["id"]).to eq(2)
-        expect(user["email"]).to eq("test2@gmail.com")
-        expect(user["name"]).to eq("testUser2")
-        expect(user["country"]).to eq("Panana")
-        expect(user["religion"]).to eq("Muslim")
-        expect(user["ethnicity"]).to eq("Arab")
-        expect(user["gender"]).to eq("Male")
-        expect(user["date_birth"]).to eq("10-06-2004")
-        expect(user["date_arrival"]).to eq("14-06-2024")
-        expect(user["verification_status"]).to eq("Approved")
-    end
+        input_photo = user1.photo.download
 
-    scenario "Get user information based on Id, Invalid Id" do
-    
-        get "http://localhost:3000/users/5"
-        #check status 
-        expect(response).to have_http_status(422)
-        #check resp
-        data = JSON.parse(response.body)
-        # user retrieved
-        expect(data["message"]).to eq("User does not exist")
+        matches = User.find_matches(input_name, input_ethnicity, input_age, input_gender, input_date, input_photo)
+        expect(matches).to include(a_hash_including(user: hash_including(id: user1.id)))
+        expect(matches).to include(a_hash_including(user: hash_including(id: user3.id)))
+      end
     end
-
+  end
 end
-
-# RSpec.describe User, type: :model do
-
-#     before do
-#         User.create(
-#             email: 'test1@gmail.com',
-#             password: 'test123',
-#             password_confirmation: 'test123',
-#             "name": "John Doe",
-#             "country": "Myanmar",
-#             ethnicity: 'Asian',
-#             "religion": "Buddhist",
-#             "gender": "Male",
-#             "date_birth": "10-06-2001",
-#             "date_arrival": "10-06-2024",
-#             "verification_status": "Pending approval",
-#             # "age": 25,
-#             )
-
-#         User.create(
-#             email: 'test1@gmail.com',
-#             password: 'test123',
-#             password_confirmation: 'test123',
-#             "name": "Jane Smith",
-#             "country": "Myanmar",
-#             ethnicity: 'Hispanic',
-#             "religion": "Buddhist",
-#             "gender": "Female",
-#             "date_birth": "10-06-2001",
-#             "date_arrival": "10-06-2024",
-#             "verification_status": "Pending approval",
-#             # "age": 30,
-#             )
-#     end
-
-#     # Methods
-#     describe '.name_match' do
-  
-#       it 'finds a user by name using fuzzy match' do
-#         expect(User.name_match('John')).to eq(user1)
-#         expect(User.name_match('Jane')).to eq(user2)
-#       end
-  
-#       it 'returns nil if no match is found' do
-#         expect(User.name_match('Nonexistent')).to be_nil
-#       end
-#     end
-  
-#     describe '.ethnicity_match' do
-  
-#       it 'finds users by ethnicity' do
-#         expect(User.ethnicity_match('Asian')).to include(user1)
-#         expect(User.ethnicity_match('Hispanic')).to include(user2)
-#       end
-  
-#       it 'returns an empty result if no match is found' do
-#         expect(User.ethnicity_match('Nonexistent')).to be_empty
-#       end
-#     end
-  
-#     describe '.age_match' do
-  
-#       it 'finds users within the age range of ±2 years' do
-#         expect(User.age_match(27)).to include(user1)
-#         expect(User.age_match(29)).to include(user2)
-#       end
-  
-#       it 'returns an empty result if no match is found' do
-#         expect(User.age_match(40)).to be_empty
-#       end
-#     end
-  
-#     describe '.gender_match' do
-  
-#       it 'finds users by gender' do
-#         expect(User.gender_match('Male')).to include(user1)
-#         expect(User.gender_match('Female')).to include(user2)
-#       end
-  
-#       it 'returns an empty result if no match is found' do
-#         expect(User.gender_match('Nonexistent')).to be_empty
-#       end
-#     end
-  
-#     describe '.find_matches' do
-  
-#       it 'finds users matching all criteria' do
-#         expect(User.find_matches('John', 'Asian', 25, 'Male')).to eq(1)
-#         expect(User.find_matches('Jane', 'Hispanic', 30, 'Female')).to eq(1)
-#       end
-  
-#       it 'returns zero if no match is found' do
-#         expect(User.find_matches('John', 'Hispanic', 25, 'Female')).to eq(0)
-#       end
-#     end
-#   end

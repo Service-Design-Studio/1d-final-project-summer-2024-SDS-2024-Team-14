@@ -15,9 +15,9 @@ RSpec.describe AuthenticationController, type: :controller do
             "date_arrival": "10-06-2024",
             "verification_status": "Pending approval"
             ) }
-  let(:valid_photo) { fixture_file_upload('spec/fixtures/files/test_photo.jpg', 'image/jpg') }
+  let(:valid_photo) { fixture_file_upload('spec/fixtures/photo.png', 'image/jpg') }
   let(:invalid_photo) { nil }
-  let(:frame_data) { Base64.encode64(File.read('spec/fixtures/files/test_frame.jpg')) }
+  let(:frame_data) { Base64.encode64(File.read('spec/fixtures/test_frame.jpg')) }
 
   describe "POST #upload" do
     context "when the user exists" do
@@ -60,7 +60,8 @@ RSpec.describe AuthenticationController, type: :controller do
           
           post :verify, params: { id: user.id, frame: "data:image/jpeg;base64,#{frame_data}" }
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include_json(matched: true)
+          json_response = JSON.parse(response.body)
+          expect(json_response['matched']).to be true
         end
 
         it "returns a not matched response" do
@@ -68,7 +69,8 @@ RSpec.describe AuthenticationController, type: :controller do
           
           post :verify, params: { id: user.id, frame: "data:image/jpeg;base64,#{frame_data}" }
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include_json(matched: false)
+          json_response = JSON.parse(response.body)
+          expect(json_response['matched']).to be false
         end
       end
 
