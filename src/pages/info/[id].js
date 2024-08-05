@@ -15,7 +15,6 @@ import propertyIcon from "../../../public/images/id_card/house.svg";
 import familyIcon from "../../../public/images/id_card/family.svg";
 import careerIcon from "../../../public/images/id_card/career.svg";
 import financeIcon from "../../../public/images/id_card/finance.svg";
-import { jsPDF } from "jspdf";
 
 const categoryIcons = {
   Education: educationIcon,
@@ -75,7 +74,9 @@ export default function Info() {
       } catch (error) {
         console.error(error.message);
       }
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     };
 
     if (router.query.id) {

@@ -8,8 +8,11 @@ import Image from "next/image";
 import EnableId from "../../../../public/images/enable_id_logo.svg";
 import ChatBot from "@/components/ChatBot";
 import Dropdown from "@/components/DropDown";
+import Loading from "@/components/loading"; 
+
 
 export default function Upload() {
+  const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [language, setLanguage] = useState('English');
   const langList = ['English', 'Malay', "Burmese", "Arabic"]
@@ -58,13 +61,13 @@ export default function Upload() {
                     noValidate={false}
                 >
                 <div className="mb-4 flex flex-col">
-                    <UploadFile selectedCategory={router.query.category} selectedLanguage={language} router={router} className="flex flex-col items-center justify-center" />
+                    <UploadFile selectedCategory={router.query.category} setLoading={setLoading} selectedLanguage={language} router={router} className="flex flex-col items-center justify-center" />
                 </div>
                 </form>
             </div>
         </div>
-    
       </div>
+      {loading && <Loading text={"Loading..."} />}
     <ChatBot/>
       </>
 );
