@@ -253,7 +253,7 @@ const DocumentManager = () => {
           <ul className="leading-loose">
             {Object.entries(parsedImportant).map(([key, value], idx) => (
               <li key={idx}>
-                <div className="flex flex-row items-center md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">{formatKey(key)}:</div>
+                <div className="flex flex-row md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">{formatKey(key)}:</div>
                 {Array.isArray(value) ? (
                   <ul className="ml-4">
                     {value.map((item, subIdx) => (
@@ -261,8 +261,8 @@ const DocumentManager = () => {
                         {typeof item === 'object' ? (
                           <ul className="ml-4">
                             {Object.entries(item).map(([subKey, subValue], subSubIdx) => (
-                              <li key={subSubIdx} className="flex flex-row items-center">
-                                <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                              <li key={subSubIdx} className="flex flex-row items-baseline">
+                                <div className="flex-shrink-0 md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
                                 <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
                               </li>
                             ))}
@@ -276,8 +276,8 @@ const DocumentManager = () => {
                 ) : typeof value === 'object' ? (
                   <ul className="ml-4">
                     {Object.entries(value).map(([subKey, subValue], subIdx) => (
-                      <li key={subIdx} className="flex flex-rowitems-center ">
-                        <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                      <li key={subIdx} className="flex flex-row items-baseline ">
+                        <div className="flex-shrink-0 md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
                         <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
                       </li>
                     ))}

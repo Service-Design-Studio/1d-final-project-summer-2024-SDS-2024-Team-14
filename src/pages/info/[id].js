@@ -15,6 +15,7 @@ import propertyIcon from "../../../public/images/id_card/house.svg";
 import familyIcon from "../../../public/images/id_card/family.svg";
 import careerIcon from "../../../public/images/id_card/career.svg";
 import financeIcon from "../../../public/images/id_card/finance.svg";
+import { jsPDF } from "jspdf";
 
 const categoryIcons = {
   Education: educationIcon,
@@ -115,7 +116,7 @@ export default function Info() {
           <ul className="leading-loose">
             {Object.entries(parsedImportant).map(([key, value], idx) => (
               <li key={idx}>
-                <div className="flex flex-row items-center md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">{formatKey(key)}:</div>
+                <div className="flex flex-row md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">{formatKey(key)}:</div>
                 {Array.isArray(value) ? (
                   <ul className="ml-4">
                     {value.map((item, subIdx) => (
@@ -123,8 +124,8 @@ export default function Info() {
                         {typeof item === 'object' ? (
                           <ul className="ml-4">
                             {Object.entries(item).map(([subKey, subValue], subSubIdx) => (
-                              <li key={subSubIdx} className="flex flex-row items-center">
-                                <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                              <li key={subSubIdx} className="flex flex-row items-baseline">
+                                <div className="flex-shrink-0 md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
                                 <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
                               </li>
                             ))}
@@ -138,8 +139,8 @@ export default function Info() {
                 ) : typeof value === 'object' ? (
                   <ul className="ml-4">
                     {Object.entries(value).map(([subKey, subValue], subIdx) => (
-                      <li key={subIdx} className="flex flex-row items-center">
-                        <div className="md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
+                      <li key={subIdx} className="flex flex-row items-baseline ">
+                        <div className="flex-shrink-0 md:text-[1.5vw] text-[3.5vw] font-semibold text-darkblue">{formatKey(subKey)}:</div>
                         <div className="pl-2 md:text-[1.2vw] text-[3.2vw] text-darkblue">{Array.isArray(subValue) ? subValue.join(', ') : subValue}</div>
                       </li>
                     ))}
@@ -158,7 +159,26 @@ export default function Info() {
     }
   };
   
-  
+
+  const handleDownloadPDF = (fileUrl) => {
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = ''; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDownloadAll = () => {
+    docuData.forEach((document, index) => {
+      if (document.file_url) {
+        setTimeout(() => {
+          handleDownloadPDF(`${document.file_url}?disposition=attachment`);
+        }, index * 100); 
+      }
+    });
+  };
+
   return (
     <div className="bg-local bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover min-h-screen text-center lg:px-[8vw]">
       <div className="flex items-center pt-4 ml-4">
@@ -169,7 +189,7 @@ export default function Info() {
       <div className="flex flex-col xl:flex-row overflow-hidden">
         <div className="flex flex-row justify-between xl:flex xl:flex-col lg:mr-[2vw]">
           <div className="flex flex-col w-full">
-            {!loading && data && (
+            {data && (
               <div className="md:w-auto md:p-[2vw] lg:p-5 id-card transition duration-500">
                 <div className="flex justify-center">
                   <ProfilePic />
@@ -197,20 +217,20 @@ export default function Info() {
               </div>
             )}
             <div className="pt-10 mx-4 md:mx-[4vw] lg:mx-2">
-              <div className="flex flex-row items-center justify-center bg-darkblue text-white font-semibold md:text-[3vw] xl:text-[1.5vw] py-1 md:py-2 rounded-lg ">
+              <div className="flex flex-row items-center justify-center bg-darkblue text-white font-semibold md:text-[3vw] xl:text-[1.5vw] py-1 md:py-2 rounded-lg" onClick={handleDownloadAll}>
                 Download All
                 <div className="px-2">
                   <Image className="items-center w-[4vw] md:w-[2.8vw] xl:w-[1.3vw]" src={download} />
                 </div>
               </div>
+            <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center">
+                <Image src={vector} className="w-full h-auto" />
             </div>
-          </div>
-          <div className="hidden lg:flex lg:w-full lg:justify-center lg:items-center">
-            <Image src={vector} className="w-auto h-auto" />
+            </div>
           </div>
         </div>
         <div className="w-full px-4 md:px-[4vw] lg:px-0 pt-[6vw] xl:w-[60%] lg:pt-0 md:flex md:flex-col">
-          <div className="relative flex flex-row w-fit md:w-full rounded-t-lg bg-[#E7E7E7] backdrop-blur-sm">
+          <div className="relative flex flex-row w-full rounded-lg bg-[#E7E7E7] backdrop-blur-sm">
             <span
               className="absolute bottom-0 top-0 -z-10 flex overflow-hidden transition-all duration-300"
               style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
@@ -222,7 +242,7 @@ export default function Info() {
               const isLast = index === categories.length - 1;
               return (
                 <div
-                  className={`md:flex-grow font-bold py-1 rounded-t-lg md:text-[3vw] xl:text-[1.5vw] text-[#939393] shadow-xl ${
+                  className={`flex-grow font-bold py-1 rounded-t-lg md:text-[3vw] xl:text-[1.5vw] text-[#939393] shadow-xl ${
                     isActive
                       ? "text-white shadow-2xl px-5 z-20 relative"
                       : "z-10 px-2 md:px-5 text-[#939393] shadow-md md:shadow-md"
@@ -264,7 +284,8 @@ export default function Info() {
                             )}
                         </div>
                         {document.important && (
-                            <Image className="w-[5%] md:w-[5%] absolute top-0 right-0 pr-2 pt-2" src={DownloadIndiv} />
+                            <Image className="w-[10%] md:w-[5%] absolute top-0 right-0 pr-2 pt-2" src={DownloadIndiv} alt='download individually' onClick={() => handleDownloadPDF(`${document.file_url}?disposition=attachment`)}
+                            style={{ cursor: 'pointer' }} />
                         )}
                         </div>
                     ))
@@ -278,3 +299,15 @@ export default function Info() {
     </div>
   );
 }
+
+
+export async function getServerSideProps(context) {
+    const { query } = context;
+    const initialCategory = query.category || "Health"; // Default to "Health" if not specified
+  
+    return {
+      props: {
+        initialCategory,
+      },
+    };
+  }
