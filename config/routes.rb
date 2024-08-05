@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'missing/upload', to: 'missing#upload'
   post 'missing/update', to: 'missing#update'
   post 'missing/delete', to: 'missing#destroy'
+  get 'missing/photo/:id', to: 'missing#photo'
   post 'authentication/upload', to: 'authentication#upload'
   post 'authentication/verify', to: 'authentication#verify'
   get 'match/associated/:id', to: 'match#associated'
