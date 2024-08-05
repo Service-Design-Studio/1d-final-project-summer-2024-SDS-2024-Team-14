@@ -149,6 +149,7 @@ export default function FamilyForm(props) {
                         onClick={() => {
                             props.setAddNew(false);
                             onSaveChanges();
+                            props.setSelected(props.numberOfEntries);
                         }}
                         className="bg-darkblue text-white w-fit hover:bg-darkblue hover:bg-opacity-75  text-center my-1 mx-2">
                         <Image width={1} height={1} className="h-0.8 w-auto mr-2 " src={"/images/save_icon.svg"} alt="Save Changes" /> Save Changes
