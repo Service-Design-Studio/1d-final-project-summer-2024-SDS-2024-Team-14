@@ -18,7 +18,7 @@ export default function NotificationPage({ open, setOpen, unread, setUnread }) {
             try {
                 await axiosInstance.get(`/notifications/${userID}`).then((resp) => {
                     let res = resp.data;
-                    console.log("response: ",resp.data)
+                    // console.log("response: ",resp.data)
                     const currentDate = new Date();
                     res.forEach(element => {
                         if (element.read && currentDate - new Date(element.created_at) > 1000 * 60 * 60 * 24) {
