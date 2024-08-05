@@ -22,8 +22,9 @@ const Tutorial = ({ title, steps, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="flex flex-col bg-white rounded-xl w-[50vw] max-w-[50vw] h-[70vh] max-h-[70vh] mx-auto">
+    <div className="fixed inset-0 flex justify-center items-center z-40">
+      <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
+      <div className="relative flex flex-col bg-white rounded-xl w-[50vw] max-w-[50vw] h-[70vh] max-h-[70vh] mx-auto">
         <div className="flex h-full">
           <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl" style={{ backgroundColor: '#F0F4FF' }}>
             <ul className="space-y-4 w-full font-semibold text-2xl">
@@ -57,7 +58,7 @@ const Tutorial = ({ title, steps, onClose }) => {
                 height={600}
               />
             </div>
-            <div className="flex justify-center items-center my-4">
+            <div className="flex justify-center items-center my-0">
               {steps.map((_, index) => (
                 <span
                   key={index}
@@ -67,7 +68,7 @@ const Tutorial = ({ title, steps, onClose }) => {
               ))}
             </div>
             <div className="flex-grow flex items-center justify-center">
-              <p className="text-darkblue text-xl mb-12 px-20 text-center leading-tight max-h-[13vh] overflow-auto">
+              <p className="text-darkblue text-[1.3rem] mb-12 px-20 text-center leading-tight max-h-[13vh] overflow-auto">
                 {steps[currentStep].text}
               </p>
             </div>
