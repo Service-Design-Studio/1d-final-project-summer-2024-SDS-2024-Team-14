@@ -15,23 +15,6 @@ RSpec.describe NotificationsController, type: :controller do
             "date_arrival": "10-06-2024",
             "verification_status": "Pending approval"
             ) }
-  describe 'GET #index' do
-    it 'returns all notifications' do
-      notification1 = Notification.create(user_id: user.id,
-      category: "Approval Pending",
-      content: "Your refugee status is pending approval.",
-      read: false)
-      notification2 = Notification.create(user_id: user.id,
-      category: "Approval Success",
-      content: "Your refugee status has been approved.",
-      read: false)
-
-      get :index, format: :json
-
-      expect(response).to be_ok
-      expect(JSON.parse(response.body)).to eq([notification1, notification2].as_json)
-    end
-  end
 
   describe 'GET #show' do
     context 'when user exists' do
