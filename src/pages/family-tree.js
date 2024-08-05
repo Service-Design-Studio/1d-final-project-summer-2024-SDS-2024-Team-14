@@ -27,8 +27,9 @@ export default function FamilyTree() {
             if (resp.data.length > 0) {
                 const updatedEntries = await Promise.all(
                     resp.data.map(async (entry) => {
-                        const photoResp = await axiosInstance.get(`/missing/photo/${entry.id}`);
-                        entry["src"] = photoResp.data.photo_url;
+                        await axiosInstance.get(`/missing/photo/${entry.id}`).then(async res => {
+                            entry["src"] = res.data.photo_url;
+                        });
                         return entry;
                     })
                 );
@@ -94,23 +95,23 @@ export default function FamilyTree() {
                             data={data}
                             setData={setData}
                             addNew={addNew}
-                            setEdit={ setEdit}
+                            setEdit={setEdit}
                             setAddNew={setAddNew}
                         />
                         {addNew && !edit && <FamilyForm
                             setAddNew={setAddNew}
                             setFetch={setFetch}
                             setSelected={setSelected}
-                            numberOfEntries={ data ? data.length : 0}
+                            numberOfEntries={data ? data.length : 0}
                         />}
                         {!addNew && !edit &&
                             <FamilyCard
-                            setAddNew={setAddNew}
-                            selectedData={selectedData}
-                            setFetch={setFetch}
-                            setSelected={setSelected}
-                            selected={selected}
-                            setEdit={ setEdit}
+                                setAddNew={setAddNew}
+                                selectedData={selectedData}
+                                setFetch={setFetch}
+                                setSelected={setSelected}
+                                selected={selected}
+                                setEdit={setEdit}
                             />}
                         {edit && edit >= 0 && <EditForm
                             setFetch={setFetch}

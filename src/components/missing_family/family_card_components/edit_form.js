@@ -25,7 +25,7 @@ export default function EditForm(props) {
                         if (files) {
                             try {
                                 let formData = new FormData();
-                                formData.append('id', resp.data.missing_id);
+                                formData.append('id', id);
                                 formData.append('photo', files, files)
                                 axiosInstance.post("/missing/upload", formData)
                             } catch (error) {
