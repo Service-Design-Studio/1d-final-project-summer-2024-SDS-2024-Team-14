@@ -61,7 +61,7 @@ end
       @user = User.find(params[:id])
       render json: @user.missing_people, status: :ok
     rescue ActiveRecord::RecordNotFound
-        render json: { message: "No missing people found" }, status: :unprocessable_entity
+      render json: { message: "No missing people found" }, status: :unprocessable_entity
     end
   end
 
