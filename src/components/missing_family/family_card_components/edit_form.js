@@ -22,7 +22,7 @@ export default function EditForm(props) {
                     if (resp.status === 200 || resp.status === 201) {
                         localStorage.setItem('notificationMessage', 'You have successfully saved.');
                         localStorage.setItem('status', 'success');
-                        if (files) {
+                        if (photos) {
                             try {
                                 let formData = new FormData();
                                 formData.append('id', id);
@@ -93,30 +93,11 @@ export default function EditForm(props) {
                     </Input>
                 </div>
                 <div className="flex flex-row w-full overflow-x-scroll mt-5 p-0">
-                    {/* {photos.map((item, index) => {
-                        return (
-                            <div key={index} className="flex flex-col items-center">
-                                <Image src={item} width={1} height={1} className="aspect-square object-cover w-28 mx-5 border-darkblue border-2" alt="added photo" />
-                                <div
-                                    className="underline"
-                                    onClick={() => {
-                                        setPhotos(prev => {
-                                            return prev.filter((item, i) => i != index)
-                                        })
-                                    }}>
-                                    Remove
-                                </div>
-                            </div>)
-
-                    })} */}
                     {photos ? <div className="flex flex-col items-center">
                         <Image unoptimized src={photos} width={1} height={1} className="aspect-square object-cover w-28 mx-5 border-darkblue border-2" alt="added photo" />
                         <div
                             className="underline"
                             onClick={() => {
-                                // setPhotos(prev => {
-                                //     return prev.filter((item, i) => i != index)
-                                // })
                                 setPhotos()
                             }}>
                             Remove

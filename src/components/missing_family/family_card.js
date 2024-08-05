@@ -27,7 +27,7 @@ export default function FamilyCard(props) {
                 <div>
                     <div className="flex-1 relative overflow-ellipsis min-w-96 lg:max-w-none lg:min-w-[16vw]">
                         <Image
-                            unoptimized
+                            // unoptimized
                             src={props.selectedData.src ? props.selectedData.src : "/images/default_profile_pic.svg"}
                             width={1}
                             height={1}

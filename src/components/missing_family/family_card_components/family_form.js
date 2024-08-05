@@ -28,10 +28,8 @@ export default function FamilyForm(props) {
                     if (resp.status === 200 || resp.status === 201) {
                         localStorage.setItem('notificationMessage', 'You have successfully saved.');
                         localStorage.setItem('status', 'success');
-                        if (files) {
+                        if (photos) {
                             try {
-                                // const blob = base64ToBlob(photos, photos.split(',')[1])
-                                // console.log("I went to photos" + files.file);
                                 let formData = new FormData();
                                 formData.append('id', resp.data.missing_id);
                                 formData.append('photo', files, files)

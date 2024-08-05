@@ -34,14 +34,15 @@ export default function FamilyTree() {
                     })
                 );
                 setData(updatedEntries);
+            } else {
+                setData([])
             }
         } catch (error) {
             console.error(error.message);
         }
+        setFetch(false);
     };
     useEffect(() => {
-        getMissingPersons();
-        setFetch(false);
         if (selectedData) {
             try {
                 //TODO: fix get match/id in backend
@@ -64,16 +65,18 @@ export default function FamilyTree() {
             }
         }
     }, [fetch])
+    useEffect(() => {
+        if (fetch) {
+            getMissingPersons();
+        }
+    }, [fetch])
+    
 
     useEffect(() => {
         if (data && selected < data.length) {
             setSelectedData(data[selected])
         }
     }, [selected, data])
-
-    useEffect(() => {
-
-    }, [selectedData])
 
     useAuth();
     return (
