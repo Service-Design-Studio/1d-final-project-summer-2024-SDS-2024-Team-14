@@ -12,8 +12,8 @@ const FilePreviewModal = ({ fileObj, onClose }) => {
                 <div className="flex justify-center items-center mt-8">
                     {fileObj.file.type.startsWith('image/') ? (
                         <img src={fileObj.preview} alt={fileObj.file.name} className='h-[60vw] md:h-[40vw] lg:h-[30vw] w-full object-contain' />
-                    ) : fileObj.file.type === 'application/pdf' ? (
-                        <iframe src={fileObj.preview} type="application/pdf" className="z-20 h-[60vw] md:h-[40vw] lg:h-[30vw] w-full"/>
+                    ) :fileObj.file.type === 'application/pdf' ? (
+                        <iframe src={fileObj.preview} type="application/pdf" className="h-[60vw] md:h-[40vw] lg:h-[30vw] w-full"/>
                     ) : (
                         <p>Unsupported file type: {fileObj.file.type}</p> // Add fallback message
                     )}
