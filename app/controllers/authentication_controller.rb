@@ -38,6 +38,7 @@ class AuthenticationController < ApplicationController
       similarity_score = compare_faces(b64_decoded_frame , image_data)
       if !similarity_score.nil?
         @user.face_verified = true
+        @user.save
         matched = true
       else
         matched = false
