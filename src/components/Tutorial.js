@@ -50,6 +50,7 @@ const Tutorial = ({ title, steps, onClose }) => {
   }
 
   const currentImages = steps[currentStep].images;
+  const currentTexts = steps[currentStep].texts;
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
@@ -107,7 +108,7 @@ const Tutorial = ({ title, steps, onClose }) => {
             </div>
             <div className="flex-grow flex items-center justify-center">
               <p className="text-darkblue text-xl mb-12 px-20 text-center leading-tight max-h-[13vh] overflow-auto">
-                {steps[currentStep].text}
+                {currentTexts[currentImageIndex]}
               </p>
             </div>
             <div className="flex justify-between mt-4">
@@ -143,7 +144,7 @@ Tutorial.propTypes = {
       category: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       images: PropTypes.arrayOf(PropTypes.string).isRequired,
-      text: PropTypes.string.isRequired,
+      texts: PropTypes.arrayOf(PropTypes.string).isRequired,
     })
   ).isRequired,
   onClose: PropTypes.func.isRequired, // Ensure this is defined
