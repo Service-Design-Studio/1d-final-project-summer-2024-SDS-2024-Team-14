@@ -17,7 +17,7 @@ const IntroPage = () => {
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
             </div>
             <div className="bg-white rounded-xl p-[2rem] w-[70%] mx-auto mt-12" style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'}}>
-                <h1 className="block text-2xl mb-4 font-bold text-center text-darkblue">
+                <h1 className="block text-4xl mb-4 font-bold text-center text-darkblue">
                     {slides[currentSlide].title}
                 </h1>
                 <Image
@@ -44,7 +44,7 @@ const IntroPage = () => {
                         />
                     ))}
                 </div>
-                <p className="text-darkblue text-base mt-12 mb-12 px-100 text-center">
+                <p className="text-darkblue text-xl mt-12 mb-12 px-100 text-center">
                     {slides[currentSlide].text}
                 </p>
                 <div className="flex justify-between">
