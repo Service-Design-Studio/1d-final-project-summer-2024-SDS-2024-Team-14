@@ -1,17 +1,18 @@
 // src/components/modalContent/docman.js
 import React from 'react';
-import SelectingCategoriesImage from 'public/images/intro/docmanhd.png';
-import SearchBarImage from 'public/images/intro/chatbot.jpg';
-import UploadingDocumentsImage1 from 'public/images/intro/homehd.png';
-import UploadingDocumentsImage2 from 'public/images/intro/famtree.png';
-import UploadingDocumentsImage3 from 'public/images/intro/docmanfigmahd.png';
-import ScanningDocumentsImage1 from 'public/images/intro/docmanfigmahd.png';
-import ScanningDocumentsImage2 from 'public/images/intro/fam.jpg';
-import ScanningDocumentsImage3 from 'public/images/intro/chatbothd.png';
-import ScanningDocumentsImage4 from 'public/images/intro/chatbothd.png';
-import SortingImage from 'public/images/intro/white bg.png';
-import PreviewingImage1 from 'public/images/intro/fam.jpg';
-import PreviewingImage2 from 'public/images/intro/slide1.jpg';
+import SelectingCategoriesImage from 'public/images/intro/lh44.png';
+import SearchBarImage from 'public/images/intro/lh44.png';
+import UploadingDocumentsImage1 from 'public/images/intro/lh44.png';
+import UploadingDocumentsImage2 from 'public/images/intro/lh44.png';
+import UploadingDocumentsImage3 from 'public/images/intro/lh44.png';
+import ScanningDocumentsImage1 from 'public/images/intro/lh44.png';
+import ScanningDocumentsImage2 from 'public/images/intro/lh44.png';
+import ScanningDocumentsImage3 from 'public/images/intro/lh44.png';
+import ScanningDocumentsImage4 from 'public/images/intro/lh44.png';
+import SortingImage from 'public/images/intro/lh44.png';
+import PreviewingImage1 from 'public/images/intro/lh44.png';
+import PreviewingImage2 from 'public/images/intro/lh44.png';
+
 
 const docManContent = [
     {

@@ -1,10 +1,10 @@
 // src/components/modalContent/homepage.js
 import React from 'react';
-import DisplayQRCodeImage1 from 'public/images/intro/homefigmahd.png'; // Update with actual image paths
-import DisplayQRCodeImage2 from 'public/images/intro/homehd.png'; // Update with actual image paths
-import AccessServicesImage from 'public/images/intro/white bg.png'; // Update with actual image paths
-import FAQChatbotImage1 from 'public/images/intro/chatbot.jpg'; // Update with actual image paths
-import FAQChatbotImage2 from 'public/images/intro/chatbothd.png'; // Update with actual image paths
+import DisplayQRCodeImage1 from 'public/images/intro/lh44.png'; // Update with actual image paths
+import DisplayQRCodeImage2 from 'public/images/intro/lh44.png'; // Update with actual image paths
+import AccessServicesImage from 'public/images/intro/modal/home/2.png'; // Update with actual image paths
+import FAQChatbotImage1 from 'public/images/intro/modal/home/3a.png'; // Update with actual image paths
+import FAQChatbotImage2 from 'public/images/intro/modal/home/3b.png'; // Update with actual image paths
 
 const homePageContent = [
     {
@@ -29,7 +29,7 @@ const homePageContent = [
         title: 'FAQ Chatbot',
         images: [FAQChatbotImage1, FAQChatbotImage2],
         texts: [
-            'To bring up the FAQ Chatbot and ask any questions regarding our webapp, click on the ? button at the bottom right of every page.',
+            'To bring up the FAQ Chatbot and ask any questions regarding our webapp, click on the "?" button at the bottom right of every page.',
             'Here is what the chatbot looks like. Simply type your question in the chat.'
         ],
     },
