@@ -13,13 +13,19 @@ import QnMarkIcon from "../../public/images/tutorial/blueqnmark.svg";
 import { Button } from '@mui/material'
 import NotificationPage from "./notifications/notification_page";
 import Tutorial from './Tutorial';
+import { useRouter } from 'next/router';
+import famTreeContent from './modalContent/famtree';
+import docManContent from './modalContent/docman';
 
-export default function NaviBar({ open, setOpen, tutorialTitle, tutorialContent }) {
+export default function NaviBar({ open, setOpen }) {
     const [navState, setNavState] = useState(false)
     const [unread, setUnread] = useState(false)
     const [tutorialOpen, setTutorialOpen] = useState(false); // Separate state for the tutorial modal
     const popupRef = useRef(null);
     const notifRef = useRef(null)
+    const router = useRouter();
+    const { pathname } = router;
+
     const handleClickOutside = (event) => {
         if (popupRef.current && !popupRef.current.contains(event.target)) {
             setNavState(false);
@@ -47,7 +53,20 @@ export default function NaviBar({ open, setOpen, tutorialTitle, tutorialContent 
         } else {
             window.removeEventListener('mousedown', handleClickOutside)
         }
-    }, [open])
+    }, [open]);
+
+    const getTutorialContent = () => {
+        switch (pathname) {
+            case '/documents':
+                return { title: 'Document Manager Tutorial', content: docManContent };
+            case '/family-tree':
+                return { title: 'Family Tree Tutorial', content: famTreeContent };
+            default:
+                return { title: '', content: [] };
+        }
+    };
+
+    const { title, content } = getTutorialContent();
 
     return (
         <div className="flex justify-between items-center mt-2">
@@ -142,7 +161,7 @@ export default function NaviBar({ open, setOpen, tutorialTitle, tutorialContent 
                 </Button>
             </div>
             <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>
-            {tutorialOpen && <Tutorial title={tutorialTitle} steps={tutorialContent} onClose={() => setTutorialOpen(false)} />}
+            {tutorialOpen && <Tutorial title={title} steps={content} onClose={() => setTutorialOpen(false)} />}
         </div>
     )
 }

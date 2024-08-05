@@ -45,6 +45,10 @@ const Tutorial = ({ title, steps, onClose }) => {
     }
   };
 
+  if (!steps || steps.length === 0) {
+    return null; // or a fallback UI
+  }
+
   const currentImages = steps[currentStep].images;
 
   return (
