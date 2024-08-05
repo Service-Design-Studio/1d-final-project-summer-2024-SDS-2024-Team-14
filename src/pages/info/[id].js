@@ -232,7 +232,7 @@ export default function Info() {
             </div>
           </div>
         </div>
-        <div className="w-full px-4 md:px-[4vw] lg:px-0 pt-[6vw] xl:w-[60%] lg:pt-0 md:flex md:flex-col">
+        <div className="w-full mb-10 px-4 md:px-[4vw] lg:px-0 pt-[6vw] xl:w-[60%] lg:pt-0 md:flex md:flex-col">
           <div className="relative flex flex-row w-full rounded-lg bg-[#E7E7E7] backdrop-blur-sm">
             <span
               className="absolute bottom-0 top-0 -z-10 flex overflow-hidden transition-all duration-300"
@@ -274,11 +274,11 @@ export default function Info() {
           <div className="w-full rounded-b-lg rounded-r-lg md:rounded-b-lg md:rounded-tr-none">
             {loading && <Loading text={"Loading..."} />}
             {!loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"} />}
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-5 md:space-y-10">
                 {console.log(docuData)}
                 {docuData.length > 0 ? (
                     docuData.map((document) => (
-                        <div key={document.id} className="overflow-auto max-h-[500px] text-left bg-white w-full px-[2vw] py-[2vw] lg:py-[0.1vw] rounded-lg flex flex-row relative">
+                        <div key={document.id} className="overflow-auto max-h-[500px] text-left bg-white w-full px-[2vw] pb-[4vw] md:pb-[2vw] pt-[1vw] rounded-lg flex flex-row relative">
                         <div>
                             <div className="capitalize text-[5vw] md:text-[1.5vw] font-bold text-darkblue">{getFileNameWithoutExtension(document.name)}</div>
                             {document.important ? (
@@ -288,7 +288,7 @@ export default function Info() {
                             )}
                         </div>
                         {document.important && (
-                            <Image className="w-[10%] md:w-[3vw] absolute top-0 right-0 pr-2 pt-2" src={DownloadIndiv} alt='download individually' onClick={() => handleDownloadPDF(`${document.file_url}?disposition=attachment`)}
+                            <Image className="w-[10%] md:w-[3vw] absolute top-0 right-0 pr-2 pt-[2vw] md:pt-[1vw]" src={DownloadIndiv} alt='download individually' onClick={() => handleDownloadPDF(`${document.file_url}?disposition=attachment`)}
                             style={{ cursor: 'pointer' }} />
                         )}
                         </div>
