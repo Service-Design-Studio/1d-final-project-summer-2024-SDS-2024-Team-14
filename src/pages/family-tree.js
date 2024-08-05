@@ -68,7 +68,7 @@ export default function FamilyTree() {
         if (data && selected < data.length) {
             setSelectedData(data[selected])
         }
-    }, [selected])
+    }, [selected, data])
 
     useEffect(() => {
 
@@ -100,6 +100,8 @@ export default function FamilyTree() {
                         {addNew && !edit && <FamilyForm
                             setAddNew={setAddNew}
                             setFetch={setFetch}
+                            setSelected={setSelected}
+                            numberOfEntries={ data ? data.length : 0}
                         />}
                         {!addNew && !edit &&
                             <FamilyCard
@@ -113,11 +115,9 @@ export default function FamilyTree() {
                         {edit && edit >= 0 && <EditForm
                             setFetch={setFetch}
                             setEdit={setEdit}
-                            selectedData={ selectedData}
+                            selectedData={selectedData}
                         />}
-                        
                     </div>
-
                     <PotentialMatches
                         selected={selected}
                         matches={matches}
