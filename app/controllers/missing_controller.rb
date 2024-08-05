@@ -65,19 +65,6 @@ end
     end
   end
 
- def photo
-  begin
-    @missing = MissingPerson.find(params[:id])
-    if @missing.photo.attached?
-      render json: { photo_url: url_for(@missing.photo) }, status: :ok
-    else
-      render json: {photo_url: "" }, status: :ok
-    end
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: "No missing people found" }, status: :unprocessable_entity
-  end
-end
-
   def missing_params
     params.permit(:name, :age, :gender, :ethnicity, :date_birth)
   end
