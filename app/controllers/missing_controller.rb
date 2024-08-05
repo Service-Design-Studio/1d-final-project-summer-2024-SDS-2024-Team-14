@@ -38,12 +38,13 @@ end
   # Attach photo to missing person(POST) - /missing/upload
   def upload
     @photo = params[:photo]
-    unless @photo.blank?
+
       begin
         @missing = MissingPerson.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         render json: { message: "Missing person does not exist" }, status: :unprocessable_entity and return
       end
+    unless @photo.blank?
       begin
         @missing.photo.attach(@photo)
       rescue => e
@@ -51,7 +52,12 @@ end
       end
       render json: { message: "Your photo has been uploaded successfully for #{@missing.name}"}, status: :ok
     else
-      render json: { message: "There was no photo uploaded. Please try again later"}, status: :unprocessable_entity
+      if @missing.photo.attached?
+        @missing.photo.purge
+        render json: { message: "Your attached photo has been removed successfully for #{@missing.name}"}, status: :ok
+      else
+        render json: { message: "There was no photo uploaded. Please try again later."}, status: :unprocessable_entity
+      end
     end
   end
 
