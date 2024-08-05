@@ -13,9 +13,8 @@ import QnMarkIcon from "../../public/images/tutorial/blueqnmark.svg";
 import { Button } from '@mui/material'
 import NotificationPage from "./notifications/notification_page";
 import Tutorial from './Tutorial';
-import famTreeContent from './modalContent/famtree'; // Adjust this import as needed
 
-export default function NaviBar({ open, setOpen }) {
+export default function NaviBar({ open, setOpen, tutorialTitle, tutorialContent }) {
     const [navState, setNavState] = useState(false)
     const [unread, setUnread] = useState(false)
     const [tutorialOpen, setTutorialOpen] = useState(false); // Separate state for the tutorial modal
@@ -143,7 +142,7 @@ export default function NaviBar({ open, setOpen }) {
                 </Button>
             </div>
             <NotificationPage ref={notifRef} open={open} setOpen={setOpen} unread={unread} setUnread={setUnread}/>
-            {tutorialOpen && <Tutorial title="Family Tree Tutorial" steps={famTreeContent} />}
+            {tutorialOpen && <Tutorial title={tutorialTitle} steps={tutorialContent} onClose={() => setTutorialOpen(false)} />}
         </div>
     )
 }

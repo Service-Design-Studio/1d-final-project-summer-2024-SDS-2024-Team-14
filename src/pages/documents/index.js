@@ -11,8 +11,9 @@ import crossIcon from "../../../public/images/upload/cross_icon.svg";
 import Link from "next/link";
 import ChatBot from "@/components/ChatBot";
 import axiosInstance from "@/utils/axiosInstance";
-import {ReactNotifications, Store} from "react-notifications-component";
+import { ReactNotifications, Store } from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css';
+import docManContent from '@/components/modalContent/docman';
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -34,56 +35,54 @@ const DocumentManager = () => {
   const [open, setOpen] = useState(false);
   let userID;
 
-
   useEffect(() => {
     if (selectedCategory) {
       fetchDocuments();
     }
-      const message = localStorage.getItem('notificationMessage');
-      const status = localStorage.getItem('status');
-      if (message) {
-          if (status==="success") {
-              Store.addNotification({
-                  title: "Success",
-                  message: message,
-                  type: "success",
-                  insert: "bottom",
-                  container: "bottom-right",
-                  animationIn: ["animate__animated", "animate__fadeIn"],
-                  animationOut: ["animate__animated", "animate__fadeOut"],
-                  dismiss: {
-                      duration: 5000,
-                      onScreen: true
-                  }
-              });
+    const message = localStorage.getItem('notificationMessage');
+    const status = localStorage.getItem('status');
+    if (message) {
+      if (status === "success") {
+        Store.addNotification({
+          title: "Success",
+          message: message,
+          type: "success",
+          insert: "bottom",
+          container: "bottom-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true
           }
-          else {
-              Store.addNotification({
-                  title: "Error",
-                  message: message,
-                  type: "danger",
-                  insert: "bottom",
-                  container: "bottom-right",
-                  animationIn: ["animate__animated", "animate__fadeIn"],
-                  animationOut: ["animate__animated", "animate__fadeOut"],
-                  dismiss: {
-                      duration: 5000,
-                      onScreen: true
-                  }
-              });
+        });
+      }
+      else {
+        Store.addNotification({
+          title: "Error",
+          message: message,
+          type: "danger",
+          insert: "bottom",
+          container: "bottom-right",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true
           }
+        });
+      }
       localStorage.removeItem('notificationMessage'); // Clear the message after displaying
       localStorage.removeItem('status'); // Clear the message after displaying
     }
   }, []);
 
   const fetchDocuments = async () => {
-
     userID = localStorage.getItem("userID");
     try {
-      await axiosInstance.post(`/document/retrieve`, {id: userID}).then((resp) => {
+      await axiosInstance.post(`/document/retrieve`, { id: userID }).then((resp) => {
         setData(resp.data.documents)
-    })
+      })
     } catch (error) {
       console.error(error.message);
     };
@@ -101,14 +100,14 @@ const DocumentManager = () => {
   useEffect(() => {
     if (data != null) {
       const filteredDocuments = data.filter(
-          doc => doc.category === selectedCategory.toLowerCase() && (statusFilter === 'All' || doc.status === statusFilter)
-        );
+        doc => doc.category === selectedCategory.toLowerCase() && (statusFilter === 'All' || doc.status === statusFilter)
+      );
 
-        setDocuments(filteredDocuments);
-        setFilteredDocuments(filteredDocuments);
+      setDocuments(filteredDocuments);
+      setFilteredDocuments(filteredDocuments);
 
-        setTotalPages(Math.ceil(filteredDocuments.length / itemsPerPage));
-      }
+      setTotalPages(Math.ceil(filteredDocuments.length / itemsPerPage));
+    }
 
   }, [selectedCategory, statusFilter, currentPage, data]);
 
@@ -199,16 +198,16 @@ const DocumentManager = () => {
     const extension = filename.split('.').pop();
     switch (extension) {
       case 'pdf':
-        return { src: pdfIcon};
+        return { src: pdfIcon };
       case 'docx':
-        return { src: docxIcon};
+        return { src: docxIcon };
       case 'jpg':
       case 'png':
       case 'img':
       case 'images':
-        return { src: picIcon};
+        return { src: picIcon };
       default:
-        return { src: picIcon};
+        return { src: picIcon };
     }
   };
 
@@ -218,18 +217,18 @@ const DocumentManager = () => {
       return (
         <div className="">
           {Object.keys(parsedImportant).map((key, index) => (
-          <div key={key}>
-            {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
-            <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
-              {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
-            </strong>
-            <ul className="leading-loose">
-              {Array.isArray(parsedImportant[key])
-                ? parsedImportant[key].map((item, idx) => (
+            <div key={key}>
+              {index !== 0 && <div className="mt-2"></div>} {/* Add margin before each new header */}
+              <strong className="md:text-[1.5vw] text-[3.5vw] font-semibold text-lightgray">
+                {key.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:
+              </strong>
+              <ul className="leading-loose">
+                {Array.isArray(parsedImportant[key])
+                  ? parsedImportant[key].map((item, idx) => (
                     <li key={idx} className="md:text-[1vw] text-[3vw] text-darkblue">
                       {typeof item === 'object' ? (
                         <>
-                         {Object.keys(item).map((itemKey) => (
+                          {Object.keys(item).map((itemKey) => (
                             <div key={itemKey} className="ml-4">
                               <strong>{itemKey.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}:</strong>
                               {` ${Array.isArray(item[itemKey]) ? item[itemKey].join(', ') : item[itemKey]}`}
@@ -241,9 +240,9 @@ const DocumentManager = () => {
                       )}
                     </li>
                   ))
-                : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
-            </ul>
-          </div>
+                  : <span className="md:text-[1.2vw] text-[3.2vw] text-darkblue">{parsedImportant[key]}</span>}
+              </ul>
+            </div>
           ))}
         </div>
       );
@@ -254,42 +253,42 @@ const DocumentManager = () => {
 
   return (
     <>
-    <ReactNotifications />
-    <div className="min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
-      <NaviBar open={open} setOpen={ setOpen} />
-          {/* category button row */}
-      <div className="mx-10 mt-10">
-        <div className="flex flex-row justify-between items-center">
-          <h1 className="text-xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
-          <div className="flex items-center bg-lightgray rounded-full px-3 py-2">
-            <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
-            <input
+      <ReactNotifications />
+      <div className="min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
+        <NaviBar open={open} setOpen={setOpen} tutorialTitle="Document Manager Tutorial" tutorialContent={docManContent} />
+        {/* category button row */}
+        <div className="mx-10 mt-10">
+          <div className="flex flex-row justify-between items-center">
+            <h1 className="text-xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
+            <div className="flex items-center bg-lightgray rounded-full px-3 py-2">
+              <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
+              <input
                 type="text"
                 placeholder="Search in Documents"
                 className="flex-grow text-darkblue w-contain bg-lightgray placeholder:text-[1.2vw] mx-auto ml-2 placeholder:text-darkblue placeholder:opacity-[79%]
                 focus:outline-none text-[1.2vw]"
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
-            />
+              />
+            </div>
           </div>
-        </div>
           <div className="flex flex-col justify-between items-center my-5 ml-0 mr-0 md:flex-row">
             {/* gap in btw cat buttons */}
             <div className="category-buttons flex flex-wrap gap-2 pl-1.5">
               {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
-                  <button
-                      key={category}
-                      onClick={() => handleCategoryClick(category)}
-                      // CATEGORY BUTTONS
-                      className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
+                <button
+                  key={category}
+                  onClick={() => handleCategoryClick(category)}
+                  // CATEGORY BUTTONS
+                  className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw]
                   ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-                  >
-                    {category}
-                  </button>
+                >
+                  {category}
+                </button>
               ))}
             </div>
           </div>
-        <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto" />
+          <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto" />
         </div>
 
         {/* Upload and Category buttons container for web */}
@@ -331,86 +330,86 @@ const DocumentManager = () => {
             </Link>
           </div>
         </div>
-      {/* DOCUMENT CONTAINER for Web */}
-      <div className="bg-white rounded-xl shadow-md mb-10 mr-10 ml-10">
-        <div className="flex font-bold py-3 text-darkblue">
-          <div className="flex items-center" style={{ width: '80px' }}></div>
-          <div className="flex items-center pl-5" style={{ width: 'calc(70% - 80px)' }} onClick={() => requestSort('name')}>
-            <span>Name</span>
-            <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
+        {/* DOCUMENT CONTAINER for Web */}
+        <div className="bg-white rounded-xl shadow-md mb-10 mr-10 ml-10">
+          <div className="flex font-bold py-3 text-darkblue">
+            <div className="flex items-center" style={{ width: '80px' }}></div>
+            <div className="flex items-center pl-5" style={{ width: 'calc(70% - 80px)' }} onClick={() => requestSort('name')}>
+              <span>Name</span>
+              <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
+            </div>
+            <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('type')}>
+              <span>Type</span>
+              <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
+            </div>
+            <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('lastModifiedDate')}>
+              <span>Last Modified Date</span>
+              <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
+            </div>
           </div>
-          <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('type')}>
-            <span>Type</span>
-            <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
-          </div>
-          <div className="flex items-center" style={{ width: '15%' }} onClick={() => requestSort('lastModifiedDate')}>
-            <span>Last Modified Date</span>
-            <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
-          </div>
-        </div>
-        <div className="">
-          {sortedDocuments.length > 0 ? (
-            sortedDocuments.map((document) => {
-              return (
-                <div className={`flex justify-between h-20 border-t border-lightgray text-lg ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
-                  <Image className="md:w-[3vw] w-[5vw] ml-8"
-                    src={getIconForFilename(document.name).src}
-                    alt={`${document.name} icon`}
-                  />
-                  <div className="flex items-center flex-grow text-lg">
-                    <div className="ml-5 font-bold">
-                      {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
+          <div className="">
+            {sortedDocuments.length > 0 ? (
+              sortedDocuments.map((document) => {
+                return (
+                  <div className={`flex justify-between h-20 border-t border-lightgray text-lg ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
+                    <Image className="md:w-[3vw] w-[5vw] ml-8"
+                      src={getIconForFilename(document.name).src}
+                      alt={`${document.name} icon`}
+                    />
+                    <div className="flex items-center flex-grow text-lg">
+                      <div className="ml-5 font-bold">
+                        {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
+                      </div>
+                    </div>
+                    <div className={`flex items-center ml-[-10px]`} style={{ width: '15%' }}>
+                      <span className="text-lg text-darkblue">{document.name.split('.').pop()}</span>
+                    </div>
+                    <div className="flex items-center" style={{ width: '15%' }}>
+                      <span className="text-lg text-darkblue">{document.lastModifiedDate}</span>
                     </div>
                   </div>
-                  <div className={`flex items-center ml-[-10px]`} style={{ width: '15%' }}>
-                    <span className="text-lg text-darkblue">{document.name.split('.').pop()}</span>
-                  </div>
-                  <div className="flex items-center" style={{ width: '15%' }}>
-                    <span className="text-lg text-darkblue">{document.lastModifiedDate}</span>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-lg text-center w-full py-5 text-lightgray">No documents available</div>
-          )}
+                );
+              })
+            ) : (
+              <div className="text-lg text-center w-full py-5 text-lightgray">No documents available</div>
+            )}
+          </div>
         </div>
-      </div>
-      {selectedDocument && (
-        <>
-          <div className="fixed top-0 left-0 w-full h-full
+        {selectedDocument && (
+          <>
+            <div className="fixed top-0 left-0 w-full h-full
           bg-default justify-center bg-opacity-75 z-50 flex items-center">
-            <div className="bg-white mx-auto my-auto rounded-xl w-2/3 h-[80%]">
-              <div className ="px-6">
-                <div className="flex justify-between pt-4 pb-1">
-                  <h1 className="text-[2.5vw] md:text-[1.5vw] font-bold text-darkblue">{selectedDocument.name}</h1>
-                  <Image className="md:w-[2vw] w-[4vw] mb-2" src={crossIcon} alt="close window" onClick={handleClosePreview}/>
+              <div className="bg-white mx-auto my-auto rounded-xl w-2/3 h-[80%]">
+                <div className="px-6">
+                  <div className="flex justify-between pt-4 pb-1">
+                    <h1 className="text-[2.5vw] md:text-[1.5vw] font-bold text-darkblue">{selectedDocument.name}</h1>
+                    <Image className="md:w-[2vw] w-[4vw] mb-2" src={crossIcon} alt="close window" onClick={handleClosePreview} />
+                  </div>
                 </div>
-              </div>
-            <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
-            <div className="flex bg-white overflow-hidden w-auto h-[80%] relative">
-              <div className="flex w-1/2">
-                <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
-                  {selectedDocument.file_url ? (
-                    <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%" height="100%"></iframe>
-                  ) : (
-                    <p>Document preview not available</p>
-                  )}
+                <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
+                <div className="flex bg-white overflow-hidden w-auto h-[80%] relative">
+                  <div className="flex w-1/2">
+                    <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
+                      {selectedDocument.file_url ? (
+                        <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%" height="100%"></iframe>
+                      ) : (
+                        <p>Document preview not available</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-1 p-5 overflow-y-auto">
+                    {selectedDocument.important ? renderImportantInfo(selectedDocument.important) : <p>No additional information available</p>}
+                  </div>
                 </div>
-              </div>
-              <div className="flex-1 p-5 overflow-y-auto">
-                {selectedDocument.important ? renderImportantInfo(selectedDocument.important) : <p>No additional information available</p>}
-              </div>
-              </div>
-              <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
+                <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
               </div>
             </div>
-          <ChatBot/>
-        </>
-      )}
-      <ChatBot/>
-    </div>
-      </>
+            <ChatBot />
+          </>
+        )}
+        <ChatBot />
+      </div>
+    </>
   );
 };
 
