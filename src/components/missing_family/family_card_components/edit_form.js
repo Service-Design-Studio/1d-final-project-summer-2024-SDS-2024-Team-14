@@ -31,6 +31,11 @@ export default function EditForm(props) {
                             } catch (error) {
                                 console.error('Error uploading image', error);
                             }
+                        } else {
+                            axiosInstance.post("/missing/upload", {
+                                'id': id,
+                                'photo': null
+                            });
                         }
                     } else {
                         localStorage.setItem('notificationMessage', 'There was an error in saving, Please retry again later.');
