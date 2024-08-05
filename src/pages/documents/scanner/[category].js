@@ -13,6 +13,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import {useRouter} from "next/router";
 import ChatBot from "@/components/ChatBot";
 import EnableId from "../../../../public/images/enable_id_logo.svg";
+import Loading from "@/components/loading";
 
 export default function Category() {
     const [loading, setLoading] = useState(false)
