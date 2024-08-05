@@ -235,7 +235,7 @@ export default function Info() {
                 {console.log(docuData)}
                 {docuData.length > 0 ? (
                 docuData.map((document) => (
-                    <div key={document.id} className="bg-white w-full px-[2vw] py-[2vw] lg:py-[0.1vw] rounded-lg flex flex-row items-center relative">
+                    <div key={document.id} className="text-left bg-white w-full px-[2vw] py-[2vw] lg:py-[0.1vw] rounded-lg flex flex-row items-center relative">
                     <div>
                         {document.important ? (
                         renderImportantInfo(document.important)
