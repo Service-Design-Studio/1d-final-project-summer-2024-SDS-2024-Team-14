@@ -11,16 +11,18 @@ import SideList from "@/components/missing_family/family_card_components/side_li
 import FamilyForm from "@/components/missing_family/family_card_components/family_form";
 import PotentialMatches from "@/components/missing_family/potential_matches";
 import EditForm from "@/components/missing_family/family_card_components/edit_form";
+
 export default function FamilyTree() {
     const router = useRouter();
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState();
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
     const [fetch, setFetch] = useState(true);
     const [selectedData, setSelectedData] = useState();
     const [matches, setMatches] = useState([]);
     const [addNew, setAddNew] = useState(false);
     const [edit, setEdit] = useState(null);
+    const [isTutorialOpen, setIsTutorialOpen] = useState(false); // State to control the tutorial modal
     const [click, setClick] = useState(null);
     const [matchRes, setMatchRes] = useState(null);
     const placeholder = [
@@ -104,7 +106,7 @@ export default function FamilyTree() {
             try {
                 getMatches();
             } catch (error) {
-                setMatches([])
+                setMatches([]);
             } finally {
                 if (matches != null && matches.length > 1) {
                     setMatches((prev) => {
@@ -127,7 +129,6 @@ export default function FamilyTree() {
         }
     }, [fetch])
 
-
     useEffect(() => {
         if (data && selected < data.length) {
             setSelectedData(data[selected]);
@@ -149,6 +150,15 @@ export default function FamilyTree() {
         }
     }
     useAuth();
+
+    const openTutorial = () => {
+        setIsTutorialOpen(true);
+    };
+
+    const closeTutorial = () => {
+        setIsTutorialOpen(false);
+    };
+
     return (
         <div className="bg-white max-w-screen md:px-3 mx-auto min-h-screen bg-cover bg-[url('/images/background/gebirah-bluebg.png')] flex flex-col">
             <NaviBar open={open} setOpen={setOpen} />

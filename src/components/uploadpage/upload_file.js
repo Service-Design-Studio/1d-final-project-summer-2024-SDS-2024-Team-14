@@ -1,8 +1,7 @@
-import axios from "axios";
 import React, { Component } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import shortid from 'shortid';
-import { ReactNotifications, Store } from "react-notifications-component";
+import { Store } from "react-notifications-component";
 import fileIcon from "../../../public/images/icons/file_darkblue.svg";
 import crossIcon from "../../../public/images/upload/cross_icon.svg";
 import fileUpload from "../../../public/images/upload/file_upload.svg";
@@ -31,8 +30,10 @@ class UploadFile extends Component {
     };
 
     onFileUpload = () => {
-        const { selectedCategory, router, selectedLanguage } = this.props;
-        if (!selectedCategory){
+        const { selectedCategory, router, selectedLanguage, setLoading } = this.props;
+        const approvedFileTypes = ['image/jpeg', 'image/png', 'application/pdf']; // List of approved file types
+
+        if (!selectedCategory) {
             Store.addNotification({
                 title: "Error",
                 message: "Please choose a category first before uploading",
@@ -46,27 +47,68 @@ class UploadFile extends Component {
                     onScreen: true
                 }
             });
-        } else {
-            const userId = localStorage.getItem('userID');
-            const formData = new FormData();
-            this.state.selectedFiles.forEach(fileObj => {
-                formData.append("files[]", fileObj.file, fileObj.file.name);
-            });
-            formData.append("id", userId)
-            formData.append("category", selectedCategory)
-            formData.append("language", selectedLanguage)
+            return; // Exit early if no category is selected
+        }
 
-            axiosInstance.post("/document", formData).then((resp) => {
+        const invalidFiles = this.state.selectedFiles.filter(fileObj => !approvedFileTypes.includes(fileObj.file.type));
+
+        if (invalidFiles.length > 0) {
+            Store.addNotification({
+                title: "Error",
+                message: "One or more files have unsupported file types. Please upload files with the following types: " + approvedFileTypes.join(", "),
+                type: "danger",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+            return; // Exit early if there are invalid files
+        }
+
+        const userId = localStorage.getItem('userID');
+        const formData = new FormData();
+        this.state.selectedFiles.forEach(fileObj => {
+            formData.append("files[]", fileObj.file, fileObj.file.name);
+        });
+        formData.append("id", userId);
+        formData.append("category", selectedCategory);
+        formData.append("language", selectedLanguage);
+
+
+        axiosInstance.post("/document", formData)
+            .then((resp) => {
                 if (resp.status === 200 || resp.status === 201) {
                     localStorage.setItem('notificationMessage', 'You have successfully uploaded the file. Please check that the file is in your folder.');
-                    localStorage.setItem('status', 'success')
+                    localStorage.setItem('status', 'success');
                 } else {
                     localStorage.setItem('notificationMessage', 'There was an error uploading the file. Please contact your administrator for help.');
-                    localStorage.setItem('status', 'error')
+                    localStorage.setItem('status', 'error');
                 }
-                router.push("/documents")
+                setLoading(false);
             })
-        }
+            .catch((error) => {
+                Store.addNotification({
+                    title: "Error",
+                    message: "An error occurred during the upload. Please try again later.",
+                    type: "danger",
+                    insert: "bottom",
+                    container: "bottom-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+            })
+            .finally(() => {
+                router.push("/documents"); 
+            });
+        setLoading(true);
     };
 
     fileData = () => {
@@ -80,7 +122,6 @@ class UploadFile extends Component {
                                 onClick={() => this.handleCardClick(fileObj)}
                             >
                                 <Image className="md:w-[3vw] w-[7.5vw]" src={fileIcon} alt="file icon"/>
-                                {/*<FontAwesomeIcon icon={faFileText} />*/}
                                 <p className="pl-3 pr-5 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw] flex-grow">File Name: {fileObj.file.name}</p>
                                 <button
                                     onClick={(e) => {
@@ -123,9 +164,9 @@ class UploadFile extends Component {
 
     render() {
         const uploadButtonClasses = (this.state.selectedFiles.length > 0)
-            ? "text-lg px-5 py-2 text-white bg-darkblue rounded-lg hover:bg-[#4378DB] hover:text-white hover:underline"
-            : "text-lg px-5 py-2 text-darkblue bg-darkblue bg-opacity-30 rounded-md cursor-not-allowed";
-    
+            ? "upload text-lg px-5 py-2 text-white bg-darkblue rounded-lg hover:bg-[#4378DB] hover:text-white hover:underline"
+            : "upload text-lg px-5 py-2 text-darkblue bg-darkblue bg-opacity-30 rounded-md cursor-not-allowed";
+
         return (
             <div className="flex flex-col h-full">
                 <div className="md:pt-8 pt-6 flex flex-col md:flex-row gap-4">
@@ -149,7 +190,7 @@ class UploadFile extends Component {
                             multiple
                             onChange={this.onFileChange}
                         />
-                        <h1 className="text-lightblue text-md md:text-[1.2vw]">Files Supported: DOC, PDF, JPEG, PNG</h1>
+                        <h1 className="text-lightblue text-md md:text-[1.2vw]">Files Supported: PDF, JPEG, PNG</h1>
                     </label>
 
                     {/* File Data Container */}
@@ -173,7 +214,7 @@ class UploadFile extends Component {
                         <button
                             id="upload"
                             onClick={this.onFileUpload}
-                            className={"upload"}
+                            className={uploadButtonClasses}
                             disabled={this.state.selectedFiles.length === 0}
                             aria-label={this.state.selectedFiles.length === 0 ? "disabled" : "enabled" }
                         >
@@ -193,7 +234,3 @@ class UploadFile extends Component {
 }
 
 export default UploadFile;
-
-
-
-//<p>File Type: {fileObj.file.type}</p>
