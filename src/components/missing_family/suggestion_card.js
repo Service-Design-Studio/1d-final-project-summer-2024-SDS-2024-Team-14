@@ -6,7 +6,7 @@ import Similarity from "./suggestion_card_components/similarity";
 export default function SuggestionCard(props) {
     return (
         <div
-            className="flex flex-col rounded-2xl md:min-w-96 h-fit shadow-lg relative bg-white my-10 md:my-20 md:mr-14 mr-11"
+            className="flex flex-col rounded-2xl h-auto shadow-lg w-[30vw] relative bg-white mt-10 md:mt-14"
             onClick={() => {
                 props.setClick(props.index);
             }}
@@ -15,8 +15,8 @@ export default function SuggestionCard(props) {
                 <Image
                     key={ props.index}
                     src={props.src}
-                    width={1}
-                    height={1}
+                    width={600}
+                    height={600}
                     alt={`${props.name}`}
                     className="flex-1 min-w-full bg-cover z-0 rounded-t-2xl static"
                 />
