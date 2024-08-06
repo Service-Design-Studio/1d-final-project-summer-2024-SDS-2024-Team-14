@@ -232,7 +232,7 @@ class UploadScan extends Component {
                            <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                                <button
                                    onClick={this.toggleCamera}
-                                   className={`begin text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
+                                   className={`begin stop text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
                                >
                                    {this.state.isCameraOn ? "Stop Face Scan" : "Begin Face Scan"}
                                </button>
@@ -240,7 +240,7 @@ class UploadScan extends Component {
                            <div className="flex justify-end pt-5">
                                <button
                                    onClick={this.handleSkip}  // Handle Skip
-                                   className={`text-2mdd text-semibold text-[#4378DB] underline py-2 border-radius-19px rounded-md`}
+                                   className={`skip text-2mdd text-semibold text-[#4378DB] underline py-2 border-radius-19px rounded-md`}
                                >
                                    Skip Face Scan
                                </button>

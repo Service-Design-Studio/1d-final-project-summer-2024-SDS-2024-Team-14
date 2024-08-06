@@ -18,6 +18,15 @@ Feature: Verify Page
     Then I did not show my face within 15s 
     Then I should see "failure" 
 
-    
+  Scenario: Stopping the face scan in the middle of scanning
+    When I click the "dropzone" button
+    Then I add new photo
+    Then I click the "proceed" button
+    Then I click the "begin" button
+    Then I decided that I would like to cancel the scanning
+    Then I click the "stop" button
+
+  Scenario: Skipping the scanning process
+    When I click the "skip" button
     
 

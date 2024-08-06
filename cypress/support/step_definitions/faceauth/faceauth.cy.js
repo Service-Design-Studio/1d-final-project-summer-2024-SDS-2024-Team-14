@@ -1,4 +1,3 @@
-
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import "../general_definitions.cy.js";
 
@@ -20,17 +19,20 @@ Then ('I show my face', () => {
         res.reply({
             statusCode: 200,
             body:{ matched: true }
-        }).as("faceMatched")
-        mount(<UploadScan />)
-        cy.wait('@faceMatched');
+        })
     })
-})
-
-Then ('I should see a successful match ',()=>{
     cy.get('p.success').should('contain', 'Face verification is successful')
 })
 
+Then ('I should see a successful match',()=>{
+    cy.get('p.success').should('contain', 'Face verification is successful')
+})
 
 Then ('I did not show my face within 15s', () => {
     cy.wait(15000)
 })
+
+Then ('I decided that I would like to cancel the scanning', ()=> {
+    cy.wait(5000)
+})
+
