@@ -25,12 +25,17 @@ export default function EditForm(props) {
                         if (files) {
                             try {
                                 let formData = new FormData();
-                                formData.append('id', resp.data.missing_id);
+                                formData.append('id', id);
                                 formData.append('photo', files, files)
                                 axiosInstance.post("/missing/upload", formData)
                             } catch (error) {
                                 console.error('Error uploading image', error);
                             }
+                        } else {
+                            axiosInstance.post("/missing/upload", {
+                                'id': id,
+                                'photo': null
+                            });
                         }
                     } else {
                         localStorage.setItem('notificationMessage', 'There was an error in saving, Please retry again later.');
@@ -39,11 +44,12 @@ export default function EditForm(props) {
                 })
         } catch (error) {
             console.error(error.message)
-        }finally{
-        setData({});
-        setPhotos();
-        setFiles();
-        props.setFetch(true);}
+        } finally {
+            setData({});
+            setPhotos();
+            setFiles();
+            props.setFetch(true);
+        }
     }
 
     const handleFileChange = (event) => {
@@ -119,12 +125,12 @@ export default function EditForm(props) {
                 </div>
             </div>
 
-            <FormField title={"Name"} placeholder={"e.g. Abdul Ahmed"} setData={setData} default={data? data.name : ""} />
-            <FormField title={"Gender"} placeholder={"e.g. Male"} setData={setData} default={data? data.gender : "Male"} />
+            <FormField title={"Name"} placeholder={"e.g. Abdul Ahmed"} setData={setData} default={data ? data.name : ""} />
+            <FormField title={"Gender"} placeholder={"e.g. Male"} setData={setData} default={data ? data.gender : "Male"} />
 
-            <FormField title={"Age"} placeholder={""} setData={setData} default={data? data.age : ""} />
-            <FormField title={"Date Of Birth"} placeholder={Date.now} setData={setData} default={data? data.date_birth : Date.now} />
-            <FormField title={"Ethnicity"} placeholder={"e.g. Arab"} setData={setData} default={data? data.ethnicity : ""} />
+            <FormField title={"Age"} placeholder={""} setData={setData} default={data ? data.age : ""} />
+            <FormField title={"Date Of Birth"} placeholder={Date.now()} setData={setData} default={data ? data.date_birth : Date.now()} />
+            <FormField title={"Ethnicity"} placeholder={"e.g. Arab"} setData={setData} default={data ? data.ethnicity : ""} />
             {/* <FormField title={"Relationship"} placeholder={"e.g. Brother"} setData={setData} /> */}
             <div className="flex flex-col items-center my-5">
                 <div>

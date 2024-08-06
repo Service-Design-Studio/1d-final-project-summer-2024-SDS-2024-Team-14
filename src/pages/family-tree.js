@@ -32,8 +32,9 @@ export default function FamilyTree() {
             if (resp.data.length > 0) {
                 const updatedEntries = await Promise.all(
                     resp.data.map(async (entry) => {
-                        const photoResp = await axiosInstance.get(`/missing/photo/${entry.id}`);
-                        entry["src"] = photoResp.data.photo_url;
+                        await axiosInstance.get(`/missing/photo/${entry.id}`).then(async res => {
+                            entry["src"] = res.data.photo_url;
+                        });
                         return entry;
                     })
                 );
@@ -74,7 +75,11 @@ export default function FamilyTree() {
         if (data && selected < data.length) {
             setSelectedData(data[selected]);
         }
-    }, [selected]);
+    }, [selected, data])
+
+    useEffect(() => {
+
+    }, [selectedData])
 
     useAuth();
 
@@ -108,13 +113,13 @@ export default function FamilyTree() {
                             setEdit={setEdit}
                             setAddNew={setAddNew}
                         />
-                        {addNew && !edit && (
-                            <FamilyForm
-                                setAddNew={setAddNew}
-                                setFetch={setFetch}
-                            />
-                        )}
-                        {!addNew && !edit && (
+                        {addNew && !edit && <FamilyForm
+                            setAddNew={setAddNew}
+                            setFetch={setFetch}
+                            setSelected={setSelected}
+                            numberOfEntries={data ? data.length : 0}
+                        />}
+                        {!addNew && !edit &&
                             <FamilyCard
                                 setAddNew={setAddNew}
                                 selectedData={selectedData}
@@ -122,17 +127,13 @@ export default function FamilyTree() {
                                 setSelected={setSelected}
                                 selected={selected}
                                 setEdit={setEdit}
-                            />
-                        )}
-                        {edit && edit >= 0 && (
-                            <EditForm
-                                setFetch={setFetch}
-                                setEdit={setEdit}
-                                selectedData={selectedData}
-                            />
-                        )}
+                            />}
+                        {edit && edit >= 0 && <EditForm
+                            setFetch={setFetch}
+                            setEdit={setEdit}
+                            selectedData={selectedData}
+                        />}
                     </div>
-
                     <PotentialMatches
                         selected={selected}
                         matches={matches}
