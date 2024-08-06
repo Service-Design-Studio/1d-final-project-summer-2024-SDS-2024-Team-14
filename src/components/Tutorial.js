@@ -69,7 +69,7 @@ const Tutorial = ({ title, steps, onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
       <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
-      <div className="relative flex flex-col bg-white rounded-xl w-full lg:w-[70vw] h-[85vh] lg:h-[80vh] max-h-[85vh] lg:max-h-[80vh] mx-8 lg:mx-0">
+      <div className="relative flex flex-col bg-white rounded-xl w-[95vw] lg:w-[70vw] h-[85vh] lg:h-[80vh] max-h-[85vh] lg:max-h-[80vh]">
         <div className="flex h-full">
           {isLargeScreen ? (
             <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF]">
@@ -97,21 +97,47 @@ const Tutorial = ({ title, steps, onClose }) => {
               <Image src={CloseIcon} alt="Close" className="w-10 h-10" />
             </button>
             {!isLargeScreen && (
-              <div className="flex flex-wrap mt-12 mb-4">
-                {steps.map((step, index) => (
+              <>
+                <div className="relative mt-12 mb-4 flex items-center">
                   <button
-                    key={index}
                     onClick={() => {
-                      setCurrentStep(index);
-                      setCurrentImageIndex(0);
+                      const container = document.getElementById('scroll-container');
+                      container.scrollBy({ left: -100, behavior: 'smooth' });
                     }}
-                    className={`m-2 px-2 py-2 rounded-lg font-bold text-lg ${currentStep === index ? 'bg-darkblue text-white' : 'bg-white text-darkblue border border-darkblue'}`}
+                    className="z-10 text-darkblue text-3xl"
                   >
-                    {step.category}
+                    &lt;
                   </button>
-                ))}
-              </div>
-
+                  <div id="scroll-container" className="overflow-x-auto mx-4 flex items-center w-full">
+                    <div className="flex flex-nowrap">
+                      {steps.map((step, index) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setCurrentStep(index);
+                            setCurrentImageIndex(0);
+                          }}
+                          className={`flex-shrink-0 m-2 px-2 py-2 rounded-lg text-xl ${currentStep === index ? 'bg-darkblue text-white' : 'bg-white text-darkblue border border-darkblue'}`}
+                        >
+                          {step.category}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const container = document.getElementById('scroll-container');
+                      container.scrollBy({ left: 100, behavior: 'smooth' });
+                    }}
+                    className="z-10 text-darkblue text-3xl"
+                  >
+                    &gt;
+                  </button>
+                </div>
+                <h1 className="block text-3xl mb-2 text-center font-bold text-darkblue">
+                  {steps[currentStep].title}
+                </h1>
+              </>
             )}
             {isLargeScreen && (
               <h1 className="block text-3xl lg:mb-8 font-bold text-center text-darkblue">
