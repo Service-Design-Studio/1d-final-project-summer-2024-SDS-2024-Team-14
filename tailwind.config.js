@@ -174,6 +174,13 @@ module.exports = {
           boxShadow: '0 -10px 20px rgba(0, 0, 0, 0.1)', /* Adjust the shadow properties as needed */
           pointerEvents: 'none', /* Ensures the pseudo-element does not interfere with other interactions */
         },
+        '.hide-scrollbar': {
+          '-ms-overflow-style': 'none',  /* IE and Edge */
+          'scrollbar-width': 'none',  /* Firefox */
+        },
+        '.hide-scrollbar::-webkit-scrollbar': {
+          display: 'none',  /* Chrome, Safari, and Opera */
+        },
       }, ['responsive']);
     }
   ],
