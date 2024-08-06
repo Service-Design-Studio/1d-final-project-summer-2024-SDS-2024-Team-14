@@ -22,18 +22,18 @@ export default function FamilyCard(props) {
     }, [deletePerson])
 
     return (
-        <div className="relative flex flex-col rounded-r-2xl shadow-lg bg-white">
+        <div className="relative flex flex-col rounded-r-2xl shadow-lg bg-white min-h-fit h-full w-full min-w-fit xl:min-w-[20vw] ">
             {props.selectedData && props.selected >= 0 ?
-                <div>
-                    <div className="flex-1 relative overflow-ellipsis min-w-96 lg:max-w-none lg:min-w-[16vw]">
+                <div className="flex flex-col w-full">
+                    <div className="flex-1 relative w-full">
                         <Image
-                            // unoptimized
-                            src={props.selectedData.src ? props.selectedData.src : "/images/default_profile_pic.svg"}
+                            src={props.selectedData.src || "/images/default_profile_pic.svg"}
                             width={1}
                             height={1}
                             alt={`${props.selectedData.name}`}
-                            className="flex-1 md:w-full  md:aspect-square md:object-cover object-contain rounded-tr-2xl static"
+                            className="w-full 2xl:aspect-square object-cover max-h-[30vw] rounded-tr-2xl static"
                         />
+
                         <div className="bg-gradient-to-t from-default to-white-15 py-5 bg-blend-multiply z-50 absolute w-full bottom-0 text-white">
                             <div className="text-lg md:text-2xl lg:text-3xl mx-7 line-clamp-2 font-semibold">{props.selectedData.name}
                             </div>
@@ -46,14 +46,14 @@ export default function FamilyCard(props) {
                         ethnicity={props.selectedData.ethnicity}
                     // relationship={props.selectedData.relationship}
                     />
-                    <div className="w-fit flex flex-row px-10 text-center h-fit p-0 justify-center items-center lg:mt-20">
+                    <div className="w-fit flex flex-row self-end px-10 text-center h-fit p-0 justify-center items-center lg:mt-20">
                         <Button
-                            className="bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-full"
+                            className="bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-fit w-fit items-center"
                             onClick={
                                 () => props.setEdit(props.selectedData.id)
                             }
                         >
-                            <Image width={1} height={1} className="h-fit w-auto mx-3" src={"/images/edit.svg"} alt="Edit Entry" />
+                            <Image width={1} height={1} className="h-fit min-w-fit w-auto px-3" src={"/images/edit.svg"} alt="Edit Entry" />
                             Edit
                         </Button>
                         <Button
@@ -62,12 +62,13 @@ export default function FamilyCard(props) {
                                 props.setAddNew(false);
                                 setDeletePerson(props.selectedData.id);
                             }}>
-                            <Image width={1} height={1} className="h-full w-auto" src={"/images/cross_icon.svg"} alt="Delete Entry" /> Delete
+                            <Image width={1} height={1} className="h-fit w-auto" src={"/images/cross_icon.svg"} alt="Delete Entry" /> Delete
                         </Button>
+                        <div className="h-20" />
                     </div>
                 </div> :
-                <div className="self-center my-auto text-darkblue font-semibold min-w-96 lg:max-w-none lg:min-w-[16vw] text-center">
-                    <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-[80%] my-10 opacity-75 mx-auto" alt="" />
+                <div className="flex flex-col self-center my-auto px-5 text-darkblue font-semibold min-w-fit w-24 md:w-64 lg:w-96 lg:max-w-none lg:min-w-[16%] text-center md:min-h-[500px]">
+                    <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-full max-w[400px] my-10 opacity-75 mx-auto" alt="" />
                     Select an available entry on the left to view
                 </div>}
         </div>

@@ -79,7 +79,7 @@ export default function EditForm(props) {
     }, [props.selectedData])
 
     return (
-        <div className="flex flex-col rounded-r-2xl w-full h-full shadow-lg bg-white text-darkblue text-lg font-semibold px-3 overflow-scroll">
+        <div className="flex flex-col rounded-r-2xl w-full min-w-fit h-full shadow-lg bg-white text-darkblue text-lg font-semibold px-3 ">
             <div className="mt-3 text-2xl line-clamp-1 overflow-ellipsis">
                 <span>{`Edit Entry`}</span>
             </div>
@@ -94,7 +94,7 @@ export default function EditForm(props) {
                 </div>
                 <div className="flex flex-row w-full overflow-x-scroll mt-5 p-0">
                     {photos ? <div className="flex flex-col items-center">
-                        <Image unoptimized src={photos} width={1} height={1} className="aspect-square object-cover w-28 mx-5 border-darkblue border-2" alt="added photo" />
+                        <Image src={photos} width={1} height={1} className="aspect-square object-cover w-28 mx-5 border-darkblue border-2" alt="added photo" />
                         <div
                             className="underline"
                             onClick={() => {
