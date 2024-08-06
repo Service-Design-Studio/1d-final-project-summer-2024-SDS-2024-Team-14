@@ -9,7 +9,7 @@ class DocumentController < ApplicationController
       language = params[:language].downcase
     end
     begin
-      @user = User.find_by(id: params[:id])
+      @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { message: "User does not exist" }, status: :unprocessable_entity and return
     end

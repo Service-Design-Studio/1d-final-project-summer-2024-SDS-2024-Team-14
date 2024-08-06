@@ -13,26 +13,27 @@ class MissingController < ApplicationController
 
   def destroy
     begin
-      @missing = MissingPerson.find(params[:id])
-      if @missing.destroy
-        render json: {message: "The missing person entry has been deleted successfully"}, status: :ok and return
+      @missing = MissingPerson.find_by(id: params[:id])
+      if @missing
+        @missing.destroy
+        render json: {message: "The missing person entry has been deleted successfully"}, status: :ok
       else
-        render json: {message: "Failed to delete missing person entry"}, status: :ok and return
+        render json: {message: "Failed to delete missing person entry"}, status: :unprocessable_entity 
       end
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound 
     end
     
   end
 def update
   begin
-    @missing = MissingPerson.find(params[:id])
+    @missing = MissingPerson.find_by(id: params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { message: "Missing person does not exist" }, status: :unprocessable_entity and return
   end
-  if @missing.update(missing_params)
-    render json: { message: "Missing person updated successfully"}, status: :ok and return
+  if @missing&.update(missing_params)                                              
+    render json: { message: "Missing person updated successfully"}, status: :ok 
   else
-    render json: { message: "Failed to update missing person", errors: @missing.errors.full_messages }, status: :unprocessable_entity and return
+    render json: { errors: missing_person&.errors&.full_messages || ['Missing person does not exist'] }, status: :unprocessable_entity 
   end
 end
   # Attach photo to missing person(POST) - /missing/upload
@@ -50,13 +51,13 @@ end
       rescue => e
         render json: { message: "Failed to upload photo: #{e.message}" }, status: :unprocessable_entity 
       end
-      render json: { message: "Your photo has been uploaded successfully for #{@missing.name}"}, status: :ok and return
+      render json: { message: "Your photo has been uploaded successfully for #{@missing.name}"}, status: :ok
     else
       if @missing.photo.attached?
         @missing.photo.purge
-        render json: { message: "Your attached photo has been removed successfully for #{@missing.name}"}, status: :ok and return
+        render json: { message: "Your attached photo has been removed successfully for #{@missing.name}"}, status: :ok 
       else
-        render json: { message: "There was no photo uploaded. Please try again later."}, status: :unprocessable_entity and return
+        render json: { message: "There was no photo uploaded. Please try again later."}, status: :unprocessable_entity 
       end
     end
   end
@@ -70,7 +71,7 @@ end
         render json: {photo_url: "" }, status: :ok
       end
     rescue ActiveRecord::RecordNotFound
-      render json: { message: "No missing people found" }, status: :unprocessable_entity
+      render json: { message: "No missing people found" }, status: :unprocessable_entity and return
     end
   end
 
