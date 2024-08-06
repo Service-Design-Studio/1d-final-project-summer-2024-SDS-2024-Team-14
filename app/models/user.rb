@@ -78,16 +78,16 @@ class User < ApplicationRecord
             result = match_counts.map do |user, count|
                 similarity = similarity_scores[user]
                 if similarity
-                    percentage = (count.to_f / 8 + (similarity.to_f / 100) * (3.0 / 8)) * 100
+                    percentage = ((count.to_f / 8 + (similarity.to_f / 100) * (3.0 / 8)) * 100).round
                 else
-                    percentage = (count.to_f / 8) * 100
+                    percentage = ((count.to_f / 8) * 100).round
+                end
                 serialized_user = ActiveModelSerializers::SerializableResource.new(user, serializer: UserMatchedSerializer).as_json
                 { user: serialized_user, percentage: percentage }
-                end
             end
         else
             result = match_counts.map do |user, count|
-                percentage = (count.to_f / 8) * 100
+                percentage = ((count.to_f / 8) * 100).round
                 serialized_user = ActiveModelSerializers::SerializableResource.new(user, serializer: UserMatchedSerializer).as_json
                 { user: serialized_user, percentage: percentage }
             end
