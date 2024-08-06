@@ -25,43 +25,6 @@ export default function FamilyTree() {
     const [isTutorialOpen, setIsTutorialOpen] = useState(false); // State to control the tutorial modal
     const [click, setClick] = useState(null);
     const [matchRes, setMatchRes] = useState(null);
-    const placeholder = [
-        {
-            user: {
-                name: "testing",
-                age: "12",
-                gender: "Male",
-                src: ""
-            }
-            , percentage: 80,
-        }, {
-            user: {
-                name: "testing",
-                age: "12",
-                gender: "Male",
-                src: ""
-            }
-            , percentage: 10,
-        },
-        {
-            user: {
-                name: "testing",
-                age: "12",
-                gender: "Male",
-                src: ""
-            }
-            , percentage: 52,
-        },
-        {
-            user: {
-                name: "testing",
-                age: "12",
-                gender: "Male",
-                src: ""
-            }
-            , percentage: 20,
-        }
-    ]
     let getMissingPersons = async () => {
         let userID = localStorage.getItem("userID");
         try {
@@ -85,7 +48,6 @@ export default function FamilyTree() {
         }
     };
     let getMatches = async () => {
-        //TODO: fix get match/id in backend
         await axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
             setMatches(res.data);
         })
@@ -160,17 +122,17 @@ export default function FamilyTree() {
     };
 
     return (
-        <div className="bg-white max-w-screen md:px-3 mx-auto min-h-screen bg-cover bg-[url('/images/background/gebirah-bluebg.png')] flex flex-col">
+        <div className="bg-white max-w-screen md:px-3 mx-auto min-h-screen bg-cover bg-[url('/images/background/gebirah-bluebg.png')] flex flex-col pb-20">
             <NaviBar open={open} setOpen={setOpen} />
-            <div className="flex flex-col w-full h-full px-5 md:mt-20">
-                <div className="text-darkblue font-semibold lg:text-4xl md:text-3xl text-2xl">
+            <div className="flex flex-col w-full h-full px-5 md:mt-8">
+                <div className="text-darkblue font-semibold lg:text-3xl md:text-2xl text-xl">
                     Missing Family & Friends
                 </div>
-                <div className="md:my-2 text-lg md:text-2xl my-4">
+                <div className="md:my-2 text-lg md:text-2xl my-4 text-darkblue">
                     Add more pictures using the plus button to improve matches.<br />
-                    Click on the swap button to swap the missing family member
+                    Click on the swap button to swap the missing family member.
                 </div>
-                <div className="flex flex-col 2xl:flex-row max-w-screen md:mt-20 min-h-fit md:h-full ">
+                <div className="flex flex-col 2xl:flex-row max-w-screen md:mt-4 2xl:mt-12 min-h-fit md:h-full ">
                     {/* form and list of entries, for larger screens */}
                     <div className="flex flex-row 2xl:w-[35%] min-w-fit w-[100%] xl:mb-0 mb-10">
                         <SideList
