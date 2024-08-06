@@ -26,6 +26,16 @@ Then ('I show my face', () => {
 
 Then ('I should see a successful match',()=>{
     cy.get('p.success').should('contain', 'Face verification is successful')
+    cy.intercept("GET", "/notifications/*", {
+        statusCode: 200,
+        fixture: "refugee_status_approved"
+    })
+    cy.intercept("GET", "/users/*", (res) => { 
+        res.reply({
+            statusCode: 200,
+            fixture: "userdetails_approved.json" 
+        })
+    } ).as("getUNHCRCard")
     cy.wait(5000)
 })
 
@@ -36,4 +46,3 @@ Then ('I did not show my face within 15s', () => {
 Then ('I decided that I would like to cancel the scanning', ()=> {
     cy.wait(5000)
 })
-
