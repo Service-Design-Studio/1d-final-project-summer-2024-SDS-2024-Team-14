@@ -181,7 +181,7 @@ const Tutorial = ({ title, steps, onClose }) => {
               {currentImageIndex < currentImages.length - 1 && (
                 <button
                   onClick={handleNextImage}
-                  className="bg-transparent border-none cursor-pointer text-[1rem] text-darkblue flex items-center ml-auto"
+                  className="next bg-transparent border-none cursor-pointer text-[1rem] text-darkblue flex items-center ml-auto"
                 >
                   Next <span className="ml-1 text-lg">&rarr;</span>
                 </button>
