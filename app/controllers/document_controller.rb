@@ -9,7 +9,7 @@ class DocumentController < ApplicationController
       language = params[:language].downcase
     end
     begin
-      @user = User.find(user_id)
+      @user = User.find_by(id: params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { message: "User does not exist" }, status: :unprocessable_entity and return
     end
@@ -47,9 +47,9 @@ class DocumentController < ApplicationController
     user = params[:id]
     category = params[:category]&.downcase
     begin
-        @user = User.find(user)
+      @user = User.find_by(id: params[:id])
     rescue ActiveRecord::RecordNotFound
-        render json: { message: "User does not exist" }, status: :unprocessable_entity
+        render json: { message: "User does not exist" }, status: :unprocessable_entity and return
     end
     if category
       @documents = @user.documents.where(category: category)
@@ -69,7 +69,7 @@ class DocumentController < ApplicationController
           end
           render json: {documents: documents_with_files}, status: :ok
       else
-          render json: {message: "No documents found for this user"}, status: :unprocessable_entity
+          render json: {message: "No documents found for this user"}, status: :unprocessable_entity and return
       end
   end
 
@@ -77,7 +77,7 @@ class DocumentController < ApplicationController
   def status
     newStatus = params[:status].downcase
     begin
-      @document = Document.find(params[:id])        
+      @document = Document.find_by(id: params[:id])        
     rescue ActiveRecord::RecordNotFound
       render json: {message: "Document does not exist"}, status: :unprocessable_entity and return
     end

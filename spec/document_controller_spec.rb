@@ -39,9 +39,20 @@ RSpec.describe DocumentController, type: :controller do
             end
         end
 
+        context 'calls the notification service on success' do
+          before do
+            allow(NotificationService).to receive(:create_document_upload_success_notification)
+          end
+      
+          it 'triggers notification on successful document creation' do
+            post :create, params: { id: user.id, category: 'education', files: [file] }
+            expect(NotificationService).to have_received(:create_document_upload_success_notification).with(user.id.to_i, anything, 'education')
+          end
+        end
+
         context 'with invalid parameters' do
             it 'returns an error response when user is not found' do
-                post :create, params: {id: 2, category: category, files: [file] }
+                post :create, params: {id: 999999, category: category, files: [file] }
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(JSON.parse(response.body)['message']).to eq("User does not exist")
             end
@@ -57,6 +68,45 @@ RSpec.describe DocumentController, type: :controller do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(JSON.parse(response.body)['message']).to eq("The document you uploaded was too blurry or it was in an invalid format. Please try again.")
             end      
+
+            it 'calls the notification service on failure' do
+              allow_any_instance_of(DocumentController).to receive(:llm_process).and_return(nil)
+              expect(NotificationService).to receive(:create_document_upload_fail_notification)
+                .with(user.id, anything, category)
+              post :create, params: { id: user.id, category: category, files: [fileno] }
+            end
+        end
+
+        it 'deletes the local file after processing' do
+          expect(File).to receive(:delete).and_call_original
+          post :create, params: { id: user.id, category: category, files: [file] }
+        end
+      
+        it 'calls the notification service on success' do
+          expect(NotificationService).to receive(:create_document_upload_success_notification).with(user.id.to_i, anything, category)
+          post :create, params: { id: user.id.to_i, category: category, files: [file] }
+        end
+      
+        it 'calls the notification service on failure' do
+          allow_any_instance_of(DocumentController).to receive(:llm_process).and_return('education')
+          expect(NotificationService).to receive(:create_document_upload_fail_notification).with(user.id, anything, category)
+          post :create, params: { id: user.id.to_i, category: category, files: [fileno] }
+        end
+
+        context 'returns an error for unsupported file type' do
+          it 'returns an unprocessable_entity response' do
+            allow_any_instance_of(DocumentController).to receive(:llm_process).and_return(nil)
+            post :create, params: { id: user.id, category: category, files: [fileno] }
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+        end
+
+        context 'returns an error response when file is not provided' do
+          it 'returns an error when no file is provided' do
+            post :create, params: { id: user.id, category: 'education' }
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(JSON.parse(response.body)['message']).to eq('File is required')
+          end
         end
     end
 
@@ -88,22 +138,35 @@ RSpec.describe DocumentController, type: :controller do
 
         context 'with invalid parameters' do
             it 'returns an error response when user is not found' do
-                get :retrieve, params: {id: 2, category: category }
+                get :retrieve, params: {id: 9999, category: category }
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(JSON.parse(response.body)['message']).to eq("User does not exist")
             end
           end
 
         context 'with no documents' do
-            it 'returns an error response' do
-              allow(User).to receive(:find).with(user.id.to_s) {user} #idk why need user.id to be string, if not keep failing
-              allow(user).to receive(:documents) { double(where: []) }
-                get :retrieve, params: { id: user.id, category: category } 
-                expect(response).to have_http_status(:unprocessable_entity)
-                expect(JSON.parse(response.body)['message']).to eq("No documents found for this user")
-            end
+          it 'returns an error response' do
+            allow(User).to receive(:find).with(user.id.to_s).and_return(user)
+            allow(user).to receive(:documents).and_return(double(where: []))
+            get :retrieve, params: { id: user.id, category: category }
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(JSON.parse(response.body)['message']).to eq("No documents found for this user")
+          end
         end
-    end
+
+        it 'returns a list of documents with correct structure' do
+          get :retrieve, params: { id: user.id, category: category }
+          documents = JSON.parse(response.body)['documents']
+          expect(documents).not_to be_empty
+          expect(documents.first).to include('id', 'name', 'status', 'file_url', 'important', 'category')
+        end
+      
+        it 'returns documents without category filter' do
+          get :retrieve, params: { id: user.id }
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['documents']).not_to be_empty
+        end
+      end
 
     describe '#status' do
     let(:user) { User.create(
@@ -142,7 +205,7 @@ RSpec.describe DocumentController, type: :controller do
           allow(NotificationService).to receive(:document_rejected_notification)
           post :status, params: { id: document.id, status: "Rejected", message: "Document rejected" }
           document.reload
-          expect(document.status).to eq("Rejected")
+          expect(document.status).to eq("rejected")
           expect(NotificationService).to have_received(:document_rejected_notification).with(document.user_id, document.name, "Document rejected")
           expect(response).to have_http_status(:ok)
         end
@@ -150,7 +213,7 @@ RSpec.describe DocumentController, type: :controller do
 
     context 'when status is not changed' do
       let(:params) { { id: document.id,  status: 'Pending', message: 'Document pending' } }
-        let(:params1) { { id: document.id, status: 'Pending', message: 'Document status is already Pending. No change applied.' } }
+        let(:params1) { { id: document.id, status: 'pending', message: 'Document status is already Pending. No change applied.' } }
 
         it 'does not update document status' do
           expect(document.status).to eq(params[:status])
@@ -178,6 +241,17 @@ RSpec.describe DocumentController, type: :controller do
         put :status, params: params
         expect(JSON.parse(response.body)['message']).to eq('Document does not exist')
       end
+    end
+
+    it 'does not send notification if status is unchanged' do
+      expect(NotificationService).not_to receive(:document_approved_notification)
+      put :status, params: { id: document.id, status: 'Pending', message: 'No change' }
+    end
+  
+    it 'handles invalid status updates gracefully' do
+      put :status, params: { id: document.id, status: 'InvalidStatus', message: 'Invalid status' }
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(JSON.parse(response.body)['message']).to eq("Invalid status")
     end
   end
 end
