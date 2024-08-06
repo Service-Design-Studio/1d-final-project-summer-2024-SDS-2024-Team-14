@@ -16,6 +16,7 @@ import Tutorial from './Tutorial';
 import famTreeContent from './modalContent/famtree'; // Import for family-tree page
 import docManContent from './modalContent/docman'; // Import for documents page
 import homePageContent from './modalContent/homepage'; // Import for homepage
+import {useRouter} from "next/router";
 
 export default function NaviBar({ open, setOpen }) {
     const [navState, setNavState] = useState(false);
@@ -23,7 +24,9 @@ export default function NaviBar({ open, setOpen }) {
     const [tutorialOpen, setTutorialOpen] = useState(false); // Separate state for the tutorial modal
     const [currentPage, setCurrentPage] = useState(null); // Track current page for displaying correct tutorial content
     const popupRef = useRef(null);
-    const notifRef = useRef(null);
+    const notifRef = useRef(null)
+    const router = useRouter();
+    const currentPath = router.pathname;
     const handleClickOutside = (event) => {
         if (popupRef.current && !popupRef.current.contains(event.target)) {
             setNavState(false);
@@ -145,7 +148,7 @@ export default function NaviBar({ open, setOpen }) {
                     ['Home', '/', ""],
                     ['Documents', '/documents'],
                     ['Family', '/family-tree'],
-                    ['Resources', '/resources'],
+                    ['Questions', '/question'],
                 ].map(([title, url]) => (
                     <Link key={title} href={url} className="py-4 font-bold text-darkblue">
                         {title}
