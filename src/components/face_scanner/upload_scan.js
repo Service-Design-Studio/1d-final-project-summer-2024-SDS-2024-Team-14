@@ -190,7 +190,7 @@ class UploadScan extends Component {
                                        src={tickGreen}
                                        alt="info icon"
                                    />
-                                   <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                   <p className="success flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                        Face verification is successful
                                    </p>
                                </>
@@ -201,7 +201,7 @@ class UploadScan extends Component {
                                        src={redError}
                                        alt="info icon"
                                    />
-                                   <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                   <p className="failure flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                        Face verification is unsuccessful
                                    </p>
                                </>
@@ -232,7 +232,7 @@ class UploadScan extends Component {
                            <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                                <button
                                    onClick={this.toggleCamera}
-                                   className={`text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
+                                   className={`begin text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
                                >
                                    {this.state.isCameraOn ? "Stop Face Scan" : "Begin Face Scan"}
                                </button>
