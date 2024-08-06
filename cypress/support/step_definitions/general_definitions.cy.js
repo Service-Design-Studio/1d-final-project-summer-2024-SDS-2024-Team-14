@@ -47,6 +47,9 @@ When(/^I fill in "(.+)" with "(.+)"$/i, (e1, e2) => {
 When(/^I do not fill in "(.+)"$/i, (e1) => {
     cy.expect(`.${e1}`).to.contains("")
 })
+When(/^I fill in "(.+)" with nothing$/, (e)=>{
+    cy.get(`#${e}`).clear();
+})
 When(/^my document is (.+)$/i, (status) => {
     cy.intercept("GET", "/notifications/*", {
         statusCode: 200,
