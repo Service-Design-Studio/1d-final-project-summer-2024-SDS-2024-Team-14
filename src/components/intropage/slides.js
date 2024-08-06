@@ -18,16 +18,16 @@ const slides = [
         text: 'Our family tree page aims to assist users in locating missing family members and friends.'
     },
     {
-        imageLg: '/images/intro/chatbothd.png',
-        imageSm: '/images/intro/chatbothd.png',
-        title: 'FAQ Chatbot',
-        text: 'If you have any questions regarding our webapp, our FAQ Chatbot will attempt to answer them and aid in re-navigating you to your desired page. Click on the icon at the bottom right of every page to open it.'
-    },
-    {
         imageLg: '/images/intro/docmanhd.png',
         imageSm: '/images/intro/phonedocman.png',
         title: 'Documents Manager',
         text: 'On the Documents Manager page, you will be able to view and access all your previously uploaded documents. You can also check on their approval status.'
+    },
+    {
+        imageLg: '/images/intro/chatbothd.png',
+        imageSm: '/images/intro/chatbothd.png',
+        title: 'FAQ Chatbot',
+        text: 'If you have any questions regarding our webapp, our FAQ Chatbot will attempt to answer them and aid in re-navigating you to your desired page. Click on the icon at the bottom right of every page to open it.'
     },
 ];
 

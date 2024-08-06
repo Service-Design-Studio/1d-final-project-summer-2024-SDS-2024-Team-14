@@ -4,10 +4,20 @@ import slides from '../components/intropage/slides';
 import "../styles/globals.css";
 import EnableId from "../../public/images/enable_id_logo.svg";
 import Image from 'next/image';
+import {useRouter} from "next/router";
 
 export default function Intro({ session }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLargeScreen, setIsLargeScreen] = useState(false);
+    const router = useRouter();
+
+    const handleNextClick = () => {
+    if (currentSlide === slides.length - 1) {
+        router.push('/passport'); // Navigate to another page
+        } else {
+          setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+        }
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -31,7 +41,7 @@ export default function Intro({ session }) {
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
             </div>
             <div className="flex-grow flex items-center justify-center overflow-hidden">
-                <div className="bg-white rounded-3xl p-[1rem] lg:p-[2rem] w-[90%] lg:w-[70%] h-40vh lg:h-[80vh] mx-auto mt-5 relative" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                <div className="bg-white rounded-3xl p-[1rem] lg:p-[2rem] w-[90%] lg:w-[70%] h-[80vh] lg:h-[80vh] mx-auto mt-5 relative" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     {/* i know should use md instead of lg but when i change the view to md stuff like ipad it looks damn weird so i used lg instead */}
                     <h1 className="block text-3xl lg:text-4xl mb-4 font-bold text-center text-darkblue">
                         {slides[currentSlide].title}
@@ -39,7 +49,7 @@ export default function Intro({ session }) {
                     <Image
                         src={src}
                         alt="Slide Image"
-                        className="h-[50vh] lg:h-[22vw] w-auto mx-auto rounded-xl border-2 border-gray"
+                        className="lg:h-[22vw] h-[100vw] w-auto md:w-auto mx-auto rounded-xl border-2 border-gray"
                         width={800}
                         height={600}
                     />
@@ -54,7 +64,7 @@ export default function Intro({ session }) {
                         ))}
                     </div>
                     <div className="flex-grow flex items-center justify-center"> {/* Centering the text container */}
-                        <p className="text-darkblue text-base lg:text-xl mt-12 mb-12 lg:px-20 text-center overflow-hidden text-ellipsis h-[10vh] lg:h-[20vh]">
+                        <p className="text-darkblue text-base lg:text-xl md:my-12 lg:px-20 text-center overflow-hidden text-ellipsis">
                             {slides[currentSlide].text}
                         </p>
                     </div>
@@ -65,19 +75,19 @@ export default function Intro({ session }) {
                                     onClick={() => setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length)}
                                     className="bg-transparent border-none cursor-pointer font-size-[0.875em] text-darkblue flex items-center"
                                 >
-                                    <span className="mr-1 text-md lg:text-2xl">&larr;</span>
-                                    <span className="text-md lg:text-base">Back</span>
+                                    <span className="mr-1 text-[3vw] lg:text-2xl">&larr;</span>
+                                    <span className="text-[3vw] lg:text-base">Back</span>
                                 </button>
                             )}
                         </div>
                         <div>
-                            {currentSlide < slides.length - 1 && (
+                            {currentSlide < slides.length && (
                                 <button
-                                    onClick={() => setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length)}
+                                    onClick={handleNextClick}
                                     className="bg-transparent border-none cursor-pointer font-size-[0.875em] text-darkblue flex items-center"
                                 >
-                                    <span className="text-md lg:text-base">Next</span>
-                                    <span className="ml-1 text-md lg:text-2xl">&rarr;</span>
+                                    <span className="text-[3vw] lg:text-base">Next</span>
+                                    <span className="ml-1 text-[3vw] lg:text-2xl">&rarr;</span>
                                 </button>
                             )}
                         </div>
