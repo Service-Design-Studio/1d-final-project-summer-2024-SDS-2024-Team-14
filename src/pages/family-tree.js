@@ -11,8 +11,6 @@ import SideList from "@/components/missing_family/family_card_components/side_li
 import FamilyForm from "@/components/missing_family/family_card_components/family_form";
 import PotentialMatches from "@/components/missing_family/potential_matches";
 import EditForm from "@/components/missing_family/family_card_components/edit_form";
-import Tutorial from "@/components/Tutorial"; // Import the Tutorial component
-import famTreeTutorialContent from "@/components/modalContent/famtree"; // Import the tutorial content
 
 export default function FamilyTree() {
     const router = useRouter();

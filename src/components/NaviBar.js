@@ -115,7 +115,7 @@ export default function NaviBar({ open, setOpen }) {
                     {[
                         ['Documents Manager', '/documents', documentIcon],
                         ['Family', '/family-tree', familyIcon],
-                        ['Resources', '/resources', resourceIcon],
+                        // ['Resources', '/resources', resourceIcon],
                         ['Tutorial', '', QnMarkIcon, () => setTutorialOpen(true)], // Add the Tutorial option
                     ].map(([title, url, img, onClick]) => (
                         <div className="py-4 flex items-center" key={title}>
@@ -147,14 +147,15 @@ export default function NaviBar({ open, setOpen }) {
                 {[
                     ['Home', '/', ""],
                     ['Documents', '/documents'],
+                    // ['Resources', '/resources'],
                     ['Family', '/family-tree'],
-                    ['Questions', '/question'],
                 ].map(([title, url]) => (
-                    <Link key={title} href={url} className="py-4 font-bold text-darkblue">
+                    <Link href={url} className={`py-4 font-semibold hover:text-darkblue hover:underline 
+                    ${currentPath === url ? 'text-darkblue underline' : 'text-black'}`}>
                         {title}
                     </Link>
                 ))}
-                <a href={"https://www.gebirah.org/"} target="_blank" className="py-4 font-bold text-darkblue"> Community </a>
+                <a href={"https://www.gebirah.org/"} target="_blank" className="py-4 font-semibold hover:text-darkblue hover:underline"> Community </a>
                 <Button onClick={() => setTutorialOpen(true)} className="hover:bg-white hover:bg-opacity-25">
                     <Image src={QnMarkIcon} width={30} height={30} alt="Open Tutorial" />
                 </Button>
