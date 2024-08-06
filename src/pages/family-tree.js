@@ -208,7 +208,7 @@ export default function FamilyTree() {
                     onClose={() => setClick(null)}
                     fullWidth={true}
                 >
-                    <div className='mx-4 flex flex-col text-start items-start'>
+                    <div className='pop-up mx-4 flex flex-col text-start items-start'>
                         <DialogTitle>Send Match Request?</DialogTitle>
                         <DialogContentText>
                             <span>{`Send '${matches[click].user.name}' a match request?`}</span>
@@ -233,7 +233,7 @@ export default function FamilyTree() {
                     onClose={() => setMatchRes(null)}
                     fullWidth={true}
                 >
-                    <div className='mx-4 flex flex-col text-start items-start'>
+                    <div className='pop-up mx-4 flex flex-col text-start items-start'>
                         <DialogTitle>Alert</DialogTitle>
                         <DialogContentText>
                             <span>{`${matchRes}`}</span>

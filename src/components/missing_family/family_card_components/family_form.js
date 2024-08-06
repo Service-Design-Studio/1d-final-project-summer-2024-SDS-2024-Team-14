@@ -118,7 +118,7 @@ export default function FamilyForm(props) {
             <FormField title={"Name"} placeholder={"e.g. Abdul Ahmed"} setData={setData} />
             <FormField title={"Gender"} placeholder={"e.g. M/F"} setData={setData} />
 
-            <FormField title={"Age"} placeholder={""} setData={setData} />
+            <FormField title={"Age"} placeholder={""} setData={setData}/>
             <FormField title={"Date Of Birth"} placeholder={Date.now} setData={setData} />
             <FormField title={"Ethnicity"} placeholder={"e.g. Arab"} setData={setData} />
             {/* <FormField title={"Relationship"} placeholder={"e.g. Brother"} setData={setData} /> */}
@@ -141,7 +141,7 @@ export default function FamilyForm(props) {
                             setOpen(true);
                         }
                     }}
-                    className="bg-darkblue text-white w-fit hover:bg-darkblue hover:bg-opacity-75  text-center my-1 mx-2">
+                    className="save_changes bg-darkblue text-white w-fit hover:bg-darkblue hover:bg-opacity-75  text-center my-1 mx-2">
                     <Image width={1} height={1} className="h-0.8 w-auto mr-2 " src={"/images/save_icon.svg"} alt="Save Changes" /> Save Changes
                 </Button>
             </div>
@@ -150,7 +150,7 @@ export default function FamilyForm(props) {
                 onClose={() => setOpen(false)}
                 fullWidth={true}
             >
-                <div className='mx-4 flex flex-col text-start items-start'>
+                <div className='pop_up mx-4 flex flex-col text-start items-start'>
                     <DialogTitle>Unfilled Details</DialogTitle>
                     <DialogContentText>
                         {data.age > 0 ? <span>{`Please fill in all details in the form before saving.`}</span> : <span>{`Please ensure age is valid in the form before saving.`}</span>}
