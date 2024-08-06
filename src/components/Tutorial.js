@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import CloseIcon from "../../public/images/tutorial/blueclose.svg"; // Import your close icon
-import "../styles/globals.css";
-import CustomDropdown from './modalContent/phonedropdown'; // Import the CustomDropdown
+import "../styles/globals.css"
 
 const Tutorial = ({ title, steps, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -70,7 +69,7 @@ const Tutorial = ({ title, steps, onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
       <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
-      <div className="relative flex flex-col bg-white rounded-xl w-full lg:w-[70vw] h-[80vh] max-h-[80vh] mx-8 lg:mx-0">
+      <div className="relative flex flex-col bg-white rounded-xl w-full lg:w-[70vw] h-[85vh] lg:h-[80vh] max-h-[85vh] lg:max-h-[80vh] mx-8 lg:mx-0">
         <div className="flex h-full">
           {isLargeScreen ? (
             <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF]">
@@ -98,14 +97,21 @@ const Tutorial = ({ title, steps, onClose }) => {
               <Image src={CloseIcon} alt="Close" className="w-10 h-10" />
             </button>
             {!isLargeScreen && (
-              <CustomDropdown
-                options={steps.map(step => step.category)}
-                selectedValue={currentStep}
-                onChange={(value) => {
-                  setCurrentStep(value);
-                  setCurrentImageIndex(0);
-                }}
-              />
+              <div className="flex flex-wrap mt-12 mb-4">
+                {steps.map((step, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setCurrentStep(index);
+                      setCurrentImageIndex(0);
+                    }}
+                    className={`m-2 px-2 py-2 rounded-lg font-bold text-lg ${currentStep === index ? 'bg-darkblue text-white' : 'bg-white text-darkblue border border-darkblue'}`}
+                  >
+                    {step.category}
+                  </button>
+                ))}
+              </div>
+
             )}
             {isLargeScreen && (
               <h1 className="block text-3xl lg:mb-8 font-bold text-center text-darkblue">
