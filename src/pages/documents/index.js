@@ -387,11 +387,11 @@ const DocumentManager = () => {
             </button>
           </div>
           <div className="fixed md:relative bottom-0 flex items-center justify-center bg-white w-full py-5 md:py-0 md:justify-end md:mx-5 md:bottom-auto md:bg-opacity-0 md:right-0">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-[1.1vw] md:py-[7.5px] px-4 bg-darkblue text-xl text-white rounded-l-xl font-bold upload">
+            <Link href={`/documents/upload/${uploadCategory}`} className="upload flex items-center py-[1.1vw] md:py-[7.5px] px-4 bg-darkblue text-xl text-white rounded-l-xl font-bold upload">
               <Image src={UploadIcon} alt="Upload Icon" className="w-[8vw] md:w-[2vw] pr-2" />
               Upload
             </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="border-darkblue border border-solid flex items-center py-[0.8vw] md:py-[6.5px] px-4 bg-white text-xl text-gray rounded-r-xl font-bold scanner">
+            <Link href={`/documents/scanner/${uploadCategory}`} className="scanner border-darkblue border border-solid flex items-center py-[0.8vw] md:py-[6.5px] px-4 bg-white text-xl text-gray rounded-r-xl font-bold scanner">
               <Image src={ScannerIcon} alt="Category Icon" className="w-[8vw] md:w-[2vw] pr-2" />
               Scan
             </Link>
@@ -415,7 +415,7 @@ const DocumentManager = () => {
             </div>
               {dropdownOpen && (
                 <div
-                  className="origin-top-right absolute bottom-full right-2 md:right-0 md:mb-2 mt-2 w-56 rounded-md shadow-2xl bg-white"
+                  className="origin-top-right absolute top-full right-2 md:right-0 md:mb-2 mt-2 w-56 rounded-md shadow-2xl bg-white"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
@@ -425,7 +425,7 @@ const DocumentManager = () => {
                       <a
                         key={category}
                         href="#"
-                        className="block px-4 py-2 text-[4vw] md:text-[0.9vw] hover:bg-lightblue"
+                        className={`${category} block px-4 py-2 text-[4vw] md:text-[0.9vw] hover:bg-lightblue`}
                         role="menuitem"
                         onClick={() => handleCategoryClick(category)}
                       >
