@@ -20,7 +20,7 @@ const Dropdown = () => {
           aria-expanded="true"
           aria-haspopup="true"
         >
-          in "${uploadCategory}"
+          in &quot;${uploadCategory}"&quot;
           <div className='pl-2'>
             <Image src={DropdownArrow} />
           </div>
