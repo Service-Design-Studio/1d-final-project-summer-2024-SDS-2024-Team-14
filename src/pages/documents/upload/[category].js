@@ -33,7 +33,6 @@ export default function Upload(props) {
 
   return (
     <>
-      <ReactNotifications />
       <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover md:px-[12vw] px-[2vw]">
         {!loading &&
         <>
