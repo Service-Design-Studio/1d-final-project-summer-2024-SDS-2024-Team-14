@@ -79,10 +79,10 @@ export default function Category() {
                 localStorage.setItem('notificationMessage', 'There was an error uploading the file. Please contact your administrator for help.');
                 localStorage.setItem('status', 'error')
             }
-            setLoading(false);
         })
         .finally(() => {
-            router.push("/documents"); 
+            router.push("/documents");
+            setLoading(false);
         });
         setLoading(true); 
     }
@@ -116,12 +116,13 @@ export default function Category() {
 
     return (
         <>
-        {!loading && (
             <div className="flex flex-col min-h-screen bg-[url('/images/background/gebirah-bluebg.png')] bg-cover ">
+                {!loading &&
+                <>
                 <div className="md:flex md:items-center pt-4 ml-4">
                     <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
                     <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
-            </div>
+                 </div>
                 {notif ? <Alert
                     className='absolute opacity-90 top-5 w-10/12 self-center z-40 bg-red text-white fill-white'
                     severity='error'
@@ -248,10 +249,10 @@ export default function Category() {
                     </Dialog>
                 }
                 <ChatBot/>
-                </div>
-                )
-            }
-            {loading && <Loading text={"Loading..."} />}
+                </>
+                }
+                {loading && <Loading text={"Loading..."} />}
+            </div>
         </>
     );
 }

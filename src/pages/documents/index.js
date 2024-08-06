@@ -16,6 +16,7 @@ import 'react-notifications-component/dist/theme.css';
 import DropdownArrow from "../../../public/images/icons/dropdown.svg"
 import ScannerIcon from "../../../public/images/icons/scanner.svg"
 import UploadIcon from "../../../public/images/icons/upload_icon.svg"
+import Loading from "@/components/loading";
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -27,16 +28,14 @@ const DocumentManager = () => {
   const [pendingCount, setPendingCount] = useState(0);
   const [rejectedCount, setRejectedCount] = useState(0);
   const [allCount, setAllCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [uploadCategory, setUploadCategory] = useState('health');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [data, setData] = useState(null);
-  const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [activeLink, setActiveLink] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const handleClick = (link) => {
     setActiveLink(link);
@@ -63,46 +62,10 @@ const DocumentManager = () => {
     if (selectedCategory) {
       fetchDocuments();
     }
-      const message = localStorage.getItem('notificationMessage');
-      const status = localStorage.getItem('status');
-      if (message) {
-          if (status==="success") {
-              Store.addNotification({
-                  title: "Success",
-                  message: message,
-                  type: "success",
-                  insert: "bottom",
-                  container: "bottom-right",
-                  animationIn: ["animate__animated", "animate__fadeIn"],
-                  animationOut: ["animate__animated", "animate__fadeOut"],
-                  dismiss: {
-                      duration: 5000,
-                      onScreen: true
-                  }
-              });
-          }
-          else {
-              Store.addNotification({
-                  title: "Error",
-                  message: message,
-                  type: "danger",
-                  insert: "bottom",
-                  container: "bottom-right",
-                  animationIn: ["animate__animated", "animate__fadeIn"],
-                  animationOut: ["animate__animated", "animate__fadeOut"],
-                  dismiss: {
-                      duration: 5000,
-                      onScreen: true
-                  }
-              });
-          }
-      localStorage.removeItem('notificationMessage'); // Clear the message after displaying
-      localStorage.removeItem('status'); // Clear the message after displaying
-    }
   }, []);
 
   const fetchDocuments = async () => {
-
+    setLoading(true);
     userID = localStorage.getItem("userID");
     try {
       await axiosInstance.post(`/document/retrieve`, {id: userID}).then((resp) => {
@@ -110,7 +73,48 @@ const DocumentManager = () => {
     })
     } catch (error) {
       console.error(error.message);
-    };
+    }
+    finally {
+        setTimeout(() => {
+          setLoading(false);
+          const message = localStorage.getItem('notificationMessage');
+          const status = localStorage.getItem('status');
+          if (message) {
+            if (status ==="success") {
+              Store.addNotification({
+                title: "Success",
+                message: message,
+                type: "success",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+              });
+            }
+            else {
+              Store.addNotification({
+                title: "Error",
+                message: message,
+                type: "danger",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+              });
+            }
+            localStorage.removeItem('notificationMessage'); // Clear the message after displaying
+            localStorage.removeItem('status'); // Clear the message after displaying
+          }
+        }, 1500); // 1.5 seconds delay
+    }
   }
   useEffect(() => {
     if (data != null) {
@@ -131,15 +135,13 @@ const DocumentManager = () => {
         setDocuments(filteredDocuments);
         setFilteredDocuments(filteredDocuments);
 
-        setTotalPages(Math.ceil(filteredDocuments.length / itemsPerPage));
       }
 
-  }, [selectedCategory, statusFilter, currentPage, data]);
+  }, [selectedCategory, statusFilter, data]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setStatusFilter('All');
-    setCurrentPage(1);
     setUploadCategory(category.toLowerCase());
     setDropdownOpen(false);
   };
@@ -147,7 +149,6 @@ const DocumentManager = () => {
 
   const handleStatusFilterClick = (status) => {
     setStatusFilter(status);
-    setCurrentPage(1);
   };
 
   const handleDocumentClick = (document) => {
@@ -302,218 +303,235 @@ const DocumentManager = () => {
     <>
     <ReactNotifications />
     <div className="overflow-hidden min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
-      <NaviBar open={open} setOpen={ setOpen} />
-          {/* category button row */}
-      <div className="mx-3 md:mx-10 md:mt-10 ">
-        <div className="px-1.5 flex flex-row justify-between items-center">
-          <h1 className="text-lg md:text-3xl font-bold text-darkblue">Documents Manager</h1>
-          <div className="md:hidden flex items-center bg-lightgray rounded-full px-1 md:px-3 py-1 md:py-2">
-            <div className="flex items-center">
-              <div className="cursor-pointer " onClick={toggleInput}>
-                <Image className="w-[4vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24}/>
-              </div>
-              {showInput && (
-                <input
-                  type="text"
-                  placeholder="Search in Documents"
-                  className={`flex-grow text-darkblue w-full mx-auto ml-2 bg-lightgray md:placeholder:text-[1.2vw] placeholder:text-darkblue placeholder:opacity-[79%] placeholder:text-[2.5vw]
+      {!loading && data &&
+          <>
+            <NaviBar open={open} setOpen={setOpen}/>
+            {/* category button row */}
+            <div className="mx-3 md:mx-10 md:mt-10 ">
+              <div className="px-1.5 flex flex-row justify-between items-center">
+                <h1 className="text-lg md:text-3xl font-bold text-darkblue">Documents Manager</h1>
+                <div className="md:hidden flex items-center bg-lightgray rounded-full px-1 md:px-3 py-1 md:py-2">
+                  <div className="flex items-center">
+                    <div className="cursor-pointer " onClick={toggleInput}>
+                      <Image className="w-[4vw]" src="/images/icons/search.svg" alt="Search Icon" width={24}
+                             height={24}/>
+                    </div>
+                    {showInput && (
+                        <input
+                            type="text"
+                            placeholder="Search in Documents"
+                            className={`flex-grow text-darkblue w-full mx-auto ml-2 bg-lightgray md:placeholder:text-[1.2vw] placeholder:text-darkblue placeholder:opacity-[79%] placeholder:text-[2.5vw]
                   focus:outline-none text-[2.5vw] md:text-[1.2vw]`}
-                  value={searchTerm}
-                  onChange={(e) => handleSearch(e.target.value)}
-                />
-              )}
-            </div>
-          </div>
-          <div className="hidden md:flex items-center bg-lightgray rounded-full px-3 py-2">
-            <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24} />
-            <input
-                type="text"
-                placeholder="Search in Documents"
-                className="flex-grow text-darkblue w-contain bg-lightgray md:placeholder:text-[1.2vw] mx-auto ml-2 placeholder:text-darkblue placeholder:opacity-[79%]
+                            value={searchTerm}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                    )}
+                  </div>
+                </div>
+                <div className="hidden md:flex items-center bg-lightgray rounded-full px-3 py-2">
+                  <Image className="w-[1.5vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24}/>
+                  <input
+                      type="text"
+                      placeholder="Search in Documents"
+                      className="flex-grow text-darkblue w-contain bg-lightgray md:placeholder:text-[1.2vw] mx-auto ml-2 placeholder:text-darkblue placeholder:opacity-[79%]
                 focus:outline-none text-[2vw] md:text-[1.2vw]"
-                value={searchTerm}
-                onChange={(e) => handleSearch(e.target.value)}
-            />
-          </div>
-        </div>
-          <div className="flex justify-between items-center my-5 ml-0 mr-0 md:flex-row">
-            {/* gap in btw cat buttons */}
-            <div className="flex flex-wrap gap-2 pl-1.5">
-              {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
-                  <button
-                      key={category}
-                      onClick={() => handleCategoryClick(category)}
-                      className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
+                      value={searchTerm}
+                      onChange={(e) => handleSearch(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between items-center my-5 ml-0 mr-0 md:flex-row">
+                {/* gap in btw cat buttons */}
+                <div className="flex flex-wrap gap-2 pl-1.5">
+                  {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
+                      <button
+                          key={category}
+                          onClick={() => handleCategoryClick(category)}
+                          className={`${category} py-1.5 px-3 rounded-md font-bold text-[1.5vw] md:text-[1.2vw] 
                       ${selectedCategory === category ? 'bg-darkblue text-white' : 'text-darkblue'}`}
                       >
-                    {category}
-                  </button>
-              ))}
-            </div>
-          </div>
-        <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto" />
-        </div>
-
-        {/* Upload and Category buttons container for web */}
-        <div className="flex justify-between items-center mb-5 mx-2 md:mx-10 md:flex">
-          <div className="flex text-[3vw] md:text-[1vw]">
-            <button
-              onClick={() => handleStatusFilterClick('All')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-            >
-              {allCount} <b>All</b>
-            </button>
-            <button
-              onClick={() => handleStatusFilterClick('Approved')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-            >
-              {approvedCount} <b>Approved</b>
-            </button>
-            <button
-              onClick={() => handleStatusFilterClick('Pending')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-            >
-              {pendingCount} <b>Pending</b>
-            </button>
-            <button
-              onClick={() => handleStatusFilterClick('Rejected')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
-            >
-              {rejectedCount} <b>Rejected</b>
-            </button>
-          </div>
-          <div className="flex items-center">
-            <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-[9px] px-4 bg-darkblue text-white rounded-l-xl font-bold upload">
-              <Image src={UploadIcon} alt="Upload Icon" className="w-[2vw] pr-2" />
-              Upload
-            </Link>
-            <Link href={`/documents/scanner/${uploadCategory}`} className="border-darkblue border border-solid flex items-center py-[6.5px] px-4 bg-white text-gray rounded-r-xl font-bold scanner">
-              <Image src={ScannerIcon} alt="Category Icon" className="w-[2vw] pr-2" />
-              Scan
-            </Link>
-            <div className='pl-2'>
-                <div className="relative inline-block text-left">
-                <div>
-                  <button
-                    onClick={toggleDropdown}
-                    type="button"
-                    className="focus:outline-none outline:none flex items-center w-full px-4 py-2 text-[0.9vw] font-bold text-darkblue"
-                    id="menu-button"
-                    aria-expanded={dropdownOpen}
-                    aria-haspopup="true"
-                  >
-                    in &quot;
-                    <span>{selectedCategory}&quot;</span>
-                    <div className='pl-2'>
-                      <Image src={DropdownArrow} />
-                    </div>
-                  </button>
+                        {category}
+                      </button>
+                  ))}
                 </div>
+              </div>
+              <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-4 mx-auto"/>
+            </div>
 
-                {dropdownOpen && (
-                  <div
-                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white outline:none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                  >
-                    <div className="py-1" role="none">
-                      {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
-                        <a
-                          key={category}
-                          href="#"
-                          className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
-                          role="menuitem"
-                          onClick={() => handleCategoryClick(category)}
-                        >
-                          {category}
-                      </a>
-                      ))}
+            {/* Upload and Category buttons container for web */}
+            <div className="flex justify-between items-center mb-5 mx-2 md:mx-10 md:flex">
+              <div className="flex text-[3vw] md:text-[1vw]">
+                <button
+                    onClick={() => handleStatusFilterClick('All')}
+                    className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+                >
+                  {allCount} <b>All</b>
+                </button>
+                <button
+                    onClick={() => handleStatusFilterClick('Approved')}
+                    className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+                >
+                  {approvedCount} <b>Approved</b>
+                </button>
+                <button
+                    onClick={() => handleStatusFilterClick('Pending')}
+                    className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+                >
+                  {pendingCount} <b>Pending</b>
+                </button>
+                <button
+                    onClick={() => handleStatusFilterClick('Rejected')}
+                    className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+                >
+                  {rejectedCount} <b>Rejected</b>
+                </button>
+              </div>
+              <div className="flex items-center">
+                <Link href={`/documents/upload/${uploadCategory}`}
+                      className="flex items-center py-[9px] px-4 bg-darkblue text-white rounded-l-xl font-bold upload">
+                  <Image src={UploadIcon} alt="Upload Icon" className="w-[2vw] pr-2"/>
+                  Upload
+                </Link>
+                <Link href={`/documents/scanner/${uploadCategory}`}
+                      className="border-darkblue border border-solid flex items-center py-[6.5px] px-4 bg-white text-gray rounded-r-xl font-bold scanner">
+                  <Image src={ScannerIcon} alt="Category Icon" className="w-[2vw] pr-2"/>
+                  Scan
+                </Link>
+                <div className='pl-2'>
+                  <div className="relative inline-block text-left">
+                    <div>
+                      <button
+                          onClick={toggleDropdown}
+                          type="button"
+                          className="focus:outline-none outline:none flex items-center w-full px-4 py-2 text-[0.9vw] font-bold text-darkblue"
+                          id="menu-button"
+                          aria-expanded={dropdownOpen}
+                          aria-haspopup="true"
+                      >
+                        in &quot;
+                        <span>{selectedCategory}&quot;</span>
+                        <div className='pl-2'>
+                          <Image src={DropdownArrow}/>
+                        </div>
+                      </button>
                     </div>
+
+                    {dropdownOpen && (
+                        <div
+                            className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white outline:none"
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="menu-button"
+                        >
+                          <div className="py-1" role="none">
+                            {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
+                                <a
+                                    key={category}
+                                    href="#"
+                                    className="block px-4 py-2 text-[0.9vw] hover:bg-lightblue"
+                                    role="menuitem"
+                                    onClick={() => handleCategoryClick(category)}
+                                >
+                                  {category}
+                                </a>
+                            ))}
+                          </div>
+                        </div>
+                    )}
                   </div>
+                </div>
+              </div>
+            </div>
+            {/* DOCUMENT CONTAINER for Web */}
+            <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
+              <div className="flex font-bold py-3 text-[2.5vw] md:text-[0.8vw] text-darkblue">
+                <div className="flex items-center w-50 md:w-80"></div>
+                <div className="flex items-center pl-5 w-[50%] md:w-[50vw]" onClick={() => requestSort('name')}>
+                  <span>Name</span>
+                  <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2"/>
+                </div>
+                <div className="flex items-center w-[15%]" onClick={() => requestSort('type')}>
+                  <span>Type</span>
+                  <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2"/>
+                </div>
+                <div className="flex items-center md:w-[15%]" onClick={() => requestSort('lastModifiedDate')}>
+                  <span>Last Modified Date</span>
+                  <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2"/>
+                </div>
+              </div>
+              <div className="">
+                {sortedDocuments.length > 0 ? (
+                    sortedDocuments.map((document) => {
+                      return (
+                          <div
+                              className={`flex justify-between h-20 border-t border-lightgray text-lg ${selectedCategory + '-document'}`}
+                              key={document.id} onClick={() => handleDocumentClick(document)}>
+                            <Image className="md:w-[3vw] w-[5vw] ml-8"
+                                   src={getIconForFilename(document.name).src}
+                                   alt={`${document.name} icon`}
+                            />
+                            <div className="flex items-center flex-grow text-[2vw] md:text-lg">
+                              <div className="w-[60%] md:w-[70%] ml-2 md:ml-5 font-bold">
+                                {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
+                              </div>
+                            </div>
+                            <div className={`flex items-center justify-center md:ml-[-10px]`} style={{width: '15%'}}>
+                              <span
+                                  className="mr-[15vw] md:mr-[5vw] text-[2vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
+                            </div>
+                            <div className="mr-[15vw] md:mr-[4vw] flex items-center justify-center"
+                                 style={{width: '15%'}}>
+                              <span className="text-[2vw] md:text-lg text-darkblue">{document.lastModifiedDate}28 July 2024</span>
+                            </div>
+                          </div>
+                      );
+                    })
+                ) : (
+                    <div className="text-md md:text-lg text-center w-full py-5 text-lightgray">No documents
+                      available</div>
                 )}
               </div>
             </div>
-          </div>
-        </div>
-      {/* DOCUMENT CONTAINER for Web */}
-      <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
-        <div className="flex font-bold py-3 text-[2.5vw] md:text-[0.8vw] text-darkblue">
-          <div className="flex items-center w-50 md:w-80"></div>
-          <div className="flex items-center pl-5 w-[50%] md:w-[50vw]" onClick={() => requestSort('name')}>
-            <span>Name</span>
-            <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
-          </div>
-          <div className="flex items-center w-[15%]" onClick={() => requestSort('type')}>
-            <span>Type</span>
-            <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
-          </div>
-          <div className="flex items-center md:w-[15%]" onClick={() => requestSort('lastModifiedDate')}>
-            <span>Last Modified Date</span>
-            <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
-          </div>
-        </div>
-        <div className="">
-          {sortedDocuments.length > 0 ? (
-            sortedDocuments.map((document) => {
-              return (
-                <div className={`flex justify-between h-20 border-t border-lightgray text-lg ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
-                  <Image className="md:w-[3vw] w-[5vw] ml-8"
-                    src={getIconForFilename(document.name).src}
-                    alt={`${document.name} icon`}
-                  />
-                  <div className="flex items-center flex-grow text-[2vw] md:text-lg">
-                    <div className="w-[60%] md:w-[70%] ml-2 md:ml-5 font-bold">
-                      {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
+            {selectedDocument && (
+                <>
+                  <div className="fixed top-0 left-0 w-full h-full
+          bg-default justify-center bg-opacity-75 z-50 flex items-center">
+                    <div className="bg-white mx-auto my-auto rounded-xl md:w-2/3 h-[80%]">
+                      <div className="px-6">
+                        <div className="flex justify-between pt-4 pb-1">
+                          <h1 className="text-[2.5vw] md:text-[1.5vw] font-bold text-darkblue">{selectedDocument.name}</h1>
+                          <Image className="md:w-[2vw] w-[4vw] mb-2" src={crossIcon} alt="close window"
+                                 onClick={handleClosePreview}/>
+                        </div>
+                      </div>
+                      <hr className="border-t-1 border-[#B0B0B0]/50 w-full"/>
+                      <div className="md:flex flex-col md:flex-row bg-white overflow-hidden w-auto h-[80%] relative">
+                        <div className="flex h-1/2 md:h-full md:w-1/2">
+                          <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
+                            {selectedDocument.file_url ? (
+                                <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%"
+                                        height="100%"></iframe>
+                            ) : (
+                                <p>Document preview not available</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex-1 p-5 overflow-y-auto">
+                          {selectedDocument.important ? renderImportantInfo(selectedDocument.important) :
+                              <p>No additional information available</p>}
+                        </div>
+                      </div>
+                      <hr className="border-t-1 border-[#B0B0B0]/50 w-full"/>
                     </div>
                   </div>
-                  <div className={`flex items-center justify-center md:ml-[-10px]`} style={{ width: '15%' }}>
-                    <span className="mr-[15vw] md:mr-[5vw] text-[2vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
-                  </div>
-                  <div className="mr-[15vw] md:mr-[4vw] flex items-center justify-center" style={{ width: '15%' }}>
-                    <span className="text-[2vw] md:text-lg text-darkblue">{document.lastModifiedDate}28 July 2024</span>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-md md:text-lg text-center w-full py-5 text-lightgray">No documents available</div>
-          )}
-        </div>
-      </div>
-      {selectedDocument && (
-        <>
-          <div className="fixed top-0 left-0 w-full h-full
-          bg-default justify-center bg-opacity-75 z-50 flex items-center">
-            <div className="bg-white mx-auto my-auto rounded-xl md:w-2/3 h-[80%]">
-              <div className ="px-6">
-                <div className="flex justify-between pt-4 pb-1">
-                  <h1 className="text-[2.5vw] md:text-[1.5vw] font-bold text-darkblue">{selectedDocument.name}</h1>
-                  <Image className="md:w-[2vw] w-[4vw] mb-2" src={crossIcon} alt="close window" onClick={handleClosePreview}/>
-                </div>
-              </div>
-            <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
-            <div className="md:flex flex-col md:flex-row bg-white overflow-hidden w-auto h-[80%] relative">
-              <div className="flex h-1/2 md:h-full md:w-1/2">
-                <div className="w-full bg-[#B0B0B0]/50 py-5 px-5">
-                  {selectedDocument.file_url ? (
-                    <iframe className='rounded-lg' src={selectedDocument.file_url} width="100%" height="100%"></iframe>
-                  ) : (
-                    <p>Document preview not available</p>
-                  )}
-                </div>
-              </div>
-              <div className="flex-1 p-5 overflow-y-auto">
-                {selectedDocument.important ? renderImportantInfo(selectedDocument.important) : <p>No additional information available</p>}
-              </div>
-              </div>
-              <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
-              </div>
-            </div>
-          <ChatBot/>
-        </>
-      )}
-      <ChatBot/>
+                  <ChatBot/>
+                </>
+            )}
+            <ChatBot/>
+          </>
+      }
+      {loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"}/>}
+      {loading && data && <Loading text={"Loading..."} />}
     </div>
       </>
   );

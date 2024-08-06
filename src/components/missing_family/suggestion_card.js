@@ -1,14 +1,19 @@
 
-import "../../styles/globals.css"
-import Image from "next/image"
-import CardDetails from "./suggestion_card_components/card_details"
-import Similarity from "./suggestion_card_components/similarity"
+import "../../styles/globals.css";
+import Image from "next/image";
+import CardDetails from "./suggestion_card_components/card_details";
+import Similarity from "./suggestion_card_components/similarity";
 export default function SuggestionCard(props) {
     return (
-        <div className="flex flex-col rounded-2xl min-w-96 h-fit shadow-lg relative bg-white my-20 mr-14">
+        <div
+            className="flex flex-col rounded-2xl md:min-w-96 h-fit shadow-lg relative bg-white my-10 md:my-20 md:mr-14 mr-11"
+            onClick={() => {
+                props.setClick(props.index);
+            }}
+        >
             <div className="flex-1 relative overflow-ellipsis">
                 <Image
-                    unoptimized
+                    key={ props.index}
                     src={props.src}
                     width={1}
                     height={1}
