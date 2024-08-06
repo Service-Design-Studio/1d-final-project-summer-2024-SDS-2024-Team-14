@@ -1,5 +1,6 @@
 class UserMatchedSerializer < ActiveModel::Serializer
-  attributes :id, :name, :age, :gender, :ethnicity, :date_birth
+  include Rails.application.routes.url_helpers
+  attributes :id, :name, :age, :gender, :ethnicity, :date_birth, :photo
   def age
     now = Time.now.utc.to_date
     age = now.year - object.date_birth.year
@@ -8,5 +9,15 @@ class UserMatchedSerializer < ActiveModel::Serializer
   end
   def date_birth
     object.date_birth.strftime('%d-%m-%Y') if object.date_birth.present?
+  end
+  def photo
+    if object.photo.attached?
+      rails_blob_url(object.photo, only_path: false)
+    else
+      nil
+    end
+  end
+  def default_url_options
+    Rails.application.config.action_mailer.default_url_options
   end
 end
