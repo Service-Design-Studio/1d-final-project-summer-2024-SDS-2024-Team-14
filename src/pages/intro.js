@@ -5,11 +5,13 @@ import "../styles/globals.css";
 import EnableId from "../../public/images/enable_id_logo.svg";
 import Image from 'next/image';
 import {useRouter} from "next/router";
+import Loading from "@/components/loading";
 
 export default function Intro({ session }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLargeScreen, setIsLargeScreen] = useState(false);
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
 
     const handleNextClick = () => {
     if (currentSlide === slides.length - 1) {
@@ -20,6 +22,9 @@ export default function Intro({ session }) {
     };
 
     useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
         const handleResize = () => {
             setIsLargeScreen(window.innerWidth >= 1024);
         };
@@ -36,6 +41,8 @@ export default function Intro({ session }) {
     return (
         <div className="overflow-hidden flex flex-col min-h-screen bg-white transition-all-500 bg-local
         bg-[url('/images/background/gebirah-bluebg.png')] bg-cover pb-8">
+            {!loading &&
+                <>
             <div className="md:flex md:items-center pt-4 ml-4">
                 <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
@@ -94,6 +101,9 @@ export default function Intro({ session }) {
                     </div>
                 </div>
             </div>
+            </>
+                }
+                {loading && <Loading text={"Loading..."} />}
         </div>
     );
 };
