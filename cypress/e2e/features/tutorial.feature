@@ -14,4 +14,4 @@ Feature: Tutorial
     And I fill in "confirmPassword" with "Passw0rd!"
     And I click on the "signup" button
     Then I should be redirected to the intro page
-    Then I click on the "next" button
+    Then I click on the next button till the last slide
