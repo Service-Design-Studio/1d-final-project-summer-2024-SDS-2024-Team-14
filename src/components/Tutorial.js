@@ -94,7 +94,10 @@ const Tutorial = ({ title, steps, onClose }) => {
             </button>
             {!isLargeScreen && (
               <>
-                <div className="relative mt-12 mb-4 flex items-center">
+                <h1 className="block md:text-3xl text-2xl mt-14 mb-2 text-center font-bold text-darkblue">
+                  {steps[currentStep].title}
+                </h1>
+                <div className="relative mb-4 flex items-center">
                   <button
                     onClick={() => {
                       const container = document.getElementById('scroll-container');
@@ -104,7 +107,7 @@ const Tutorial = ({ title, steps, onClose }) => {
                   >
                     &lt;
                   </button>
-                  <div id="scroll-container" className="overflow-x-auto mx-4 flex items-center w-full">
+                  <div id="scroll-container" className="overflow-x-auto hide-scrollbar mx-4 flex items-center w-full">
                     <div className="flex flex-nowrap">
                       {steps.map((step, index) => (
                         <button
@@ -130,9 +133,6 @@ const Tutorial = ({ title, steps, onClose }) => {
                     &gt;
                   </button>
                 </div>
-                <h1 className="block text-3xl mb-2 text-center font-bold text-darkblue">
-                  {steps[currentStep].title}
-                </h1>
               </>
             )}
             {isLargeScreen && (
@@ -140,17 +140,17 @@ const Tutorial = ({ title, steps, onClose }) => {
                 {steps[currentStep].title}
               </h1>
             )}
-            <div className="flex justify-center items-center h-[45vh] lg:mb-8 relative">
+            <div className="flex justify-center items-center h-[65vw] md:h-[45vh] lg:mb-8 relative">
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
                 layout="intrinsic"
-                className="max-h-[45vh] w-auto rounded-lg"
+                className="w-auto rounded-lg"
                 width={800}
                 height={600}
               />
             </div>
-            <div className="flex justify-center items-center mb-2 lg:mt-2 lg:mb-4">
+            <div className="flex justify-center items-center mb-2 mt-4 lg:mb-4">
               {/*{currentImages.length > 1 ? (*/}
               {currentImages.map((_, index) => (
                   <span
@@ -165,8 +165,8 @@ const Tutorial = ({ title, steps, onClose }) => {
               {/*// )}*/}
             </div>
             <div className="flex-grow flex items-center justify-center">
-              <div className="text-darkblue text-xl lg:px-14 text-center leading-tight max-h-[13vh] overflow-auto">
-                <p className="min-h-[13vh]">{currentTexts[currentImageIndex]}</p>
+              <div className="text-darkblue text-xl lg:px-14 text-center leading-tight h-[35vw] md:max-h-[13vh] overflow-auto">
+                <p className="md:min-h-[13vh]">{currentTexts[currentImageIndex]}</p>
               </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-white py-2 px-4 flex justify-between items-center rounded-xl">
