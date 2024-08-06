@@ -18,7 +18,7 @@ export default function PotentialMatches(props) {
     }, [emblaApi])
 
     useEffect(() => {
-        if (props.matches.length > 0) {
+        if (props.matches) {
             setCount(props.matches.length);
         } else {
             setCount(0);
@@ -26,13 +26,13 @@ export default function PotentialMatches(props) {
     }, [props.matches])
     
     return (
-        <div className="2xl:px-[2vw] mx-0 2xl:w-[75%] w-full overflow-hidden 2xl:mt-0">
+        <div className="2xl:px-4 mx-0 2xl:w-[75%] w-full overflow-hidden mt-8 2xl:mt-0">
             <div className="flex flex-col md:w-auto h-auto ">
-                <div className="">
+                <div className="ml-12">
                     <span className="text-darkblue text-2xl font-semibold">
                         Potential Matches
                     </span>
-                    <p className="text-lg">
+                    <p className="text-lg text-darkblue">
                         Swipe right to explore more matches
                     </p>
                 </div>
@@ -61,7 +61,7 @@ export default function PotentialMatches(props) {
                         <Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-2 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                 </div>
                 {/* Intro for desktop view */}
-                <div className=" flex flex-row w-full md:my-10">
+                <div className=" flex flex-row w-full">
                     <Button
                         className='min-w-fit px-0 md:mx-5 mx-1 embla__button embla__button--prev md:block md:w-auto hidden w-0'
                         onClick={() => {
@@ -82,13 +82,13 @@ export default function PotentialMatches(props) {
                             {props.selected != undefined ? "No matches found. Please check back later." : "Please select an entry on the left, or add a new entry."}
                         </div>
                     }
-                       {count > 0 && <div ref={emblaRef} className="embla__viewport overflow-x-hidden h-full w-full">
-                            <div className="embla__container">
+                       {count > 0 && <div ref={emblaRef} className="overflow-x-hidden h-full w-full">
+                            <div className="embla__container gap-x-12">
                                 {props.matches ? props.matches.map((data, index) => {
                                     return <SuggestionCard
                                         key={`${data.user.id}`}
                                         index={`${index}`}
-                                        src={data.user.src ? data.user.src : "/images/default_profile_pic.svg"}
+                                        src={data.user.photo ? data.user.photo : "/images/default_profile_pic.svg"}
                                         name={data.user.name || "Not Available"}
                                         gender={data.user.gender || "Not Available"}
                                         age={data.user.age || "Not Available"}
