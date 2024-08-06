@@ -21,7 +21,6 @@ export default function IdCard(props) {
             <div className="flex lg:items-center flex-col" data-aos='fade-right' data-aos-delay='300'>
                 <span className="card lg:mx-auto md:my-4 mb-4 pb-0 shadow-none text-3xl font-medium text-darkblue">ID Card</span>
                 <div className="w-11/12 mx-auto md:w-full md:p-[2vw] id-card transition duration-500 ">
-                    {/* {console.log(props.loading, "\n", props.data)} */}
                     <div className="flex justify-around">
                         <ProfilePic />
                         <div className="mx-[5vw] lg:mx-0">
