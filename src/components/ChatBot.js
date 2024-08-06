@@ -61,8 +61,7 @@ export default function ChatBot() {
         <>
             <div className="fixed sm:bottom-10 sm:right-10 bottom-4 right-4">
                 <button
-                    id={`Chatbot`}
-                    className={`cursor-pointer fixed sm:bottom-10 sm:right-10 bottom-4 right-4 ${chatState ? "hidden" : "inline-block"}`}
+                    className={`chatbot cursor-pointer fixed sm:bottom-10 sm:right-10 bottom-4 right-4 ${chatState ? "hidden" : "inline-block"}`}
                     onClick={() => setChatState(!chatState)}
                 >
                     <Image  className="w-[12.5vw] sm:w-[10vw] lg:w-[3.5vw]" src={chatBot} />
