@@ -20,6 +20,8 @@ export default function PotentialMatches(props) {
     useEffect(() => {
         if (props.matches.length > 0) {
             setCount(props.matches.length);
+        } else {
+            setCount(0);
         }
     }, [props.matches])
     
@@ -70,7 +72,7 @@ export default function PotentialMatches(props) {
                         }}
                     ><Image src="/images/previous_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view previous scanned documents" />
                     </Button>
-                    {count == 0 ?
+                    {count == 0 &&
                         <div className="flex flex-col w-full h-full text-darkblue text-2xl items-center">
                             <Image
                                 src={props.selected != undefined ? "/images/no_matches_found.svg" : "/images/no_selected_entry.svg"}
@@ -79,10 +81,10 @@ export default function PotentialMatches(props) {
                                 alt="No matches found" />
                             {props.selected != undefined ? "No matches found. Please check back later." : "Please select an entry on the left, or add a new entry."}
                         </div>
-                        :
-                        <div ref={emblaRef} className="embla__viewport overflow-x-hidden h-full w-full">
+                    }
+                       {count > 0 && <div ref={emblaRef} className="embla__viewport overflow-x-hidden h-full w-full">
                             <div className="embla__container">
-                                {props.matches.map((data, index) => {
+                                {props.matches ? props.matches.map((data, index) => {
                                     return <SuggestionCard
                                         key={`${data.user.id}`}
                                         index={`${index}`}
@@ -95,7 +97,7 @@ export default function PotentialMatches(props) {
                                         similarity={data.percentage || "Not Available"}
                                         setClick={ props.setClick}
                                     />
-                                })}
+                                }) : null}
                             </div>
                         </div>
                     }
