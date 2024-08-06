@@ -97,7 +97,7 @@ export default function FamilyTree() {
         }
     }
     useEffect(() => {
-        setMatches(placeholder)
+        // setMatches(placeholder)
         if (selectedData) {
             try {
                 // getMatches();
@@ -197,7 +197,7 @@ export default function FamilyTree() {
                     fullWidth={true}
                 >
                     <div className='mx-4 flex flex-col text-start items-start'>
-                        <DialogTitle>Confirm Upload?</DialogTitle>
+                        <DialogTitle>Send Match Request?</DialogTitle>
                         <DialogContentText>
                             <span>{`Send '${matches[click].user.name}' a match request?`}</span>
                         </DialogContentText>

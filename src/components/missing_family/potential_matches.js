@@ -34,6 +34,7 @@ export default function PotentialMatches(props) {
                         Swipe right to explore more matches
                     </p>
                 </div>
+                {/* Prev/Next buttons for mobile view */}
                 <div className="flex flex-row md:hidden my-3">
                     <Button
                         className='flex-1 min-w-fit px-0 md:mx-5 mx-1 embla__button embla__button--prev start-0 items-center'
@@ -57,6 +58,7 @@ export default function PotentialMatches(props) {
                     >Next
                         <Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-2 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                 </div>
+                {/* Carousel for desktop view */}
                 <div className=" flex flex-row w-full md:my-10">
                     <Button
                         className='min-w-fit px-0 md:mx-5 mx-1 embla__button embla__button--prev md:block md:w-auto hidden w-0'
@@ -69,7 +71,7 @@ export default function PotentialMatches(props) {
                     ><Image src="/images/previous_chevron.svg" className='w-4 sm:w-7 mx-0 px-0' width={1} height={1} alt="view previous scanned documents" />
                     </Button>
                     {count == 0 ?
-                        <div className="flex flex-col w-[65vw] h-full text-darkblue text-2xl items-center">
+                        <div className="flex flex-col w-full h-full text-darkblue text-2xl items-center">
                             <Image
                                 src={props.selected != undefined ? "/images/no_matches_found.svg" : "/images/no_selected_entry.svg"}
                                 className="w-1/4 max-w-72"
