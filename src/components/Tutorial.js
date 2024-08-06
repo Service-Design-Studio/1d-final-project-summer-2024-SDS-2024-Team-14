@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import CloseIcon from "../../public/images/tutorial/blueclose.svg"; // Import your close icon
-import "../styles/globals.css"
+import "../styles/globals.css";
+import CustomDropdown from './modalContent/phonedropdown'; // Import the CustomDropdown
 
 const Tutorial = ({ title, steps, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -97,20 +98,14 @@ const Tutorial = ({ title, steps, onClose }) => {
               <Image src={CloseIcon} alt="Close" className="w-10 h-10" />
             </button>
             {!isLargeScreen && (
-              <select
-                value={currentStep}
-                onChange={(e) => {
-                  setCurrentStep(parseInt(e.target.value));
+              <CustomDropdown
+                options={steps.map(step => step.category)}
+                selectedValue={currentStep}
+                onChange={(value) => {
+                  setCurrentStep(value);
                   setCurrentImageIndex(0);
                 }}
-                className="block w-full p-2 mb-4 mt-12 border border-gray-300 rounded text-darkblue font-bold text-3xl"
-              >
-                {steps.map((step, index) => (
-                  <option key={index} value={index}>
-                    {step.category}
-                  </option>
-                ))}
-              </select>
+              />
             )}
             {isLargeScreen && (
               <h1 className="block text-3xl lg:mb-8 font-bold text-center text-darkblue">
