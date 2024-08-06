@@ -309,17 +309,17 @@ const DocumentManager = () => {
       <div className="mx-3 md:mx-10 md:mt-10 ">
         <div className="px-1.5 flex flex-row justify-between items-center">
           <h1 className="text-2xl md:text-3xl font-bold text-darkblue">Documents Manager</h1>
-          <div className={`md:hidden right-0 flex items-center ${backgroundVisible ? 'bg-opacity-0' : 'bg-lightgray'} rounded-full px-1 md:px-3 py-1 md:py-2`}>
+          <div className={`md:hidden absolute top-5 right-5 flex items-center ${backgroundVisible ? 'bg-opacity-0' : 'bg-lightgray'} rounded-full px-1 md:px-3 py-1 md:py-2`}>
             <div className="flex items-center">
-              <div className="cursor-pointer " onClick={toggleInput}>
+              <div className="cursor-pointer" onClick={toggleInput}>
                 <Image className="w-[6vw] md:w-[4vw]" src="/images/icons/search.svg" alt="Search Icon" width={24} height={24}/>
               </div>
               {showInput && (
                 <input
                   type="text"
                   placeholder="Search in Documents"
-                  className={`flex-grow text-darkblue w-full mx-auto ml-2 bg-lightgray md:placeholder:text-[1.2vw] placeholder:text-darkblue placeholder:opacity-[79%] placeholder:text-[2.5vw]
-                  focus:outline-none text-[3vw] md:text-[1.2vw]`}
+                  className={`flex-grow text-darkblue w-full mx-auto ml-2 bg-lightgray md:placeholder:text-[1.2vw] placeholder:text-darkblue placeholder:opacity-[79%] placeholder:text-[4vw]
+                  focus:outline-none text-[4vw] md:text-[1.2vw]`}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                 />
@@ -356,34 +356,34 @@ const DocumentManager = () => {
         <hr className="border-t-2 border-[#B0B0B0]/50 w-full my-2 md:my-4 mx-auto" />
         </div>
         {/* Upload and Category buttons container for web */}
-        <div className="relative flex justify-between items-center mb-5 md:mx-2 md:mx-10 md:flex">
-          <div className="flex text-[3.5vw] mx-2 md:text-[1vw]">
+        <div className="relative flex justify-between items-center mb-5 md:mx-7 md:flex">
+          <div className="flex text-[3.5vw] mx-2 md:mx-2 md:text-[1vw]">
             <button
               onClick={() => handleStatusFilterClick('All')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`flex mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'All' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
-              {allCount} <b>All</b>
+              <div className='pr-1'>{allCount}</div> <b>All</b>
             </button>
             <button
               onClick={() => handleStatusFilterClick('Approved')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`flex mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Approved' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
-              {approvedCount} <b>Approved</b>
+              <div className='pr-1'>{approvedCount}</div> <b>Approved</b>
             </button>
             <button
               onClick={() => handleStatusFilterClick('Pending')}
-              className={`mx-2 py-1 px-2 md:py-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`flex  mx-2 py-1 md:py-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Pending' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
-              {pendingCount} <b>Pending</b>
+              <div className='pr-1'>{pendingCount}</div> <b>Pending</b>
             </button>
             <button
               onClick={() => handleStatusFilterClick('Rejected')}
-              className={`mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
+              className={`flex mx-2 py-1 md:py-2 px-2 md:px-4 rounded-md md:rounded-xl ${statusFilter === 'Rejected' ? 'bg-darkblue text-white' : 'text-darkblue'}`}
             >
-              {rejectedCount} <b>Rejected</b>
+              <div className='pr-1'>{rejectedCount}</div> <b>Rejected</b>
             </button>
           </div>
-          <div className="fixed md:relative bottom-0 flex items-center justify-center bg-white w-full py-5 md:justify-end md:mx-5 md:bottom-auto md:bg-opacity-0 md:right-0">
+          <div className="fixed md:relative bottom-0 flex items-center justify-center bg-white w-full py-5 md:py-0 md:justify-end md:mx-5 md:bottom-auto md:bg-opacity-0 md:right-0">
             <Link href={`/documents/upload/${uploadCategory}`} className="flex items-center py-[1.1vw] md:py-[7.5px] px-4 bg-darkblue text-xl text-white rounded-l-xl font-bold upload">
               <Image src={UploadIcon} alt="Upload Icon" className="w-[8vw] md:w-[2vw] pr-2" />
               Upload
@@ -439,17 +439,17 @@ const DocumentManager = () => {
         </div>
       {/* DOCUMENT CONTAINER for Web */}
       <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
-        <div className="flex font-bold py-3 text-[3.5vw] md:text-[0.8vw] text-darkblue">
+        <div className="flex font-bold py-3 text-[3.5vw] md:text-[1.2vw] text-darkblue">
           <div className="flex items-center"></div>
-          <div className="flex items-center pl-2 md:pl-9 w-[50%] md:w-[66vw]" onClick={() => requestSort('name')}>
+          <div className="flex items-center pl-[12vw] md:pl-[6.7vw] w-[50%] md:w-[66vw]" onClick={() => requestSort('name')}>
             <span>Name</span>
             <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
           </div>
-          <div className="flex items-center w-[22%] md:w-[15%]" onClick={() => requestSort('type')}>
+          <div className="flex items-center w-[22%] md:w-[16%]" onClick={() => requestSort('type')}>
             <span>Type</span>
             <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
           </div>
-          <div className="flex items-center w-[15%] md:w-[15%]" onClick={() => requestSort('lastModifiedDate')}>
+          <div className="flex items-center w-[15%] md:w-[16%]" onClick={() => requestSort('lastModifiedDate')}>
             <span className='hidden md:block '>Last Modified Date</span>
             <span className='block md:hidden'>Date</span>
             <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
@@ -464,15 +464,15 @@ const DocumentManager = () => {
                     src={getIconForFilename(document.name).src}
                     alt={`${document.name} icon`}
                   />
-                  <div className="flex items-center flex-grow text-[4vw] md:text-lg">
-                    <div className="w-[80%] md:w-[70%] ml-2 md:ml-5 font-bold">
+                  <div className="flex overflow-hidden items-center flex-grow text-[4vw] w-[40%] md:w-[70%] md:text-lg">
+                    <div className="overflow-hidden whitespace-nowrap text-ellipsis w-full ml-2 md:ml-5 font-bold">
                       {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
                     </div>
                   </div>
-                  <div className={`flex items-center justify-center md:ml-[-10px]`} style={{ width: '20%' }}>
+                  <div className="flex items-center justify-center md:ml-[-10px] w-[20%] md:w-[15%]">
                     <span className="md:mr-[5vw] text-[4vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
                   </div>
-                  <div className="mr-[1.5vw] md:mr-[4vw] flex items-center justify-center" style={{ width: '30%' }}>
+                  <div className="mr-[1.5vw] md:mr-[4vw] flex items-center justify-center w-[30%] md:w-[15%]">
                     <span className="text-[4vw] md:text-lg text-darkblue">{document.lastModifiedDate}28 July 2024</span>
                   </div>
                 </div>
