@@ -17,15 +17,13 @@ When(/^I have added a "(.+)-document"$/i, (e1) => {
             }]
         })
     }).as("retrieveDocuments")
-    cy.intercept("GET", "http://localhost:3001/rails/active_storage/blobs/redirect/**", {
-        statusCode: 200,
-        body: "Mock file content for popup",
-        headers: {
-            "content-type": "text/plain"
-        }
-    }).as("getFileContent")
-
-    cy.visit("/documents")
+    // cy.intercept("GET", "http://localhost:3001/rails/active_storage/blobs/redirect/**", {
+    //     statusCode: 200,
+    //     body: "Mock file content for popup",
+    //     headers: {
+    //         "content-type": "text/plain"
+    //     }
+    // }).as("getFileContent")
 })
 
 Then(/^I should see "(.+)-document"$/i, (e1) => {
