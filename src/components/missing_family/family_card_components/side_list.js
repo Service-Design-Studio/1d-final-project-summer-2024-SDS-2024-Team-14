@@ -4,12 +4,12 @@ import Image from "next/image"
 import { useState } from "react"
 export default function SideList(props) {
     return (
-        <div className="flex flex-col w-fit rounded-l-2xl min-h-full bg-white shadow-lg md:max-w-72">
-            <Button onClick={() => props.setAddNew(true)} className={`md:flex md:flex-row w-fit h-auto bg-darkblue md:mx-5 mx-1 max-h-14 text-white font-semibold text-lg rounded-xl my-8 md:py-3 items-center hover:bg-darkblue hover:opacity-85 ${props.addNew ? "pointer-events-none bg-disabled" : ""}`}>
-                <Image className="w-fit max-w-32 md:mr-3 my-auto" width="100" height="100" alt="add family member" src="/images/plus.svg" />
+        <div className="flex flex-col min-w-fit md:min-w-52 rounded-l-2xl min-h-full bg-white shadow-lg md:max-w-72">
+            <div onClick={() => props.setAddNew(true)} className={`md:flex md:flex-row w-fit md:w-[80%] p-2 h-auto bg-darkblue md:mx-5 mx-1 max-h-14 text-white font-semibold text-lg rounded-xl my-8 md:py-3 self-center items-center hover:bg-darkblue hover:opacity-85 ${props.addNew ? "pointer-events-none bg-disabled" : ""}`}>
+                <Image className="w-fit h-auto max-w-32 md:mr-3 my-auto" width="100" height="100" alt="add family member" src="/images/plus.svg" />
                 <span className="line-clamp-1 hidden w-0 md:inline md:w-fit">Add New</span>
-            </Button>
-            <div className="overflow-y-scroll ">
+            </div>
+            <div className="overflow-y-scroll">
                 {
                     props.data.map((data, idx) => {
                         return <div
@@ -21,8 +21,8 @@ export default function SideList(props) {
                                 props.setEdit(null);
                             }}
                         >
-                            <div className="flex flex-row">
-                                <div className="aspect-square md:w-[20%] w-[40%] self-center md:mr-5">
+                            <div className="flex flex-row w-full">
+                                <div className="aspect-square md:w-[20%] w-[50%] self-center md:mr-5">
                                     {data.src ?
                                         <Image
                                             key={`${idx}`}

@@ -24,7 +24,7 @@ export default function PotentialMatches(props) {
     }, [props.matches])
     
     return (
-        <div className="2xl:px-[2vw] mx-0 2xl:w-[75%] w-full overflow-hidden 2xl:mt-0 mt-10">
+        <div className="2xl:px-[2vw] mx-0 2xl:w-[75%] w-full overflow-hidden 2xl:mt-0">
             <div className="flex flex-col md:w-auto h-auto ">
                 <div className="">
                     <span className="text-darkblue text-2xl font-semibold">

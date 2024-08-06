@@ -67,8 +67,8 @@ export default function FamilyCard(props) {
                         <div className="h-20" />
                     </div>
                 </div> :
-                <div className="flex flex-col self-center my-auto px-5 text-darkblue font-semibold min-w-fit w-24 md:w-64 lg:w-96 lg:max-w-none lg:min-w-[16%] text-center md:min-h-[500px]">
-                    <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-full max-w[400px] my-10 opacity-75 mx-auto" alt="" />
+                <div className="flex flex-col self-center my-auto px-5 text-darkblue font-semibold min-w-fit w-24 lg:w-52 xl:w-96 text-center md:min-h-[500px]">
+                    <Image src="/images/graphic_magnifying_glass.svg" width={1} height={1} className="w-full max-w[400px] my-10 opacity-75" alt="" />
                     Select an available entry on the left to view
                 </div>}
         </div>
