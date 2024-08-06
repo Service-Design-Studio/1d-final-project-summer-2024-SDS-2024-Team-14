@@ -1,5 +1,5 @@
 import "../../../styles/globals.css"
-import { Button, Input } from "@mui/material"
+import { Dialog, DialogActions, DialogContentText, DialogTitle, Button, Input } from "@mui/material"
 import { useState, useEffect } from "react"
 import FormField from "./form_field"
 import Image from "next/image"
@@ -10,7 +10,8 @@ export default function EditForm(props) {
     const [data, setData] = useState({});
     const [photos, setPhotos] = useState();
     const [files, setFiles] = useState(null);
-
+    const [saveable, setSaveable] = useState(false);
+    const [open, setOpen] = useState(false);
     let onSaveChanges = async () => {
         try {
             await axiosInstance.post("/missing/update",
@@ -22,7 +23,7 @@ export default function EditForm(props) {
                     if (resp.status === 200 || resp.status === 201) {
                         localStorage.setItem('notificationMessage', 'You have successfully saved.');
                         localStorage.setItem('status', 'success');
-                        if (photos) {
+                        if (photos != null) {
                             try {
                                 let formData = new FormData();
                                 formData.append('id', id);
@@ -48,9 +49,18 @@ export default function EditForm(props) {
             setData({});
             setPhotos();
             setFiles();
+            props.setEdit();
             props.setFetch(true);
         }
     }
+
+    useEffect(() => {
+        if (data.name && data.age && data.gender && data.ethnicity && data.date_birth) {
+            setSaveable(true);
+        } else {
+            setSaveable(false);
+        }
+    }, [data])
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -124,12 +134,33 @@ export default function EditForm(props) {
                 </Button>
                 <Button
                     onClick={() => {
-                        props.setEdit();
-                        onSaveChanges();
+                        if (saveable) {
+                            onSaveChanges();
+                        } else {
+                            setOpen(true);
+                        }
                     }}
-                    className="bg-darkblue text-white w-fit hover:bg-darkblue hover:bg-opacity-75  text-center my-1 mx-2">
+                    className="save_changes bg-darkblue text-white w-fit hover:bg-darkblue hover:bg-opacity-75  text-center my-1 mx-2">
                     <Image width={1} height={1} className="h-0.8 w-auto mr-2 " src={"/images/save_icon.svg"} alt="Save Changes" /> Save Changes
                 </Button>
             </div>
+            {open && <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                fullWidth={true}
+            >
+                <div className='pop-up mx-4 flex flex-col text-start items-start'>
+                    <DialogTitle>Unfilled Details</DialogTitle>
+                    <DialogContentText>
+                        {data.age > 0 ? <span>{`Please fill in all details in the form before saving.`}</span> : <span>{`Please ensure age is valid in the form before saving.`}</span>}
+                    </DialogContentText>
+                </div>
+
+                <DialogActions className='flex flex-row'>
+                    <Button className="w-3/12" onClick={() => {
+                        setOpen(false);
+                    }}>Close</Button>
+                </DialogActions>
+            </Dialog>}
         </div>)
 }

@@ -5,7 +5,7 @@ import { useState } from "react"
 export default function SideList(props) {
     return (
         <div className="flex flex-col min-w-fit md:min-w-52 rounded-l-2xl min-h-full bg-white shadow-lg md:max-w-72">
-            <div onClick={() => props.setAddNew(true)} className={`md:flex md:flex-row w-fit md:w-[80%] p-2 h-auto bg-darkblue md:mx-5 mx-1 max-h-14 text-white font-semibold text-lg rounded-xl my-8 md:py-3 self-center items-center hover:bg-darkblue hover:opacity-85 ${props.addNew ? "pointer-events-none bg-disabled" : ""}`}>
+            <div onClick={() => props.setAddNew(true)} className={`add_new md:flex md:flex-row w-fit md:w-[80%] p-2 h-auto bg-darkblue md:mx-5 mx-1 max-h-14 text-white font-semibold text-lg rounded-xl my-8 md:py-3 self-center items-center hover:bg-darkblue hover:opacity-85 ${props.addNew ? "pointer-events-none bg-disabled" : ""}`}>
                 <Image className="w-fit h-auto max-w-32 md:mr-3 my-auto" width="100" height="100" alt="add family member" src="/images/plus.svg" />
                 <span className="line-clamp-1 hidden w-0 md:inline md:w-fit">Add New</span>
             </div>
@@ -14,7 +14,7 @@ export default function SideList(props) {
                     props.data.map((data, idx) => {
                         return <div
                             key={`${idx}`}
-                            className={` w-full min-h-fit flex flex-col text-darkblue font-semibold text-xl justify-center py-3 border-t border-lightgray ${props.selected == idx ? "pointer-events-none bg-darkblue text-white" : "hover:bg-darkblue hover:bg-opacity-65 hover:text-white"}`}
+                            className={`missing-person-entry w-full min-h-fit flex flex-col text-darkblue font-semibold text-xl justify-center py-3 border-t border-lightgray ${props.selected == idx ? "pointer-events-none bg-darkblue text-white" : "hover:bg-darkblue hover:bg-opacity-65 hover:text-white"}`}
                             onClick={() => {
                                 props.setSelected(idx);
                                 props.setAddNew(false);
@@ -22,7 +22,7 @@ export default function SideList(props) {
                             }}
                         >
                             <div className="flex flex-row w-full">
-                                <div className="aspect-square md:w-[20%] w-[50%] self-center md:mr-5">
+                                <div className="aspect-square md:w-[20%] w-[50%] max-w-14 self-center md:mr-5">
                                     {data.src ?
                                         <Image
                                             key={`${idx}`}
