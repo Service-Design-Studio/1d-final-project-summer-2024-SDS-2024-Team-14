@@ -55,9 +55,9 @@ const Tutorial = ({ title, steps, onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
       <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
-      <div className="relative flex flex-col bg-white rounded-xl w-[60vw] max-w-[70vw] h-[70vh] max-h-[70vh] mx-auto">
+      <div className="relative flex flex-col bg-white rounded-xl w-[60vw] max-w-[70vw] h-[80vh] max-h-[80vh] mx-auto">
         <div className="flex h-full">
-          <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl" style={{ backgroundColor: '#F0F4FF' }}>
+          <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF]">
             <ul className="space-y-4 w-full font-semibold text-2xl">
               {steps.map((step, index) => (
                 <li
@@ -83,7 +83,7 @@ const Tutorial = ({ title, steps, onClose }) => {
             <h1 className="block text-3xl mb-8 font-bold text-center text-darkblue">
               {steps[currentStep].title}
             </h1>
-            <div className="flex justify-center items-center h-[40vh] mb-8 relative">
+            <div className="flex justify-center items-center h-[45vh] mb-8 relative">
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
@@ -111,7 +111,7 @@ const Tutorial = ({ title, steps, onClose }) => {
                 {currentTexts[currentImageIndex]}
               </p>
             </div>
-            <div className="flex justify-between mt-4">
+            <div className="absolute bottom-0 left-0 right-0 bg-white py-2 px-4 flex justify-between items-center rounded-xl">
               {currentImageIndex > 0 && (
                 <button
                   onClick={handlePrevImage}

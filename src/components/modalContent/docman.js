@@ -1,17 +1,17 @@
 // src/components/modalContent/docman.js
 import React from 'react';
-import SelectingCategoriesImage from 'public/images/intro/lh44.png';
-import SearchBarImage from 'public/images/intro/lh44.png';
-import UploadingDocumentsImage1 from 'public/images/intro/lh44.png';
-import UploadingDocumentsImage2 from 'public/images/intro/lh44.png';
-import UploadingDocumentsImage3 from 'public/images/intro/lh44.png';
-import ScanningDocumentsImage1 from 'public/images/intro/lh44.png';
-import ScanningDocumentsImage2 from 'public/images/intro/lh44.png';
-import ScanningDocumentsImage3 from 'public/images/intro/lh44.png';
-import ScanningDocumentsImage4 from 'public/images/intro/lh44.png';
-import SortingImage from 'public/images/intro/lh44.png';
-import PreviewingImage1 from 'public/images/intro/lh44.png';
-import PreviewingImage2 from 'public/images/intro/lh44.png';
+import SelectingCategoriesImage from 'public/images/intro/modal/docman/1.png';
+import SearchBarImage from 'public/images/intro/modal/docman/2.png'; 
+import UploadingDocumentsImage1 from 'public/images/intro/modal/docman/3a.png';
+import UploadingDocumentsImage2 from 'public/images/intro/modal/docman/3b.png';
+import UploadingDocumentsImage3 from 'public/images/intro/modal/docman/3c.png';
+import ScanningDocumentsImage1 from 'public/images/intro/modal/docman/4a.png';
+import ScanningDocumentsImage2 from 'public/images/intro/modal/docman/4b.png';
+import ScanningDocumentsImage3 from 'public/images/intro/modal/docman/4c.png';
+import ScanningDocumentsImage4 from 'public/images/intro/modal/docman/4d.png';
+import SortingImage from 'public/images/intro/modal/docman/5.png';
+import PreviewingImage1 from 'public/images/intro/modal/docman/6a.png';
+import PreviewingImage2 from 'public/images/intro/modal/docman/6b.png';
 
 
 const docManContent = [

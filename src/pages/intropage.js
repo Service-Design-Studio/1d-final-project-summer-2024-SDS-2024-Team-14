@@ -31,6 +31,7 @@ const IntroPage = () => {
             </div>
             <div className="flex-grow flex items-center justify-center">
                 <div className="bg-white rounded-3xl p-[1rem] lg:p-[2rem] w-[90%] lg:w-[70%] h-40vh lg:h-[80vh] mx-auto mt-5 relative" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                    {/* i know should use md instead of lg but when i change the view to md stuff like ipad it looks damn weird so i used lg instead */}
                     <h1 className="block text-3xl lg:text-4xl mb-4 font-bold text-center text-darkblue">
                         {slides[currentSlide].title}
                     </h1>
