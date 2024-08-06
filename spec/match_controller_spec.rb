@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe MatchController, type: :controller do
     let(:user) { User.create!(
-        email: 'test2@gmail.com',
+        email: 'test4@gmail.com',
         password: 'test123',
         password_confirmation: 'test123',
         name: "testUser1",
