@@ -86,7 +86,7 @@ export default function Login({ session }) {
             (resp) => {
                 if (resp.status === 200 || resp.status === 201) {
                     localStorage.setItem('userID', resp.data.user_id)
-                    router.push('/');
+                    router.push('/intro');
                 }
             }).catch((error) => {
                 console.log(error)

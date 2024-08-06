@@ -60,7 +60,7 @@ export default function PotentialMatches(props) {
                     >Next
                         <Image src="/images/next_chevron.svg" className='w-4 sm:w-7 mx-2 px-0' width={1} height={1} alt="view next scanned documents" /></Button>
                 </div>
-                {/* Carousel for desktop view */}
+                {/* Intro for desktop view */}
                 <div className=" flex flex-row w-full md:my-10">
                     <Button
                         className='min-w-fit px-0 md:mx-5 mx-1 embla__button embla__button--prev md:block md:w-auto hidden w-0'

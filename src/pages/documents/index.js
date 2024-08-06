@@ -406,8 +406,7 @@ const DocumentManager = () => {
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
                   >
-                    <span className='hidden md:block md:text-[1vw]'>in</span>
-                    <span className='hidden md:block md:text-[1vw]'>&quot;{selectedCategory}&quot;</span>
+                    <span className='hidden md:block md:text-[1vw]'>in &quot;{selectedCategory}&quot;</span>
                     <div className='hidden md:block md:pl-2'>
                       <Image src={DropdownArrow} />
                     </div>

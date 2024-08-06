@@ -1,12 +1,14 @@
-import {useEffect, useState} from 'react';
+// src/pages/index.js
+import { useEffect, useState } from 'react';
 import Homepage from "../components/homepage/homepage.js";
 import "../styles/globals.css";
-import "../hooks/useAuth"
+import "../hooks/useAuth";
 import useAuth from "@/hooks/useAuth";
 import NaviBar from "../components/NaviBar";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ChatBot from "@/components/ChatBot";
+import homePageContent from '../components/modalContent/homepage'; // Import homePageContent
 import Loading from "@/components/loading";
 import axiosInstance from "@/utils/axiosInstance";
 
@@ -41,17 +43,17 @@ export default function Home({ session }) {
     }, [])
 
     return (
-    <main className="overflow-hidden flex flex-col align-middle min-h-screen transition-all-500
+    <div className="overflow-hidden flex flex-col md:h-screen min-h-screen transition-all-500
     bg-[url('/images/background/gebirah-bluebg.png')] bg-cover">
+        <NaviBar open={open} setOpen={setOpen}/>
         {!loading && data &&
             <>
-                <NaviBar open={open} setOpen={setOpen}/>
                 <Homepage setOpen={setOpen} setLoading={setLoading} setData={setData} data={data} userID={userID}/>
                 <ChatBot/>
             </>
         }
         {loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"}/>}
         {loading && data && <Loading text={"Loading..."} />}
-      </main>
+      </div>
     );
 }

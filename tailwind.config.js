@@ -92,6 +92,7 @@ module.exports = {
       'lightpurple':'#9B65B5',
       'darkpurple':'#7C4EA0',
       'darkpink':'#D649B7',
+      'faintblue': 'F0F4FF'
     },
     colors: {
       'white': '#FFFFFF',
@@ -126,6 +127,8 @@ module.exports = {
       'mutedyellow':'#EEBD2F',
       'mutedred':'#DA5071',
       'lightblue': '#D2EFFF',
+      'faintblue': 'F0F4FF',
+      'gray-300' : '#E0E0E0',
     },
     fontSize: {
       'xs': '0.1rem',
@@ -170,6 +173,13 @@ module.exports = {
           height: '15px', /* Adjust the height as needed */
           boxShadow: '0 -10px 20px rgba(0, 0, 0, 0.1)', /* Adjust the shadow properties as needed */
           pointerEvents: 'none', /* Ensures the pseudo-element does not interfere with other interactions */
+        },
+        '.hide-scrollbar': {
+          '-ms-overflow-style': 'none',  /* IE and Edge */
+          'scrollbar-width': 'none',  /* Firefox */
+        },
+        '.hide-scrollbar::-webkit-scrollbar': {
+          display: 'none',  /* Chrome, Safari, and Opera */
         },
       }, ['responsive']);
     }
