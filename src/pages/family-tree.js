@@ -22,14 +22,16 @@ export default function FamilyTree() {
     const [addNew, setAddNew] = useState(false);
     const [edit, setEdit] = useState(null);
     const [click, setClick] = useState(null);
+    const [matchRes, setMatchRes] = useState(null);
     const placeholder = [
-        {user:{
-        name: "testing",
-        age: "12",
-        gender: "Male",
-        src: ""
-        }
-        ,percentage: 80,
+        {
+            user: {
+                name: "testing",
+                age: "12",
+                gender: "Male",
+                src: ""
+            }
+            , percentage: 80,
         }, {
             user: {
                 name: "testing",
@@ -82,41 +84,43 @@ export default function FamilyTree() {
     };
     let getMatches = async () => {
         //TODO: fix get match/id in backend
-        // const loadMatches = await axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
-        //     setMatches(res.data);
-        // })
+        await axiosInstance.get(`/match/${selectedData["id"]}`).then(res => {
+            setMatches(res.data);
+        })
         // setMatches(placeholder)
-        if (matches && matches.length > 1 && loadMatches) {
-            setMatches((prev) => {
-                prev.sort((i1, i2) => {
-                    return i2["percentage"] - i1["percentage"]
-                })
-            })
-        } else {
-            setMatches([])
-        }
+        // if (matches && matches.length > 1 && loadMatches) {
+        //     setMatches((prev) => {
+        //         prev.sort((i1, i2) => {
+        //             return i2["percentage"] - i1["percentage"]
+        //         })
+        //     })
+        // } else {
+        //     setMatches([])
+        // }
     }
     useEffect(() => {
         // setMatches(placeholder)
         if (selectedData) {
             try {
-                // getMatches();
+                getMatches();
             } catch (error) {
                 setMatches([])
             } finally {
-                // if (matches != null && matches.length > 1) {
-                //     setMatches((prev) => {
-                //         prev.sort((i1, i2) => {
-                //             return i2["percentage"] - i1["percentage"]
-                //         })
-                //     })
-                // } else {
-                //     setMatches([])
-                // }
+                if (matches != null && matches.length > 1) {
+                    setMatches((prev) => {
+                        prev.sort((i1, i2) => {
+                            return i1["percentage"] - i2["percentage"]
+                        })
+                    })
+                } else {
+                    setMatches([])
+                }
+                console.log("matches: ",matches)
                 setFetch(false)
             }
         }
-    }, [fetch])
+    }, [fetch, selectedData])
+
     useEffect(() => {
         if (fetch) {
             getMissingPersons();
@@ -131,6 +135,19 @@ export default function FamilyTree() {
         }
     }, [selected, data])
 
+    let handleMatch = async () => {
+        if (selectedData && click) {
+            await axiosInstance.post('/match', {
+                "user_id": selectedData.id,
+                "missing": click
+            }).then(res => {
+                setClick(null);
+                if (res.status == 200 || res.status == 201) {
+                    setMatchRes("Match request sent.")
+                }
+            })
+        }
+    }
     useAuth();
     return (
         <div className="bg-white max-w-screen md:px-3 mx-auto min-h-screen bg-cover bg-[url('/images/background/gebirah-bluebg.png')] flex flex-col">
@@ -205,10 +222,30 @@ export default function FamilyTree() {
                         }}>Close</Button>
                         <Button className="w-3/12 bg-darkblue text-white hover:text-white hover:bg-darkblue" onClick={() => {
                             setOpen(false);
-                            setClick(null)
+                            handleMatch(click);
                         }}>Yes</Button>
                     </DialogActions>
                 </Dialog>
                 : null}
+            {matchRes && 
+                <Dialog
+                    open={matchRes != null}
+                    onClose={() => setMatchRes(null)}
+                    fullWidth={true}
+                >
+                    <div className='mx-4 flex flex-col text-start items-start'>
+                        <DialogTitle>Alert</DialogTitle>
+                        <DialogContentText>
+                            <span>{`${matchRes}`}</span>
+                        </DialogContentText>
+                    </div>
+
+                    <DialogActions className='flex flex-row'>
+                        <Button className="w-3/12" onClick={() => {
+                            setMatchRes(null);
+                        }}>Close</Button>
+                    </DialogActions>
+                </Dialog>
+            }
         </div>)
 }
