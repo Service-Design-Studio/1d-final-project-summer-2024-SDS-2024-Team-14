@@ -183,7 +183,7 @@ const Tutorial = ({ title, steps, onClose }) => {
                   onClick={handleNextImage}
                   className="next bg-transparent border-none cursor-pointer text-[1rem] text-darkblue flex items-center ml-auto"
                 >
-                  Next <span className="ml-1 text-lg">&rarr;</span>
+                  Next <span className="next ml-1 text-lg">&rarr;</span>
                 </button>
               )}
             </div>

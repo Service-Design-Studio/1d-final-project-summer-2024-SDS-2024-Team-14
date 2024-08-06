@@ -1,3 +1,4 @@
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 Then('I click on the next button till the last slide', () => {
     const nextButtonSelector = '.next'; 
