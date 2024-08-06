@@ -44,6 +44,7 @@ export default function FormField(props) {
             {props.title === "Age" &&
                 <span>
                     <Input
+                        id="age"
                         value={age}
                         placeholder={props.placeholder}
                         inputProps={props.title}
@@ -59,6 +60,7 @@ export default function FormField(props) {
             {props.title === "Date Of Birth" &&
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
+                        className="birthdate"
                         label={props.title}
                         disableFuture={true}
                         placeholder={props.placeholder}
@@ -77,6 +79,7 @@ export default function FormField(props) {
             {props.title === "Gender" &&
                 <ButtonGroup>
                     <Button
+                        className="male"
                         disableElevation
                         variant={gender === "Male" ? "contained" : "outlined"}
                         onClick={() => {
@@ -91,6 +94,7 @@ export default function FormField(props) {
                         Male
                     </Button>
                     <Button
+                        className="female"
                         disableElevation
                         variant={gender === "Female" ? "contained" : "outlined"}
                         onClick={() => {
@@ -108,6 +112,7 @@ export default function FormField(props) {
             }
             {props.title !== "Date Of Birth" && props.title !== "Age" && props.title !== "Gender" &&
                 <Input
+                id={props.title === "Name" ? "name" : "ethnicity"}
                     placeholder={props.placeholder}
                     value={props.title === "Name" ? name : ethnicity}
                     inputProps={props.title}

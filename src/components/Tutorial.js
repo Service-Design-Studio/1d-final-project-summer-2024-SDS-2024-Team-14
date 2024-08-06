@@ -1,5 +1,5 @@
 // src/components/Tutorial.js
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import CloseIcon from "../../public/images/tutorial/blueclose.svg"; // Import your close icon
@@ -9,6 +9,7 @@ const Tutorial = ({ title, steps, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const nextImageRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,19 +24,14 @@ const Tutorial = ({ title, steps, onClose }) => {
     };
   }, []);
 
-  const handlePrevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-      setCurrentImageIndex(0);
+  useEffect(() => {
+    // Preload the next image
+    if (currentImageIndex < steps[currentStep].images.length - 1) {
+      const nextImage = new window.Image();
+      nextImage.src = steps[currentStep].images[currentImageIndex + 1];
+      nextImageRef.current = nextImage;
     }
-  };
-
-  const handleNextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-      setCurrentImageIndex(0);
-    }
-  };
+  }, [currentImageIndex, currentStep, steps]);
 
   const handlePrevImage = () => {
     if (currentImageIndex > 0) {
@@ -69,11 +65,11 @@ const Tutorial = ({ title, steps, onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
       <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
-      <div className="relative flex flex-col bg-white rounded-xl w-[95vw] lg:w-[70vw] h-[85vh] lg:h-[80vh] max-h-[85vh] lg:max-h-[80vh]">
+      <div className="relative flex flex-col bg-white rounded-xl w-[95vw] lg:w-[70vw] h-[85vh] lg:h-[80vh] max-h-[85vh] lg:max-h-[80vh] overflow-hidden">
         <div className="flex h-full">
           {isLargeScreen ? (
-            <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF]">
-              <ul className="space-y-4 w-full font-semibold text-2xl">
+            <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF] overflow-auto">
+              <ul className="space-y-4 w-full font-semibold text-lg">
                 {steps.map((step, index) => (
                   <li
                     key={index}
@@ -92,13 +88,16 @@ const Tutorial = ({ title, steps, onClose }) => {
               </ul>
             </div>
           ) : null}
-          <div className="w-full lg:w-3/4 p-4 lg:p-8 flex flex-col justify-between relative">
+          <div className="w-full lg:w-3/4 p-2 lg:p-4 flex flex-col justify-between relative">
             <button onClick={handleClose} className="absolute top-0 right-0 mt-4 mr-4">
               <Image src={CloseIcon} alt="Close" className="w-10 h-10" />
             </button>
             {!isLargeScreen && (
               <>
-                <div className="relative mt-12 mb-4 flex items-center">
+                <h1 className="block md:text-3xl text-2xl mt-14 mb-2 text-center font-bold text-darkblue">
+                  {steps[currentStep].title}
+                </h1>
+                <div className="relative mb-4 flex items-center">
                   <button
                     onClick={() => {
                       const container = document.getElementById('scroll-container');
@@ -108,7 +107,7 @@ const Tutorial = ({ title, steps, onClose }) => {
                   >
                     &lt;
                   </button>
-                  <div id="scroll-container" className="overflow-x-auto mx-4 flex items-center w-full">
+                  <div id="scroll-container" className="overflow-x-auto hide-scrollbar mx-4 flex items-center w-full">
                     <div className="flex flex-nowrap">
                       {steps.map((step, index) => (
                         <button
@@ -134,42 +133,39 @@ const Tutorial = ({ title, steps, onClose }) => {
                     &gt;
                   </button>
                 </div>
-                <h1 className="block text-3xl mb-2 text-center font-bold text-darkblue">
-                  {steps[currentStep].title}
-                </h1>
               </>
             )}
             {isLargeScreen && (
-              <h1 className="block text-3xl lg:mb-8 font-bold text-center text-darkblue">
+              <h1 className="block text-3xl lg:mb-4 font-bold text-center text-darkblue">
                 {steps[currentStep].title}
               </h1>
             )}
-            <div className="flex justify-center items-center h-[45vh] lg:mb-8 relative">
+            <div className="flex justify-center items-center h-[65vw] md:h-[45vh] lg:mb-8 relative">
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
-                className="max-h-[45vh] w-auto rounded-lg"
+                className="lg:h-[22vw] w-auto rounded-lg border-2 border-gray"
                 width={800}
                 height={600}
               />
             </div>
-            <div className="flex justify-center items-center mb-4 lg:mt-4 lg:mb-8">
-              {currentImages.length > 1 ? (
-                currentImages.map((_, index) => (
+            <div className="flex justify-center items-center mb-2 mt-4 lg:mb-4">
+              {/*{currentImages.length > 1 ? (*/}
+              {currentImages.map((_, index) => (
                   <span
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`h-2 w-2 rounded-full mx-1 cursor-pointer ${index === currentImageIndex ? 'bg-darkblue' : 'bg-gray-300'}`}
                     style={{ backgroundColor: index !== currentImageIndex ? '#E0E0E0' : '' }}
                   />
-                ))
-              ) : (
-                <span className="h-2 w-2 mx-1" style={{ visibility: 'hidden' }} />
-              )}
+                ))}
+              {/*// ) : (*/}
+              {/*//   <span className="h-2 w-2 mx-1" style={{ visibility: 'hidden' }} />*/}
+              {/*// )}*/}
             </div>
             <div className="flex-grow flex items-center justify-center">
-              <div className="text-darkblue text-xl mb-12 lg:px-20 text-center leading-tight max-h-[13vh] overflow-auto">
-                <p className="min-h-[13vh]">{currentTexts[currentImageIndex]}</p>
+              <div className="text-darkblue text-xl lg:px-14 text-center leading-tight h-[35vw] md:max-h-[13vh] overflow-auto">
+                <p className="md:min-h-[13vh]">{currentTexts[currentImageIndex]}</p>
               </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-white py-2 px-4 flex justify-between items-center rounded-xl">

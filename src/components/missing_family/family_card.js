@@ -22,7 +22,7 @@ export default function FamilyCard(props) {
     }, [deletePerson])
 
     return (
-        <div className="relative h-full flex flex-col rounded-r-2xl shadow-lg bg-white min-h-fit w-full min-w-fit xl:min-w-[20vw] ">
+        <div className="relative h-full flex flex-col rounded-r-2xl shadow-lg bg-white min-h-fit w-full min-w-fit xl:min-w-[20vw] missing-person-card">
             {props.selectedData && props.selected >= 0 ?
                 <div className="flex flex-col w-full">
                     <div className="flex-1 relative w-full">
@@ -48,7 +48,7 @@ export default function FamilyCard(props) {
                     />
                     <div className="w-fit flex flex-row self-end px-10 text-center h-fit p-0 justify-center items-center lg:mt-20">
                         <Button
-                            className="bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-fit w-fit items-center"
+                            className="edit bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-fit w-fit items-center"
                             onClick={
                                 () => props.setEdit(props.selectedData.id)
                             }
@@ -57,7 +57,7 @@ export default function FamilyCard(props) {
                             Edit
                         </Button>
                         <Button
-                            className="hover:underline-offset-4 hover:underline text-darkblue h-full"
+                            className="delete hover:underline-offset-4 hover:underline text-darkblue h-full"
                             onClick={() => {
                                 props.setAddNew(false);
                                 setDeletePerson(props.selectedData.id);

@@ -150,7 +150,7 @@ export default function NaviBar({ open, setOpen }) {
                     // ['Resources', '/resources'],
                     ['Family', '/family-tree'],
                 ].map(([title, url]) => (
-                    <Link href={url} className={`py-4 font-semibold hover:text-darkblue hover:underline 
+                    <Link href={url} key={title} className={`py-4 font-semibold hover:text-darkblue hover:underline 
                     ${currentPath === url ? 'text-darkblue underline' : 'text-black'}`}>
                         {title}
                     </Link>
