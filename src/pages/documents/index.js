@@ -16,6 +16,7 @@ import 'react-notifications-component/dist/theme.css';
 import DropdownArrow from "../../../public/images/icons/dropdown.svg"
 import ScannerIcon from "../../../public/images/icons/scanner.svg"
 import UploadIcon from "../../../public/images/icons/upload_icon.svg"
+import Loading from "@/components/loading";
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
@@ -27,18 +28,16 @@ const DocumentManager = () => {
   const [pendingCount, setPendingCount] = useState(0);
   const [rejectedCount, setRejectedCount] = useState(0);
   const [allCount, setAllCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [uploadCategory, setUploadCategory] = useState('health');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [data, setData] = useState(null);
-  const itemsPerPage = 10;
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [activeLink, setActiveLink] = useState(null);
   const [showInput, setShowInput] = useState(false)
   const [backgroundVisible, setBackgroundVisible] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleClick = (link) => {
     setActiveLink(link);
@@ -65,46 +64,10 @@ const DocumentManager = () => {
     if (selectedCategory) {
       fetchDocuments();
     }
-      const message = localStorage.getItem('notificationMessage');
-      const status = localStorage.getItem('status');
-      if (message) {
-          if (status==="success") {
-              Store.addNotification({
-                  title: "Success",
-                  message: message,
-                  type: "success",
-                  insert: "bottom",
-                  container: "bottom-right",
-                  animationIn: ["animate__animated", "animate__fadeIn"],
-                  animationOut: ["animate__animated", "animate__fadeOut"],
-                  dismiss: {
-                      duration: 5000,
-                      onScreen: true
-                  }
-              });
-          }
-          else {
-              Store.addNotification({
-                  title: "Error",
-                  message: message,
-                  type: "danger",
-                  insert: "bottom",
-                  container: "bottom-right",
-                  animationIn: ["animate__animated", "animate__fadeIn"],
-                  animationOut: ["animate__animated", "animate__fadeOut"],
-                  dismiss: {
-                      duration: 5000,
-                      onScreen: true
-                  }
-              });
-          }
-      localStorage.removeItem('notificationMessage'); // Clear the message after displaying
-      localStorage.removeItem('status'); // Clear the message after displaying
-    }
   }, []);
 
   const fetchDocuments = async () => {
-
+    setLoading(true);
     userID = localStorage.getItem("userID");
     try {
       await axiosInstance.post(`/document/retrieve`, {id: userID}).then((resp) => {
@@ -112,7 +75,48 @@ const DocumentManager = () => {
     })
     } catch (error) {
       console.error(error.message);
-    };
+    }
+    finally {
+        setTimeout(() => {
+          setLoading(false);
+          const message = localStorage.getItem('notificationMessage');
+          const status = localStorage.getItem('status');
+          if (message) {
+            if (status ==="success") {
+              Store.addNotification({
+                title: "Success",
+                message: message,
+                type: "success",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+              });
+            }
+            else {
+              Store.addNotification({
+                title: "Error",
+                message: message,
+                type: "danger",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+              });
+            }
+            localStorage.removeItem('notificationMessage'); // Clear the message after displaying
+            localStorage.removeItem('status'); // Clear the message after displaying
+          }
+        }, 1500); // 1.5 seconds delay
+    }
   }
   useEffect(() => {
     if (data != null) {
@@ -133,15 +137,13 @@ const DocumentManager = () => {
         setDocuments(filteredDocuments);
         setFilteredDocuments(filteredDocuments);
 
-        setTotalPages(Math.ceil(filteredDocuments.length / itemsPerPage));
       }
 
-  }, [selectedCategory, statusFilter, currentPage, data]);
+  }, [selectedCategory, statusFilter, data]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setStatusFilter('All');
-    setCurrentPage(1);
     setUploadCategory(category.toLowerCase());
     setDropdownOpen(false);
   };
@@ -149,7 +151,6 @@ const DocumentManager = () => {
 
   const handleStatusFilterClick = (status) => {
     setStatusFilter(status);
-    setCurrentPage(1);
   };
 
   const handleDocumentClick = (document) => {
@@ -304,6 +305,8 @@ const DocumentManager = () => {
     <>
     <ReactNotifications />
     <div className="overflow-hidden min-h-screen flex flex-col bg-cover bg-[url('/images/background/gebirah-bluebg.png')]">
+      {!loading && data &&
+      <>
       <NaviBar open={open} setOpen={ setOpen} />
           {/* category button row */}
       <div className="mx-3 md:mx-10 md:mt-10 ">
@@ -403,86 +406,85 @@ const DocumentManager = () => {
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
                   >
-                    <span className='hidden md:block md:text-[1vw]'>in "</span>
-                    <span className='hidden md:block md:text-[1vw]'>{selectedCategory}"</span>
+                    <span className='hidden md:block md:text-[1vw]'>in</span>
+                    <span className='hidden md:block md:text-[1vw]'>&quot;{selectedCategory}&quot;</span>
                     <div className='hidden md:block md:pl-2'>
                       <Image src={DropdownArrow} />
                     </div>
                   </button>
-                </div>
-
-                {dropdownOpen && (
-                  <div
-                    className="origin-top-right absolute bottom-full right-2 md:right-0 md:mb-2 mt-2 w-56 rounded-md shadow-2xl bg-white"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                  >
-                    <div className="py-1" role="none">
-                      {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
-                        <a
-                          key={category}
-                          href="#"
-                          className="block px-4 py-2 text-[4vw] md:text-[0.9vw] hover:bg-lightblue"
-                          role="menuitem"
-                          onClick={() => handleCategoryClick(category)}
-                        >
-                          {category}
-                      </a>
-                      ))}
-                    </div>
+            </div>
+              {dropdownOpen && (
+                <div
+                  className="origin-top-right absolute bottom-full right-2 md:right-0 md:mb-2 mt-2 w-56 rounded-md shadow-2xl bg-white"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                >
+                  <div className="py-1" role="none">
+                    {['Health', 'Career', 'Education', 'Family', 'Finance', 'Property'].map((category) => (
+                      <a
+                        key={category}
+                        href="#"
+                        className="block px-4 py-2 text-[4vw] md:text-[0.9vw] hover:bg-lightblue"
+                        role="menuitem"
+                        onClick={() => handleCategoryClick(category)}
+                      >
+                        {category}
+                    </a>
+                    ))}
                   </div>
+                </div>
+                  )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* DOCUMENT CONTAINER for Web */}
+            <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
+              <div className="flex font-bold py-3 text-[3.5vw] md:text-[1.2vw] text-darkblue">
+                <div className="flex items-center"></div>
+                <div className="flex items-center pl-[12vw] md:pl-[6.5vw] w-[50%] md:w-[72vw]" onClick={() => requestSort('name')}>
+                  <span>Name</span>
+                  <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
+                </div>
+                <div className="flex items-center w-[22%] md:w-[14%]" onClick={() => requestSort('type')}>
+                  <span>Type</span>
+                  <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
+                </div>
+                <div className="flex items-center w-[15%] md:w-[17%]" onClick={() => requestSort('lastModifiedDate')}>
+                  <span className='hidden md:block'>Last Modified Date</span>
+                  <span className='block md:hidden'>Date</span>
+                  <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
+                </div>
+              </div>
+              <div className="">
+                {sortedDocuments.length > 0 ? (
+                  sortedDocuments.map((document) => {
+                    return (
+                      <div className={`flex justify-between h-[15vw] md:h-20 border-t border-lightgray ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
+                        <Image className="md:w-[3vw] w-[8vw] ml-2 md:ml-8"
+                          src={getIconForFilename(document.name).src}
+                          alt={`${document.name} icon`}
+                        />
+                        <div className="flex overflow-hidden items-center flex-grow text-[4vw] w-[40%] md:w-[70%] md:text-lg">
+                          <div className="overflow-hidden whitespace-nowrap text-ellipsis w-full ml-2 md:ml-5 font-bold">
+                            {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-center md:ml-[-10px] w-[20%] md:w-[15%]">
+                          <span className="md:mr-[5vw] text-[4vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
+                        </div>
+                        <div className="mr-[1.5vw] md:mr-[4vw] flex items-center justify-center w-[30%] md:w-[15%]">
+                          <span className="text-[3.5vw] md:text-lg text-darkblue">{document.lastModifiedDate}</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-md md:text-lg text-center w-full py-5 text-lightgray">No documents available</div>
                 )}
               </div>
             </div>
-          </div>
-        </div>
-      {/* DOCUMENT CONTAINER for Web */}
-      <div className="overflow-hidden bg-white rounded-xl shadow-md mx-3 md:mb-10 md:mx-10">
-        <div className="flex font-bold py-3 text-[3.5vw] md:text-[1.2vw] text-darkblue">
-          <div className="flex items-center"></div>
-          <div className="flex items-center pl-[12vw] md:pl-[6.7vw] w-[50%] md:w-[66vw]" onClick={() => requestSort('name')}>
-            <span>Name</span>
-            <FontAwesomeIcon icon={getArrowIcon('name')} className="ml-2" />
-          </div>
-          <div className="flex items-center w-[22%] md:w-[16%]" onClick={() => requestSort('type')}>
-            <span>Type</span>
-            <FontAwesomeIcon icon={getArrowIcon('type')} className="ml-2" />
-          </div>
-          <div className="flex items-center w-[15%] md:w-[16%]" onClick={() => requestSort('lastModifiedDate')}>
-            <span className='hidden md:block '>Last Modified Date</span>
-            <span className='block md:hidden'>Date</span>
-            <FontAwesomeIcon icon={getArrowIcon('lastModifiedDate')} className="ml-2" />
-          </div>
-        </div>
-        <div className="">
-          {sortedDocuments.length > 0 ? (
-            sortedDocuments.map((document) => {
-              return (
-                <div className={`flex justify-between h-[15vw] md:h-20 border-t border-lightgray ${selectedCategory + '-document'}`} key={document.id} onClick={() => handleDocumentClick(document)}>
-                  <Image className="md:w-[3vw] w-[8vw] ml-2 md:ml-8"
-                    src={getIconForFilename(document.name).src}
-                    alt={`${document.name} icon`}
-                  />
-                  <div className="flex overflow-hidden items-center flex-grow text-[4vw] w-[40%] md:w-[70%] md:text-lg">
-                    <div className="overflow-hidden whitespace-nowrap text-ellipsis w-full ml-2 md:ml-5 font-bold">
-                      {document.name.replace(/\.[^/.]+$/, "")} {/* Remove file extension */}
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center md:ml-[-10px] w-[20%] md:w-[15%]">
-                    <span className="md:mr-[5vw] text-[4vw] md:text-lg text-darkblue">{document.name.split('.').pop()}</span>
-                  </div>
-                  <div className="mr-[1.5vw] md:mr-[4vw] flex items-center justify-center w-[30%] md:w-[15%]">
-                    <span className="text-[4vw] md:text-lg text-darkblue">{document.lastModifiedDate}28 July 2024</span>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="text-md md:text-lg text-center w-full py-5 text-lightgray">No documents available</div>
-          )}
-        </div>
-      </div>
       {selectedDocument && (
         <>
           <div className="fixed top-0 left-0 w-full h-full
@@ -512,10 +514,15 @@ const DocumentManager = () => {
               <hr className="border-t-1 border-[#B0B0B0]/50 w-full" />
               </div>
             </div>
+          <ChatBot/>
         </>
-      )}
+        )}
+          <ChatBot/>
+        </>
+      }
+      {loading && !data && <Loading text={"500: Internal Error\nUnable to fetch user data"}/>}
+      {loading && data && <Loading text={"Loading..."} />}
     </div>
-    <div><ChatBot/></div>
       </>
   );
 };
