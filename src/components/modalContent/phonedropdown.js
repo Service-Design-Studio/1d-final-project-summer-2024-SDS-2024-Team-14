@@ -15,12 +15,12 @@ const CustomDropdown = ({ options, selectedValue, onChange }) => {
       <div>
         <button
           type="button"
-          className="inline-flex justify-between items-center w-full p-3 mb-4 mt-12 border border-gray-300 rounded-lg text-darkblue font-bold text-2xl shadow-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none transition"
+          className="inline-flex justify-between items-center w-full p-3 mb-4 mt-12 border border-gray-300 rounded-lg bg-darkblue text-white font-bold text-2xl shadow-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none transition"
           onClick={() => setIsOpen(!isOpen)}
         >
           {options[selectedValue]}
           <svg
-            className={`w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100 transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+            className={`w-5 h-5 ml-2 -mr-1 text-white transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -41,7 +41,7 @@ const CustomDropdown = ({ options, selectedValue, onChange }) => {
             {options.map((option, index) => (
               <button
                 key={index}
-                className="w-full text-left px-4 py-2 text-2xl text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className={`w-full text-left px-4 py-2 text-2xl ${index === selectedValue ? 'bg-darkblue text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'}`}
                 role="menuitem"
                 onClick={() => handleSelect(index)}
               >
