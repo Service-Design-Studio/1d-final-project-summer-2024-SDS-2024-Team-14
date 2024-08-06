@@ -194,7 +194,7 @@ export default function Info() {
         <div className="flex flex-row justify-between xl:flex xl:flex-col lg:mr-[2vw]">
           <div className="flex flex-col w-full">
             {data && (
-              <div className="md:w-auto md:p-[2vw] lg:p-5 id-card transition duration-500">
+              <div className="w-[90%] md:w-auto md:p-[2vw] mx-auto lg:p-5 id-card transition duration-500">
                 <div className="flex justify-center">
                   <ProfilePic />
                   <div className="flex flex-col pl-[2vw] text-left flex-grow">
@@ -203,7 +203,7 @@ export default function Info() {
                         {data.name}
                       </div>
                       <div className="text-[4vw] md:text-2xl xl:text-xl text-darkblue">
-                        000-000-00000{data.id}
+                        000-000-00{data.id}
                       </div>
                     </div>
                     <PersonalInfo
@@ -246,9 +246,9 @@ export default function Info() {
               const isLast = index === categories.length - 1;
               return (
                 <div
-                  className={`flex-grow font-bold py-1 rounded-t-lg md:text-[3vw] xl:text-[1.5vw] text-[#939393] shadow-xl ${
+                  className={`flex-grow font-bold py-1 rounded-t-lg md:text-[3vw] xl:text-[1.5vw] text-[#939393] md:shadow-xl ${
                     isActive
-                      ? "text-white shadow-2xl px-5 z-20 relative"
+                      ? "text-white shadow-2xl md:px-5 px-2 z-20 relative"
                       : "z-10 px-2 md:px-5 text-[#939393] shadow-md md:shadow-md"
                   }`}
                   style={{ marginRight: isLast ? "0" : "2px", top: isActive ? "-2px" : "0" }}
@@ -261,7 +261,7 @@ export default function Info() {
                       <span className="flex">{category.name}</span>
                     ) : (
                       <div className="flex w-full justify-center">
-                        <span className="w-6 h-6 flex items-center justify-center">
+                        <span className="w-5 h-5 flex items-center justify-center">
                           <Image src={categoryIcons[category.name]} alt={category.name} />
                         </span>
                       </div>
@@ -279,7 +279,7 @@ export default function Info() {
                 {console.log(docuData)}
                 {docuData.length > 0 ? (
                     docuData.map((document) => (
-                        <div key={document.id} className="overflow-auto max-h-[500px] text-left bg-white w-full px-[2vw] pb-[4vw] md:pb-[2vw] pt-[1vw] rounded-lg flex flex-row relative">
+                        <div key={document.id} className="overflow-auto max-h-[500px] text-left bg-white w-full md:px-6 px-4 pb-[4vw] md:pb-[2vw] md:pt-4 pt-2 rounded-lg flex flex-row relative">
                         <div>
                             <div className="capitalize text-[5vw] md:text-[1.5vw] font-bold text-darkblue">{getFileNameWithoutExtension(document.name)}</div>
                             {document.important ? (
@@ -295,10 +295,12 @@ export default function Info() {
                         </div>
                     ))
                 ) : (
-                <p>No documents available for the selected category.</p>
+                    <div className="overflow-auto max-h-[500px] bg-white w-full justify-center md:px-6 px-4 pb-[4vw] md:pb-[2vw] md:pt-4 pt-2 rounded-lg">
+                      <p>No documents available for the selected category.</p>
+                    </div>
                 )}
             </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>

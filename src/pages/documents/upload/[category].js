@@ -33,10 +33,9 @@ export default function Upload(props) {
 
   return (
     <>
-      {!loading && (
+      <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover md:px-[12vw] px-[2vw]">
+        {!loading &&
         <>
-        <ReactNotifications />
-        <div className="min-h-screen flex flex-col bg-[url('../../public/images/background/gebirah-bluebg.png')] bg-cover md:px-[12vw] px-[2vw]">
           <div className="md:flex md:items-center pt-4 ml-4">
             <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
             <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
@@ -61,12 +60,11 @@ export default function Upload(props) {
               </form>
             </div>
           </div>
-        </div>
-        <ChatBot/>
-        </>
-      )
-    }
-    {loading && <Loading text={"Loading..."} />}
+          <ChatBot/>
+          </>
+        }
+        {loading && <Loading text={"Loading..."} />}
+      </div>
     </>
   );
 }
