@@ -144,8 +144,7 @@ const Tutorial = ({ title, steps, onClose }) => {
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
-                layout="intrinsic"
-                className="w-auto rounded-lg"
+                className="lg:h-[22vw] w-auto rounded-lg border-2 border-gray"
                 width={800}
                 height={600}
               />

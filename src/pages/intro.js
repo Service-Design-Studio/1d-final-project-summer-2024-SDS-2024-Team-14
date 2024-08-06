@@ -1,11 +1,11 @@
-// src/pages/intropage.js
+// src/pages/intro.js
 import React, { useState, useEffect } from 'react';
-import slides from './intropage/slides';
+import slides from '../components/intropage/slides';
 import "../styles/globals.css";
 import EnableId from "../../public/images/enable_id_logo.svg";
 import Image from 'next/image';
 
-const IntroPage = () => {
+export default function Intro({ session }) {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLargeScreen, setIsLargeScreen] = useState(false);
 
@@ -21,6 +21,7 @@ const IntroPage = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+    const src = isLargeScreen ? slides[currentSlide].imageLg : slides[currentSlide].imageSm;
 
     return (
         <div className="overflow-hidden flex flex-col min-h-screen bg-white transition-all-500 bg-local
@@ -29,16 +30,16 @@ const IntroPage = () => {
                 <Image src={EnableId} alt="Logo" className="w-8 h-8 mr-2 inline-block" />
                 <span className="font-bold md:text-2xl text-[4.5vw] text-[#405DB5]">Enable ID</span>
             </div>
-            <div className="flex-grow flex items-center justify-center">
+            <div className="flex-grow flex items-center justify-center overflow-hidden">
                 <div className="bg-white rounded-3xl p-[1rem] lg:p-[2rem] w-[90%] lg:w-[70%] h-40vh lg:h-[80vh] mx-auto mt-5 relative" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     {/* i know should use md instead of lg but when i change the view to md stuff like ipad it looks damn weird so i used lg instead */}
                     <h1 className="block text-3xl lg:text-4xl mb-4 font-bold text-center text-darkblue">
                         {slides[currentSlide].title}
                     </h1>
                     <Image
-                        src={isLargeScreen ? slides[currentSlide].imageLg : slides[currentSlide].imageSm}
+                        src={src}
                         alt="Slide Image"
-                        className="h-[50vh] lg:h-[26vw] w-auto mx-auto rounded-xl" 
+                        className="h-[50vh] lg:h-[22vw] w-auto mx-auto rounded-xl border-2 border-gray"
                         width={800}
                         height={600}
                     />
@@ -86,5 +87,3 @@ const IntroPage = () => {
         </div>
     );
 };
-
-export default IntroPage;

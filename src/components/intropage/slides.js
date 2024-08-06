@@ -1,4 +1,3 @@
-// src/pages/intropage/slides.js
 const slides = [
     {
         imageLg: '/images/intro/slide1.jpg',
