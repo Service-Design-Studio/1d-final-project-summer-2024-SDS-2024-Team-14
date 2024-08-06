@@ -40,7 +40,10 @@ class DocumentController < ApplicationController
       NotificationService.create_document_upload_fail_notification(user_id, document, category)
       render json: { message: "File transfer has failed. Please contact the administrator" }, status: :unprocessable_entity
     end
-  end
+    rescue StandardError => e
+      render json: { message: "Unsupported file type" }, status: :unprocessable_entity
+    end
+
 
   # Retrieve files given user id (POST) - /document/retrieve
   def retrieve

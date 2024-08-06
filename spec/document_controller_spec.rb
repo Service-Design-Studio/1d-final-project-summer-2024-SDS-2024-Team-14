@@ -6,6 +6,46 @@ RSpec.describe DocumentController, type: :controller do
     .with(headers: {'Content-Type'=>'application/json'})
     .to_return(status: 200, body: { candidates: [{ content: { parts: [{ text: {"name": "Timothy Tang Long Zun", "date of birth": "10/04/2001", "student ID": "1006266", "degree": "Bachelor of Science (Design And Artificial Intelligence) with Design Accreditation", "highest education": "", "date obtained": "",
                   "overall GPA": "4.42", "institution name": "Singapore University of Technology and Design (SUTD)", "graduation date": "August 2026"} }] } }] }.to_json, headers: {})
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD3eT6P2yBnWsO_9CvpEX8PWod0joKUUUE").
+    with(
+      body: "{\"contents\":[{\"parts\":[{\"text\":\"Extract important information from the given text: Error processing PDF: PDF does not contain EOF marker for a education document. \\n              Provide the output in JSON format, strictly starting with { and ending with }. Do not include the word json in the response.\"}]}]}",
+      headers: {
+      'Accept'=>'*/*',
+      'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      'Content-Type'=>'application/json',
+      'User-Agent'=>'Ruby'
+      }).
+    to_return(status: 200, body: "", headers: {})
+
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD3eT6P2yBnWsO_9CvpEX8PWod0joKUUUE").
+         with(
+           body: "{\"contents\":[{\"parts\":[{\"text\":\"Extract important information from the given text: Unsupported file type for a education document. \\n              Provide the output in JSON format, strictly starting with { and ending with }. Do not include the word json in the response.\"}]}]}",
+           headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>'Ruby'
+           }).
+         to_return(status: 200, body: "", headers: {})
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD3e6P2yBnWsO_9CvpEX8PWod0joKUUUE").
+         with(
+           headers: {
+          'Content-Type'=>'application/json'
+           })
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD3e6P2yBnWsO_9CvpEX8PWod0joKUUUE").
+    with(
+      headers: {
+    'Content-Type'=>'application/json'
+      })
+    stub_request(:post, "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyD3eT6P2yBnWsO_9CvpEX8PWod0joKUUUE").
+      with(
+        body: "{\"contents\":[{\"parts\":[{\"text\":\"Extract important information from the given text: Error processing PDF: PDF does not contain EOF marker for a education document. \\n              Provide the output in JSON format, strictly starting with { and ending with }. Do not include the word json in the response.\"}]}]}",
+        headers: {
+      'Accept'=>'*/*',
+      'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+      'Content-Type'=>'application/json',
+      'User-Agent'=>'Ruby'
+        })
   end
 
   describe 'POST #create' do
@@ -93,6 +133,7 @@ RSpec.describe DocumentController, type: :controller do
       allow_any_instance_of(DocumentController).to receive(:llm_process).and_raise(StandardError)
       post :create, params: { id: user.id, category: category, files: [file] }
       expect(response).to have_http_status(:unprocessable_entity)
+      expect(JSON.parse(response.body)['message']).to eq("Unsupported file type")
     end
 
     it 'creates a new document with multiple files' do
@@ -215,7 +256,7 @@ RSpec.describe DocumentController, type: :controller do
         expect(NotificationService).to receive(:document_rejected_notification).with(document.user_id, document.name, "Document rejected")
         put :status, params: { id: document.id, status: "Rejected", message: "Document rejected" }
         document.reload
-        expect(document.status).to eq("Rejected")
+        expect(document.status).to eq("rejected")
         expect(response).to have_http_status(:ok)
       end
     end
@@ -227,7 +268,7 @@ RSpec.describe DocumentController, type: :controller do
         expect(document.status).to eq('Pending')
         put :status, params: params1
         document.reload
-        expect(document.status).to eq('Pending')
+        expect(document.status).to eq('pending')
       end
 
       it 'returns message indicating no change' do

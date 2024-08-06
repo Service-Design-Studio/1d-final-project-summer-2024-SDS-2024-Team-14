@@ -1,13 +1,23 @@
 class MissingController < ApplicationController
   # Create missing people (POST) - /missing
+  # def create
+  #   @user = User.find(params[:user_id])
+  #   @missing = @user.missing_people.build(missing_params)
+  #   if @missing.save
+  #     # TODO - notification service
+  #     render json: {message: "The missing person #{@missing.name} has been created successfully", user_id: @user.id, missing_id: @missing.id}, status: :created 
+  #   else
+  #       render json: @missing.errors, status: :unprocessable_entity 
+  #   end
+  # end
   def create
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id])
     @missing = @user.missing_people.create(missing_params)
+    
     if @missing.save
-      # TODO - notification service
-      render json: {message: "The missing person #{@missing.name} has been created successfully", user_id: @user.id, missing_id: @missing.id}, status: :created 
+      render json: { message: "The missing person #{@missing.name} has been created successfully", user_id: @user.id, missing_id: @missing.id }, status: :created 
     else
-        render json: @user.errors, status: :unprocessable_entity 
+      render json: @missing.errors, status: :unprocessable_entity
     end
   end
 
@@ -24,16 +34,29 @@ class MissingController < ApplicationController
     end
     
   end
+# def update
+#   begin
+#     @missing = MissingPerson.find_by(id: params[:id])
+#   rescue ActiveRecord::RecordNotFound
+#     render json: { message: "Missing person does not exist" }, status: :unprocessable_entity and return
+#   end
+#   if @missing.update(missing_params)                                              
+#     render json: { message: "Missing person updated successfully"}, status: :ok 
+#   else
+#     render json: { message: "Failed to update missing person", errors: @missing.errors.full_messages }, status: :unprocessable_entity 
+#   end
+# end
 def update
-  begin
-    @missing = MissingPerson.find_by(id: params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { message: "Missing person does not exist" }, status: :unprocessable_entity and return
+  @missing = MissingPerson.find_by(id: params[:id]) 
+  if @missing.nil?
+    render json: { message: "Missing person does not exist" }, status: :unprocessable_entity
+    return
   end
-  if @missing&.update(missing_params)                                              
-    render json: { message: "Missing person updated successfully"}, status: :ok 
+  
+  if @missing.update(missing_params)
+    render json: { message: "Missing person updated successfully" }, status: :ok 
   else
-    render json: { errors: missing_person&.errors&.full_messages || ['Missing person does not exist'] }, status: :unprocessable_entity 
+    render json: { errors: @missing.errors.full_messages }, status: :unprocessable_entity 
   end
 end
   # Attach photo to missing person(POST) - /missing/upload
@@ -78,12 +101,19 @@ end
   # Return missing people based on id(GET) - /missing/[id]
   def show 
     begin
-      @user = User.find(params[:id])
-      render json: @user.missing_people, status: :ok
-    rescue ActiveRecord::RecordNotFound
-      render json: { message: "No missing people found" }, status: :unprocessable_entity and return
-    end
+      @user = User.find_by(id: params[:id])
+  #     render json: @user.missing_people, status: :ok
+  #   rescue ActiveRecord::RecordNotFound
+  #     render json: { message: "No missing people found" }, status: :unprocessable_entity and return
+  #   end
+  # end
+  if @user.nil? || @user.missing_people.empty?
+    return render json: { message: "No missing people found" }, status: :unprocessable_entity
   end
+
+  render json: @user.missing_people, status: :ok
+end
+end
 
   def missing_params
     params.permit(:name, :age, :gender, :ethnicity, :date_birth)
