@@ -256,11 +256,11 @@ class UploadScan extends Component {
                            <p className="pt-2 text-2md">This may prolong your verification process.</p>
                            <div className="flex justify-end mt-4">
                                <button onClick={this.confirmSkip}
-                                       className="text- darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
+                                       className="confirmation text-darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
                                    Yes
                                </button>
                                <button onClick={this.cancelSkip}
-                                       className="border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
+                                       className="cancel border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
                                    No, I will stay
                                </button>
                            </div>

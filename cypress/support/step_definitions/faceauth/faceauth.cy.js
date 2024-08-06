@@ -26,6 +26,7 @@ Then ('I show my face', () => {
 
 Then ('I should see a successful match',()=>{
     cy.get('p.success').should('contain', 'Face verification is successful')
+    cy.wait(5000)
 })
 
 Then ('I did not show my face within 15s', () => {
