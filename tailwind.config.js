@@ -128,6 +128,7 @@ module.exports = {
       'mutedred':'#DA5071',
       'lightblue': '#D2EFFF',
       'faintblue': 'F0F4FF',
+      'gray-300' : '#E0E0E0',
     },
     fontSize: {
       'xs': '0.1rem',
