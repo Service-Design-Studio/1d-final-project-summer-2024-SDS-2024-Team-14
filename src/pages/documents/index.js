@@ -402,8 +402,8 @@ const DocumentManager = () => {
                     aria-expanded={dropdownOpen}
                     aria-haspopup="true"
                   >
-                    in "
-                    <span>{selectedCategory}"</span>
+                    in &quot;
+                    <span>{selectedCategory}&quot;</span>
                     <div className='pl-2'>
                       <Image src={DropdownArrow} />
                     </div>
