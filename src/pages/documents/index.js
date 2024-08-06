@@ -1,3 +1,5 @@
+// src/pages/documents/index.js
+
 import React, { useState, useEffect } from 'react';
 import NaviBar from '../../components/NaviBar';
 import { useRouter } from 'next/router';
@@ -8,11 +10,15 @@ import pdfIcon from "../../../public/images/icons/pdf_icon.svg";
 import docxIcon from "../../../public/images/icons/docx_icon.svg";
 import picIcon from "../../../public/images/icons/pic_icon.svg";
 import crossIcon from "../../../public/images/upload/cross_icon.svg";
+import UploadIcon from "../../../public/images/icons/upload_icon.svg"; // Import the UploadIcon
+import ScannerIcon from "../../../public/images/icons/scanner.svg"; // Import the ScannerIcon
+import DropdownArrow from "../../../public/images/icons/dropdown.svg"; // Import the DropdownArrow
 import Link from "next/link";
 import ChatBot from "@/components/ChatBot";
 import axiosInstance from "@/utils/axiosInstance";
 import { ReactNotifications, Store } from "react-notifications-component";
 import 'react-notifications-component/dist/theme.css';
+
 
 const DocumentManager = () => {
   const [selectedCategory, setSelectedCategory] = useState('Health');
