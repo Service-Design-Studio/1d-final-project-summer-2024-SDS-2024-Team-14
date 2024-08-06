@@ -22,7 +22,7 @@ export default function IdCard(props) {
                 <span className="card lg:mx-auto md:my-4 mb-4 pb-0 shadow-none text-3xl font-medium text-darkblue">ID Card</span>
                 <div className="w-11/12 mx-auto md:w-full md:p-[2vw] id-card transition duration-500 ">
                     <div className="flex justify-around">
-                        <ProfilePic />
+                        <ProfilePic src={props.data.photo} verified={props.data.face_verified}/>
                         <div className="mx-[5vw] lg:mx-0">
                             <div className="flex flex-col pl-[2vw] text-left flex-grow">
                                 <div className="text-left pb-[0.5vw]">
@@ -50,7 +50,6 @@ export default function IdCard(props) {
                         <Link href={`/info/${props.data.id}`}>
                             <div className={`mx-auto w-fit py-4 ${props.data.verification_status == "Approved" ? "QR_code" : ""}`}>
                                 <Canvas
-                                    
                                     data-cy={"qrCode"}
                                     text={process.env.NEXT_PUBLIC_FRONTEND + 'info/' + props.data.id}
                                     options={{
