@@ -28,7 +28,7 @@ export default function IdCard(props) {
                             <div className="flex flex-col pl-[2vw] text-left flex-grow">
                                 <div className="text-left pb-[0.5vw]">
                                     <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-[1.4vw] text-darkblue">{props.data.name}</div>
-                                    <div className="text-[3.8vw] md:text-2xl xl:text-[1.4vw] text-darkblue identification_number">{props.data.verification_status == "Approved" ? props.data.id : "***-*****"}</div>
+                                    <div className="text-[3.8vw] md:text-2xl xl:text-[1.4vw] text-darkblue identification_number">{props.data.verification_status == "Approved" ? `000-000-00000${props.data.id}` : "***-*****"}</div>
                                 </div>
                                 {isOpen ?
                                     <PersonalInfo userName={props.data.name} sex={props.data.gender}

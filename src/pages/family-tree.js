@@ -123,7 +123,6 @@ export default function FamilyTree() {
                         selected={selected}
                         matches={matches}
                     />
-
                 </div>
             </div>
             <ChatBot />
