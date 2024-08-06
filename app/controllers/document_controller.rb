@@ -64,7 +64,8 @@ class DocumentController < ApplicationController
                 status: document.status,
                 file_url: document.file.attached? ? url_for(document.file) : nil,
                 important: document.important,
-                category: document.category
+                category: document.category,
+                lastModifiedDate: document.created_at.strftime('%d %B %Y')
               }
           end
           render json: {documents: documents_with_files}, status: :ok
