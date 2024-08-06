@@ -1,5 +1,5 @@
 // src/components/Tutorial.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import CloseIcon from "../../public/images/tutorial/blueclose.svg"; // Import your close icon
@@ -8,6 +8,20 @@ import "../styles/globals.css"
 const Tutorial = ({ title, steps, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+
+    handleResize(); // Check initial screen size
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handlePrevStep = () => {
     if (currentStep > 0) {
@@ -55,35 +69,55 @@ const Tutorial = ({ title, steps, onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-40">
       <div className="absolute inset-0 bg-default bg-opacity-50"></div> {/* Dimming effect */}
-      <div className="relative flex flex-col bg-white rounded-xl w-[60vw] max-w-[70vw] h-[80vh] max-h-[80vh] mx-auto">
+      <div className="relative flex flex-col bg-white rounded-xl w-full lg:w-[70vw] h-[80vh] max-h-[80vh] mx-8 lg:mx-0">
         <div className="flex h-full">
-          <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF]">
-            <ul className="space-y-4 w-full font-semibold text-2xl">
-              {steps.map((step, index) => (
-                <li
-                  key={index}
-                  onClick={() => {
-                    setCurrentStep(index);
-                    setCurrentImageIndex(0);
-                  }}
-                  className={`cursor-pointer p-6 ${currentStep === index ? 'bg-darkblue text-white' : 'text-darkblue'} ${index === 0 ? 'rounded-tl-xl' : ''} ${index !== 0 && 'rounded-none'}`}
-                  style={{
-                    backgroundColor: currentStep === index ? '#405DB5' : '#F0F4FF',
-                  }}
-                >
-                  {step.category}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="w-3/4 p-8 flex flex-col justify-between relative">
+          {isLargeScreen ? (
+            <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF]">
+              <ul className="space-y-4 w-full font-semibold text-2xl">
+                {steps.map((step, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setCurrentStep(index);
+                      setCurrentImageIndex(0);
+                    }}
+                    className={`cursor-pointer p-6 ${currentStep === index ? 'bg-darkblue text-white' : 'text-darkblue'} ${index === 0 ? 'rounded-tl-xl' : ''} ${index !== 0 && 'rounded-none'}`}
+                    style={{
+                      backgroundColor: currentStep === index ? '#405DB5' : '#F0F4FF',
+                    }}
+                  >
+                    {step.category}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <div className="w-full lg:w-3/4 p-4 lg:p-8 flex flex-col justify-between relative">
             <button onClick={handleClose} className="absolute top-0 right-0 mt-4 mr-4">
               <Image src={CloseIcon} alt="Close" className="w-10 h-10" />
             </button>
-            <h1 className="block text-3xl mb-8 font-bold text-center text-darkblue">
-              {steps[currentStep].title}
-            </h1>
-            <div className="flex justify-center items-center h-[45vh] mb-8 relative">
+            {!isLargeScreen && (
+              <select
+                value={currentStep}
+                onChange={(e) => {
+                  setCurrentStep(parseInt(e.target.value));
+                  setCurrentImageIndex(0);
+                }}
+                className="block w-full p-2 mb-4 mt-12 border border-gray-300 rounded text-darkblue font-bold text-3xl"
+              >
+                {steps.map((step, index) => (
+                  <option key={index} value={index}>
+                    {step.category}
+                  </option>
+                ))}
+              </select>
+            )}
+            {isLargeScreen && (
+              <h1 className="block text-3xl lg:mb-8 font-bold text-center text-darkblue">
+                {steps[currentStep].title}
+              </h1>
+            )}
+            <div className="flex justify-center items-center h-[45vh] lg:mb-8 relative">
               <Image
                 src={currentImages[currentImageIndex]}
                 alt="Step Image"
@@ -92,7 +126,7 @@ const Tutorial = ({ title, steps, onClose }) => {
                 height={600}
               />
             </div>
-            <div className="flex justify-center items-center my-4">
+            <div className="flex justify-center items-center mb-4 lg:mt-4 lg:mb-8">
               {currentImages.length > 1 ? (
                 currentImages.map((_, index) => (
                   <span
@@ -107,9 +141,9 @@ const Tutorial = ({ title, steps, onClose }) => {
               )}
             </div>
             <div className="flex-grow flex items-center justify-center">
-              <p className="text-darkblue text-xl mb-12 px-20 text-center leading-tight max-h-[13vh] overflow-auto">
-                {currentTexts[currentImageIndex]}
-              </p>
+              <div className="text-darkblue text-xl mb-12 lg:px-20 text-center leading-tight max-h-[13vh] overflow-auto">
+                <p className="min-h-[13vh]">{currentTexts[currentImageIndex]}</p>
+              </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-white py-2 px-4 flex justify-between items-center rounded-xl">
               {currentImageIndex > 0 && (
