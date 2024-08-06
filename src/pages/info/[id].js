@@ -196,7 +196,7 @@ export default function Info() {
             {data && (
               <div className="w-[90%] md:w-auto md:p-[2vw] mx-auto lg:p-5 id-card transition duration-500">
                 <div className="flex justify-center">
-                  <ProfilePic />
+                  <ProfilePic src={props.data.photo}/>
                   <div className="flex flex-col pl-[2vw] text-left flex-grow">
                     <div className="text-left pb-[0.5vw]">
                       <div className="font-bold uppercase text-[4vw] md:text-2xl xl:text-xxl text-darkblue">

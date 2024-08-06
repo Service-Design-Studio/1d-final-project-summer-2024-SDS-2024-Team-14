@@ -22,7 +22,7 @@ export default function SideList(props) {
                             }}
                         >
                             <div className="flex flex-row w-full">
-                                <div className="aspect-square md:w-[20%] w-[50%] self-center md:mr-5">
+                                <div className="aspect-square md:w-[20%] w-[50%] max-w-14 self-center md:mr-5">
                                     {data.src ?
                                         <Image
                                             key={`${idx}`}

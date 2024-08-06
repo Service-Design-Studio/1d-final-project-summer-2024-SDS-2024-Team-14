@@ -164,8 +164,8 @@ class UploadFile extends Component {
 
     render() {
         const uploadButtonClasses = (this.state.selectedFiles.length > 0)
-            ? "text-lg px-5 py-2 text-white bg-darkblue rounded-lg hover:bg-[#4378DB] hover:text-white hover:underline"
-            : "text-lg px-5 py-2 text-darkblue bg-darkblue bg-opacity-30 rounded-md cursor-not-allowed";
+            ? "upload text-lg px-5 py-2 text-white bg-darkblue rounded-lg hover:bg-[#4378DB] hover:text-white hover:underline"
+            : "upload text-lg px-5 py-2 text-darkblue bg-darkblue bg-opacity-30 rounded-md cursor-not-allowed";
 
         return (
             <div className="flex flex-col h-full">
