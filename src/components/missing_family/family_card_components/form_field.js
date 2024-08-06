@@ -39,7 +39,7 @@ export default function FormField(props) {
     }, [props.default, props.title])
 
     return (
-        <div className="flex flex-col w-full lg:min-w-96 my-3">
+        <div className="flex flex-col w-fit my-3">
             <span className="text-lg">{props.title}</span>
             {props.title === "Age" &&
                 <span>
