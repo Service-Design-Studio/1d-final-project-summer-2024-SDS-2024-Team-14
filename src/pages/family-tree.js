@@ -150,7 +150,6 @@ export default function FamilyTree() {
                             selected={selected}
                             setSelected={setSelected}
                             data={data}
-                            setData={setData}
                             addNew={addNew}
                             setEdit={setEdit}
                             setAddNew={setAddNew}
@@ -176,10 +175,6 @@ export default function FamilyTree() {
                             selectedData={selectedData}
                         />}
                     </div>
-                    {/* form and list of entries, for small screens */}
-                    {/* <div>
-
-                    </div> */}
 
                     {/* section for potential matches */}
                     <PotentialMatches
