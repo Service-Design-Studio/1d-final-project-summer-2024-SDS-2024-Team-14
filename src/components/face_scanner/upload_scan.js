@@ -190,7 +190,7 @@ class UploadScan extends Component {
                                        src={tickGreen}
                                        alt="info icon"
                                    />
-                                   <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                   <p className="success flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                        Face verification is successful
                                    </p>
                                </>
@@ -201,7 +201,7 @@ class UploadScan extends Component {
                                        src={redError}
                                        alt="info icon"
                                    />
-                                   <p className="flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
+                                   <p className="failure flex-grow pt-0.75 font-semibold text-lightblue text-[3.5vw] sm:text-[3.5vw] md:text-lg lg:text-[1.1vw]">
                                        Face verification is unsuccessful
                                    </p>
                                </>
@@ -232,7 +232,7 @@ class UploadScan extends Component {
                            <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                                <button
                                    onClick={this.toggleCamera}
-                                   className={`text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
+                                   className={`begin stop text-2md px-5 py-2 border-radius-19px rounded-md bg-[#4378DB] text-white `}
                                >
                                    {this.state.isCameraOn ? "Stop Face Scan" : "Begin Face Scan"}
                                </button>
@@ -240,7 +240,7 @@ class UploadScan extends Component {
                            <div className="flex justify-end pt-5">
                                <button
                                    onClick={this.handleSkip}  // Handle Skip
-                                   className={`text-2mdd text-semibold text-[#4378DB] underline py-2 border-radius-19px rounded-md`}
+                                   className={`skip text-2mdd text-semibold text-[#4378DB] underline py-2 border-radius-19px rounded-md`}
                                >
                                    Skip Face Scan
                                </button>
@@ -256,11 +256,11 @@ class UploadScan extends Component {
                            <p className="pt-2 text-2md">This may prolong your verification process.</p>
                            <div className="flex justify-end mt-4">
                                <button onClick={this.confirmSkip}
-                                       className="text- darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
+                                       className="confirmation text-darkblue px-4 py-2 border rounded mr-2 hover:bg-[#4378DB] hover:text-white">
                                    Yes
                                </button>
                                <button onClick={this.cancelSkip}
-                                       className="border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
+                                       className="cancel border border-gray-300 px-4 py-2 rounded hover:bg-[#4378DB] hover:text-white">
                                    No, I will stay
                                </button>
                            </div>
