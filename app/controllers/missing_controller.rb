@@ -12,10 +12,11 @@ class MissingController < ApplicationController
   # end
   def create
     @user = User.find_by(id: params[:user_id])
-    @missing = @user.missing_people.create(missing_params)
-    
+    return render json: { error: "User not found" }, status: :not_found if @user.nil?
+  
+    @missing = @user.missing_people.build(missing_params)
     if @missing.save
-      render json: { message: "The missing person #{@missing.name} has been created successfully", user_id: @user.id, missing_id: @missing.id }, status: :created 
+      render json: { message: "The missing person #{@missing.name} has been created successfully" }, status: :created
     else
       render json: @missing.errors, status: :unprocessable_entity
     end
@@ -107,16 +108,18 @@ end
   #     render json: { message: "No missing people found" }, status: :unprocessable_entity and return
   #   end
   # end
-  if @user.nil? || @user.missing_people.empty?
-    return render json: { message: "No missing people found" }, status: :unprocessable_entity
+    end
+    if @user.nil? || @user.missing_people.empty?
+      return render json: { message: "No missing people found" }, status: :unprocessable_entity
+    end
+
+    render json: @user.missing_people, status: :ok
   end
-
-  render json: @user.missing_people, status: :ok
-end
 end
 
-  def missing_params
-    params.permit(:name, :age, :gender, :ethnicity, :date_birth)
-  end
 
+private
+
+def missing_params
+  params.require(:missing_person).permit(:name, :age, :gender, :ethnicity, :date_birth)
 end

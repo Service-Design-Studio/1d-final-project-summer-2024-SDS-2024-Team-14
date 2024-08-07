@@ -90,6 +90,7 @@ group :test do
   gem "selenium-webdriver"
   gem "simplecov", :require => false
   gem "webmock"
+  gem 'factory_bot_rails'
 end
 
 group :production do
