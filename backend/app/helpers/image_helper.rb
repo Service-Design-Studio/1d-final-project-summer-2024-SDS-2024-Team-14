@@ -12,3 +12,4 @@ module ImageHelper
     end
   end
 end
+
