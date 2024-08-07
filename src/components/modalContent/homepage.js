@@ -1,9 +1,9 @@
 // src/components/modalContent/homepage.js
 import React from 'react';
-import DisplayQRCodeImage1 from 'public/images/intro/modal/home/1a.png'; // Update with actual image paths
-import DisplayQRCodeImage2 from 'public/images/intro/modal/home/1b.png'; // Update with actual image paths
-import AccessServicesImage from 'public/images/intro/modal/home/2.png'; // Update with actual image paths
-import FAQChatbotImage1 from 'public/images/intro/modal/home/3a.png'; // Update with actual image paths
+import DisplayQRCodeImage1 from 'public/images/intro/modal/home/1a.jpeg'; // Update with actual image paths
+import DisplayQRCodeImage2 from 'public/images/intro/modal/home/1b.jpeg'; // Update with actual image paths
+import AccessServicesImage from 'public/images/intro/modal/home/2.jpeg'; // Update with actual image paths
+import FAQChatbotImage1 from 'public/images/intro/modal/home/3a.jpeg'; // Update with actual image paths
 import FAQChatbotImage2 from 'public/images/intro/modal/home/3b.png'; // Update with actual image paths
 
 const homePageContent = [

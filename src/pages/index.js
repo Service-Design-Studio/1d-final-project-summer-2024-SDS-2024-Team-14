@@ -34,7 +34,7 @@ export default function Home({ session }) {
                 console.error(error.message);
             }
             finally {
-                setTimeout(() => {
+                setTimeout(() => {  
                     setLoading(false);
                 }, 1500); // 1.5 seconds delay
             }

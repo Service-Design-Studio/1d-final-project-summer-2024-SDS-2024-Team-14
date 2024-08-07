@@ -132,7 +132,7 @@ class Upload extends Component {
                         <div className="flex md:space-x-4 space-x-8 justify-end pt-5">
                         <button
                             onClick={this.onFileUpload}
-                            className={`text-2md px-5 py-2  
+                            className={`proceed text-2md px-5 py-2  
                             border-radius-19px rounded-md ${this.state.selectedFile !== null ? "bg-[#4378DB] text-white hover:bg-darkblue transition-all duration-200 ease-in-out" : "bg-gray text-white cursor-not-allowed"
                             }`}
                         >
