@@ -11,14 +11,14 @@ export default function SuggestionCard(props) {
                 props.setClick(props.index);
             }}
         >
-            <div className="flex-1 relative w-[13vw]">
+            <div className="flex-1 relative md:w-[13vw] lg:w-full">
                 <Image
                     key={props.index}
                     src={props.src}
                     width={600}
                     height={600}
                     alt={`${props.name}`}
-                    className="flex-1 z-0 rounded-t-2xl bg-cover w-full h-full"
+                    className="flex-1 z-0 rounded-t-2xl object-cover w-full h-full aspect-square"
                 />
                 <div className="bg-gradient-to-t from-default to-white-15 pb-5 bg-blend-multiply z-40 absolute w-full bottom-0 text-white">
                     <div className="text-lg md:text-2xl lg:text-3xl mx-7 line-clamp-2 font-semibold">{props.name}
