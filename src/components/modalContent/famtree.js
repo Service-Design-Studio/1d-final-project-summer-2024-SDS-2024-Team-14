@@ -1,10 +1,10 @@
 // src/components/modalContent/famtree.js
 import React from 'react';
-import CreateNewSearchImage1 from 'public/images/intro/modal/famtree/1a.png';
-import CreateNewSearchImage2 from 'public/images/intro/modal/famtree/1b.png';
-import ViewExistingSearchImage from 'public/images/intro/lh44.png';
-import EditExistingSearchImage1 from 'public/images/intro/lh44.png';
-import EditExistingSearchImage2 from 'public/images/intro/lh44.png';
+import CreateNewSearchImage1 from 'public/images/intro/modal/famtree/1a.jpeg';
+import CreateNewSearchImage2 from 'public/images/intro/modal/famtree/1b.jpeg';
+import ViewExistingSearchImage from 'public/images/intro/modal/famtree/2.jpeg';
+import EditExistingSearchImage1 from 'public/images/intro/modal/famtree/3a.jpeg';
+import EditExistingSearchImage2 from 'public/images/intro/modal/famtree/3b.jpeg';
 
 const famTreeContent = [
     {
