@@ -1,0 +1,70 @@
+.loader {
+  width: 80px;
+  height: 50px;
+  position: relative;
+}
+
+.loader_text {
+  position: absolute;
+  top: 0;
+  padding: 0;
+  margin: 0;
+  color: white;
+  animation: text_713 3.5s ease both infinite;
+  font-size: .8rem;
+  letter-spacing: 1px;
+}
+
+.load {
+  background-color: #9A79FF;
+  border-radius: 50px;
+  display: block;
+  height: 16px;
+  width: 16px;
+  bottom: 0;
+  position: absolute;
+  transform: translateX(64px);
+  animation: loading_713 3.5s ease both infinite;
+}
+
+.load::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #D1C2FF;
+  border-radius: inherit;
+  animation: loading2_713 3.5s ease both infinite;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: translateY(360px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(400px);
+  }
+}
+
+@keyframes fadeInModalMobile {
+  from {
+    opacity: 0;
+    transform: translateY(240px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(280px);
+  }
+}
+
+.fadeModal{
+  animation: fadeInModal 1s ease-in-out forwards;
+}
+
+.fadeModalMobile{
+  animation: fadeInModalMobile 1s ease-in-out forwards;
+}

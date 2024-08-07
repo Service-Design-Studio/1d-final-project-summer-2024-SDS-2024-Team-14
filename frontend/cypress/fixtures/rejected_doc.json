@@ -1,0 +1,10 @@
+[
+  {
+    "user_id": 2,
+    "category": "Verification Failed",
+    "content": "Your education document: example-file.pdf has been rejected.",
+    "created_at": "2024-JUL-23",
+    "id": 21,
+    "read": false
+  }
+]

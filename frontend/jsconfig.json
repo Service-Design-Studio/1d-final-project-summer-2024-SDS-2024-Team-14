@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/pages/info/*": ["./src/pages/info/*"],
+      "@/pages/id_card": ["./src/pages/id_card.jsx"],
+    }
+  }
+}
