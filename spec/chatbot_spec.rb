@@ -1,28 +1,40 @@
 require 'rails_helper'
-include Dialogagent
 
 RSpec.describe ChatbotController, type: :controller do
-  describe '#create' do
-    let(:text) { 'Hello, world!' }
-    let(:session_id) { '1234567890' }
-    let(:access_token) { 'abc123' }
+  describe 'POST #create' do
+    let(:valid_params) { { text: 'Hello', userID: '123' } }
+    let(:invalid_params) { { text: '', userID: '' } }
 
-    before do
-      allow(Open3).to receive(:capture3).with('gcloud auth print-access-token').and_return(['abc123', '', 0])
-      allow(HTTParty).to receive(:post).with(any_args).and_return(double(code: 200, body: '{"queryResult": {"responseMessages": [{"text": {"text": ["Hello, world!"]}}]}}'))
+    context 'when get_resp returns a response' do
+      before do
+        # Mock the get_resp method to return a valid response
+        allow_any_instance_of(ChatbotController).to receive(:get_resp).and_return('Valid response')
+        post :create, params: valid_params
+      end
+
+      it 'returns a success status' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns the correct message' do
+        expect(JSON.parse(response.body)).to eq({ 'message' => 'Valid response' })
+      end
     end
 
-    it 'renders a JSON response with the message' do
-      post :create, params: { text: text, userID: session_id }
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to eq({ message: 'Hello, world!' }.to_json)
-    end
+    context 'when get_resp returns nil' do
+      before do
+        # Mock the get_resp method to return nil
+        allow_any_instance_of(ChatbotController).to receive(:get_resp).and_return(nil)
+        post :create, params: valid_params
+      end
 
-    it 'renders an error response if the API call fails' do
-      allow(HTTParty).to receive(:post).with(any_args).and_return(double(code: 404, body: 'Not Found'))
-      post :create, params: { text: text, userID: session_id }
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.body).to eq({ message: 'There was an issue sending your message to our bot. Please try again later.' }.to_json)
+      it 'returns an unprocessable entity status' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns the error message' do
+        expect(JSON.parse(response.body)).to eq({ 'message' => 'There was an issue sending your message to our bot. Please try again later.' })
+      end
     end
   end
 end
