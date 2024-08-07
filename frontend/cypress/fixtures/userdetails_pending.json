@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "email": "tonytangebirah@gmail.com",
+  "name": "Tony Tan",
+  "country": "Singapore",
+  "ethnicity": "Singapore",
+  "religion": "Catholic",
+  "gender": "Male",
+  "date_birth": "30-06-2024",
+  "date_arrival": "30-06-2024",
+  "verification_status": "Pending approval",
+  "face_verified":false
+}

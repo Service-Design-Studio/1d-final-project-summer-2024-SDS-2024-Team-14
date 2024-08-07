@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    ),
+    rgb(var(--background-start-rgb));
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  @screen xxs {
+    .title-text {
+      @apply text-sm;
+    }
+    .content-text {
+      @apply text-md;
+    }
+  }
+  @screen xs {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-mdd;
+    }
+  }
+  @screen xsm {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-2mdd;
+    }
+  }
+  @screen sm {
+    .title-text {
+      @apply text-2mdd;
+    }
+    .content-text {
+      @apply text-base;
+    }
+    
+  }
+  @screen md {
+    .title-text {
+      @apply text-md;
+    }
+    .content-text {
+      @apply text-2mdd;
+    }
+  }
+  @screen lg {
+    .title-text {
+      @apply text-[0.6rem];
+    }
+    .content-text {
+      @apply text-[0.8rem];
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply flex justify-center px-4 py-3 w-full btn-border shadow-lg;
+  }
+  .btn-darkblue {
+    @apply btn bg-darkblue text-white transition-all-500 hover:hover-color fill-white;
+  }
+  .btn-submit{
+  @apply w-full bg-darkblue text-white hover:bg-white hover:text-darkblue text-xl rounded-md my-5 md:text-2xl border-solid border-4 border-darkblue
+  }
+  .btn-disabled {
+    @apply btn bg-disabled fill-white text-darkblue;
+  }
+  .icon {
+    @apply px-2 my-auto max-w-12 max-h-12;
+  }
+  .card {
+    @apply card-width p-1 sm:p-3 xxs:p-3 rounded-xl shadow-md overflow-hidden md:max-w-3xl;
+  }
+  .id-card {
+    @apply p-2 sm:p-2 xxs:p-3 rounded-xl shadow-md overflow-hidden px-6 pt-4 bg-gradient-to-r from-[#BEE3F7] to-white transition-all-500;
+  }
+  .feature-card {
+    @apply card flex flex-row mb-4 mx-auto bg-darkblue text-white hover:bump transition-all duration-300;
+  }
+  .notif-subheader{
+    @apply w-fit text-2xl font-semibold text-darkblue;
+  }
+  .grid-2-cols-4-rows {
+    @apply grid grid-cols-2 grid-rows-3 md:gap-y-2 my-auto gap-x-6 md:gap-x-10 lg:gap-x-16 md:py-2;
+  }
+  .embla {
+  @apply overflow-hidden;
+}
+.embla__container {
+  @apply flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .transition-all-500 {
+    @apply transition-all delay-0 duration-700;
+  }
+  .btn-border {
+    @apply border-0 rounded-xl;
+  }
+  .hover-color {
+    @apply bg-white fill-darkblue text-darkblue;
+  }
+  .header-text {
+    @apply text-4xl text-nowrap overflow-ellipsis text-darkblue font-medium align-middle text-left;
+  }
+  .h2-text {
+    @apply block md:text-3xl font-medium sm:text-xl text-nowrap;
+  }
+  .btn-text {
+    @apply h2-text my-auto mx-2  text-center align-middle justify-center;
+  }
+  .title-text {
+    @apply uppercase tracking-normal overflow-ellipsis text-lightgray font-semibold;
+  }
+  .content-text {
+    @apply block leading-tight font-medium;
+  }
+  .card-width {
+    @apply w-full;
+  }
+  .bump {
+    @apply shadow-sm shadow-default duration-500 border-darkblue border-4;
+  }
+  .transbox {
+    @apply;
+  }
+  .custom-icon-size {
+  @apply w-10 h-10; /* Use Tailwind utility classes here */
+}
+}
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
