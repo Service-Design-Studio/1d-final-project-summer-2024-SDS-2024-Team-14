@@ -1,6 +1,6 @@
 Feature: Tutorial 
 
-  Scenario:First Introduction
+  Scenario: First Introduction
     Given I am on the login page
     When I click the "signup_tab" button
     And I fill in "firstName" with "Abdul"
@@ -12,6 +12,22 @@ Feature: Tutorial
     And I fill in "email" with "e@gmail.com"
     And I fill in "password" with "Passw0rd!"
     And I fill in "confirmPassword" with "Passw0rd!"
-    And I click on the "signup" button
-    Then I should be redirected to the intro page
+    And I click the "signup" button
+    Then as I am a first time user I should be redirected to the intro page
     Then I click on the next button till the last slide
+
+  Scenario: Home page tutorial
+   Given I am on the home page
+   When I click on the "tutorial" button
+   Then I should see the correct tutorial content for "Home"
+
+  Scenario: Documents tutorial
+    Given I am on the home page
+    When I click on the "tutorial" button
+    Then I should see the correct tutorial content for "Documents"
+
+  Scenario: Family tree tutorial
+    Given I am on the home page
+    When I click on the "tutorial" button
+    Then I should see the correct tutorial content for "Family Tree"
+

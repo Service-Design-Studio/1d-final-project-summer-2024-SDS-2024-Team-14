@@ -91,9 +91,9 @@ export default function Intro({ session }) {
                             {currentSlide < slides.length && (
                                 <button
                                     onClick={handleNextClick}
-                                    className="bg-transparent border-none cursor-pointer font-size-[0.875em] text-darkblue flex items-center"
+                                    className="next bg-transparent border-none cursor-pointer font-size-[0.875em] text-darkblue flex items-center"
                                 >
-                                    <span className="next text-[3vw] lg:text-base">Next</span>
+                                    <span className="text-[3vw] lg:text-base">Next</span>
                                     <span className="ml-1 text-[3vw] lg:text-2xl">&rarr;</span>
                                 </button>
                             )}

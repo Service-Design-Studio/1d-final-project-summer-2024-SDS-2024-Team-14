@@ -68,7 +68,7 @@ const Tutorial = ({ title, steps, onClose }) => {
       <div className="relative flex flex-col bg-white rounded-xl w-[95vw] lg:w-[70vw] h-[85vh] lg:h-[80vh] max-h-[85vh] lg:max-h-[80vh] overflow-hidden">
         <div className="flex h-full">
           {isLargeScreen ? (
-            <div className="w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF] overflow-auto">
+            <div className="tutorial-content-selector w-1/4 flex flex-col justify-start rounded-tl-xl rounded-bl-xl bg-[#F0F4FF] overflow-auto">
               <ul className="space-y-4 w-full font-semibold text-lg">
                 {steps.map((step, index) => (
                   <li

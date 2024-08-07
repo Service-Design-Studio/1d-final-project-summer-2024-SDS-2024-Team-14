@@ -156,7 +156,7 @@ export default function NaviBar({ open, setOpen }) {
                     </Link>
                 ))}
                 <a href={"https://www.gebirah.org/"} target="_blank" className="py-4 font-semibold hover:text-darkblue hover:underline"> Community </a>
-                <Button onClick={() => setTutorialOpen(true)} className="hover:bg-white hover:bg-opacity-25">
+                <Button onClick={() => setTutorialOpen(true)} className="tutorial hover:bg-white hover:bg-opacity-25">
                     <Image src={QnMarkIcon} width={30} height={30} alt="Open Tutorial" />
                 </Button>
                 <Button onClick={() => setOpen(!open)} className={` ${open ? `shadow-md bg-white hover:bg-white` : `hover:bg-white hover:bg-opacity-25`} notification`}>
