@@ -22,7 +22,7 @@ export default function FamilyCard(props) {
     }, [deletePerson])
 
     return (
-        <div className="relative h-full flex flex-col rounded-r-2xl shadow-lg bg-white min-h-fit w-full min-w-fit xl:min-w-[20vw] missing-person-card">
+        <div className="relative h-full flex flex-col rounded-r-2xl shadow-lg bg-white min-h-fit w-[80vw] md:w-[50vw] lg:w-[30vw] xl:w-[25vw]">
             {props.selectedData && props.selected >= 0 ?
                 <div className="flex flex-col w-full">
                     <div className="flex-1 relative w-full">
@@ -31,7 +31,7 @@ export default function FamilyCard(props) {
                             width={600}
                             height={600}
                             alt={`${props.selectedData.name}`}
-                            className="w-[20vw] 2xl:aspect-square object-cover rounded-tr-2xl static"
+                            className="w-full h-full aspect-square object-cover rounded-tr-2xl static"
                         />
 
                         <div className="bg-gradient-to-t from-default to-white-15 py-5 bg-blend-multiply z-50 absolute w-full bottom-0 text-white">
