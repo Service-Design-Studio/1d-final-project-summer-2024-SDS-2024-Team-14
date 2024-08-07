@@ -19,6 +19,7 @@ export default function FamilyTree() {
     const [data, setData] = useState([]);
     const [fetch, setFetch] = useState(true);
     const [selectedData, setSelectedData] = useState();
+    const [selectedMissing, setSelectedMissing] = useState();
     const [matches, setMatches] = useState([]);
     const [addNew, setAddNew] = useState(false);
     const [edit, setEdit] = useState(null);
@@ -102,7 +103,7 @@ export default function FamilyTree() {
         if (selectedData && click) {
             await axiosInstance.post('/match', {
                 "user_id": selectedData.id,
-                "missing": click
+                "missing": selectedMissing.id
             }).then(res => {
                 setClick(null);
                 if (res.status == 200 || res.status == 201) {
@@ -132,12 +133,13 @@ export default function FamilyTree() {
                     Add more pictures using the plus button to improve matches.<br />
                     Click on the swap button to swap the missing family member.
                 </div>
-                <div className="flex flex-col 2xl:flex-row max-w-screen md:mt-4 2xl:mt-12 min-h-fit md:h-full ">
+                <div className="flex flex-col md:flex-row max-w-screen md:mt-4 2xl:mt-12 min-h-fit md:h-full ">
                     {/* form and list of entries, for larger screens */}
-                    <div className="flex flex-row 2xl:w-[35%] min-w-fit w-[100%] xl:mb-0 mb-10">
+                    <div className="flex flex-row 2xl:w-[35%] min-w-fit w-[100%] lg:w-[45%] xl:mb-0 mb-10">
                         <SideList
                             selected={selected}
                             setSelected={setSelected}
+                            setSelectedMissing={setSelectedMissing}
                             data={data}
                             addNew={addNew}
                             setEdit={setEdit}
@@ -199,7 +201,7 @@ export default function FamilyTree() {
                     </DialogActions>
                 </Dialog>
                 : null}
-            {matchRes && 
+            {matchRes &&
                 <Dialog
                     open={matchRes != null}
                     onClose={() => setMatchRes(null)}
