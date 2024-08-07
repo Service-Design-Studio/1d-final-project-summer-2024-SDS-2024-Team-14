@@ -28,10 +28,10 @@ export default function FamilyCard(props) {
                     <div className="flex-1 relative w-full">
                         <Image
                             src={props.selectedData.src || "/images/default_profile_pic.svg"}
-                            width={1}
-                            height={1}
+                            width={600}
+                            height={600}
                             alt={`${props.selectedData.name}`}
-                            className="w-full 2xl:aspect-square object-cover max-h-[30vw] rounded-tr-2xl static"
+                            className="w-[20vw] 2xl:aspect-square object-cover rounded-tr-2xl static"
                         />
 
                         <div className="bg-gradient-to-t from-default to-white-15 py-5 bg-blend-multiply z-50 absolute w-full bottom-0 text-white">
@@ -46,7 +46,7 @@ export default function FamilyCard(props) {
                         ethnicity={props.selectedData.ethnicity}
                     // relationship={props.selectedData.relationship}
                     />
-                    <div className="w-fit flex flex-row self-end px-10 text-center h-fit p-0 justify-center items-center lg:mt-20">
+                    <div className="w-fit flex flex-row self-end px-10 text-center h-fit p-0 pb-10 justify-center items-center">
                         <Button
                             className="edit bg-darkblue hover:bg-darkblue hover:opacity-65 text-white rounded-lg h-fit w-fit items-center"
                             onClick={
@@ -64,7 +64,6 @@ export default function FamilyCard(props) {
                             }}>
                             <Image width={1} height={1} className="h-fit w-auto" src={"/images/cross_icon.svg"} alt="Delete Entry" /> Delete
                         </Button>
-                        <div className="h-20" />
                     </div>
                 </div> :
                 <div className="flex flex-col self-center my-auto px-5 text-darkblue font-semibold min-w-fit w-24 lg:w-52 xl:w-96 text-center md:min-h-[500px]">

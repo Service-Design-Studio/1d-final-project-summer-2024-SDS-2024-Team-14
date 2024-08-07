@@ -28,7 +28,7 @@ export default function SideList(props) {
                                             key={`${idx}`}
                                             className="w-full object-cover aspect-square rounded-full mx-3"
                                             src={`${data.src}?${new Date().getTime()}`}
-                                            width={10} height={10}
+                                            width={300} height={300}
                                             alt="entry image" />
                                         :
                                         <Image
