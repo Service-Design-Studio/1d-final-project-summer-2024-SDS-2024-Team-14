@@ -9,7 +9,7 @@ class DocumentController < ApplicationController
       language = params[:language].downcase
     end
     begin
-      @user = User.find(user_id)
+      @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { message: "User does not exist" }, status: :unprocessable_entity and return
     end
@@ -40,16 +40,19 @@ class DocumentController < ApplicationController
       NotificationService.create_document_upload_fail_notification(user_id, document, category)
       render json: { message: "File transfer has failed. Please contact the administrator" }, status: :unprocessable_entity
     end
-  end
+    rescue StandardError => e
+      render json: { message: "Unsupported file type" }, status: :unprocessable_entity
+    end
+
 
   # Retrieve files given user id (POST) - /document/retrieve
   def retrieve
     user = params[:id]
     category = params[:category]&.downcase
     begin
-        @user = User.find(user)
+      @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-        render json: { message: "User does not exist" }, status: :unprocessable_entity
+        render json: { message: "User does not exist" }, status: :unprocessable_entity and return
     end
     if category
       @documents = @user.documents.where(category: category)
