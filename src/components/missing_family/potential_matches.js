@@ -82,7 +82,7 @@ export default function PotentialMatches(props) {
                             {props.selected != undefined ? "No matches found. Please check back later." : "Please select an entry on the left, or add a new entry."}
                         </div>
                     }
-                       {count > 0 && <div ref={emblaRef} className="overflow-x-hidden h-full w-full">
+                       {count > 0 && <div ref={emblaRef} className="overflow-x-hidden h-full w-full pl-4 pr-14">
                             <div className="embla__container gap-x-12">
                                 {props.matches ? props.matches.map((data, index) => {
                                     return <SuggestionCard
