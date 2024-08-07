@@ -19,6 +19,7 @@ export default function FamilyTree() {
     const [data, setData] = useState([]);
     const [fetch, setFetch] = useState(true);
     const [selectedData, setSelectedData] = useState();
+    const [selectedMissing, setSelectedMissing] = useState();
     const [matches, setMatches] = useState([]);
     const [addNew, setAddNew] = useState(false);
     const [edit, setEdit] = useState(null);
@@ -102,7 +103,7 @@ export default function FamilyTree() {
         if (selectedData && click) {
             await axiosInstance.post('/match', {
                 "user_id": selectedData.id,
-                "missing": click
+                "missing": selectedMissing.id
             }).then(res => {
                 setClick(null);
                 if (res.status == 200 || res.status == 201) {
@@ -138,6 +139,7 @@ export default function FamilyTree() {
                         <SideList
                             selected={selected}
                             setSelected={setSelected}
+                            setSelectedMissing={setSelectedMissing}
                             data={data}
                             addNew={addNew}
                             setEdit={setEdit}
