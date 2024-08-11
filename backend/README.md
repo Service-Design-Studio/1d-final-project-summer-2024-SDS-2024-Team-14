@@ -28,7 +28,7 @@ For a complete list of dependencies, please refer to the Gemfile in the project 
 
 * AWS Rekognition Client 
 
-* Tesseract
+* Tesseract - Please install tesseract on your os for this to work, including the Burmese, Arabic and Malaysia language pack
 
 ## Deployment instructions
 
