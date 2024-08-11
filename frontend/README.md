@@ -19,12 +19,7 @@
 npm install
 ```
 
-2. Install Tailwind for styling:
-```
-npm i tailwindcss
-```
-
-3. Run executes the dev script for React:
+2. Start Next Server that serves the frontend files:
 ```
 npm run dev
 ```
@@ -38,6 +33,6 @@ npm i cypress
 
 2. Run the following command to run tests:
 ```
-yarn cypress open
+npx cypress open
 ```
 
