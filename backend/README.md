@@ -49,9 +49,22 @@ rails db:migrate
 rails db:prepare
 ```
 
-4. Run the rails server:
+4. Change to your own credentials
+Command + Shift + F to search for "Rails.application.credentials" and replace all of them with your own credentials"
+You can also use 
+```
+EDITOR="code --wait" rails credentials:edit
+```
+and set your own credentials inside before closing it to be encrypted by a master key that is written under config/master.key
+For more details, please read the guide to rails credentials here: https://webcrunch.com/posts/the-complete-guide-to-ruby-on-rails-encrypted-credentials
+
+5. Run the rails server:
 ```
 rails server
+```
+or if you would like to run both frontend and backend together:
+```
+rails server -p 3001
 ```
 
 ## Testing
