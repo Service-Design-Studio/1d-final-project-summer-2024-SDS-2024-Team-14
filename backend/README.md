@@ -50,12 +50,11 @@ rails db:prepare
 ```
 
 4. Change to your own credentials
-Command + Shift + F to search for "Rails.application.credentials" and replace all of them with your own credentials"  
-You can also use: 
+Command + Shift + F to search for "Rails.application.credentials" and replace all of them with your own credentials" or you can also use: 
 ```
 EDITOR="code --wait" rails credentials:edit
 ```
-Set your own credentials inside before closing it to be encrypted by a master key that is written under config/master.key  
+Set your own credentials inside before closing it to be encrypted by a master key that is written under config/master.key.  
 For more details, please read the guide to rails credentials here: https://webcrunch.com/posts/the-complete-guide-to-ruby-on-rails-encrypted-credentials
 
 5. Run the rails server:
