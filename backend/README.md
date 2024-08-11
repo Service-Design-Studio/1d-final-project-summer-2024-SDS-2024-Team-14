@@ -49,8 +49,8 @@ rails db:migrate
 rails db:prepare
 ```
 
-4. Change to your own credentials
-Command + Shift + F to search for "Rails.application.credentials" and replace all of them with your own credentials" or you can also use: 
+4. Change to your own credentials --
+Command + Shift + F / Ctrl + Shift + F to search for "Rails.application.credentials" and replace all of them with your own credentials or you can also use: 
 ```
 EDITOR="code --wait" rails credentials:edit
 ```
