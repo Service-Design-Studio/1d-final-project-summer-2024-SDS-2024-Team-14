@@ -1,6 +1,6 @@
 # EnableID for Gebirah Frontend
 
-## Prerequesites
+## Prerequisites
 
 * Next.js
 
