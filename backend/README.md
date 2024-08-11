@@ -1,24 +1,62 @@
-# README
+# EnableID for Gebirah Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Prerequesites
 
-Things you may want to cover:
+* Ruby version: 3.3.1
 
-* Ruby version
+* Rails version: 7.1.3.4
 
-* System dependencies
+## System dependencies
 
-* Configuration
+* PostgreSQL
 
-* Database creation
+* Docker
 
-* Database initialization
+* Rspec for testing
 
-* How to run the test suite
+* Turbo and Stimulus for modern Rails development
 
-* Services (job queues, cache servers, search engines, etc.)
+For a complete list of dependencies, please refer to the Gemfile in the project repository.
 
-* Deployment instructions
+## Some notable API usages
 
-* ...
+* Google Cloud Translate v2
+
+* Google Vertex AI Agent Builder
+
+* Google Gemini 1.5 Flash 
+
+* AWS Rekognition Client 
+
+* Tesseract
+
+## Deployment instructions
+
+1. Change directory to 'backend':
+```
+cd 1d-final-project-summer-2024-sds-2024-team-14/backend
+```
+
+2. Install dependencies for rails:
+```
+bundle install
+```
+
+3. Setup database:
+```
+rails db:create
+rails db:migrate
+rails db:prepare
+```
+
+4. Run the rails server:
+```
+rails server
+```
+
+## Testing
+
+Run the following command:
+```
+rspec
+```
