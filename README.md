@@ -39,12 +39,13 @@
     <a href="https://docs.google.com/document/d/1jCgIEbSquIWM2TcBFJDTQyb8psk419NHWv1tpFA85a8/edit?usp=sharing"><strong>Explore our Design Workbook »</strong></a>
     <br />
     <br />
-    <a href="https://gebirah-frontend-2r6b52gguq-as.a.run.app/">View Demo</a>
+    <a href="https://gebirah-frontend-2r6b52gguq-as.a.run.app/">Checkout the website</a>
     ·
+    <p align="center"> Check out the final video: </p> <br/>
     <p align="center">
-    <a href="https://youtu.be/ccrcRkjByKM">
-      <img width="80%" height="auto" src="https://img.youtube.com/vi/ccrcRkjByKM/hqdefault.jpg" alt="Watch the video">
-    </a>
+      <a href="https://youtu.be/vzT93J-PMRs">
+        <img width="80%" height="auto" src="https://img.youtube.com/vi/vzT93J-PMRs/hqdefault.jpg" alt="Watch the video">
+      </a>
     </p>
   </p>
 </div>
@@ -182,7 +183,7 @@ Timothy Tang Long Zun - [LinkedIn](https://www.linkedin.com/in/timothy-tang-xeph
 * [Design Workbook](https://docs.google.com/document/d/1jCgIEbSquIWM2TcBFJDTQyb8psk419NHWv1tpFA85a8/edit?usp=sharing)
 * [Figma Documentation](https://www.figma.com/board/BWnYolkVdRS5E9WQAdX91t/Brainstorming-Team-14?node-id=0-1&t=CIFSB8XlrVWsfuSm-0)
 * [Figma Prototyping](https://www.figma.com/proto/PD059qNKRolmF4y4GT4MEs/SDS-Team-14?node-id=0-1&t=UQxFjPjveyWirL78-1)
-* [Pitch Video](https://www.youtube.com/playlist?list=PLJbt3DXk5ylPv0ERKu7ZMFzzH54UEJ2Xd)
+* [Final Video/Guiding Videos](https://www.youtube.com/playlist?list=PLJbt3DXk5ylPv0ERKu7ZMFzzH54UEJ2Xd)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
