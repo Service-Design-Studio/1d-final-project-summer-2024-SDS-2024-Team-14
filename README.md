@@ -41,6 +41,7 @@
     <br />
     <br />
     <a href="https://gebirah-frontend-2r6b52gguq-as.a.run.app/">Checkout the website</a>
+    </br>
     <p align="center">
       <a href="https://youtu.be/vzT93J-PMRs">
         <img width="80%" height="auto" src="https://img.youtube.com/vi/vzT93J-PMRs/hqdefault.jpg" alt="Watch the video">
