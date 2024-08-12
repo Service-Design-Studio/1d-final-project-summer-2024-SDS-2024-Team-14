@@ -35,18 +35,17 @@
     <br>
     Access and verify your digital identity on the move.
     Send in your documents and photos to kickstart your refugee application process.
-    </br>
-    <a href="https://github.com/Service-Design-Studio/1d-final-project-summer-2024-SDS-2024-Team-14"><strong>Explore the repo »</strong></a>
     <br />
-    <br />
-    <a href="https://docs.google.com/document/d/1jCgIEbSquIWM2TcBFJDTQyb8psk419NHWv1tpFA85a8/edit?usp=sharing"><strong>Explore the documentation »</strong></a>
+    <a href="https://docs.google.com/document/d/1jCgIEbSquIWM2TcBFJDTQyb8psk419NHWv1tpFA85a8/edit?usp=sharing"><strong>Explore our Design Workbook »</strong></a>
     <br />
     <br />
     <a href="https://gebirah-frontend-2r6b52gguq-as.a.run.app/">View Demo</a>
     ·
-    <a href="https://github.com/github_username/Service-Design-Studio/1d-final-project-summer-2024-SDS-2024-Team-14/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/Service-Design-Studio/1d-final-project-summer-2024-SDS-2024-Team-14/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <p align="center">
+    <a href="https://youtu.be/ccrcRkjByKM">
+      <img width="80%" height="auto" src="https://img.youtube.com/vi/ccrcRkjByKM/hqdefault.jpg" alt="Watch the video">
+    </a>
+    </p>
   </p>
 </div>
 
