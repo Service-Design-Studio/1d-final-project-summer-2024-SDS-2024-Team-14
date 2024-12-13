@@ -179,7 +179,7 @@ Timothy Tang Long Zun - [LinkedIn](https://www.linkedin.com/in/timothy-tang-xeph
 <!-- REFERENCES -->
 ## References
 
-* [Google Site](https://sites.google.com/d/1l_3PATAnuvAOnn9fr6dyAU9cg2EIng3M/p/1jj3r00gamO9t_V_roJSpl1ETOqq_J-fu/edit)
+* [Google Site](https://sites.google.com/view/sds-2024-team-14/home?authuser=0)
 * [Design Workbook](https://docs.google.com/document/d/1jCgIEbSquIWM2TcBFJDTQyb8psk419NHWv1tpFA85a8/edit?usp=sharing)
 * [Figma Documentation](https://www.figma.com/board/BWnYolkVdRS5E9WQAdX91t/Brainstorming-Team-14?node-id=0-1&t=CIFSB8XlrVWsfuSm-0)
 * [Figma Prototyping](https://www.figma.com/proto/PD059qNKRolmF4y4GT4MEs/SDS-Team-14?node-id=0-1&t=UQxFjPjveyWirL78-1)
